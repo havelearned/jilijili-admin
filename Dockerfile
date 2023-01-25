@@ -19,3 +19,9 @@ RUN  apk add --update --on-cache openjdk18-jre-base \
      && rm -f /var/cache/apk/*
 
 WORKDIR /app
+
+COPY --from=build /app/target/wang-jilijili-0.0.1-SNAPSHOT.jar    .
+
+EXPOSE 80
+
+CMD ["java","-jar","/app/wang-jilijili-0.0.1-SNAPSHOT.jar"]
