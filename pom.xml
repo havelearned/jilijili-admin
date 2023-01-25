@@ -131,19 +131,6 @@
                             <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
                         </env>
                     </image>
-
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                        <exclude>
-<!--                            <id>process-aot</id>-->
-                            <goals>
-                                <goal>process-aot</goal>
-                            </goals>
-                        </exclude>
-                    </excludes>
                 </configuration>
 
             </plugin>
@@ -159,7 +146,7 @@
                     <!-- 镜像名称 -->
                     <imageName>${project.artifactId}</imageName>
                     <!--docker文件所在的目录-->
-                    <dockerDirectory>src/main/resources/docker</dockerDirectory>
+                    <dockerDirectory>/dockerfile</dockerDirectory>
                     <!-- jar包名称和路径 以及复制到容器的路径 -->
                     <resources>
                         <resource>
