@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wang.jilijili.music.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="wang.jilijili.music.pojo.entity.User">
+            <id property="id" column="id" jdbcType="VARCHAR"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="gender" column="gender" jdbcType="VARCHAR"/>
+            <result property="locked" column="locked" jdbcType="TINYINT"/>
+            <result property="enabled" column="enabled" jdbcType="TINYINT"/>
+            <result property="lastLoginIp" column="last_login_ip" jdbcType="VARCHAR"/>
+            <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,username,nickname,
+        password,gender,locked,
+        enabled,last_login_ip,last_login_time,
+        created_time,updated_time
+    </sql>
+    <select id="findUserBy" resultType="wang.jilijili.music.pojo.entity.User"></select>
+    <select id="findUserByUsername" resultType="wang.jilijili.music.pojo.entity.User"></select>
+</mapper>

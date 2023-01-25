@@ -1,0 +1,103 @@
+# 配置端口
+server:
+  port: ${APPLICATION_PORT}
+  servlet:
+    session:
+      timeout: 21600
+
+spring:
+  # 配置mysql数据库
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_H0ST}:3306/${DATABASE_NAME}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    username: ${MYSQL_USER_NAME}
+    password: ${MYSQL_PASSWORD}
+    hikari:
+      minimum-idle: 5
+      # 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 180000
+      # 连接池最大连接数，默认是10
+      maximum-pool-size: 10
+      # 此属性控制从池返回的连接的默认自动提交行为,默认值：true
+      auto-commit: true
+      # 连接池名称
+      pool-name: MyHikariCP
+      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      max-lifetime: 1800000
+      # 数据库连接超时时间,默认30秒，即30000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+  # mq配置
+  rabbitmq:
+    host: 110.40.230.65
+    port: 5672
+    username: admin_A
+    password: admin_A
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3 #最大重试次数
+          initial-interval: 3000 #重试间隔时间（单位毫秒）
+
+  # es配置 若搜索模式为mysql可删除
+  elasticsearch:
+    rest:
+      uris: 110.40.230.65:9200
+
+  # 邮箱配置
+  mail:
+    host: smtp.qq.com
+    username: 1918652173@qq.com
+    password: apnxignovcgdcagf
+    default-encoding: UTF-8
+    port: 587
+    properties:
+      mail:
+      smtp:
+      auth: true
+      socketFactory:
+      class: javax.net.ssl.SSLSocketFactory
+
+  # 上传图片大小限制
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+  data:
+    redis:
+      host: 110.40.230.65
+      port: 6370
+      password: 123456
+
+   # sql版本控制
+  flyway:
+    enabled: false
+    encoding: UTF-8
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+  sql:
+    init:
+      continue-on-error: false
+      platform: h2
+
+
+# 配置MybatisPlus
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
