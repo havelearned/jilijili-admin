@@ -55,10 +55,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .addFilter(new JwtAuthorizationFilter(authenticationManager())) // 授权过滤器
 
         .exceptionHandling() // 异常处理
-        .authenticationEntryPoint(this.restAuthenticationEntryPoint)
+//        .authenticationEntryPoint(this.restAuthenticationEntryPoint)
         .and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and().formLogin();
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 
   }
 
