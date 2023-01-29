@@ -1,4 +1,5 @@
-FROM maven:3.6.0-jdk-17-slim as build
+FROM maven:3.6.0-jdk-8-slim as build
+#FROM maven:3.8.6-amazoncorretto-17 as build
 
 WORKDIR /app
 

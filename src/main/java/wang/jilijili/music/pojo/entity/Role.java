@@ -1,15 +1,16 @@
 package wang.jilijili.music.pojo.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import javax.persistence.Entity;
+import java.io.Serializable;
 
 /**
  * @TableName role
  */
+@EqualsAndHashCode(callSuper = true)
 @Entity(name="role")
 @Data
 public class Role extends AbstractEntity implements Serializable {

@@ -1,13 +1,20 @@
 package wang.jilijili.music.service.impl;
 
-import jakarta.transaction.Transactional;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import wang.jilijili.music.exception.BizException;
+import wang.jilijili.music.exception.ExceptionType;
 import wang.jilijili.music.mapper.UserMapper;
 import wang.jilijili.music.pojo.convert.UserConvert;
+import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
+import wang.jilijili.music.pojo.entity.User;
 import wang.jilijili.music.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @Auther: Amani
@@ -16,18 +23,60 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl implements UserService {
-    private UserMapper userMapper;
-    private UserConvert userConvert;
+  private UserMapper userMapper;
+  private UserConvert userConvert;
+
+  private PasswordEncoder passwordEncoder;
 
 
-    public UserServiceImpl(UserMapper userMapper, UserConvert userConvert) {
-        this.userMapper = userMapper;
-        this.userConvert = userConvert;
+  public UserServiceImpl(UserMapper userMapper, UserConvert userConvert, PasswordEncoder bCryptPasswordEncoder) {
+    this.userMapper = userMapper;
+    this.userConvert = userConvert;
+    this.passwordEncoder = bCryptPasswordEncoder;
+  }
+
+  @Override
+  public List<UserDto> userList() {
+    return userMapper.findAll().stream().map(userConvert::toDto).collect(Collectors.toList());
+  }
+
+  /**
+   * 创建用户
+   *
+   * @param userCreateDto
+   */
+  @Override
+  public UserDto create(UserCreateDto userCreateDto) {
+    checkUsername(userCreateDto.getUsername());
+    User user = this.userConvert.toUserEntity(userCreateDto);
+    user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+    user.setEnabled(1);
+    user.setLocked(0);
+
+    User save = this.userMapper.save(user);
+    UserDto userDto = this.userConvert.toDto(save);
+
+    return userDto;
+  }
+
+  public void checkUsername(String username) {
+    Optional<User> user = this.userMapper.findUserByUsername(username);
+    if (user.isPresent()) {
+      throw new BizException(ExceptionType.USER_NAME_DUPLICATE);
     }
+  }
 
-
-    @Override
-    public List<UserDto> userList() {
-        return userMapper.findAll().stream().map(userConvert::toDto).toList();
+  /**
+   * @param username
+   * @return
+   * @throws UsernameNotFoundException
+   */
+  @Override
+  public User loadUserByUsername(String username) throws UsernameNotFoundException {
+    Optional<User> user = this.userMapper.findUserByUsername(username);
+    if (user.isPresent()) {
+      return user.get();
     }
+    throw new BizException(ExceptionType.USER_NOT_FOND);
+  }
 }

@@ -18,5 +18,9 @@ class UserMapperTest {
 
     @Test
     void findUserByUsername() {
+        User user = new User();
+        user.setUsername("234123");
+        userMapper.save(user);
+        System.out.println(user);
     }
 }

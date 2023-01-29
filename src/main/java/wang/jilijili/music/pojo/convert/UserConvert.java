@@ -2,6 +2,7 @@ package wang.jilijili.music.pojo.convert;
 
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
+import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
 import wang.jilijili.music.pojo.entity.User;
 import wang.jilijili.music.pojo.vo.UserVo;
@@ -19,5 +20,7 @@ public interface UserConvert {
     UserVo toVo(UserDto userDto);
 
     User toUserEntity(UserDto userDto);
+
+    User toUserEntity(UserCreateDto userCreateDto);
 
 }

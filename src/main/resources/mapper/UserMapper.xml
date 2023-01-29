@@ -26,4 +26,5 @@
     </sql>
     <select id="findUserBy" resultType="wang.jilijili.music.pojo.entity.User"></select>
     <select id="findUserByUsername" resultType="wang.jilijili.music.pojo.entity.User"></select>
+    <select id="findByUsername" resultType="wang.jilijili.music.pojo.entity.User"></select>
 </mapper>

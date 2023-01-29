@@ -1,13 +1,14 @@
 package wang.jilijili.music.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import wang.jilijili.music.pojo.convert.UserConvert;
+import wang.jilijili.music.pojo.dto.UserCreateDto;
+import wang.jilijili.music.pojo.dto.UserDto;
 import wang.jilijili.music.pojo.vo.UserVo;
 import wang.jilijili.music.service.UserService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Auther: Amani
@@ -18,18 +19,26 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserService userService;
-    private UserConvert userConvert;
+  private UserService userService;
+  private UserConvert userConvert;
 
-    public UserController(UserService userService, UserConvert userConvert) {
-        this.userService = userService;
-        this.userConvert = userConvert;
-    }
+  public UserController(UserService userService, UserConvert userConvert) {
+    this.userService = userService;
+    this.userConvert = userConvert;
+  }
 
-    @GetMapping("/")
-    public List<UserVo> list() {
+  @PostMapping("/")
+  public UserVo create(@RequestBody UserCreateDto userCreateDto) {
+    UserDto userDto = this.userService.create(userCreateDto);
+    UserVo userVo = this.userConvert.toVo(userDto);
+    return userVo;
+  }
 
-        return userService.userList().stream().map(userConvert::toVo).toList();
-    }
+
+  @GetMapping("/")
+  public List<UserVo> list() {
+
+    return userService.userList().stream().map(userConvert::toVo).collect(Collectors.toList());
+  }
 
 }
