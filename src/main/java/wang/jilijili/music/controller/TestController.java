@@ -2,16 +2,11 @@ package wang.jilijili.music.controller;
 
 import com.alibaba.fastjson2.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import wang.jilijili.music.common.utils.ReadCSVServer;
-import wang.jilijili.music.common.utils.ReadCSVUtil;
 import wang.jilijili.music.service.impl.AsyncServer;
 
-import java.io.IOException;
-import java.util.List;
+import javax.servlet.http.Cookie;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -25,13 +20,17 @@ public class TestController {
 
     @Autowired
     private AsyncServer asyncServer;
-    @Autowired
-    private ReadCSVUtil readCSVUtil;
 
+//    @Autowired
+//    private ReadCSVUtil readCSVUtil;
+
+/*
     @Autowired
     private ReadCSVServer readCSVServer;
+*/
 
 
+/*
     @RequestMapping("/test/readCSV")
     public JSONObject testReadCSV(@RequestBody JSONObject get) throws JSONException, IOException, InterruptedException {
         JSONObject output = new JSONObject();
@@ -55,6 +54,7 @@ public class TestController {
 
 
     }
+*/
 
     @RequestMapping("/testThread")
     public JSONObject testThread() throws InterruptedException {
@@ -76,9 +76,16 @@ public class TestController {
 
     }
 
+    @RequestMapping("/")
+    public String testSay(Cookie cookies) {
+        System.out.println("获取得到的cookies:" + cookies);
+
+        return "访问成功";
+
+    }
+
     @RequestMapping("/test")
     public String test() {
-
         return "success";
     }
 }

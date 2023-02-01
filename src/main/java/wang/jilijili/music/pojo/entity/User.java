@@ -54,40 +54,32 @@ public class User extends AbstractEntity implements Serializable, UserDetails {
         return null;
     }
 
-    /**
-     * 账号没有过期状态(true账号没有过期，false账号已经过期)
-     * @return
-     */
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-
-    /**
-     * 账号没有过期状态(true账号没有过期，false账号已经过期)
-     * @return
-     */
 
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
-    /**
-     * 密码没有过期状态（true密码没有过期，false密码已经过期）
-     * @return
-     */
-
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
-    /**
-     * @return
-     */
     @Override
     public boolean isEnabled() {
-        return this.enabled == 1;
+        return true;
     }
+
+
+//    /**
+//     * @return
+//     */
+//    @Override
+//    public boolean isEnabled() {
+//        return this.enabled == 1;
+//    }
 }

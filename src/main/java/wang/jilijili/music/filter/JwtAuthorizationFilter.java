@@ -27,10 +27,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     super(authenticationManager);
   }
 
+
   @Override
   protected void doFilterInternal(HttpServletRequest request,
                                   HttpServletResponse response,
                                   FilterChain chain) throws IOException, ServletException {
+    /*鉴权,校验解析token*/
     String header = request.getHeader(SecurityConfig.HEADER_STRING);
     if (header == null) {
       chain.doFilter(request, response);
@@ -43,6 +45,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
   }
 
   private UsernamePasswordAuthenticationToken getAuthentication(String header) {
+    // 解析token
     String username = JWT.require(Algorithm.HMAC512(SecurityConfig.SECRET.getBytes()))
         .build().verify(header.replace(SecurityConfig.TOKEN_PREFIX, ""))
         .getSubject();
