@@ -4,6 +4,7 @@ import lombok.Data;
 import wang.jilijili.music.common.enums.Gender;
 import wang.jilijili.music.pojo.entity.Role;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +17,15 @@ public class UserVo {
     private String id;
     private String username;
     private String nickname;
-    private List<Role> roles;
 
+    private Gender gender;
+
+    private Integer enabled;
+
+    private String lastLoginIp;
+
+    private Date lastLoginTime;
+
+
+    private List<Role> roles;
 }

@@ -1,5 +1,7 @@
 package wang.jilijili.music.mapper;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import wang.jilijili.music.pojo.entity.User;
 
@@ -15,7 +17,9 @@ public interface UserMapper extends JpaRepository<User, String> {
 
     public abstract Optional<User> findUserByUsername(String username);
 
-    public abstract  User findByUsername(String username);
+    public abstract User findByUsername(String username);
+
+    public abstract Page<User> findAll(Pageable pageable);
 }
 
 

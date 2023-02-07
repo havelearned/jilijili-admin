@@ -1,28 +1,42 @@
-FROM maven:3.6.0-jdk-8-slim as build
+# 官方教程[Dockerfile最佳实践]: https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+# 选择构建用基础镜像(选择原则: 在包含所有用到的依赖前提下尽可能提及小).
+# 如需更换, 请到[dockerhub官方仓库](https://hub.docker.com/_/java?tab=tags)自行选择后替换.
+FROM maven:3.5.2-jdk-8-slim as build
 
+# 指定构建过程中的工作目录.
 WORKDIR /app
 
+# 将 src 目录下所有文件, 拷贝到工作目录(/app)中 src 目录下.
 COPY src /app/src
 
+# 将 pom.xml 文件, 拷贝到工作目录(/app)下.
 COPY pom.xml /app
 
-RUN mvn -f /app/pom.xml clean package -Dspring.profiles.active=prod
+# 执行代码编译命令.
+RUN mvn -f /app/pom.xml clean package
 
-FROM apline:3.13
+# 选择运行时基础镜像.
+FROM alpine:3.13
 
+# 微信云托管中数据库信息
 ENV MYSOL_HOST  110.40.230.65
 ENV MYSQL_PORT=3307
 ENV MYSOL_USER_NAME root
 ENV MYSOL_PASSWORD 123456
 ENV DATABASE_NAME jilijili-music
 
-RUN  apk add --update --on-cache openjdk18-jre-base \
-     && rm -f /var/cache/apk/*
+# 安装依赖包, 如需其它依赖包, 请到alpine依赖包管理(https://pkgs.alpinelinux.org/packages?name=php8*imagick*&branch=v3.13)查找.
+RUN apk add --update --no-cache openjdk8-jre-base \
+    && rm -f /var/cache/apk/*
 
+# 指定运行时的工作目录.
 WORKDIR /app
 
-COPY --from=build /app/target/wang-jilijili-0.0.1-SNAPSHOT.jar    .
+# 将构建产物jar包拷贝到运行时目录中.
+COPY --from=build /app/target/wang-jilijili-0.0.1-SNAPSHOT.jar .
 
+# 暴露端口.
 EXPOSE 8080
 
-CMD ["java","-jar","/app/wang-jilijili-0.0.1-SNAPSHOT.jar"]
+# 执行启动命令.
+CMD ["java", "-jar", "/app/wang-jilijili-0.0.1-SNAPSHOT.jar"]

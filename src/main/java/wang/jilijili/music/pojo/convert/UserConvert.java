@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
 import wang.jilijili.music.pojo.entity.User;
+import wang.jilijili.music.pojo.query.UserCreateRequest;
+import wang.jilijili.music.pojo.query.UserUpdateRequest;
 import wang.jilijili.music.pojo.vo.UserVo;
 
 /**
@@ -19,8 +21,12 @@ public interface UserConvert {
 
     UserVo toVo(UserDto userDto);
 
-    User toUserEntity(UserDto userDto);
+    User toUserEntity(UserCreateRequest userCreateRequest);
+    User toUserEntity(UserUpdateRequest userUpdateRequest);
 
     User toUserEntity(UserCreateDto userCreateDto);
+
+
+
 
 }

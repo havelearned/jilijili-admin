@@ -2,6 +2,7 @@ package wang.jilijili.music.exception;
 
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSON;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -18,8 +19,6 @@ import java.io.IOException;
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
 
-
-
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
@@ -27,11 +26,11 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setHeader("Cache-Control", "no-cache");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setCode(ExceptionType.UNAUTHORIZED.getCode());
         errorResponse.setMessage(ExceptionType.UNAUTHORIZED.getMessage());
-        errorResponse.setTrace(JSON.toJSONString(authException.getMessage()));
-
         response.getWriter().println(JSONUtil.parse(errorResponse));
         response.getWriter().flush();
     }

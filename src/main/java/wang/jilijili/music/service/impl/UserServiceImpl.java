@@ -1,5 +1,7 @@
 package wang.jilijili.music.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,8 @@ import wang.jilijili.music.pojo.convert.UserConvert;
 import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
 import wang.jilijili.music.pojo.entity.User;
+import wang.jilijili.music.pojo.query.UserUpdateRequest;
+import wang.jilijili.music.pojo.vo.Result;
 import wang.jilijili.music.service.UserService;
 
 import java.util.List;
@@ -23,60 +27,108 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UserServiceImpl implements UserService {
-  private UserMapper userMapper;
-  private UserConvert userConvert;
+    private UserMapper userMapper;
+    private UserConvert userConvert;
 
-  private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
 
-  public UserServiceImpl(UserMapper userMapper, UserConvert userConvert, PasswordEncoder bCryptPasswordEncoder) {
-    this.userMapper = userMapper;
-    this.userConvert = userConvert;
-    this.passwordEncoder = bCryptPasswordEncoder;
-  }
-
-  @Override
-  public List<UserDto> userList() {
-    return userMapper.findAll().stream().map(userConvert::toDto).collect(Collectors.toList());
-  }
-
-  /**
-   * 创建用户
-   *
-   * @param userCreateDto
-   */
-  @Override
-  public UserDto create(UserCreateDto userCreateDto) {
-    checkUsername(userCreateDto.getUsername());
-    User user = this.userConvert.toUserEntity(userCreateDto);
-    user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-    user.setEnabled(1);
-    user.setLocked(0);
-
-    User save = this.userMapper.save(user);
-    UserDto userDto = this.userConvert.toDto(save);
-
-    return userDto;
-  }
-
-  public void checkUsername(String username) {
-    Optional<User> user = this.userMapper.findUserByUsername(username);
-    if (user.isPresent()) {
-      throw new BizException(ExceptionType.USER_NAME_DUPLICATE);
+    public UserServiceImpl(UserMapper userMapper, UserConvert userConvert, PasswordEncoder bCryptPasswordEncoder) {
+        this.userMapper = userMapper;
+        this.userConvert = userConvert;
+        this.passwordEncoder = bCryptPasswordEncoder;
     }
-  }
 
-  /**
-   * @param username
-   * @return
-   * @throws UsernameNotFoundException
-   */
-  @Override
-  public User loadUserByUsername(String username) throws UsernameNotFoundException {
-    Optional<User> user = this.userMapper.findUserByUsername(username);
-    if (user.isPresent()) {
-      return user.get();
+    @Override
+    public List<UserDto> userList() {
+        return userMapper.findAll().stream().map(userConvert::toDto).collect(Collectors.toList());
     }
-    throw new BizException(ExceptionType.USER_NOT_FOND);
-  }
+
+    /**
+     * 创建用户
+     *
+     * @param userCreateDto
+     */
+    @Override
+    public UserDto create(UserCreateDto userCreateDto) {
+        checkUsername(userCreateDto.getUsername());
+        User user = this.userConvert.toUserEntity(userCreateDto);
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+        user.setEnabled(1);
+        user.setLocked(0);
+
+        User save = this.userMapper.save(user);
+        UserDto userDto = this.userConvert.toDto(save);
+
+        return userDto;
+    }
+
+
+    @Override
+    public UserDto get(String id) {
+        Optional<User> user = this.userMapper.findById(id);
+        if (user.isPresent()) {
+            UserDto userDto = this.userConvert.toDto(user.get());
+            return userDto;
+        }
+        return new UserDto();
+    }
+
+    @Override
+    public UserDto update(String id, UserUpdateRequest userUpdateRequest) {
+        try {
+            Optional<User> user = this.userMapper.findById(id);
+            if (!user.isPresent()) {
+                throw new BizException(ExceptionType.USER_NOT_FOND);
+            }
+
+            User saveUser = this.userConvert.toUserEntity(userUpdateRequest);
+            saveUser.setId(user.get().getId());
+            User resultUser = this.userMapper.save(saveUser);
+            UserDto userDto = this.userConvert.toDto(resultUser);
+            return userDto;
+        } catch (Exception e) {
+            throw new BizException(ExceptionType.USER_NAME_DUPLICATE);
+        }
+
+    }
+
+    @Override
+    public Result<?> delete(String id) {
+        Optional<User> user = this.userMapper.findById(id);
+        if (user.isPresent()) {
+            this.userMapper.deleteById(id);
+            return Result.ok();
+        }
+        return Result.fail(ExceptionType.USER_NOT_FOND.getMessage());
+
+
+    }
+
+    @Override
+    public Page<UserDto> search(Pageable pageable) {
+
+        return this.userMapper.findAll(pageable).map(userConvert::toDto);
+    }
+
+    public void checkUsername(String username) {
+        Optional<User> user = this.userMapper.findUserByUsername(username);
+        if (user.isPresent()) {
+            throw new BizException(ExceptionType.USER_NAME_DUPLICATE);
+        }
+    }
+
+    /**
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException
+     */
+    @Override
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> user = this.userMapper.findUserByUsername(username);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        throw new BizException(ExceptionType.USER_NOT_FOND);
+    }
 }

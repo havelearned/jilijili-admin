@@ -1,7 +1,6 @@
 package wang.jilijili.music.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -50,8 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 // 允许所有post请求访问,其他都需要鉴权后访问
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL,"/test/*").permitAll()
-//                .antMatchers("/login").permitAll()
+                .antMatchers("/test/*", "/users/*").permitAll()
+                .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
 
