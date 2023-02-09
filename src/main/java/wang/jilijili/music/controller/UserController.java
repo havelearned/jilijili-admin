@@ -14,6 +14,9 @@ import wang.jilijili.music.pojo.vo.Result;
 import wang.jilijili.music.pojo.vo.UserVo;
 import wang.jilijili.music.service.UserService;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @Auther: Amani
  * @Date: 2023/1/24 11:19
@@ -66,6 +69,16 @@ public class UserController {
             @PageableDefault(size = 5, sort = "createdTime", direction = Sort.Direction.DESC) Pageable pageable) {
 
         return userService.search(pageable).map(userConvert::toVo);
+    }
+
+
+    @GetMapping("/getallLoginUsers")
+    public Result<?> getAllLoginUsers(){
+        List<UserDto> dtoList =  userService.getAllLoginUsers();
+        List<UserVo> result = dtoList.stream().map(userConvert::toVo).collect(Collectors.toList());
+
+        return Result.ok(result);
+
     }
 
 }

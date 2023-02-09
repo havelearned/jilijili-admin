@@ -148,7 +148,7 @@
                     <!-- 镜像名称 -->
                     <imageName>${project.artifactId}</imageName>
                     <!--docker文件所在的目录-->
-                    <dockerDirectory>/dockerfile</dockerDirectory>
+                    <dockerDirectory>/Dockerfile</dockerDirectory>
                     <!-- jar包名称和路径 以及复制到容器的路径 -->
                     <resources>
                         <resource>

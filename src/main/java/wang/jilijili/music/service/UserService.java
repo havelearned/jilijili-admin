@@ -35,4 +35,6 @@ public interface UserService extends UserDetailsService {
     Result<?> delete(String id);
 
     Page<UserDto> search(Pageable pageable);
+
+    List<UserDto> getAllLoginUsers();
 }

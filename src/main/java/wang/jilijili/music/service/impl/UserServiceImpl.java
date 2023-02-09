@@ -1,7 +1,9 @@
 package wang.jilijili.music.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,9 @@ public class UserServiceImpl implements UserService {
     private UserConvert userConvert;
 
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private SessionRegistry sessionRegistry;
 
 
     public UserServiceImpl(UserMapper userMapper, UserConvert userConvert, PasswordEncoder bCryptPasswordEncoder) {
@@ -111,6 +116,7 @@ public class UserServiceImpl implements UserService {
         return this.userMapper.findAll(pageable).map(userConvert::toDto);
     }
 
+
     public void checkUsername(String username) {
         Optional<User> user = this.userMapper.findUserByUsername(username);
         if (user.isPresent()) {
@@ -130,5 +136,15 @@ public class UserServiceImpl implements UserService {
             return user.get();
         }
         throw new BizException(ExceptionType.USER_NOT_FOND);
+    }
+
+    @Override
+    public List<UserDto> getAllLoginUsers() {
+        List<Object> allPrincipals = this.sessionRegistry.getAllPrincipals();
+        List<UserDto> userDtos = allPrincipals.stream().map(username -> {
+            Optional<User> byUsername = this.userMapper.findUserByUsername(username.toString());
+            return userConvert.toDto(byUsername.get());
+        }).collect(Collectors.toList());
+        return userDtos;
     }
 }
