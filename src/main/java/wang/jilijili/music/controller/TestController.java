@@ -1,12 +1,12 @@
 package wang.jilijili.music.controller;
 
 import com.alibaba.fastjson2.JSONObject;
+import jakarta.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wang.jilijili.music.service.impl.AsyncServerImpl;
 
-import javax.servlet.http.Cookie;
 import java.util.concurrent.CountDownLatch;
 
 /**

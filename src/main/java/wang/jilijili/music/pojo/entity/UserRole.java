@@ -3,8 +3,8 @@ package wang.jilijili.music.pojo.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import java.io.Serializable;
 
 /**

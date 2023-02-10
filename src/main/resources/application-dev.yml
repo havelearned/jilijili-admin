@@ -75,7 +75,7 @@ spring:
 
     # sql版本控制
   flyway:
-    enabled: true
+    enabled: false
     encoding: UTF-8
     locations: classpath:db/migration
     baseline-on-migrate: true

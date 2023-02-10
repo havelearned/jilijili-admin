@@ -124,6 +124,17 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
+    @Override
+    public List<UserDto> getAllLoginUsers() {
+        List<Object> allPrincipals = this.sessionRegistry.getAllPrincipals();
+        List<UserDto> userDtos = allPrincipals.stream().map(username -> {
+            Optional<User> byUsername = this.userMapper.findUserByUsername(username.toString());
+            return userConvert.toDto(byUsername.get());
+        }).collect(Collectors.toList());
+        return userDtos;
+    }
+
     /**
      * @param username
      * @return
@@ -138,13 +149,4 @@ public class UserServiceImpl implements UserService {
         throw new BizException(ExceptionType.USER_NOT_FOND);
     }
 
-    @Override
-    public List<UserDto> getAllLoginUsers() {
-        List<Object> allPrincipals = this.sessionRegistry.getAllPrincipals();
-        List<UserDto> userDtos = allPrincipals.stream().map(username -> {
-            Optional<User> byUsername = this.userMapper.findUserByUsername(username.toString());
-            return userConvert.toDto(byUsername.get());
-        }).collect(Collectors.toList());
-        return userDtos;
-    }
 }

@@ -1,6 +1,9 @@
 package wang.jilijili.music.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.AuthorizationServiceException;
@@ -21,13 +24,11 @@ import org.springframework.security.web.session.SessionInformationExpiredStrateg
 import org.springframework.stereotype.Component;
 import wang.jilijili.music.pojo.vo.Result;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class RestAuthenticationHandler implements AuthenticationSuccessHandler,
+public class RestAuthenticationHandler implements
+        AuthenticationSuccessHandler,
         AuthenticationFailureHandler,
         LogoutSuccessHandler,
         SessionInformationExpiredStrategy,
@@ -40,7 +41,9 @@ public class RestAuthenticationHandler implements AuthenticationSuccessHandler,
 
     //认证失败处理
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request,
+                         HttpServletResponse response,
+                         AuthenticationException authException) throws IOException, ServletException {
         String detailMessage = authException.getClass().getSimpleName() + " " + authException.getLocalizedMessage();
         if (authException instanceof InsufficientAuthenticationException) {
             detailMessage = "请登陆后再访问";
@@ -56,19 +59,22 @@ public class RestAuthenticationHandler implements AuthenticationSuccessHandler,
     public void handle(HttpServletRequest request,
                        HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        String detailMessage = null;
+        Result<String> result = new Result<>();
+        result.setFlag(false);
+        result.setData("");
+        result.setCode(HttpStatus.UNAUTHORIZED.value());
         if (accessDeniedException instanceof MissingCsrfTokenException) {
-            detailMessage = "缺少CSRF TOKEN,请从表单或HEADER传入";
+            result.setMessage("缺少CSRF TOKEN,请从表单或HEADER传入");
         } else if (accessDeniedException instanceof InvalidCsrfTokenException) {
-            detailMessage = "无效的CSRF TOKEN";
+            result.setMessage("无效的CSRF TOKEN");
         } else if (accessDeniedException instanceof CsrfException) {
-            detailMessage = accessDeniedException.getLocalizedMessage();
+            result.setMessage(accessDeniedException.getLocalizedMessage());
         } else if (accessDeniedException instanceof AuthorizationServiceException) {
-            detailMessage = AuthorizationServiceException.class.getSimpleName() + " " + accessDeniedException.getLocalizedMessage();
+            result.setMessage(AuthorizationServiceException.class.getSimpleName() + " " + accessDeniedException.getLocalizedMessage());
         }
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
-        response.setStatus(HttpStatus.FORBIDDEN.value());
-        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(String.format("%s%s", detailMessage, "禁止访问")));
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(result));
     }
 
     //认证失败时的处理
@@ -76,7 +82,7 @@ public class RestAuthenticationHandler implements AuthenticationSuccessHandler,
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(String.format("%s", "登陆失败")));
+        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(Result.fail("登陆失败! 用户名或者密码错误")));
 
     }
 
@@ -89,7 +95,7 @@ public class RestAuthenticationHandler implements AuthenticationSuccessHandler,
         //  https://yangruoyu.blog.csdn.net/article/details/128276473
         request.getSession().setAttribute("spring_security_context_key", SecurityContextHolder.getContext());
 
-        response.getWriter().println(OBJECT_MAPPER.writeValueAsString("登陆成功"));
+        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(Result.ok("登录成功")));
 
     }
 

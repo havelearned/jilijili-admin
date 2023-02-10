@@ -16,7 +16,7 @@ import java.util.List;
  * @Date: 2023/1/24 11:42
  * @Description:
  */
-public interface UserService extends UserDetailsService {
+public interface UserService extends UserDetailsService{
 
     /**
      * 返回所有用户信息

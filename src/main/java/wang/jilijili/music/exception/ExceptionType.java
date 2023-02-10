@@ -13,7 +13,8 @@ public enum ExceptionType {
     FORBIDDEN(403, "无权操作"),
     NOT_FOUND(404, "未找到3"),
     USER_NAME_DUPLICATE(4001001, "用户名重复"),
-    USER_NOT_FOND(40401001,"用户用户未找到")
+    USER_NOT_FOND(40401001,"用户未找到"),
+    USERNAME_OR_PASSWORD_ERROR(40401002,"账号或者密码错误")
     ;
 
     private final Integer code;
