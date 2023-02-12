@@ -1,152 +1,143 @@
 package wang.jilijili.music.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import cn.hutool.core.lang.UUID;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.ksuid.KsuidGenerator;
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import wang.jilijili.music.common.utils.IpUtils;
 import wang.jilijili.music.exception.BizException;
 import wang.jilijili.music.exception.ExceptionType;
 import wang.jilijili.music.mapper.UserMapper;
 import wang.jilijili.music.pojo.convert.UserConvert;
 import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
+import wang.jilijili.music.pojo.dto.UserQueryDto;
 import wang.jilijili.music.pojo.entity.User;
 import wang.jilijili.music.pojo.query.UserUpdateRequest;
 import wang.jilijili.music.pojo.vo.Result;
+import wang.jilijili.music.pojo.vo.UserVo;
 import wang.jilijili.music.service.UserService;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * @Auther: Amani
- * @Date: 2023/1/24 11:43
- * @Description:
+ * @author admin
+ * @description 针对表【user(用户表)】的数据库操作Service实现
+ * @createDate 2023-02-12 15:32:36
  */
 @Service
-public class UserServiceImpl implements UserService {
-    private UserMapper userMapper;
-    private UserConvert userConvert;
+public class UserServiceImpl extends ServiceImpl<UserMapper, User>
+        implements UserService {
 
-    private PasswordEncoder passwordEncoder;
+    UserMapper userMapper;
 
-    @Autowired
-    private SessionRegistry sessionRegistry;
+    SessionRegistry sessionRegistry;
+    private final UserConvert userConvert;
+
+    PasswordEncoder passwordEncoder;
 
 
-    public UserServiceImpl(UserMapper userMapper, UserConvert userConvert, PasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserMapper userMapper, SessionRegistry sessionRegistry, UserConvert userConvert, PasswordEncoder passwordEncoder) {
         this.userMapper = userMapper;
+        this.sessionRegistry = sessionRegistry;
         this.userConvert = userConvert;
-        this.passwordEncoder = bCryptPasswordEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
-
-    @Override
-    public List<UserDto> userList() {
-        return userMapper.findAll().stream().map(userConvert::toDto).collect(Collectors.toList());
-    }
-
-    /**
-     * 创建用户
-     *
-     * @param userCreateDto
-     */
-    @Override
-    public UserDto create(UserCreateDto userCreateDto) {
-        checkUsername(userCreateDto.getUsername());
-        User user = this.userConvert.toUserEntity(userCreateDto);
-        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(1);
-        user.setLocked(0);
-
-        User save = this.userMapper.save(user);
-        UserDto userDto = this.userConvert.toDto(save);
-
-        return userDto;
-    }
-
 
     @Override
     public UserDto get(String id) {
-        Optional<User> user = this.userMapper.findById(id);
-        if (user.isPresent()) {
-            UserDto userDto = this.userConvert.toDto(user.get());
-            return userDto;
-        }
-        return new UserDto();
+        User user = this.userMapper.selectById(id);
+        return userConvert.toDto(user);
     }
 
     @Override
     public UserDto update(String id, UserUpdateRequest userUpdateRequest) {
-        try {
-            Optional<User> user = this.userMapper.findById(id);
-            if (!user.isPresent()) {
-                throw new BizException(ExceptionType.USER_NOT_FOND);
-            }
-
-            User saveUser = this.userConvert.toUserEntity(userUpdateRequest);
-            saveUser.setId(user.get().getId());
-            User resultUser = this.userMapper.save(saveUser);
-            UserDto userDto = this.userConvert.toDto(resultUser);
-            return userDto;
-        } catch (Exception e) {
-            throw new BizException(ExceptionType.USER_NAME_DUPLICATE);
+        User user = this.userMapper.selectById(id);
+        User updateUser = null;
+        if (user != null) {
+            updateUser = userConvert.toUserEntity(userUpdateRequest);
+            this.userMapper.update(updateUser,
+                    new LambdaQueryWrapper<User>().eq(User::getId, user.getId()));
         }
 
+        return userConvert.toDto(updateUser);
     }
 
     @Override
     public Result<?> delete(String id) {
-        Optional<User> user = this.userMapper.findById(id);
-        if (user.isPresent()) {
-            this.userMapper.deleteById(id);
-            return Result.ok();
-        }
-        return Result.fail(ExceptionType.USER_NOT_FOND.getMessage());
+        int delete = this.userMapper.deleteById(id);
 
+        return delete >= 1 ? Result.ok() : Result.fail();
+    }
+
+    @Override
+    public UserDto create(UserCreateDto userCreateDto, HttpServletRequest request) {
+        User user = userConvert.toUserEntity(userCreateDto);
+        user.setId(KsuidGenerator.generate());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setLastLoginIp(IpUtils.getIpSource(IpUtils.getIpAddress(request)));
+        user.setNickname(IpUtils.getUserAgent(request) + UUID.fastUUID().toString());
+
+
+        this.userMapper.insert(user);
+        return userConvert.toDto(user);
 
     }
 
     @Override
-    public Page<UserDto> search(Pageable pageable) {
+    public List<Object> getAllLoginUsers() {
 
-        return this.userMapper.findAll(pageable).map(userConvert::toDto);
-    }
+        List<Object> allPrincipals = sessionRegistry.getAllPrincipals();
+        for (Object allPrincipal : allPrincipals) {
+            if (allPrincipal instanceof String sessionId) {
 
 
-    public void checkUsername(String username) {
-        Optional<User> user = this.userMapper.findUserByUsername(username);
-        if (user.isPresent()) {
-            throw new BizException(ExceptionType.USER_NAME_DUPLICATE);
+            }
         }
+        return allPrincipals;
     }
-
 
     @Override
-    public List<UserDto> getAllLoginUsers() {
-        List<Object> allPrincipals = this.sessionRegistry.getAllPrincipals();
-        List<UserDto> userDtos = allPrincipals.stream().map(username -> {
-            Optional<User> byUsername = this.userMapper.findUserByUsername(username.toString());
-            return userConvert.toDto(byUsername.get());
-        }).collect(Collectors.toList());
-        return userDtos;
+    public IPage<UserVo> search(IPage<User> pageEntity, UserQueryDto userQueryDto) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper
+                .like(StringUtils.hasText(userQueryDto.getId()), User::getId, userQueryDto.getId())
+                .like(StringUtils.hasText(userQueryDto.getGender()), User::getGender, userQueryDto.getGender())
+                .like(StringUtils.hasText(userQueryDto.getUsername()), User::getUsername, userQueryDto.getUsername())
+                .like(StringUtils.hasText(userQueryDto.getNickname()), User::getNickname, userQueryDto.getNickname())
+                .eq(true, User::getUnseal, userQueryDto.getUnseal())
+                .between(userQueryDto.getSpecifyTime() != null && userQueryDto.getCreatedTime() != null,
+                        User::getCreatedTime, userQueryDto.getCreatedTime(), userQueryDto.getSpecifyTime());
+
+
+        IPage<User> page = this.page(pageEntity, queryWrapper);
+
+
+        return page.convert(item -> userConvert.toVo(userConvert.toDto(item)));
     }
 
-    /**
-     * @param username
-     * @return
-     * @throws UsernameNotFoundException
-     */
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = this.userMapper.findUserByUsername(username);
-        if (user.isPresent()) {
-            return user.get();
+        LambdaQueryWrapper<User> eq = new LambdaQueryWrapper<User>().eq(User::getUsername, username);
+        User user = this.getOne(eq);
+        if (user != null) {
+            return user;
         }
-        throw new BizException(ExceptionType.USER_NOT_FOND);
-    }
+        throw new BizException(ExceptionType.USERNAME_OR_PASSWORD_ERROR);
 
+    }
 }
+
+
+
+

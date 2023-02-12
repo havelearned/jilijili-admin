@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
+import wang.jilijili.music.pojo.dto.UserQueryDto;
 import wang.jilijili.music.pojo.entity.User;
 import wang.jilijili.music.pojo.query.UserCreateRequest;
 import wang.jilijili.music.pojo.query.UserUpdateRequest;
@@ -17,6 +18,9 @@ import wang.jilijili.music.pojo.vo.UserVo;
 @Mapper(componentModel = "spring")
 @Component
 public interface UserConvert {
+
+
+
     UserDto toDto(User user);
 
     UserVo toVo(UserDto userDto);
@@ -25,6 +29,8 @@ public interface UserConvert {
     User toUserEntity(UserUpdateRequest userUpdateRequest);
 
     User toUserEntity(UserCreateDto userCreateDto);
+
+    User toUserEntity(UserQueryDto userQueryDto);
 
 
 

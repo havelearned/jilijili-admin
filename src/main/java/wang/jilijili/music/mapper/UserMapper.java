@@ -1,25 +1,19 @@
 package wang.jilijili.music.mapper;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import wang.jilijili.music.pojo.entity.User;
-
-import java.util.Optional;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * @author admin
- * @description 针对表【user(用户表)】的数据库操作Mapper
- * @createDate 2023-01-23 17:17:42
- * @Entity wang.jilijili.music.pojo.entity.User
- */
-public interface UserMapper extends JpaRepository<User, String> {
+* @author admin
+* @description 针对表【user(用户表)】的数据库操作Mapper
+* @createDate 2023-02-12 15:32:36
+* @Entity wang.jilijili.music.pojo.entity.User
+*/
+@Repository
+public interface UserMapper extends BaseMapper<User> {
 
-    public abstract Optional<User> findUserByUsername(String username);
-
-    public abstract User findByUsername(String username);
-
-    public abstract Page<User> findAll(Pageable pageable);
+    User userRoles(String id);
 }
 
 

@@ -1,21 +1,21 @@
 package wang.jilijili.music.controller;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import wang.jilijili.music.pojo.convert.UserConvert;
 import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
+import wang.jilijili.music.pojo.dto.UserQueryDto;
+import wang.jilijili.music.pojo.entity.User;
 import wang.jilijili.music.pojo.query.UserUpdateRequest;
 import wang.jilijili.music.pojo.vo.Result;
 import wang.jilijili.music.pojo.vo.UserVo;
 import wang.jilijili.music.service.UserService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @Auther: Amani
@@ -27,8 +27,8 @@ import java.util.stream.Collectors;
 @CrossOrigin
 public class UserController {
 
-    private UserService userService;
-    private UserConvert userConvert;
+    private final UserService userService;
+    private final UserConvert userConvert;
 
     public UserController(UserService userService, UserConvert userConvert) {
         this.userService = userService;
@@ -57,25 +57,27 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public UserVo create(@Validated @RequestBody UserCreateDto userCreateDto) {
-        UserDto userDto = this.userService.create(userCreateDto);
+    public Result<UserVo> create(@Validated @RequestBody UserCreateDto userCreateDto,
+                                 HttpServletRequest request) {
+        UserDto userDto = this.userService.create(userCreateDto, request);
         UserVo userVo = this.userConvert.toVo(userDto);
-        return userVo;
+        return Result.ok(userVo);
     }
 
 
-    @GetMapping("/list")
-    public Page<UserVo> search(
-            @PageableDefault(size = 5, sort = "createdTime", direction = Sort.Direction.DESC) Pageable pageable) {
-
-        return userService.search(pageable).map(userConvert::toVo);
+    @GetMapping("/list/{page}/{size}")
+    public Result<IPage<UserVo>> search(@PathVariable Long page,
+                                        @PathVariable Long size,
+                                        @RequestBody UserQueryDto userQueryDto) {
+        IPage<User> pageEntity = new Page<>(page, size);
+        IPage<UserVo> voIPage = this.userService.search(pageEntity, userQueryDto);
+        return Result.ok(voIPage);
     }
 
 
     @GetMapping("/getallLoginUsers")
-    public Result<?> getAllLoginUsers(){
-        List<UserDto> dtoList =  userService.getAllLoginUsers();
-        List<UserVo> result = dtoList.stream().map(userConvert::toVo).collect(Collectors.toList());
+    public Result<?> getAllLoginUsers() {
+        List<Object> result = userService.getAllLoginUsers();
 
         return Result.ok(result);
 

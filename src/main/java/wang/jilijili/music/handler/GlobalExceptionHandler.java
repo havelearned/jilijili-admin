@@ -30,13 +30,6 @@ public class GlobalExceptionHandler {
         return errorResponse;
     }
 
-    @ExceptionHandler(value = Exception.class)
-    public ErrorResponse exception(Exception e) {
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setCode(ExceptionType.INNER_ERROR.getCode());
-        errorResponse.setMessage(ExceptionType.INNER_ERROR.getMessage());
-        return errorResponse;
-    }
 
 
     @ExceptionHandler(value = AccessDeniedException.class)

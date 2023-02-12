@@ -12,8 +12,8 @@ import wang.jilijili.music.service.UserService;
 @Component
 public class AuthenticationEventsHandler {
 
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
 
     @EventListener
     public void onSuccess(AuthenticationSuccessEvent success) {

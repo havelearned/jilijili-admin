@@ -1,8 +1,8 @@
 package wang.jilijili.music.common.utils;
 
-import org.hibernate.HibernateException;
-import org.hibernate.engine.spi.SharedSessionContractImplementor;
-import org.hibernate.id.IdentifierGenerator;
+import cn.hutool.core.lang.Snowflake;
+import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 
 /**
  * @Auther: Amani
@@ -10,8 +10,12 @@ import org.hibernate.id.IdentifierGenerator;
  * @Description:
  */
 public class KsuidGenerator implements IdentifierGenerator {
+
+
     @Override
-    public String generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException {
-        return com.github.ksuid.KsuidGenerator.generate();
+    public Number nextId(Object entity) {
+        Snowflake snowflake = IdUtil.createSnowflake(1, 1);
+        long id = snowflake.nextId();
+        return null;
     }
 }

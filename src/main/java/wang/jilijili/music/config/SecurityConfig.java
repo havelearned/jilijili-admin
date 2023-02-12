@@ -63,6 +63,7 @@ public class SecurityConfig {
                 .httpBasic().and()
                 // 请求白名单
                 .authorizeHttpRequests()
+                .requestMatchers("/error", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
 

@@ -4,6 +4,8 @@ import lombok.extern.java.Log;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -11,7 +13,8 @@ import java.net.NetworkInterface;
 import java.util.Enumeration;
 
 @SpringBootApplication
-@MapperScan(basePackages = "wang.jilijili.music.mapper.*")
+@MapperScan(basePackages = "wang.jilijili.music.mapper")
+@ComponentScan(basePackages = "wang.jilijili.music.*")
 @Log
 public class JilijiliMusicApplication {
 

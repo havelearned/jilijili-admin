@@ -20,7 +20,7 @@ public class UserVo {
 
     private Gender gender;
 
-    private Integer enabled;
+    private Integer unseal;
 
     private String lastLoginIp;
 

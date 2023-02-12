@@ -19,7 +19,7 @@ public class UserDto {
     private List<RoleDto> roles;
     private Gender gender;
     private Integer locked;
-    private Integer enabled;
+    private Integer unseal;
     private String lastLoginIp;
 
     private Date createdTime;

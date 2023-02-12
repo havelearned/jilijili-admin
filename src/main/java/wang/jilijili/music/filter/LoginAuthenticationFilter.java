@@ -50,12 +50,18 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
             User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), new ArrayList<>());
-            Authentication authenticate = this.getAuthenticationManager().authenticate(authenticationToken);
-            return authenticate;
+            return this.getAuthenticationManager().authenticate(authenticationToken);
 
         } catch (Exception e) {
-
-            throw new BizException(ExceptionType.USERNAME_OR_PASSWORD_ERROR);
+            try {
+                response.getWriter()
+                        .println(
+                                JSON.toJSONString(
+                                        Result.fail(ExceptionType.USERNAME_OR_PASSWORD_ERROR.getMessage())));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            return null;
         }
 
     }
@@ -72,8 +78,8 @@ public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFil
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConfig.EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(SecurityConfig.SECRET.getBytes()));
 
-        SecurityContextHolder.getContext().setAuthentication(authResult);
 
+        SecurityContextHolder.getContext().setAuthentication(authResult);
 
         response.setContentType("application/json;charset=UTF-8");
         response.addHeader(SecurityConfig.HEADER_STRING, SecurityConfig.TOKEN_PREFIX + token);

@@ -1,54 +1,80 @@
 package wang.jilijili.music.pojo.entity;
 
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import wang.jilijili.music.common.enums.Gender;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 /**
+ * 用户表
+ *
  * @TableName user
  */
-@EqualsAndHashCode(callSuper = true)
-@Entity(name = "user")
+
+@TableName(value = "user")
 @Data
-public class User extends AbstractEntity implements Serializable, UserDetails {
+public class User extends SuperEntity implements Serializable, UserDetails {
+
+    @TableId(type = IdType.INPUT)
+    @TableField(fill = FieldFill.INSERT)
+    protected String id;
+
+    @TableField(exist = false)
+    List<Role> roles;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private List<Role> roles;
-
-    @Column(unique = true, name = "username")
+    /**
+     * 用户名
+     */
     private String username;
 
+    /**
+     * 用户昵称
+     */
     private String nickname;
 
+    /**
+     * 加密后的密码
+     */
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
+    /**
+     * 性别
+     */
+    private String gender;
 
+    /**
+     * 是否锁定,1-是,0-否
+     */
+    @TableLogic
     private Integer locked = 0;
 
-    private Integer enabled = 1;
+    /**
+     * 是否可用,1-是,0-否
+     */
+    @TableField(value = "enabled")
+    private Integer unseal = 1;
 
+    /**
+     * 最后登录IP
+     */
     private String lastLoginIp;
 
+    /**
+     * 最后登录IP
+     */
+    @TableField(fill = FieldFill.INSERT)
     private Date lastLoginTime;
 
 
+    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-    /**
-     * @return
-     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -73,13 +99,4 @@ public class User extends AbstractEntity implements Serializable, UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
-//    /**
-//     * @return
-//     */
-//    @Override
-//    public boolean isEnabled() {
-//        return this.enabled == 1;
-//    }
 }

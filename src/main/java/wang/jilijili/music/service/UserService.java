@@ -1,32 +1,26 @@
 package wang.jilijili.music.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
+import wang.jilijili.music.pojo.dto.UserQueryDto;
+import wang.jilijili.music.pojo.entity.User;
+import com.baomidou.mybatisplus.extension.service.IService;
 import wang.jilijili.music.pojo.query.UserUpdateRequest;
 import wang.jilijili.music.pojo.vo.Result;
+import wang.jilijili.music.pojo.vo.UserVo;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
- * @Auther: Amani
- * @Date: 2023/1/24 11:42
- * @Description:
- */
-public interface UserService extends UserDetailsService{
-
-    /**
-     * 返回所有用户信息
-     */
-    public abstract List<UserDto> userList();
-
-    /**
-     * 创建用户
-     */
-    public abstract UserDto create(UserCreateDto userCreateDto);
+* @author admin
+* @description 针对表【user(用户表)】的数据库操作Service
+* @createDate 2023-02-12 15:32:36
+*/
+public interface UserService extends IService<User>, UserDetailsService {
 
     UserDto get(String id);
 
@@ -34,7 +28,9 @@ public interface UserService extends UserDetailsService{
 
     Result<?> delete(String id);
 
-    Page<UserDto> search(Pageable pageable);
+    UserDto create(UserCreateDto userCreateDto, HttpServletRequest request);
 
-    List<UserDto> getAllLoginUsers();
+    List<Object> getAllLoginUsers();
+
+    IPage<UserVo> search(IPage<User> pageEntity, UserQueryDto userQueryDto);
 }
