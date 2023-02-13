@@ -1,6 +1,7 @@
 package wang.jilijili.music.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,13 +13,12 @@ import java.io.Serializable;
  */
 
 @TableName(value = "role")
+@Schema(title= "角色",name = "角色实体类")
 @Data
 public class Role extends SuperEntity implements Serializable {
 
 
-    @TableId(type = IdType.INPUT)
-    @TableField(fill = FieldFill.INSERT)
-    protected String id;
+
 
     /**
      * 角色名称

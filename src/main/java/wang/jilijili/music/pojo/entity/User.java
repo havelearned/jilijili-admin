@@ -1,7 +1,10 @@
 package wang.jilijili.music.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,12 +20,11 @@ import java.util.List;
  */
 
 @TableName(value = "user")
+@Schema(title= "用户",name = "用户实体类")
 @Data
 public class User extends SuperEntity implements Serializable, UserDetails {
 
-    @TableId(type = IdType.INPUT)
-    @TableField(fill = FieldFill.INSERT)
-    protected String id;
+
 
     @TableField(exist = false)
     List<Role> roles;
@@ -68,7 +70,9 @@ public class User extends SuperEntity implements Serializable, UserDetails {
     /**
      * 最后登录IP
      */
-    @TableField(fill = FieldFill.INSERT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(value="last_login_time",fill = FieldFill.INSERT_UPDATE)
     private Date lastLoginTime;
 
 

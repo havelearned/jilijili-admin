@@ -57,8 +57,22 @@
                  left join role r on r.id = ur.role_id
         where u.id = #{id}
     </select>
-
-
+    <select id="getUserByUsername" resultMap="userRolesMap" parameterType="java.lang.String">
+        select u.id,
+               u.username,
+               u.nickname,
+               u.password,
+               u.gender,
+               u.enabled as unseal,
+               u.last_login_ip,
+               u.last_login_time,
+               r.title,
+               r.name
+        from  user u
+                  left join user_role ur on u.id = ur.user_id
+                  left join role r on r.id = ur.role_id
+        where u.username = #{username}
+    </select>
 
 
 </mapper>

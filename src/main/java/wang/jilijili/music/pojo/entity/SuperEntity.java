@@ -5,9 +5,10 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.lang.reflect.Type;
 import java.util.Date;
 
 /**
@@ -18,14 +19,17 @@ import java.util.Date;
 @Data
 public class SuperEntity {
 
-    @TableId(type = IdType.INPUT)
-    @TableField(fill = FieldFill.INSERT)
+    @TableId(type = IdType.NONE)
     protected String id;
 
 
-    @TableField(fill = FieldFill.INSERT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(value = "created_time", fill = FieldFill.INSERT)
     protected Date createdTime;
 
-    @TableField(fill = FieldFill.UPDATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(value = "updated_time", fill = FieldFill.UPDATE)
     protected Date updatedTime;
 }

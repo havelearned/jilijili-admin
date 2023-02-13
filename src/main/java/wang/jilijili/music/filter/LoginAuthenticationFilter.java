@@ -28,8 +28,9 @@ import java.util.Date;
 /**
  * @Auther: Amani
  * @Date: 2023/1/28 16:15
- * @Description: 鉴权
+ * @Description: 鉴权, 使用了tokenController创建内容,此类作废
  */
+@Deprecated
 @Component
 public class LoginAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 

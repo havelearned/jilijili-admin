@@ -5,7 +5,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -20,8 +19,9 @@ public class JilijiliMusicApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(JilijiliMusicApplication.class, args);
+        log.info("http://:" + getIpAddress() + ":端口/swagger-ui/index.html 接口文档");
+        log.info("本机地址:" + getIpAddress());
 
-        log.info("hostAddress:" + getIpAddress());
     }
 
     public static String getIpAddress() {

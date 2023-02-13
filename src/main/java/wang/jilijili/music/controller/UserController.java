@@ -2,6 +2,7 @@ package wang.jilijili.music.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 @CrossOrigin
+@Tag(name = "用户管理")
 public class UserController {
 
     private final UserService userService;
@@ -80,7 +82,12 @@ public class UserController {
         List<Object> result = userService.getAllLoginUsers();
 
         return Result.ok(result);
+    }
 
+    @GetMapping("/me")
+    public Result<UserVo> me() {
+        UserDto userDto = this.userService.currentUser();
+        return Result.ok(userConvert.toVo(userDto));
     }
 
 }

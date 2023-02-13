@@ -3,6 +3,7 @@ package wang.jilijili.music.pojo.dto;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import wang.jilijili.music.pojo.entity.User;
@@ -14,6 +15,7 @@ import java.util.Date;
  * @author Amani
  * @date 2023年02月12日 22:13
  */
+
 @Data
 public class UserQueryDto implements Serializable {
 
@@ -42,11 +44,11 @@ public class UserQueryDto implements Serializable {
      */
     private Integer unseal = 1;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdTime;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date specifyTime;
 
 

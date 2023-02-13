@@ -1,23 +1,27 @@
 package wang.jilijili.music.service.impl;
 
 import cn.hutool.core.lang.UUID;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.ksuid.KsuidGenerator;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import wang.jilijili.music.common.utils.IpUtils;
+import wang.jilijili.music.config.SecurityConfig;
 import wang.jilijili.music.exception.BizException;
 import wang.jilijili.music.exception.ExceptionType;
 import wang.jilijili.music.mapper.UserMapper;
 import wang.jilijili.music.pojo.convert.UserConvert;
+import wang.jilijili.music.pojo.dto.CreateTokenDto;
 import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
 import wang.jilijili.music.pojo.dto.UserQueryDto;
@@ -27,8 +31,8 @@ import wang.jilijili.music.pojo.vo.Result;
 import wang.jilijili.music.pojo.vo.UserVo;
 import wang.jilijili.music.service.UserService;
 
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author admin
@@ -87,8 +91,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setLastLoginIp(IpUtils.getIpSource(IpUtils.getIpAddress(request)));
         user.setNickname(IpUtils.getUserAgent(request) + UUID.fastUUID().toString());
-
-
         this.userMapper.insert(user);
         return userConvert.toDto(user);
 
@@ -97,14 +99,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public List<Object> getAllLoginUsers() {
 
-        List<Object> allPrincipals = sessionRegistry.getAllPrincipals();
-        for (Object allPrincipal : allPrincipals) {
-            if (allPrincipal instanceof String sessionId) {
 
-
-            }
-        }
-        return allPrincipals;
+        return null;
     }
 
     @Override
@@ -127,14 +123,40 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
+    public String createToken(CreateTokenDto createTokenDto) {
+        User user = this.loadUserByUsername(createTokenDto.getUsername());
+        if (!this.passwordEncoder.matches(createTokenDto.getPassword(), user.getPassword())) {
+            throw new BizException(ExceptionType.USERNAME_OR_PASSWORD_ERROR);
+        }
+        if (user.getUnseal() == null || user.getUnseal() < 1) {
+            throw new BizException(ExceptionType.USER_NOT_ENABLED);
+        }
+        if (user.getLocked() == null || user.getLocked() < 0) {
+            throw new BizException(ExceptionType.USER_NOT_LOCKED);
+        }
+
+        return JWT.create()
+                .withSubject(user.getUsername()) // 一般id,唯一字段
+                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConfig.EXPIRATION_TIME)) // 过期时间
+                .sign(Algorithm.HMAC512(SecurityConfig.SECRET.getBytes()));
+    }
+
+
+    @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
-        LambdaQueryWrapper<User> eq = new LambdaQueryWrapper<User>().eq(User::getUsername, username);
-        User user = this.getOne(eq);
+        User user = this.userMapper.getUserByUsername(username);
         if (user != null) {
             return user;
         }
         throw new BizException(ExceptionType.USERNAME_OR_PASSWORD_ERROR);
+    }
 
+
+    @Override
+    public UserDto currentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = this.loadUserByUsername(authentication.getName());
+        return userConvert.toDto(user);
     }
 }
 

@@ -26,7 +26,10 @@ public class SecurityConfig {
     public static final long EXPIRATION_TIME = 864000000;//10days
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
-    public static final String SIGN_UP_URL = "/users/";
+    public static final String SIGN_UP_URL = "/tokens/";
+    public static final String[] SWAGGER_UP_URL ={
+            "/error", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html"
+    };
 
 
     /**
@@ -63,11 +66,12 @@ public class SecurityConfig {
                 .httpBasic().and()
                 // 请求白名单
                 .authorizeHttpRequests()
-                .requestMatchers("/error", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                .requestMatchers(SWAGGER_UP_URL).permitAll()
+                .requestMatchers(SIGN_UP_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
 
-                .addFilterAt(loginAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                //.addFilterAt(loginAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilter(jwtAuthorizationFilter)
                 .logout().logoutUrl("/logout").logoutSuccessHandler(authenticationHandler)
                 .and()

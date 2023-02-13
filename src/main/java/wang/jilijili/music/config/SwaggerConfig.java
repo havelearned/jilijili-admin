@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfig {
 
 
-
     /*http://localhost:8080/swagger-ui/index.html*/
     @Bean
     public OpenAPI restfulOpenAPI() {
@@ -28,5 +27,6 @@ public class SwaggerConfig {
                         .description("SpringDoc Wiki Documentation")
                         .url("https://springdoc.org/v2"));
     }
+
 
 }

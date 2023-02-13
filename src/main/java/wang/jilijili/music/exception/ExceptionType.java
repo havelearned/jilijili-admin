@@ -14,7 +14,9 @@ public enum ExceptionType {
     NOT_FOUND(404, "未找到3"),
     USER_NAME_DUPLICATE(4001001, "用户名重复"),
     USER_NOT_FOND(40401001,"用户未找到"),
-    USERNAME_OR_PASSWORD_ERROR(40401002,"账号或者密码错误")
+    USERNAME_OR_PASSWORD_ERROR(40001002,"用户名或者密码错误"),
+    USER_NOT_ENABLED(50001001,"用户未启用"),
+    USER_NOT_LOCKED(50001002,"用户被锁定")
     ;
 
     private final Integer code;
