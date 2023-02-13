@@ -16,8 +16,6 @@ import wang.jilijili.music.pojo.vo.Result;
 import wang.jilijili.music.pojo.vo.UserVo;
 import wang.jilijili.music.service.UserService;
 
-import java.util.List;
-
 /**
  * @Auther: Amani
  * @Date: 2023/1/24 11:19
@@ -77,10 +75,12 @@ public class UserController {
     }
 
 
-    @GetMapping("/getallLoginUsers")
-    public Result<?> getAllLoginUsers() {
-        List<Object> result = userService.getAllLoginUsers();
-
+    @GetMapping("/getOnlineUsers/{page}/{size}")
+    public Result<IPage<UserVo>> getOnlineUsers(
+            @PathVariable Long page,
+            @PathVariable Long size,
+            @RequestBody UserQueryDto userQueryDto) {
+        IPage<UserVo> result = userService.getOnlineUsers(page, size, userQueryDto);
         return Result.ok(result);
     }
 

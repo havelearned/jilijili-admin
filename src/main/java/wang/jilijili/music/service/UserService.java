@@ -1,7 +1,6 @@
 package wang.jilijili.music.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import wang.jilijili.music.pojo.dto.CreateTokenDto;
@@ -14,13 +13,11 @@ import wang.jilijili.music.pojo.query.UserUpdateRequest;
 import wang.jilijili.music.pojo.vo.Result;
 import wang.jilijili.music.pojo.vo.UserVo;
 
-import java.util.List;
-
 /**
-* @author admin
-* @description 针对表【user(用户表)】的数据库操作Service
-* @createDate 2023-02-12 15:32:36
-*/
+ * @author admin
+ * @description 针对表【user(用户表)】的数据库操作Service
+ * @createDate 2023-02-12 15:32:36
+ */
 public interface UserService extends IService<User>, UserDetailsService {
 
     UserDto get(String id);
@@ -31,7 +28,7 @@ public interface UserService extends IService<User>, UserDetailsService {
 
     UserDto create(UserCreateDto userCreateDto, HttpServletRequest request);
 
-    List<Object> getAllLoginUsers();
+    IPage<UserVo> getOnlineUsers(Long page, Long size, UserQueryDto userQueryDto);
 
     IPage<UserVo> search(IPage<User> pageEntity, UserQueryDto userQueryDto);
 

@@ -5,6 +5,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.ksuid.KsuidGenerator;
 import jakarta.servlet.http.HttpServletRequest;
@@ -97,14 +98,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public List<Object> getAllLoginUsers() {
+    public IPage<UserVo> getOnlineUsers(Long page, Long size, UserQueryDto userQueryDto) {
+        IPage<User> ipage = new Page<>(page, size);
+        // 得到在线用户
+        List<Object> allPrincipals = this.sessionRegistry.getAllPrincipals();
+        // 筛选条件
+        LambdaQueryWrapper<User> queryWrapper = queryConditionConstruction(userQueryDto);
+        // 执行查询
+        queryWrapper
+                .in(allPrincipals.size() > 0, User::getUsername, allPrincipals);
+        IPage<User> iPage = this.page(ipage, queryWrapper);
+        // 列表转换
+        return iPage.convert(item -> {
+            UserDto userDto = userConvert.toDto(item);
+            return userConvert.toVo(userDto);
 
-
-        return null;
+        });
     }
 
-    @Override
-    public IPage<UserVo> search(IPage<User> pageEntity, UserQueryDto userQueryDto) {
+    /**
+     * 查询条件构造
+     *
+     * @param userQueryDto
+     * @return
+     */
+    private LambdaQueryWrapper<User> queryConditionConstruction(UserQueryDto userQueryDto) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper
                 .like(StringUtils.hasText(userQueryDto.getId()), User::getId, userQueryDto.getId())
@@ -114,11 +132,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
                 .eq(true, User::getUnseal, userQueryDto.getUnseal())
                 .between(userQueryDto.getSpecifyTime() != null && userQueryDto.getCreatedTime() != null,
                         User::getCreatedTime, userQueryDto.getCreatedTime(), userQueryDto.getSpecifyTime());
+        return queryWrapper;
+    }
 
-
-        IPage<User> page = this.page(pageEntity, queryWrapper);
-
-
+    @Override
+    public IPage<UserVo> search(IPage<User> pageEntity, UserQueryDto userQueryDto) {
+        IPage<User> page = this.page(pageEntity, queryConditionConstruction(userQueryDto));
         return page.convert(item -> userConvert.toVo(userConvert.toDto(item)));
     }
 
