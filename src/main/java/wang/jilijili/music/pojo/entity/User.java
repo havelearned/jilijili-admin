@@ -1,11 +1,19 @@
 package wang.jilijili.music.pojo.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -17,12 +25,10 @@ import java.util.List;
  */
 
 @TableName(value = "user")
+@Schema(title = "用户", name = "用户实体类")
 @Data
 public class User extends SuperEntity implements Serializable, UserDetails {
 
-    @TableId(type = IdType.INPUT)
-    @TableField(fill = FieldFill.INSERT)
-    protected String id;
 
     @TableField(exist = false)
     List<Role> roles;
@@ -68,7 +74,9 @@ public class User extends SuperEntity implements Serializable, UserDetails {
     /**
      * 最后登录IP
      */
-    @TableField(fill = FieldFill.INSERT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(value = "last_login_time", fill = FieldFill.INSERT_UPDATE)
     private Date lastLoginTime;
 
 
@@ -77,7 +85,11 @@ public class User extends SuperEntity implements Serializable, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+
+        return new ArrayList<GrantedAuthority>(
+                roles.stream()
+                        .map(item -> new SimpleGrantedAuthority(item.getName()))
+                        .toList());
     }
 
     @Override

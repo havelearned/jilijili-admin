@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import wang.jilijili.music.pojo.dto.UserQueryDto;
 import wang.jilijili.music.pojo.entity.User;
 import wang.jilijili.music.pojo.vo.UserVo;
@@ -20,6 +21,16 @@ class UserServiceImplTest {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Test
+    void passwordTest() {
+        String encode = passwordEncoder.encode("123456");
+        boolean pass = passwordEncoder.matches("123456", "$2a$10$NuV9AwpJuzsxdaiYBBOTYOVlvNStVxcWHOV3RkkbKnlbLY5ADvflq");
+        System.out.println(encode);
+    }
 
     @Test
     void search() throws ParseException {

@@ -1,5 +1,6 @@
 package wang.jilijili.music.pojo.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import wang.jilijili.music.common.enums.Gender;
 import wang.jilijili.music.pojo.entity.Role;
@@ -24,7 +25,10 @@ public class UserVo {
 
     private String lastLoginIp;
 
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastLoginTime;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createdTime;
 
 
     private List<Role> roles;

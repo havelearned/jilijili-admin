@@ -1,7 +1,6 @@
 package wang.jilijili.music.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.github.ksuid.KsuidGenerator;
 import lombok.extern.java.Log;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
@@ -21,8 +20,7 @@ public class MPMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill ....");
-        this.strictUpdateFill
-                (metaObject, "lastLoginTime", Date.class, new Date()); // 起始版本 3.3.0(推荐)
+        this.strictUpdateFill(metaObject, "lastLoginTime", Date.class, new Date()); // 起始版本 3.3.0(推荐)
         this.strictInsertFill(metaObject, "createdTime", Date.class, new Date()); // 起始版本 3.3.0(推荐使用)
 
     }

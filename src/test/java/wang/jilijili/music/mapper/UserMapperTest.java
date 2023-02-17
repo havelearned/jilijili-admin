@@ -1,6 +1,7 @@
 package wang.jilijili.music.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.github.ksuid.KsuidGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,14 +18,8 @@ class UserMapperTest {
 
     @Test
     void Query() {
-
-
-        User user = userMapper.userRoles("00064bdf-0fd7-1");
-        List<Role> roles = user.getRoles();
-        for (Role role : roles) {
-            System.out.println(role);
-
-        }
-
+        // 2LrC8wCWcA8AGUV65OeLCJiQRAw
+        // 2LrCBBMHDhbLHmdyzRZ8CBdfQc6
+        System.out.println(KsuidGenerator.generate());
     }
 }

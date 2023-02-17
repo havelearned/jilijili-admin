@@ -2,6 +2,7 @@ package wang.jilijili.music.handler;
 
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -9,8 +10,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import wang.jilijili.music.exception.BizException;
 import wang.jilijili.music.exception.ErrorResponse;
 import wang.jilijili.music.exception.ExceptionType;
+import wang.jilijili.music.pojo.vo.Result;
 
-import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,29 +23,25 @@ import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = BizException.class)
-    public ErrorResponse bizException(BizException bizException) {
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setCode(bizException.getCode());
-        errorResponse.setMessage(bizException.getMessage());
-        errorResponse.setTrace(bizException.getStackTrace());
-        return errorResponse;
+    public Result<?> bizException(BizException e) {
+        return Result.fail(
+                e.getCode(),
+                String.format("%s", e.getMessage()));
     }
-
 
 
     @ExceptionHandler(value = AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ErrorResponse accessDeniedException(AccessDeniedException e) {
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setCode(ExceptionType.FORBIDDEN.getCode());
-        errorResponse.setMessage(ExceptionType.FORBIDDEN.getMessage());
-        errorResponse.setTrace(e.getStackTrace());
-        return errorResponse;
+    public Result<?> accessDeniedException(AccessDeniedException e) {
+        return Result.fail(
+                ExceptionType.FORBIDDEN.getCode(),
+                String.format("%s %s", ExceptionType.FORBIDDEN.getMessage(), e.getMessage()));
+
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public List<ErrorResponse> methodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public Result<List<ErrorResponse>> methodArgumentNotValidException(MethodArgumentNotValidException e) {
         List<ErrorResponse> responses = new ArrayList<>();
         e.getBindingResult().getAllErrors().forEach((error) -> {
             ErrorResponse errorResponse = new ErrorResponse();
@@ -52,7 +49,7 @@ public class GlobalExceptionHandler {
             errorResponse.setMessage(error.getDefaultMessage());
             responses.add(errorResponse);
         });
-        return responses;
+        return Result.ok(responses);
     }
 
 

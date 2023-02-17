@@ -14,7 +14,9 @@
     <name>jilijili-music</name>
     <description>jilijili-music</description>
     <properties>
-        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.compilerVersion>17</maven.compiler.compilerVersion>
     </properties>
     <dependencies>
 
@@ -142,54 +144,21 @@
             <artifactId>java-jwt</artifactId>
             <version>3.11.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.1.2</version>
+        </dependency>
     </dependencies>
 
 
     <build>
         <plugins>
-
-            <plugin>
-                <groupId>org.graalvm.buildtools</groupId>
-                <artifactId>native-maven-plugin</artifactId>
-
-            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <image>
-                        <builder>paketobuildpacks/builder:tiny</builder>
-                        <env>
-                            <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
-                        </env>
-                    </image>
-                </configuration>
-
             </plugin>
-
-            <!-- docker插件 -->
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>1.2.2</version>
-                <configuration>
-                    <!-- 远程docker地址 -->
-                    <dockerHost>http://localhost:2375</dockerHost>
-                    <!-- 镜像名称 -->
-                    <imageName>${project.artifactId}</imageName>
-                    <!--docker文件所在的目录-->
-                    <dockerDirectory>/Dockerfile</dockerDirectory>
-                    <!-- jar包名称和路径 以及复制到容器的路径 -->
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
-
 
             <!--javabean转换插件-->
             <plugin>

@@ -12,6 +12,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import wang.jilijili.music.config.SecurityConfig;
+import wang.jilijili.music.mapper.UserMapper;
+import wang.jilijili.music.pojo.entity.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,9 +27,12 @@ import java.util.ArrayList;
 @Component
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
+    UserMapper userMapper;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
+
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserMapper userMapper) {
         super(authenticationManager);
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -53,8 +58,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 .verify(header.replace(SecurityConfig.TOKEN_PREFIX, ""))
                 .getSubject();
 
-        if (username != null)
-            return new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>());
+        if (username != null) {
+            User user = this.userMapper.getUserByUsername(username);
+            return new UsernamePasswordAuthenticationToken(username, null, user.getAuthorities());
+        }
 
         return null;
     }

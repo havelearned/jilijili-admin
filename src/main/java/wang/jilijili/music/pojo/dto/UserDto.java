@@ -1,5 +1,6 @@
 package wang.jilijili.music.pojo.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import wang.jilijili.music.common.enums.Gender;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @Date: 2023/1/24 11:26
  * @Description:
  */
+
 @Data
 public class UserDto {
     private String id;
@@ -21,6 +23,7 @@ public class UserDto {
     private Integer locked;
     private Integer unseal;
     private String lastLoginIp;
+    private String lastLoginTime;
 
     private Date createdTime;
 }

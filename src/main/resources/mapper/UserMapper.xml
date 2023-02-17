@@ -12,16 +12,17 @@
         <result property="gender" column="gender" jdbcType="VARCHAR"/>
         <result property="locked" column="locked" jdbcType="TINYINT"/>
         <result property="unseal" column="enabled" jdbcType="TINYINT"/>
-        <result property="last_login_ip" column="last_login_ip" jdbcType="VARCHAR"/>
-        <result property="last_login_time" column="last_login_time" jdbcType="TIMESTAMP"/>
-        <!--            <result property="created_time" column="created_time" jdbcType="TIMESTAMP"/>-->
-        <!--            <result property="updated_time" column="updated_time" jdbcType="TIMESTAMP"/>-->
+        <result property="lastLoginIp" column="last_login_ip" jdbcType="VARCHAR"/>
+        <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <resultMap id="userRolesMap" type="wang.jilijili.music.pojo.entity.User">
         <id property="id" column="id" jdbcType="VARCHAR"/>
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
         <result property="gender" column="gender" jdbcType="VARCHAR"/>
         <result property="unseal" column="enabled" jdbcType="TINYINT"/>
         <result property="lastLoginIp" column="last_login_ip" jdbcType="VARCHAR"/>
@@ -57,8 +58,22 @@
                  left join role r on r.id = ur.role_id
         where u.id = #{id}
     </select>
-
-
+    <select id="getUserByUsername" resultMap="userRolesMap" parameterType="java.lang.String">
+        select u.id,
+               u.username,
+               u.nickname,
+               u.password,
+               u.gender,
+               u.enabled as unseal,
+               u.last_login_ip,
+               u.last_login_time,
+               r.title,
+               r.name
+        from  user u
+                  left join user_role ur on u.id = ur.user_id
+                  left join role r on r.id = ur.role_id
+        where u.username = #{username}
+    </select>
 
 
 </mapper>

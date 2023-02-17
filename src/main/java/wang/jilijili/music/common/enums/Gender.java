@@ -8,8 +8,6 @@ package wang.jilijili.music.common.enums;
 public enum Gender {
     FEMALE,
     MALE,
-    男,
-    女,
     UNKNOWN,
     ALL;
 
