@@ -190,4 +190,35 @@
         </plugins>
     </build>
 
+    <!-- 如果要上传自己的包，可以用github的仓库 -->
+    <distributionManagement>
+        <repository>
+            <!-- id需要与上面的server对应的id匹配 -->
+            <id>github</id>
+            <name>GitHub OWNER Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/havelearned/jilijili-music</url>
+        </repository>
+    </distributionManagement>
+
+
+    <profiles>
+        <profile>
+            <id>github</id>
+            <repositories>
+                <repository>
+                    <id>central</id>
+                    <url>https://repo1.maven.org/maven2</url>
+                    <releases><enabled>true</enabled></releases>
+                    <snapshots><enabled>true</enabled></snapshots>
+                </repository>
+                <repository>
+                    <!-- id需要与上面的server对应的id匹配 -->
+                    <id>github</id>
+                    <name>GitHub OWNER Apache Maven Packages</name>
+                    <url>https://maven.pkg.github.com/havelearned/jilijili-music</url>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+
 </project>
