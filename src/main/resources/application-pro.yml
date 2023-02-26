@@ -105,3 +105,7 @@ mybatis-plus:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
+wx:
+  appId: ${WX_APPID}
+  appSecret: ${WX_APPSECRET}

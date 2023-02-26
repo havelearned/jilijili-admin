@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
             errorResponse.setMessage(error.getDefaultMessage());
             responses.add(errorResponse);
         });
-        return Result.ok(responses);
+        return Result.fail(responses);
     }
 
 

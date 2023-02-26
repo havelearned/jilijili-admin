@@ -101,7 +101,12 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
 
-
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
+wx:
+  appId: ${WX_APPID}
+  appSecret: ${WX_APPSECRET}
+
+

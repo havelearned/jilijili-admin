@@ -4,6 +4,7 @@ import lombok.extern.java.Log;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.net.Inet4Address;
@@ -11,16 +12,19 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
+@Log
 @SpringBootApplication
+@ConfigurationPropertiesScan
 @MapperScan(basePackages = "wang.jilijili.music.mapper")
 @ComponentScan(basePackages = "wang.jilijili.music.*")
-@Log
 public class JilijiliMusicApplication {
+
 
     public static void main(String[] args) {
         SpringApplication.run(JilijiliMusicApplication.class, args);
         log.info("http://" + getIpAddress() + ":端口/swagger-ui/index.html 接口文档");
         log.info("本机地址:" + getIpAddress());
+
 
     }
 
