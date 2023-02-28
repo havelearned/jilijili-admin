@@ -27,11 +27,10 @@ public class WeixinController {
     }
 
     /**
-     *
+     * @param redirectUrl 重定向地址
+     * @return null
      * @author Amani
      * @date 2023/2/25 10:04
-     * @param  redirectUrl 重定向地址
-     * @return null
      */
     @GetMapping("/auth_url")
     public String getAuthUrl(@PathParam("redirectUrl") String redirectUrl) {
@@ -40,6 +39,7 @@ public class WeixinController {
 
     /**
      * 获取小程序openId等信息
+     *
      * @param code2SessionDto code 和账号密码
      * @return 返回用户信息
      * @throws WxErrorException
