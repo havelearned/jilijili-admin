@@ -1,6 +1,7 @@
 package wang.jilijili.music.handler;
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,6 +13,7 @@ import wang.jilijili.music.exception.ErrorResponse;
 import wang.jilijili.music.exception.ExceptionType;
 import wang.jilijili.music.pojo.vo.Result;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +24,21 @@ import java.util.List;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(value = DataAccessException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result<?> repeatException(SQLIntegrityConstraintViolationException e) {
+
+        return Result.fail(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
+
+
     @ExceptionHandler(value = BizException.class)
     public Result<?> bizException(BizException e) {
         return Result.fail(
                 e.getCode(),
                 String.format("%s", e.getMessage()));
     }
-
 
     @ExceptionHandler(value = AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)

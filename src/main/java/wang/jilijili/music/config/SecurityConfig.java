@@ -33,7 +33,7 @@ public class SecurityConfig {
     public static final String HEADER_STRING = "Authorization";
     public static final String SIGN_UP_URL = "/tokens/";
     public static final String[] SWAGGER_UP_URL = {
-            "/test/**","/weChat/**",
+            "/test/**", "/weChat/**",
             "/error", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html"
     };
 

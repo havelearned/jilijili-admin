@@ -103,6 +103,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setLastLoginIp(IpUtils.getIpAddress(request));
         user.setNickname(IpUtils.getUserAgent(request) + UUID.fastUUID().toString());
+
         this.userMapper.insert(user);
         return userConvert.toDto(user);
 

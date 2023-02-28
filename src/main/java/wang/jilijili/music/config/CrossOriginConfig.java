@@ -26,5 +26,4 @@ public class CrossOriginConfig implements WebMvcConfigurer {
         return new CorsFilter(urlBasedCorsConfigurationSource);
     }
 
-
 }
