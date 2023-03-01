@@ -115,6 +115,5 @@ public class RestAuthenticationHandler implements
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.getWriter().println(OBJECT_MAPPER.writeValueAsString(event.getSessionInformation()));
-        ;
     }
 }

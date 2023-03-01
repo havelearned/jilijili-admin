@@ -23,7 +23,10 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import wang.jilijili.music.common.enums.DatabaseConstant;
 import wang.jilijili.music.common.utils.IpUtils;
 import wang.jilijili.music.config.SecurityConfig;
 import wang.jilijili.music.exception.BizException;
@@ -96,6 +99,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return delete >= 1 ? Result.ok() : Result.fail();
     }
 
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.NEVER)
     @Override
     public UserDto create(UserCreateDto userCreateDto, HttpServletRequest request) {
         User user = userConvert.toUserEntity(userCreateDto);
@@ -104,7 +108,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setLastLoginIp(IpUtils.getIpAddress(request));
         user.setNickname(IpUtils.getUserAgent(request) + UUID.fastUUID().toString());
 
+        // 添加用户
         this.userMapper.insert(user);
+
+        // 初始化用户权限,默认普通用户
+        this.userMapper.initUserRole(user.getId(), DatabaseConstant.ROLE_USER_ID);
         return userConvert.toDto(user);
 
     }

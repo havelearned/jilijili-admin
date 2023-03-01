@@ -107,5 +107,5 @@ springdoc:
     path: /swagger-ui.html
 
 wx:
-  appId: ${WX_APPID}
-  appSecret: ${WX_APPSECRET}
+  appId: wxb5f832807c32df70
+  appSecret: dedf594ba7101cc849fbe558472ffb23

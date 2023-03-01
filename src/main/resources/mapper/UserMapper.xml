@@ -42,6 +42,15 @@
         enabled,last_login_ip,last_login_time,
         created_time,updated_time
     </sql>
+
+
+    <insert id="initUserRole" parameterType="java.lang.String">
+        insert into user_role(user_id, role_id) value
+        (#{userId},#{roleId})
+
+    </insert>
+
+
     <select id="userRoles" resultMap="userRolesMap" parameterType="java.lang.String">
         select u.id,
                u.username,
