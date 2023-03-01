@@ -2,12 +2,20 @@ package wang.jilijili.music.controller;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.websocket.server.PathParam;
 import me.chanjar.weixin.common.error.WxErrorException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import wang.jilijili.music.mapper.UserMapper;
+import wang.jilijili.music.pojo.convert.UserConvert;
 import wang.jilijili.music.pojo.dto.Code2SessionDto;
+import wang.jilijili.music.pojo.dto.CreateWeChatTokenDto;
+import wang.jilijili.music.pojo.entity.User;
 import wang.jilijili.music.pojo.vo.Result;
+import wang.jilijili.music.service.UserService;
+import wang.jilijili.music.service.WeChatMPService;
 
 /**
  * @author Amani
@@ -15,15 +23,24 @@ import wang.jilijili.music.pojo.vo.Result;
  */
 @RestController
 @RequestMapping("/weChat")
-public class WeixinController {
+@Tag(name = "微信小程序控制器")
+public class WeixinController extends BaseController<User, UserMapper, UserService> {
 
 
     WxMaService wxMaService;
+    WeChatMPService weChatMPService;
+    UserConvert userConvert;
 
+    PasswordEncoder passwordEncoder;
 
-    public WeixinController(WxMaService wxMaService) {
-
+    public WeixinController(UserMapper mapper, UserService service,
+                            WxMaService wxMaService, WeChatMPService weChatMPService,
+                            PasswordEncoder passwordEncoder, UserConvert userConvert) {
+        super(mapper, service);
         this.wxMaService = wxMaService;
+        this.weChatMPService = weChatMPService;
+        this.userConvert = userConvert;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -50,4 +67,12 @@ public class WeixinController {
         return Result.ok(sessionResult);
     }
 
+
+    @PostMapping("/createToken")
+    public Result<?> createToken(@Validated @RequestBody
+                                 CreateWeChatTokenDto createWeChatTokenDto) {
+
+        String token = this.createToken(createWeChatTokenDto, this.passwordEncoder);
+        return Result.ok(token);
+    }
 }
