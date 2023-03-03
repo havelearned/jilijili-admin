@@ -3,7 +3,6 @@ package wang.jilijili.music.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import wang.jilijili.music.pojo.dto.CreateTokenDto;
 import wang.jilijili.music.pojo.dto.UserCreateDto;
@@ -36,6 +35,4 @@ public interface UserService extends IService<User>, UserDetailsService {
     String createToken(CreateTokenDto createTokenDto);
 
     UserDto currentUser();
-
-    void exprot(UserQueryDto userQueryDto, HttpServletResponse response);
 }

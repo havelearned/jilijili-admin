@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * @Auther: Amani
  * @Date: 2023/1/23 17:22
- * @Description:
+ * @Description: 所有实体类的基类
  */
 @Data
 public class SuperEntity {

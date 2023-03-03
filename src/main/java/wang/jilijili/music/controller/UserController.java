@@ -8,7 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import wang.jilijili.music.pojo.convert.UserConvert;
+import wang.jilijili.music.mapper.UserMapper;
+import wang.jilijili.music.pojo.bo.UserConvertBo;
 import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
 import wang.jilijili.music.pojo.dto.UserQueryDto;
@@ -29,16 +30,16 @@ import static wang.jilijili.music.common.enums.RoleConstant.ROLE_SUPER_ADMIN;
 @RequestMapping("/users")
 @CrossOrigin(origins = "*")
 @Tag(name = "用户管理")
-public class UserController {
+public class UserController extends BaseController<User, UserMapper, UserService> {
 
     private final UserService userService;
-    private final UserConvert userConvert;
+    private final UserConvertBo userConvertBo;
 
-    public UserController(UserService userService, UserConvert userConvert) {
+    public UserController(UserMapper mapper, UserService service, UserService userService, UserConvertBo userConvertBo) {
+        super(mapper, service);
         this.userService = userService;
-        this.userConvert = userConvert;
+        this.userConvertBo = userConvertBo;
     }
-
 
     @GetMapping("/list")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN}) // 有前缀
@@ -51,7 +52,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public Result<UserVo> get(@PathVariable("id") String id) {
-        UserVo userVo = this.userConvert.toVo(this.userService.get(id));
+        UserVo userVo = this.userConvertBo.toVo(this.userService.get(id));
         return Result.ok(userVo);
 
     }
@@ -61,7 +62,7 @@ public class UserController {
     public Result<UserVo> update(
             @PathVariable("id") String id,
             @Validated @RequestBody UserUpdateRequest userUpdateRequest) {
-        UserVo userVo = this.userConvert.toVo(this.userService.update(id, userUpdateRequest));
+        UserVo userVo = this.userConvertBo.toVo(this.userService.update(id, userUpdateRequest));
         return Result.ok(userVo);
     }
 
@@ -76,7 +77,7 @@ public class UserController {
     public Result<UserVo> create(@Validated @RequestBody UserCreateDto userCreateDto,
                                  HttpServletRequest request) {
         UserDto userDto = this.userService.create(userCreateDto, request);
-        UserVo userVo = this.userConvert.toVo(userDto);
+        UserVo userVo = this.userConvertBo.toVo(userDto);
         return Result.ok(userVo);
     }
 
@@ -90,14 +91,14 @@ public class UserController {
     @GetMapping("/me")
     public Result<UserVo> me() {
         UserDto userDto = this.userService.currentUser();
-        return Result.ok(userConvert.toVo(userDto));
+        return Result.ok(userConvertBo.toVo(userDto));
     }
 
     @PostMapping("/export")
     public void export(@RequestBody UserQueryDto userQueryDto,
                        HttpServletResponse response) {
 
-        userService.exprot(userQueryDto, response);
+        super.export(userQueryDto, response);
     }
 
 

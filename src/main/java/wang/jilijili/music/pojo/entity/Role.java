@@ -7,9 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 角色表
- *
- * @TableName role
+ * @TableName role 角色表
  */
 
 @TableName(value = "role")

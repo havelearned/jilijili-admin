@@ -8,26 +8,49 @@ server:
 spring:
   # 配置mysql数据库
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_H0ST:localhost}:${MYSQL_PORT:3306}/${DATABASE_NAME:jilijili-music}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
-    username: ${MYSQL_USER_NAME:root}
-    password: ${MYSQL_PASSWORD:123456}
-    hikari:
-      minimum-idle: 5
-      # 空闲连接存活最大时间，默认600000（10分钟）
-      idle-timeout: 180000100
-      # 连接池最大连接数，默认是10
-      maximum-pool-size: 10
-      # 此属性控制从池返回的连接的默认自动提交行为,默认值：true
-      auto-commit: true
-      # 连接池名称
-      pool-name: MyHikariCP
-      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
-      max-lifetime: 0
-      # 数据库连接超时时间,默认30秒，即30000
-      connection-timeout: 30000000
-      connection-test-query: SELECT 1
+    dynamic:
+      primary: master
+      strict: false
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT}/${DATABASE_NAME_1}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+          username: ${MYSQL_USER_NAME:root}
+          password: ${MYSQL_PASSWORD:123456}
+          driver-class-name: com.mysql.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
+          hikari:
+            connection-timeout: 30000 # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQ
+            minIdle: 5 # 最小连接数
+            maxPoolSize: 10 # 最大连接数
+            isAutoCommit: true # 自动提交
+            idleTimeout: 600000 # 连接超时的最大时长（毫秒），超时则被释放（retired），默认:10分钟
+            maxLifetime: 1800000 # 连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认:30分钟
+            connection-test-query: SELECT 1 FROM DUAL
+            data-source-properties: #以下属性仅为演示（默认不会引入）
+        slave_1:
+          url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT}/${DATABASE_NAME_2}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+          username: ${MYSQL_USER_NAME:root}
+          password: ${MYSQL_PASSWORD:123456}
+          driver-class-name: com.mysql.jdbc.Driver
+#    type: com.zaxxer.hikari.HikariDataSource
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT}/${DATABASE_NAME_1}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+#    username: ${MYSQL_USER_NAME:root}
+#    password: ${MYSQL_PASSWORD:123456}
+#    hikari:
+#      #最小空闲连接数量
+#      minimum-idle: 5
+#      #从池返回的连接默认自动提交
+#      auto-commit: true
+#      #空闲连接最大时间，10秒
+#      idle-timeout: 10000
+#      #连接池名字
+#      pool-name: StoreHikariCP
+#      #池中连接的最长生命周期
+#      max-lifetime: 1800000
+#      #数据库连接的超时时间
+#      connection-timeout: 30000
+#      connection-test-query: SELECT 1
 
   # mq配置
   rabbitmq:
