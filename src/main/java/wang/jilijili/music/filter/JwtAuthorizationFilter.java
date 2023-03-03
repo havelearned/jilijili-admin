@@ -30,6 +30,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     UserMapper userMapper;
 
 
+
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserMapper userMapper) {
         super(authenticationManager);
         this.userMapper = userMapper;
