@@ -14,11 +14,33 @@ import wang.jilijili.music.pojo.entity.User;
 @Repository
 public interface UserMapper extends BaseMapper<User> {
 
+    /**
+     * 通过id查询用户角色
+     * @author Amani
+     * @date 2023/3/5 11:49
+     * @param id
+     * @return wang.jilijili.music.pojo.entity.User
+     */
     User userRoles(String id);
 
+    /**
+     * 通过名称查询用户
+     * @author Amani
+     * @date 2023/3/5 11:49
+     * @param username
+     * @return wang.jilijili.music.pojo.entity.User
+     */
     User getUserByUsername(String username);
 
-    int initUserRole(@Param("userId") String userId, @Param("roleId") String roleId);
+    /**
+     * 添加用户时初始化角色
+     *
+     * @param userId
+     * @param roleId
+     * @author Amani
+     * @date 2023/3/5 11:50
+     */
+    void initUserRole(@Param("userId") String userId, @Param("roleId") String roleId);
 }
 
 

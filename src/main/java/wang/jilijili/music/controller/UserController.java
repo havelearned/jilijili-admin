@@ -49,13 +49,19 @@ public class UserController extends BaseController<User, UserMapper, UserService
 
     }
 
+    /**
+     * 搜索请求
+     * @author Amani
+     * @date 2023/3/5 11:45
+     * @param userQueryDto 搜索条件
+     * @return wang.jilijili.music.pojo.vo.Result<com.baomidou.mybatisplus.core.metadata.IPage<wang.jilijili.music.pojo.vo.UserVo>>
+     */
     @GetMapping("/list")
-    @RolesAllowed(value = {ROLE_SUPER_ADMIN}) // 有前缀
-//    @PreAuthorize(value = "hasAnyRole('ROLE_SUPER_ADMIN')") // 没有前缀
+    @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     public Result<IPage<UserVo>> search(UserQueryDto userQueryDto) {
         IPage<User> pageEntity = new Page<>(userQueryDto.getPage(), userQueryDto.getSize());
-        IPage<UserVo> voIPage = this.userService.search(pageEntity, userQueryDto);
-        return Result.ok(voIPage);
+        IPage<UserVo> voIpage = this.userService.search(pageEntity, userQueryDto);
+        return Result.ok(voIpage);
     }
 
     @GetMapping("/{id}")
@@ -65,21 +71,43 @@ public class UserController extends BaseController<User, UserMapper, UserService
 
     }
 
+    /**
+     * 修改用户
+     * @author Amani
+     * @date 2023/3/5 11:46
+     * @param userUpdateRequest 修改表单
+     * @return wang.jilijili.music.pojo.vo.Result<wang.jilijili.music.pojo.vo.UserVo>
+     */
     @PutMapping("/")
-    @RolesAllowed(value = {ROLE_SUPER_ADMIN}) // 有前缀
+    @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     public Result<UserVo> update(@Validated @RequestBody UserUpdateRequest userUpdateRequest) {
         UserVo userVo = this.userConvertBo.toVo(this.userService.update(userUpdateRequest));
         return Result.ok(userVo);
     }
 
+    /**
+     * 删除用户
+     * @author Amani
+     * @date 2023/3/5 11:46
+     * @param id 用户id
+     * @return wang.jilijili.music.pojo.vo.Result<?>
+     */
     @DeleteMapping("/{id}")
-    @RolesAllowed(value = {ROLE_SUPER_ADMIN}) // 有前缀
+    @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     public Result<?> delete(@PathVariable("id") String id) {
         return this.userService.delete(id);
     }
 
+    /**
+     * 创建用户
+     * @author Amani
+     * @date 2023/3/5 11:47
+     * @param userCreateDto dto
+     * @param request 当前请求
+     * @return wang.jilijili.music.pojo.vo.Result<wang.jilijili.music.pojo.vo.UserVo>
+     */
     @PostMapping("/")
-    @RolesAllowed(value = {ROLE_SUPER_ADMIN}) // 有前缀
+    @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     public Result<UserVo> create(@Validated @RequestBody UserCreateDto userCreateDto,
                                  HttpServletRequest request) {
         UserDto userDto = this.userService.create(userCreateDto, request);

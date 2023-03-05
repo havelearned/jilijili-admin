@@ -15,13 +15,13 @@ import java.util.Date;
  */
 @Log
 @Component
-public class MPMetaObjectHandler implements MetaObjectHandler {
+public class MpMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill ....");
-        this.strictUpdateFill(metaObject, "lastLoginTime", Date.class, new Date()); // 起始版本 3.3.0(推荐)
-        this.strictInsertFill(metaObject, "createdTime", Date.class, new Date()); // 起始版本 3.3.0(推荐使用)
+        this.strictUpdateFill(metaObject, "lastLoginTime", Date.class, new Date());
+        this.strictInsertFill(metaObject, "createdTime", Date.class, new Date());
 
     }
 
@@ -29,7 +29,7 @@ public class MPMetaObjectHandler implements MetaObjectHandler {
     public void updateFill(MetaObject metaObject) {
         log.info("start update fill ....");
         this.strictUpdateFill
-                (metaObject, "lastLoginTime", Date.class, new Date()); // 起始版本 3.3.0(推荐)
-        this.strictInsertFill(metaObject, "updatedTime", Date.class, new Date()); // 起始版本 3.3.0(推荐使用)
+                (metaObject, "lastLoginTime", Date.class, new Date());
+        this.strictInsertFill(metaObject, "updatedTime", Date.class, new Date());
     }
 }

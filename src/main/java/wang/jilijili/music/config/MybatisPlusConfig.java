@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import wang.jilijili.music.handler.MPMetaObjectHandler;
+import wang.jilijili.music.handler.MpMetaObjectHandler;
 
 /**
  * @author Amani
@@ -17,10 +17,8 @@ import wang.jilijili.music.handler.MPMetaObjectHandler;
 public class MybatisPlusConfig {
 
     @Autowired
-    MPMetaObjectHandler mpMetaObjectHandler;
+    MpMetaObjectHandler mpMetaObjectHandler;
 
-
-    // 最新版
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();

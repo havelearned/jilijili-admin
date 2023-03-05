@@ -18,12 +18,41 @@ import wang.jilijili.music.pojo.vo.UserVo;
 public interface UserConvertBo {
 
 
+    /**
+     * User 转 UserDto
+     * @author Amani
+     * @date 2023/3/5 11:31
+     * @param user 实体类
+     * @return wang.jilijili.music.pojo.dto.UserDto
+     */
     UserDto toDto(User user);
 
+    /**
+     *  UserDto 转 UserVo
+     * @author Amani
+     * @date 2023/3/5 11:32
+     * @param userDto  dto
+     * @return UserVo
+     */
     UserVo toVo(UserDto userDto);
 
+    /**
+     * UserUpdateRequest 转 User
+     * @author Amani
+     * @date 2023/3/5 11:34
+     * @param userUpdateRequest
+     * @return wang.jilijili.music.pojo.entity.User
+     */
     User toUserEntity(UserUpdateRequest userUpdateRequest);
 
+
+    /**
+     * UserCreateDto 转 User
+     * @author Amani
+     * @date 2023/3/5 11:34
+     * @param userCreateDto
+     * @return wang.jilijili.music.pojo.entity.User
+     */
     User toUserEntity(UserCreateDto userCreateDto);
 
 

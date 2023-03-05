@@ -19,18 +19,69 @@ import wang.jilijili.music.pojo.vo.UserVo;
  */
 public interface UserService extends IService<User>, UserDetailsService {
 
+    /**
+     * 通过id查询用户
+     * @author Amani
+     * @date 2023/3/5 11:45
+     * @param id
+     * @return wang.jilijili.music.pojo.dto.UserDto
+     */
     UserDto get(String id);
 
+
+    /**
+     * 修改用户
+     * @author Amani
+     * @date 2023/3/5 11:44
+     * @param userUpdateRequest
+     * @return wang.jilijili.music.pojo.dto.UserDto
+     */
     UserDto update(UserUpdateRequest userUpdateRequest);
 
+    /**
+     * 删除用户
+     * @author Amani
+     * @date 2023/3/5 11:44
+     * @param id
+     * @return wang.jilijili.music.pojo.vo.Result<?>
+     */
     Result<?> delete(String id);
 
+    /**
+     * 创建用户
+     * @author Amani
+     * @date 2023/3/5 11:44
+     * @param userCreateDto
+     * @param request
+     * @return wang.jilijili.music.pojo.dto.UserDto
+     */
     UserDto create(UserCreateDto userCreateDto, HttpServletRequest request);
 
+    /**
+     * 获取在线所有用户
+     * @author Amani
+     * @date 2023/3/5 11:43
+     * @param null
+     * @return null
+     */
     IPage<UserVo> getOnlineUsers(Long page, Long size, UserQueryDto userQueryDto);
 
+    /**
+     * 搜索条件加分页
+     * @author Amani
+     * @date 2023/3/5 11:43
+     * @param pageEntity
+     * @param userQueryDto
+     * @return com.baomidou.mybatisplus.core.metadata.IPage<wang.jilijili.music.pojo.vo.UserVo>
+     */
     IPage<UserVo> search(IPage<User> pageEntity, UserQueryDto userQueryDto);
 
 
+    /**
+     * 获取当前用户
+     * @author Amani
+     * @date 2023/3/5 11:43
+     * @return wang.jilijili.music.pojo.dto.UserDto
+     */
     UserDto currentUser();
 }

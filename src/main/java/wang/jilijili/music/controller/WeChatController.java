@@ -14,7 +14,7 @@ import wang.jilijili.music.pojo.dto.Code2SessionDto;
 import wang.jilijili.music.pojo.entity.User;
 import wang.jilijili.music.pojo.vo.Result;
 import wang.jilijili.music.service.UserService;
-import wang.jilijili.music.service.WeChatMPService;
+import wang.jilijili.music.service.WeChatMpService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,17 +30,17 @@ public class WeChatController extends BaseController<User, UserMapper, UserServi
 
 
     WxMaService wxMaService;
-    WeChatMPService weChatMPService;
+    WeChatMpService weChatMpService;
     UserConvertBo userConvertBo;
 
     PasswordEncoder passwordEncoder;
 
     public WeChatController(UserMapper mapper, UserService service,
-                            WxMaService wxMaService, WeChatMPService weChatMPService,
+                            WxMaService wxMaService, WeChatMpService weChatMpService,
                             PasswordEncoder passwordEncoder, UserConvertBo userConvertBo) {
         super(mapper, service);
         this.wxMaService = wxMaService;
-        this.weChatMPService = weChatMPService;
+        this.weChatMpService = weChatMpService;
         this.userConvertBo = userConvertBo;
         this.passwordEncoder = passwordEncoder;
     }
@@ -70,7 +70,7 @@ public class WeChatController extends BaseController<User, UserMapper, UserServi
 
         String token = super.createToken(code2SessionDto, passwordEncoder);
 
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(2);
         map.put("sessionResult", sessionResult);
         map.put("token", token);
 

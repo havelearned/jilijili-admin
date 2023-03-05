@@ -15,9 +15,11 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfig {
 
 
-    /*http://localhost:8080/swagger-ui/index.html*/
+    /**
+     * 访问: http://localhost:8080/swagger-ui/index.html
+     * */
     @Bean
-    public OpenAPI restfulOpenAPI() {
+    public OpenAPI restfulOpenApi() {
         return new OpenAPI()
                 .info(new Info().title("肌理音乐接口文档")
                         .description("Zoo & Animal Detail APi")

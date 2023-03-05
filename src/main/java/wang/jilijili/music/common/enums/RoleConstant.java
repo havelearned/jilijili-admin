@@ -9,10 +9,14 @@ package wang.jilijili.music.common.enums;
  */
 public interface RoleConstant {
 
-    // 普通用户
-    public static final String ROLE_USER = "USER";
+    /**
+     * 普通用户
+     * */
+     String ROLE_USER = "USER";
 
-    // 超级管理员
-    public static final String ROLE_SUPER_ADMIN = "SUPER_ADMIN";
+    /**
+     * 超级管理员
+     * */
+     String ROLE_SUPER_ADMIN = "SUPER_ADMIN";
 
 }

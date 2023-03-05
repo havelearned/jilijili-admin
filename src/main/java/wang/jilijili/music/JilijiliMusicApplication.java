@@ -14,6 +14,9 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
+/**
+ * @author admin
+ */
 @Log
 @SpringBootApplication
 @ConfigurationPropertiesScan
@@ -26,8 +29,8 @@ public class JilijiliMusicApplication {
     public static void main(String[] args) {
         SpringApplication.run(JilijiliMusicApplication.class, args);
         String port = environment.getProperty("server.port");
-        log.info("http://" + getIpAddress() + ":" + port + "/swagger-ui/index.html 接口文档");
-        log.info("http://" + getIpAddress() + ":" + port + "/test/test 测试接口");
+        log.info("https://" + getIpAddress() + ":" + port + "/swagger-ui/index.html 接口文档");
+        log.info("https://" + getIpAddress() + ":" + port + "/test/test 测试接口");
 
 
     }

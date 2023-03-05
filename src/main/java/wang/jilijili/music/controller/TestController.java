@@ -21,43 +21,6 @@ public class TestController {
     @Autowired
     private AsyncServerImpl asyncServer;
 
-
-
-//    @Autowired
-//    private ReadCSVUtil readCSVUtil;
-
-/*
-    @Autowired
-    private ReadCSVServer readCSVServer;
-*/
-
-
-/*
-    @RequestMapping("/test/readCSV")
-    public JSONObject testReadCSV(@RequestBody JSONObject get) throws JSONException, IOException, InterruptedException {
-        JSONObject output = new JSONObject();
-        String filePath = get.getString("filePath");
-        filePath.replace("\\", "/");
-        long startTime = System.currentTimeMillis();
-        List<String> fileInPaths = this.readCSVUtil.getFileInPath(filePath);
-        // 创建同步工具
-        CountDownLatch downLatch = new CountDownLatch(fileInPaths.size());
-        if (fileInPaths != null) {
-            for (String file : fileInPaths) {
-                this.readCSVServer.readCSVAndWrite(downLatch, file, filePath);
-            }
-
-        }
-        downLatch.await();
-        long endTime = System.currentTimeMillis();
-        output.put("msg", "succeed");
-        output.put("data", "已处理" + fileInPaths.size() + "个文件;耗时" + (endTime - startTime) / 1000 + "秒");
-        return output;
-
-
-    }
-*/
-
     @RequestMapping("/testThread")
     public JSONObject testThread() throws InterruptedException {
         JSONObject output = new JSONObject();

@@ -1,19 +1,14 @@
 package wang.jilijili.music.handler;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import wang.jilijili.music.service.UserService;
 
 @Component
 public class AuthenticationEventsHandler {
-
-//    @Autowired
-//    private UserService userService;
 
     @EventListener
     public void onSuccess(AuthenticationSuccessEvent success) {

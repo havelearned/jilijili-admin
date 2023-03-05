@@ -39,7 +39,9 @@ public class RestAuthenticationHandler implements
     public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
 
-    //认证失败处理
+    /**
+     * 认证失败处理
+     * */
     @Override
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
@@ -54,7 +56,9 @@ public class RestAuthenticationHandler implements
         response.getWriter().println(OBJECT_MAPPER.writeValueAsString(Result.fail(detailMessage)));
     }
 
-    // 权限不足时的处理
+    /**
+     * 权限不足时的处理
+     * */
     @Override
     public void handle(HttpServletRequest request,
                        HttpServletResponse response,
@@ -77,7 +81,9 @@ public class RestAuthenticationHandler implements
         response.getWriter().println(OBJECT_MAPPER.writeValueAsString(result));
     }
 
-    //认证失败时的处理
+    /**
+     * 认证失败时的处理
+     * */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
@@ -86,7 +92,9 @@ public class RestAuthenticationHandler implements
 
     }
 
-    //认证成功时的处理
+    /**
+     * 认证成功时的处理
+     * */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
@@ -99,7 +107,9 @@ public class RestAuthenticationHandler implements
 
     }
 
-    // 会话过期处理
+    /**
+     * 会话过期处理
+     * */
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);

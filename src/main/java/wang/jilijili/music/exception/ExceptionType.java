@@ -1,12 +1,15 @@
 package wang.jilijili.music.exception;
 
 /**
- * @Auther: Amani
+ * @author admin
  * @Date: 2023/1/28 10:53
  * @Description:
  */
 public enum ExceptionType {
 
+    /**
+     *
+     * */
     INNER_ERROR(500, "系统内部错误"),
     UNAUTHORIZED(401, "未登录"),
     BAD_REQUEST(400, "请求错误"),
