@@ -1,13 +1,14 @@
 package wang.jilijili.music.pojo.query;
 
-import lombok.Data;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 @Data
 public class UserUpdateRequest {
-    @NotBlank(message = "用户名不能为空")
+
+    @NotBlank(message = "id不能为空")
+    private String id;
     @Size(min = 4, max = 64, message = "用户名长度应该在4到64个字符之间")
     private String username;
     private String nickname;

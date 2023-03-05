@@ -1,14 +1,15 @@
 package wang.jilijili.music.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import wang.jilijili.music.mapper.UserMapper;
 import wang.jilijili.music.pojo.dto.CreateTokenDto;
+import wang.jilijili.music.pojo.entity.User;
 import wang.jilijili.music.pojo.vo.Result;
 import wang.jilijili.music.service.UserService;
 
@@ -19,17 +20,20 @@ import wang.jilijili.music.service.UserService;
 @RestController
 @RequestMapping("/tokens")
 @Tag(name = "token服务")
-public class TokenController {
-    UserService userService;
+public class TokenController extends BaseController<User, UserMapper,UserService> {
 
-    public TokenController(UserService userService) {
-        this.userService = userService;
+    PasswordEncoder passwordEncoder;
+
+    public TokenController(UserMapper mapper, UserService service, PasswordEncoder passwordEncoder) {
+        super(mapper, service);
+        this.passwordEncoder = passwordEncoder;
     }
 
-
     @PostMapping("/")
-    public Result<?> create(@RequestBody @Validated CreateTokenDto createTokenDto) {
-        return Result.ok(this.userService.createToken(createTokenDto));
+    public Result<String> create(@RequestBody @Validated CreateTokenDto createTokenDto) {
+        String token = super.createToken(createTokenDto, passwordEncoder);
+        return Result.ok(token);
+//        return Result.ok(this.userService.createToken(createTokenDto));
     }
 
 }

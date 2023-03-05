@@ -11,8 +11,10 @@
     <groupId>wang.jilijili</groupId>
     <artifactId>wang-jilijili</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>jilijili-music</name>
     <description>jilijili-music</description>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

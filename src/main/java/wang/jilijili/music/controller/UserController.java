@@ -1,5 +1,6 @@
 package wang.jilijili.music.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,6 +42,13 @@ public class UserController extends BaseController<User, UserMapper, UserService
         this.userConvertBo = userConvertBo;
     }
 
+    @GetMapping("/checkUsername/{username}")
+    public Result<?> checkUsername(@PathVariable("username") String username){
+        long count = this.service.count(new LambdaQueryWrapper<User>().eq(User::getUsername, username));
+        return count <=0 ? Result.ok():Result.fail();
+
+    }
+
     @GetMapping("/list")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN}) // 有前缀
 //    @PreAuthorize(value = "hasAnyRole('ROLE_SUPER_ADMIN')") // 没有前缀
@@ -57,12 +65,10 @@ public class UserController extends BaseController<User, UserMapper, UserService
 
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN}) // 有前缀
-    public Result<UserVo> update(
-            @PathVariable("id") String id,
-            @Validated @RequestBody UserUpdateRequest userUpdateRequest) {
-        UserVo userVo = this.userConvertBo.toVo(this.userService.update(id, userUpdateRequest));
+    public Result<UserVo> update(@Validated @RequestBody UserUpdateRequest userUpdateRequest) {
+        UserVo userVo = this.userConvertBo.toVo(this.userService.update(userUpdateRequest));
         return Result.ok(userVo);
     }
 

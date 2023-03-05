@@ -20,10 +20,10 @@ public class UserSearchBo {
     public static LambdaQueryWrapper<User> getUserLambdaQueryWrapper(UserQueryDto userQueryDto) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper
-                .eq(StringUtils.hasText(userQueryDto.getId()), User::getId, userQueryDto.getId())
-                .eq(StringUtils.hasText(userQueryDto.getGender()), User::getGender, userQueryDto.getGender())
-                .eq(StringUtils.hasText(userQueryDto.getUsername()), User::getUsername, userQueryDto.getUsername())
                 .like(StringUtils.hasText(userQueryDto.getNickname()), User::getNickname, userQueryDto.getNickname())
+                .eq(StringUtils.hasText(userQueryDto.getGender()), User::getGender, userQueryDto.getGender())
+                .eq(StringUtils.hasText(userQueryDto.getId()), User::getId, userQueryDto.getId())
+                .eq(StringUtils.hasText(userQueryDto.getUsername()), User::getUsername, userQueryDto.getUsername())
                 .eq(userQueryDto.getUnseal() != null, User::getUnseal, userQueryDto.getUnseal())
                 .between(userQueryDto.getSpecifyTime() != null && userQueryDto.getCreatedTime() != null,
                         User::getCreatedTime, userQueryDto.getCreatedTime(), userQueryDto.getSpecifyTime())

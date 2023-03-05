@@ -55,13 +55,12 @@ public class BaseController<T extends SuperEntity, M extends BaseMapper<T>, S ex
     /**
      * 通过不通业务创建不通类型的token
      *
-     * @param createTokenDto  token创建条件
+     * @param createTokenDto  token多种类型创建条件
      * @param passwordEncoder 加密方式
      * @return 返回token字符串
      */
     public String createToken(CreateTokenDto createTokenDto, PasswordEncoder passwordEncoder) {
         User user;
-        //
         if (createTokenDto instanceof CreateWeChatTokenDto weChatTokenDto) {
             user = this.loadUserByUsername(weChatTokenDto.getOpenId());
         } else {
@@ -92,7 +91,6 @@ public class BaseController<T extends SuperEntity, M extends BaseMapper<T>, S ex
      * @return 用户实体类
      * @throws UsernameNotFoundException 没有找到用户异常
      */
-
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         if (mapper instanceof UserMapper userMapper) {

@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import wang.jilijili.music.pojo.dto.CreateTokenDto;
 import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
 import wang.jilijili.music.pojo.dto.UserQueryDto;
@@ -22,7 +21,7 @@ public interface UserService extends IService<User>, UserDetailsService {
 
     UserDto get(String id);
 
-    UserDto update(String id, UserUpdateRequest userUpdateRequest);
+    UserDto update(UserUpdateRequest userUpdateRequest);
 
     Result<?> delete(String id);
 
@@ -32,7 +31,6 @@ public interface UserService extends IService<User>, UserDetailsService {
 
     IPage<UserVo> search(IPage<User> pageEntity, UserQueryDto userQueryDto);
 
-    String createToken(CreateTokenDto createTokenDto);
 
     UserDto currentUser();
 }

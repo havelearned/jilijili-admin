@@ -1,8 +1,6 @@
 package wang.jilijili.music.service.impl;
 
 import cn.hutool.core.lang.UUID;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -19,12 +17,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import wang.jilijili.music.common.enums.DatabaseConstant;
 import wang.jilijili.music.common.utils.IpUtils;
-import wang.jilijili.music.config.SecurityConfig;
 import wang.jilijili.music.exception.BizException;
 import wang.jilijili.music.exception.ExceptionType;
 import wang.jilijili.music.mapper.UserMapper;
 import wang.jilijili.music.pojo.bo.UserConvertBo;
-import wang.jilijili.music.pojo.dto.CreateTokenDto;
 import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
 import wang.jilijili.music.pojo.dto.UserQueryDto;
@@ -34,7 +30,6 @@ import wang.jilijili.music.pojo.vo.Result;
 import wang.jilijili.music.pojo.vo.UserVo;
 import wang.jilijili.music.service.UserService;
 
-import java.util.Date;
 import java.util.List;
 
 import static wang.jilijili.music.pojo.bo.UserSearchBo.getUserLambdaQueryWrapper;
@@ -70,16 +65,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public UserDto update(String id, UserUpdateRequest userUpdateRequest) {
-        User user = this.userMapper.selectById(id);
-        User updateUser = null;
-        if (user != null) {
-            updateUser = userConvertBo.toUserEntity(userUpdateRequest);
-            this.userMapper.update(updateUser,
-                    new LambdaQueryWrapper<User>().eq(User::getId, user.getId()));
+    public UserDto update(UserUpdateRequest userUpdateRequest) {
+        User user = this.userConvertBo.toUserEntity(userUpdateRequest);
+        if(user!=null){
+            this.updateById(user);
+            return userConvertBo.toDto(user);
         }
+        throw new BizException(ExceptionType.BAD_REQUEST);
 
-        return userConvertBo.toDto(updateUser);
+
     }
 
     @Override
@@ -131,26 +125,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         IPage<User> page = this.page(pageEntity, getUserLambdaQueryWrapper(userQueryDto));
         return page.convert(item -> userConvertBo.toVo(userConvertBo.toDto(item)));
     }
-
-    @Override
-    public String createToken(CreateTokenDto createTokenDto) {
-        User user = this.loadUserByUsername(createTokenDto.getUsername());
-        if (!this.passwordEncoder.matches(createTokenDto.getPassword(), user.getPassword())) {
-            throw new BizException(ExceptionType.USERNAME_OR_PASSWORD_ERROR);
-        }
-        if (user.getUnseal() == null || user.getUnseal() < 1) {
-            throw new BizException(ExceptionType.USER_NOT_ENABLED);
-        }
-        if (user.getLocked() == null || user.getLocked() < 0) {
-            throw new BizException(ExceptionType.USER_NOT_LOCKED);
-        }
-
-        return JWT.create()
-                .withSubject(user.getUsername()) // 一般id,唯一字段
-                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConfig.EXPIRATION_TIME)) // 过期时间
-                .sign(Algorithm.HMAC512(SecurityConfig.SECRET.getBytes()));
-    }
-
 
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
