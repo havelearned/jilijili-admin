@@ -1,21 +1,22 @@
 package wang.jilijili.music.pojo.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
+ * @author admin
  * @TableName role 角色表
  */
 
 @TableName(value = "role")
-@Schema(title= "角色",name = "角色实体类")
+@Schema(title = "角色", name = "角色实体类")
 @Data
 public class Role extends SuperEntity implements Serializable {
-
-
 
 
     /**

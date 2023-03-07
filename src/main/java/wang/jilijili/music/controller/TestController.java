@@ -10,7 +10,7 @@ import wang.jilijili.music.service.impl.AsyncServerImpl;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * @Auther: Amani
+ * @author admin
  * @Date: 2023/1/22 21:39
  * @Description:
  */

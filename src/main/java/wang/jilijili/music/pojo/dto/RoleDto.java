@@ -3,7 +3,7 @@ package wang.jilijili.music.pojo.dto;
 import lombok.Data;
 
 /**
- * @Auther: Amani
+ * @author admin
  * @Date: 2023/1/24 11:26
  * @Description:
  */

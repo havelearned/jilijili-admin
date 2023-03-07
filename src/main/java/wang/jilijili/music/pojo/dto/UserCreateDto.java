@@ -8,7 +8,7 @@ import lombok.Data;
 
 
 /**
- * @Auther: Amani
+ * @author admin
  * @Date: 2023/1/28 10:29
  * @Description: <>创建用户</> 数据传输对象
  */

@@ -15,7 +15,7 @@ import wang.jilijili.music.handler.RestAuthenticationHandler;
 import wang.jilijili.music.service.impl.UserServiceImpl;
 
 /**
- * @Auther: Amani
+ * @author admin
  * @Date: 2023/1/28 16:12
  * @Description:
  */

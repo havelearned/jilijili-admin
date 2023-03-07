@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import wang.jilijili.music.common.enums.JilJilOperationLog;
+import wang.jilijili.music.common.enums.OperationType;
 import wang.jilijili.music.mapper.UserMapper;
 import wang.jilijili.music.pojo.dto.CreateTokenDto;
 import wang.jilijili.music.pojo.entity.User;
@@ -28,7 +30,7 @@ public class TokenController extends BaseController<User, UserMapper,UserService
         super(mapper, service);
         this.passwordEncoder = passwordEncoder;
     }
-
+    @JilJilOperationLog(moduleName = "用户管理", type = OperationType.ADD)
     @PostMapping("/")
     public Result<String> create(@RequestBody @Validated CreateTokenDto createTokenDto) {
         String token = super.createToken(createTokenDto, passwordEncoder);

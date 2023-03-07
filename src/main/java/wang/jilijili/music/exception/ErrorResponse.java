@@ -3,7 +3,7 @@ package wang.jilijili.music.exception;
 import lombok.Data;
 
 /**
- * @Auther: Amani
+ * @author admin
  * @Date: 2023/1/28 11:04
  * @Description:
  */

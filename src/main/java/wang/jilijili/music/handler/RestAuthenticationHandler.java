@@ -26,6 +26,9 @@ import wang.jilijili.music.pojo.vo.Result;
 
 import java.io.IOException;
 
+/**
+ * @author admin
+ */
 @Component
 public class RestAuthenticationHandler implements
         AuthenticationSuccessHandler,

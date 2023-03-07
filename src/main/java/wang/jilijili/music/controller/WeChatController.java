@@ -8,6 +8,8 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import wang.jilijili.music.common.enums.JilJilOperationLog;
+import wang.jilijili.music.common.enums.OperationType;
 import wang.jilijili.music.mapper.UserMapper;
 import wang.jilijili.music.pojo.bo.UserConvertBo;
 import wang.jilijili.music.pojo.dto.Code2SessionDto;
@@ -51,6 +53,7 @@ public class WeChatController extends BaseController<User, UserMapper, UserServi
      * @author Amani
      * @date 2023/2/25 10:04
      */
+    @JilJilOperationLog(moduleName = "用户管理", type = OperationType.SELECT)
     @GetMapping("/auth_url")
     public String getAuthUrl(@PathParam("redirectUrl") String redirectUrl) {
         return redirectUrl;
@@ -63,6 +66,7 @@ public class WeChatController extends BaseController<User, UserMapper, UserServi
      * @return 返回用户信息
      * @throws WxErrorException 微信错误信息
      */
+    @JilJilOperationLog(moduleName = "用户管理", type = OperationType.SELECT)
     @PostMapping("/")
     public Result<?> authUrl(@Validated @RequestBody Code2SessionDto code2SessionDto) throws WxErrorException {
         WxMaJscode2SessionResult sessionResult = wxMaService.jsCode2SessionInfo(code2SessionDto.getCode());

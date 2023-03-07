@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 /**
- * @Auther: Amani
+ * @author admin
  * @Date: 2023/1/23 17:22
  * @Description: 所有实体类的基类
  */

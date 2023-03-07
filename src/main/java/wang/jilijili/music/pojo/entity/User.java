@@ -21,6 +21,7 @@ import java.util.List;
 /**
  * 用户表
  *
+ * @author admin
  * @TableName user
  */
 

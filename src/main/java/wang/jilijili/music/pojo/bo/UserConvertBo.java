@@ -9,7 +9,7 @@ import wang.jilijili.music.pojo.query.UserUpdateRequest;
 import wang.jilijili.music.pojo.vo.UserVo;
 
 /**
- * @Auther: Amani
+ * @author admin
  * @Date: 2023/1/24 11:39
  * @Description: User mapper to Dto or Vo or Bo structural
  */

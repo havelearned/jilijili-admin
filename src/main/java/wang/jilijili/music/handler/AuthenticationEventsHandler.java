@@ -7,6 +7,9 @@ import org.springframework.security.authentication.event.AuthenticationSuccessEv
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author admin
+ */
 @Component
 public class AuthenticationEventsHandler {
 

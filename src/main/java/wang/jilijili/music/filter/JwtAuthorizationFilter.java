@@ -16,10 +16,9 @@ import wang.jilijili.music.mapper.UserMapper;
 import wang.jilijili.music.pojo.entity.User;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
- * @Auther: Amani
+ * @author admin
  * @Date: 2023/1/28 16:38
  * @Description: 授权
  */
@@ -28,7 +27,6 @@ import java.util.ArrayList;
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     UserMapper userMapper;
-
 
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserMapper userMapper) {

@@ -3,7 +3,9 @@ package wang.jilijili.music.pojo.query;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-
+/**
+ * @author admin
+ */
 @Data
 public class UserUpdateRequest {
 
