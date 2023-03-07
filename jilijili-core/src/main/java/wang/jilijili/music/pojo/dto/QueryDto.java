@@ -3,7 +3,6 @@ package wang.jilijili.music.pojo.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-import wang.jilijili.music.pojo.entity.SuperEntity;
 
 import java.util.Date;
 

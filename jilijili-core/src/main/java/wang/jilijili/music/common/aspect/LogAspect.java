@@ -84,7 +84,7 @@ public class LogAspect {
     }
 
     @AfterThrowing(value = "operationLogPointcut()", throwing = "ex")
-    public void afterThrowing(Throwable ex) throws Exception {
+    public void afterThrowing(Throwable ex) {
         OperationLog operationLog = new OperationLog();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

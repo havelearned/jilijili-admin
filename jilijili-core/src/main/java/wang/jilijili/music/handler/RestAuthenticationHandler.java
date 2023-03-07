@@ -1,7 +1,6 @@
 package wang.jilijili.music.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
@@ -44,11 +43,11 @@ public class RestAuthenticationHandler implements
 
     /**
      * 认证失败处理
-     * */
+     */
     @Override
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
-                         AuthenticationException authException) throws IOException, ServletException {
+                         AuthenticationException authException) throws IOException {
         String detailMessage = authException.getClass().getSimpleName() + " " + authException.getLocalizedMessage();
         if (authException instanceof InsufficientAuthenticationException) {
             detailMessage = "请登陆后再访问";
@@ -61,11 +60,11 @@ public class RestAuthenticationHandler implements
 
     /**
      * 权限不足时的处理
-     * */
+     */
     @Override
     public void handle(HttpServletRequest request,
                        HttpServletResponse response,
-                       AccessDeniedException accessDeniedException) throws IOException, ServletException {
+                       AccessDeniedException accessDeniedException) throws IOException {
         Result<String> result = new Result<>();
         result.setFlag(false);
         result.setData("");
@@ -86,9 +85,9 @@ public class RestAuthenticationHandler implements
 
     /**
      * 认证失败时的处理
-     * */
+     */
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.getWriter().println(OBJECT_MAPPER.writeValueAsString(Result.fail("登陆失败! 用户名或者密码错误")));
@@ -97,9 +96,9 @@ public class RestAuthenticationHandler implements
 
     /**
      * 认证成功时的处理
-     * */
+     */
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
         response.setStatus(HttpStatus.OK.value());
         // SecurityContext在设置Authentication的时候并不会自动写入Session，读的时候却会根据Session判断，所以需要手动写入一次，否则下一次刷新时SecurityContext是新创建的实例。
@@ -112,16 +111,16 @@ public class RestAuthenticationHandler implements
 
     /**
      * 会话过期处理
-     * */
+     */
     @Override
-    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
         response.setStatus(HttpStatus.OK.value());
         response.getWriter().println(OBJECT_MAPPER.writeValueAsString("注销成功"));
     }
 
     @Override
-    public void onExpiredSessionDetected(SessionInformationExpiredEvent event) throws IOException, ServletException {
+    public void onExpiredSessionDetected(SessionInformationExpiredEvent event) throws IOException {
         String message = "该账号已从其他设备登陆,如果不是您自己的操作请及时修改密码";
         System.out.println(message);
         final HttpServletResponse response = event.getResponse();
