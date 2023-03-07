@@ -11,8 +11,8 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT}/${DATABASE_NAME_1}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
-    username: ${MYSQL_USER_NAME:root}
-    password: ${MYSQL_PASSWORD:123456}
+    username: ${MYSQL_USER_NAME}
+    password: ${MYSQL_PASSWORD}
     hikari:
       #最小空闲连接数量
       minimum-idle: 5
@@ -30,10 +30,10 @@ spring:
 
   # mq配置
   rabbitmq:
-    host: 110.40.230.65
-    port: 5672
-    username: admin_A
-    password: admin_A
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_USERNAME}
     listener:
       simple:
         retry:
@@ -44,7 +44,7 @@ spring:
   # es配置 若搜索模式为mysql可删除
   elasticsearch:
     rest:
-      uris: 110.40.230.65:9200
+      uris: ${ELASTICSEARCH_URIS}
 
   # 邮箱配置
   mail:
@@ -68,9 +68,9 @@ spring:
 
   data:
     redis:
-      host: 110.40.230.65
-      port: 6370
-      password: 123456
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
 
   security:
     user:

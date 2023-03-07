@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>wang.jilijili</groupId>
-        <artifactId>wang-jilijili</artifactId>
+        <artifactId>jilijili-system</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
@@ -22,6 +22,7 @@
     </properties>
 
     <dependencies>
+
 
 
         <dependency>
@@ -57,12 +58,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-
-            <optional>true</optional>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.projectlombok</groupId>-->
+<!--            <artifactId>lombok</artifactId>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
