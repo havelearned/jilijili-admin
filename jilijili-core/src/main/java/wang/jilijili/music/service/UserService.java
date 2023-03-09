@@ -8,7 +8,7 @@ import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
 import wang.jilijili.music.pojo.dto.UserQueryDto;
 import wang.jilijili.music.pojo.entity.User;
-import wang.jilijili.music.pojo.query.UserUpdateRequest;
+import wang.jilijili.music.pojo.request.UserUpdateRequest;
 import wang.jilijili.music.pojo.vo.Result;
 import wang.jilijili.music.pojo.vo.UserVo;
 

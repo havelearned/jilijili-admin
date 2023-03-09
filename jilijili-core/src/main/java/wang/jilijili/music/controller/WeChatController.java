@@ -8,7 +8,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import wang.jilijili.music.common.enums.JilJilOperationLog;
+import wang.jilijili.music.common.annotation.JilJilOperationLog;
 import wang.jilijili.music.common.enums.OperationType;
 import wang.jilijili.music.mapper.UserMapper;
 import wang.jilijili.music.pojo.bo.UserConvertBo;

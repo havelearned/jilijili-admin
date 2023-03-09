@@ -1,5 +1,7 @@
 package wang.jilijili.music.exception;
 
+import wang.jilijili.music.common.enums.StatusCodeEnum;
+
 /**
  * @author admin
  * @Date: 2023/1/28 10:52
@@ -16,6 +18,12 @@ public class BizException extends RuntimeException {
     public BizException(String message, Integer code) {
         super(message);
         this.code = code;
+    }
+
+    public BizException(StatusCodeEnum fail) {
+        super(fail.getDesc());
+        this.code = fail.getCode();
+
     }
 
     public Integer getCode() {

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import wang.jilijili.music.common.enums.JilJilOperationLog;
+import wang.jilijili.music.common.annotation.JilJilOperationLog;
 import wang.jilijili.music.common.enums.OperationType;
 import wang.jilijili.music.mapper.UserMapper;
 import wang.jilijili.music.pojo.dto.CreateTokenDto;

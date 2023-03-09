@@ -18,7 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
-import wang.jilijili.music.common.enums.DatabaseConstant;
+import wang.jilijili.music.common.constant.DatabaseConstant;
 import wang.jilijili.music.config.SecurityConfig;
 import wang.jilijili.music.exception.BizException;
 import wang.jilijili.music.exception.ExceptionType;

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
 import wang.jilijili.music.pojo.entity.User;
-import wang.jilijili.music.pojo.query.UserUpdateRequest;
+import wang.jilijili.music.pojo.request.UserUpdateRequest;
 import wang.jilijili.music.pojo.vo.UserVo;
 
 /**
@@ -40,7 +40,7 @@ public interface UserConvertBo {
      * UserUpdateRequest 转 User
      * @author Amani
      * @date 2023/3/5 11:34
-     * @param userUpdateRequest
+     * @param userUpdateRequest userUpdateRequest
      * @return wang.jilijili.music.pojo.entity.User
      */
     User toUserEntity(UserUpdateRequest userUpdateRequest);
@@ -50,7 +50,7 @@ public interface UserConvertBo {
      * UserCreateDto 转 User
      * @author Amani
      * @date 2023/3/5 11:34
-     * @param userCreateDto
+     * @param userCreateDto userCreateDto
      * @return wang.jilijili.music.pojo.entity.User
      */
     User toUserEntity(UserCreateDto userCreateDto);

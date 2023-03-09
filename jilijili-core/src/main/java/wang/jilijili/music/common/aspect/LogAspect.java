@@ -16,7 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import wang.jilijili.music.common.enums.JilJilOperationLog;
+import wang.jilijili.music.common.annotation.JilJilOperationLog;
 import wang.jilijili.music.common.utils.IpUtils;
 import wang.jilijili.music.exception.BizException;
 import wang.jilijili.music.mapper.OperationLogMapper;
@@ -43,7 +43,7 @@ public class LogAspect {
     @Autowired
     UserMapper userMapper;
 
-    @Pointcut(value = "@annotation(wang.jilijili.music.common.enums.JilJilOperationLog)")
+    @Pointcut(value = "@annotation(wang.jilijili.music.common.annotation.JilJilOperationLog)")
     public void operationLogPointcut() {
 
     }

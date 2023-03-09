@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import wang.jilijili.music.common.enums.JilJilOperationLog;
+import wang.jilijili.music.common.annotation.JilJilOperationLog;
 import wang.jilijili.music.common.enums.OperationType;
 import wang.jilijili.music.mapper.UserMapper;
 import wang.jilijili.music.pojo.bo.UserConvertBo;
@@ -17,12 +17,13 @@ import wang.jilijili.music.pojo.dto.UserCreateDto;
 import wang.jilijili.music.pojo.dto.UserDto;
 import wang.jilijili.music.pojo.dto.UserQueryDto;
 import wang.jilijili.music.pojo.entity.User;
-import wang.jilijili.music.pojo.query.UserUpdateRequest;
+import wang.jilijili.music.pojo.request.UserUpdateRequest;
 import wang.jilijili.music.pojo.vo.Result;
 import wang.jilijili.music.pojo.vo.UserVo;
 import wang.jilijili.music.service.UserService;
 
-import static wang.jilijili.music.common.enums.RoleConstant.ROLE_SUPER_ADMIN;
+import static wang.jilijili.music.common.constant.ModuleNameConstant.USER_MANAGEMENT;
+import static wang.jilijili.music.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
 
 /**
  * @author admin
@@ -44,7 +45,7 @@ public class UserController extends BaseController<User, UserMapper, UserService
         this.userConvertBo = userConvertBo;
     }
 
-    @JilJilOperationLog(moduleName = "用户管理", type = OperationType.SELECT)
+    @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.SELECT)
     @GetMapping("/checkUsername/{username}")
     public Result<?> checkUsername(@PathVariable("username") String username) {
         long count = this.service.count(new LambdaQueryWrapper<User>().eq(User::getUsername, username));
@@ -60,7 +61,7 @@ public class UserController extends BaseController<User, UserMapper, UserService
      * @author Amani
      * @date 2023/3/5 11:45
      */
-    @JilJilOperationLog(moduleName = "用户管理", type = OperationType.SELECT)
+    @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.SELECT)
     @GetMapping("/list")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     public Result<IPage<UserVo>> search(UserQueryDto userQueryDto) {
@@ -69,7 +70,7 @@ public class UserController extends BaseController<User, UserMapper, UserService
         return Result.ok(voIpage);
     }
 
-    @JilJilOperationLog(moduleName = "用户管理", type = OperationType.SELECT)
+    @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.SELECT)
     @GetMapping("/{id}")
     public Result<UserVo> get(@PathVariable("id") String id) {
         UserVo userVo = this.userConvertBo.toVo(this.userService.get(id));
@@ -85,7 +86,7 @@ public class UserController extends BaseController<User, UserMapper, UserService
      * @author Amani
      * @date 2023/3/5 11:46
      */
-    @JilJilOperationLog(moduleName = "用户管理", type = OperationType.UPDATE)
+    @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.UPDATE)
     @PutMapping("/")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     public Result<UserVo> update(@Validated @RequestBody UserUpdateRequest userUpdateRequest) {
@@ -101,7 +102,7 @@ public class UserController extends BaseController<User, UserMapper, UserService
      * @author Amani
      * @date 2023/3/5 11:46
      */
-    @JilJilOperationLog(moduleName = "用户管理", type = OperationType.DELETED)
+    @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.DELETED)
     @DeleteMapping("/{id}")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     public Result<?> delete(@PathVariable("id") String id) {
@@ -117,7 +118,7 @@ public class UserController extends BaseController<User, UserMapper, UserService
      * @author Amani
      * @date 2023/3/5 11:47
      */
-    @JilJilOperationLog(moduleName = "用户管理", type = OperationType.ADD)
+    @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.ADD)
     @PostMapping("/")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     public Result<UserVo> create(@Validated @RequestBody UserCreateDto userCreateDto,
@@ -127,7 +128,7 @@ public class UserController extends BaseController<User, UserMapper, UserService
         return Result.ok(userVo);
     }
 
-    @JilJilOperationLog(moduleName = "用户管理", type = OperationType.SELECT)
+    @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.SELECT)
     @GetMapping("/getOnlineUsers")
     public Result<IPage<UserVo>> getOnlineUsers(
             @RequestBody UserQueryDto userQueryDto) {
@@ -135,14 +136,14 @@ public class UserController extends BaseController<User, UserMapper, UserService
         return Result.ok(result);
     }
 
-    @JilJilOperationLog(moduleName = "用户管理", type = OperationType.SELECT)
+    @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.SELECT)
     @GetMapping("/me")
     public Result<UserVo> me() {
         UserDto userDto = this.userService.currentUser();
         return Result.ok(userConvertBo.toVo(userDto));
     }
 
-    @JilJilOperationLog(moduleName = "用户管理", type = OperationType.EXPORT)
+    @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.EXPORT)
     @PostMapping("/export")
     public void export(@RequestBody UserQueryDto userQueryDto,
                        HttpServletResponse response) {

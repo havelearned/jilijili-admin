@@ -1,4 +1,4 @@
-package wang.jilijili.music.common.enums;
+package wang.jilijili.music.common.constant;
 
 /**
  * 数据库字段常量

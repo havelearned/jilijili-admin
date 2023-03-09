@@ -1,5 +1,7 @@
-package wang.jilijili.music.common.enums;
+package wang.jilijili.music.common.annotation;
 
+
+import wang.jilijili.music.common.enums.OperationType;
 
 import java.lang.annotation.*;
 

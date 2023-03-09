@@ -1,4 +1,4 @@
-package wang.jilijili.music.pojo.query;
+package wang.jilijili.music.pojo.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
