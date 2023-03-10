@@ -15,3 +15,9 @@ CREATE TABLE user
 ) ENGINE = InnoDB
   DEFAULT CHARSET = Utf8mb4
   COLLATE = Utf8mb4_bin COMMENT '用户表';
+
+insert into user(id, username, nickname, password, gender, last_login_ip, last_login_time, created_time, updated_time)
+value ('1','superadmin','admin','123456','MAN','localhost','2023-03-07 20:37:36','2023-03-07 20:37:36',null);
+
+insert into user(id, username, nickname, password, gender, last_login_ip, last_login_time, created_time, updated_time)
+    value ('2','user_ljj','my_ljj','123456','MAN','localhost','2023-03-07 20:37:36','2023-03-07 20:37:36',null);

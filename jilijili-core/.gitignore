@@ -6,6 +6,8 @@ target
 !**/src/test/**/target/
 ../.env
 
+src/main/resources/application-pro.yml
+
 /src/test
 
 ### STS ###
