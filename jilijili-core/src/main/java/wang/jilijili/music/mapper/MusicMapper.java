@@ -1,8 +1,9 @@
-package wnag.jilijili.music.mapper;
+package wang.jilijili.music.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
-import wnag.jilijili.music.pojo.entity.Music;
+import wang.jilijili.music.pojo.entity.Music;
+
 
 /**
  * @author admin

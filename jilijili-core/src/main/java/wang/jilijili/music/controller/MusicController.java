@@ -1,4 +1,4 @@
-package wnag.jilijili.music.controller;
+package wang.jilijili.music.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -8,17 +8,16 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import wang.jilijili.music.common.annotation.JilJilOperationLog;
 import wang.jilijili.music.common.enums.OperationType;
-import wang.jilijili.music.controller.BaseController;
+import wang.jilijili.music.mapper.MusicMapper;
+import wang.jilijili.music.pojo.bo.MusicConvertBo;
+import wang.jilijili.music.pojo.dto.MusicDto;
+import wang.jilijili.music.pojo.entity.Music;
+import wang.jilijili.music.pojo.request.MusicCreateRequest;
+import wang.jilijili.music.pojo.request.MusicQueryRequest;
+import wang.jilijili.music.pojo.request.MusicUpdateRequest;
+import wang.jilijili.music.pojo.vo.MusicVo;
 import wang.jilijili.music.pojo.vo.Result;
-import wnag.jilijili.music.mapper.MusicMapper;
-import wnag.jilijili.music.pojo.bo.MusicConvertBo;
-import wnag.jilijili.music.pojo.dto.MusicDto;
-import wnag.jilijili.music.pojo.entity.Music;
-import wnag.jilijili.music.pojo.request.MusicCreateRequest;
-import wnag.jilijili.music.pojo.request.MusicQueryRequest;
-import wnag.jilijili.music.pojo.request.MusicUpdateRequest;
-import wnag.jilijili.music.pojo.vo.MusicVo;
-import wnag.jilijili.music.service.MusicService;
+import wang.jilijili.music.service.MusicService;
 
 import static wang.jilijili.music.common.constant.ModuleNameConstant.MUSIC_MANAGE;
 import static wang.jilijili.music.common.constant.RoleConstant.ROLE_SUPER_ADMIN;

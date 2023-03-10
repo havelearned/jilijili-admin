@@ -11,7 +11,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import wang.jilijili.music.common.enums.Gender;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,7 +55,7 @@ public class User extends SuperEntity implements Serializable, UserDetails {
     /**
      * 性别
      */
-    private String gender;
+    private Gender gender;
 
     /**
      * 是否锁定,1-是,0-否
@@ -81,6 +83,7 @@ public class User extends SuperEntity implements Serializable, UserDetails {
     private Date lastLoginTime;
 
 
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 

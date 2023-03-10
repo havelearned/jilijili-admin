@@ -48,6 +48,7 @@ public class WeChatController extends BaseController<User, UserMapper, UserServi
     }
 
     /**
+     * 获得重定向地址
      * @param redirectUrl 重定向地址
      * @return null
      * @author Amani

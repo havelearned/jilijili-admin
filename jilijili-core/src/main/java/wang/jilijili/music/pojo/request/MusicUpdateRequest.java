@@ -1,4 +1,4 @@
-package wnag.jilijili.music.pojo.request;
+package wang.jilijili.music.pojo.request;
 
 import lombok.Data;
 

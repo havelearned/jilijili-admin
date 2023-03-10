@@ -1,8 +1,9 @@
-package wnag.jilijili.music.pojo.request;
+package wang.jilijili.music.pojo.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import wang.jilijili.music.common.enums.MusicStatus;
 
 /**
  * @author Amani
@@ -15,6 +16,6 @@ public class MusicCreateRequest {
     String name;
 
     @NotBlank
-    Integer musicStatus;
+    MusicStatus musicStatus;
 
 }

@@ -1,8 +1,10 @@
 package wang.jilijili.music.common.aspect;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.github.ksuid.KsuidGenerator;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.java.Log;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
@@ -58,7 +60,7 @@ public class LogAspect {
         JilJilOperationLog annotation = method.getAnnotation(JilJilOperationLog.class);
         if (annotation != null) {
             operationLog.setModuleName(annotation.moduleName());
-            operationLog.setOperationType(annotation.type().ordinal());
+            operationLog.setOperationType(annotation.type().getNum());
         }
         operationLog.setMethodExecution(pjp.getTarget().getClass().getName() + "." + method.getName());
         operationLog.setRequestData(Arrays.toString(pjp.getArgs()));
@@ -66,7 +68,7 @@ public class LogAspect {
         //获取request
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 
-        operationLog.setRequestUrl(request.getRequestURI());
+        operationLog.setRequestUrl(request.getMethod() + " " + request.getRequestURI());
         operationLog.setLastLoginIp(IpUtils.getIpAddress(request));
 
         Object proceed = pjp.proceed();
@@ -75,18 +77,28 @@ public class LogAspect {
         Object username = authentication.getPrincipal();
 
         User user = userMapper.getUserByUsername((String) username);
+        // 设置id
         operationLog.setUserId(user.getId());
         operationLog.setUsername(user.getUsername());
-        operationLog.setContent(proceed.toString());
+        operationLog.setContent(JSONObject.toJSONString(proceed));
         operationLog.setId(KsuidGenerator.generate());
+
         operationLogMapper.insert(operationLog);
         return proceed;
     }
 
     @AfterThrowing(value = "operationLogPointcut()", throwing = "ex")
-    public void afterThrowing(Throwable ex) {
+    public void afterThrowing(JoinPoint joinPoint, Throwable ex) {
         OperationLog operationLog = new OperationLog();
 
+
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        JilJilOperationLog jilOperationLog = signature.getMethod().getAnnotation(JilJilOperationLog.class);
+        if(jilOperationLog!=null){
+            operationLog.setModuleName(jilOperationLog.moduleName());
+            operationLog.setOperationType(jilOperationLog.type().getNum());
+        }
+        operationLog.setMethodExecution(joinPoint.getTarget().getClass().getName() + "." + signature.getName());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object username = authentication.getPrincipal();
 
@@ -95,12 +107,16 @@ public class LogAspect {
         operationLog.setUserId(user.getId());
         operationLog.setUsername(user.getUsername());
         // 设置异常信息
-        operationLog.setContent(ex.getCause().getMessage());
+        if (ex != null) {
+            operationLog.setContent(ex.getCause().getMessage());
+        }
 
         //获取request
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 
-        operationLog.setRequestUrl(request.getRequestURI());
+        operationLog.setRequestUrl(request.getMethod() + " " + request.getRequestURI());
+
+        operationLog.setRequestData(JSONObject.toJSONString(request.getParameterMap()));
         operationLog.setLastLoginIp(IpUtils.getIpAddress(request));
 
         operationLogMapper.insert(operationLog);

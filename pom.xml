@@ -17,7 +17,6 @@
     <description>jilijili-music</description>
     <modules>
         <module>jilijili-core</module>
-        <module>jilijili-music</module>
     </modules>
 
     <properties>

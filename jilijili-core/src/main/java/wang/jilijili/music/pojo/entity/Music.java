@@ -1,10 +1,9 @@
-package wnag.jilijili.music.pojo.entity;
+package wang.jilijili.music.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import wang.jilijili.music.common.enums.MusicStatus;
-import wang.jilijili.music.pojo.entity.SuperEntity;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -13,7 +12,7 @@ import java.io.Serializable;
  * @author admin
  * @TableName music
  */
-@TableName(value = "music")
+@TableName(value = "jilijili-music.music")
 @Data
 public class Music extends SuperEntity implements Serializable {
     /**

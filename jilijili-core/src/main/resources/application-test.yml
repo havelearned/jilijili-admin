@@ -42,11 +42,11 @@ spring:
     # 设置为 true 后 flyway 将在需要 baseline 的时候, 自动执行一次 baseline。
     baseline-on-migrate: true
     # 指定 baseline 的版本号,默认值为 1, 低于该版本号的 SQL 文件, migrate 时会被忽略
-    baseline-version: 20230123160427
+    baseline-version: 1
     # 字符编码 默认 UTF-8
     encoding: UTF-8
     # 是否允许不按顺序迁移 开发建议 true  生产建议 false
-    out-of-order: true
+    out-of-order: false
     # 需要 flyway 管控的 schema list,这里我们配置为flyway  缺省的话, 使用spring.datasource.url 配置的那个 schema,
     # 可以指定多个schema, 但仅会在第一个schema下建立 metadata 表, 也仅在第一个schema应用migration sql 脚本.
     # 但flyway Clean 命令会依次在这些schema下都执行一遍. 所以 确保生产 spring.flyway.clean-disabled 为 true

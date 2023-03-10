@@ -1,3 +1,4 @@
+drop table if exists user_role;
 CREATE TABLE user_role
 (
     user_id VARCHAR(32) NOT NULL COMMENT '用户ID',

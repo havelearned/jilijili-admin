@@ -1,9 +1,10 @@
-package wnag.jilijili.music.pojo.bo;
+package wang.jilijili.music.pojo.bo;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.util.StringUtils;
-import wnag.jilijili.music.pojo.entity.Music;
-import wnag.jilijili.music.pojo.request.MusicQueryRequest;
+import wang.jilijili.music.pojo.entity.Music;
+import wang.jilijili.music.pojo.request.MusicQueryRequest;
+
 
 /**
  * 为歌曲的查询业务条件封装

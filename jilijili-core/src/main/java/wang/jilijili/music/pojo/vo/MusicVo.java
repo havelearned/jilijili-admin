@@ -1,4 +1,4 @@
-package wnag.jilijili.music.pojo.vo;
+package wang.jilijili.music.pojo.vo;
 
 /**
  * @author Amani

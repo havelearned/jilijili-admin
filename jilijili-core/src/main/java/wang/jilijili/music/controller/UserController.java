@@ -45,6 +45,13 @@ public class UserController extends BaseController<User, UserMapper, UserService
         this.userConvertBo = userConvertBo;
     }
 
+    /**
+     * 通过用户名查询
+     * @author Amani
+     * @date 2023/3/10 11:56
+     * @param username  username
+     * @return wang.jilijili.music.pojo.vo.Result<?>
+     */
     @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.SELECT)
     @GetMapping("/checkUsername/{username}")
     public Result<?> checkUsername(@PathVariable("username") String username) {
@@ -54,8 +61,7 @@ public class UserController extends BaseController<User, UserMapper, UserService
     }
 
     /**
-     * 搜索请求
-     *
+     * 分页查询
      * @param userQueryDto 搜索条件
      * @return wang.jilijili.music.pojo.vo.Result<com.baomidou.mybatisplus.core.metadata.IPage < wang.jilijili.music.pojo.vo.UserVo>>
      * @author Amani
@@ -70,6 +76,13 @@ public class UserController extends BaseController<User, UserMapper, UserService
         return Result.ok(voIpage);
     }
 
+    /**
+     *  查询用户
+     * @author Amani
+     * @date 2023/3/10 11:55
+     * @param id id
+     * @return wang.jilijili.music.pojo.vo.Result<wang.jilijili.music.pojo.vo.UserVo>
+     */
     @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.SELECT)
     @GetMapping("/{id}")
     public Result<UserVo> get(@PathVariable("id") String id) {
@@ -128,6 +141,13 @@ public class UserController extends BaseController<User, UserMapper, UserService
         return Result.ok(userVo);
     }
 
+    /**
+     * 查询在线用户
+     * @author Amani
+     * @date 2023/3/10 11:56
+     * @param userQueryDto  查询条件
+     * @return wang.jilijili.music.pojo.vo.Result<com.baomidou.mybatisplus.core.metadata.IPage<wang.jilijili.music.pojo.vo.UserVo>>
+     */
     @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.SELECT)
     @GetMapping("/getOnlineUsers")
     public Result<IPage<UserVo>> getOnlineUsers(
@@ -136,12 +156,26 @@ public class UserController extends BaseController<User, UserMapper, UserService
         return Result.ok(result);
     }
 
+    /**
+     * 查询当前用户
+     * @author Amani
+     * @date 2023/3/10 11:57
+     * @return wang.jilijili.music.pojo.vo.Result<wang.jilijili.music.pojo.vo.UserVo>
+     */
     @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.SELECT)
     @GetMapping("/me")
     public Result<UserVo> me() {
         UserDto userDto = this.userService.currentUser();
         return Result.ok(userConvertBo.toVo(userDto));
     }
+
+    /**
+     * 导出
+     * @author Amani
+     * @date 2023/3/10 11:57
+     * @param userQueryDto 导出条件
+     * @param response 响应
+     */
 
     @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.EXPORT)
     @PostMapping("/export")

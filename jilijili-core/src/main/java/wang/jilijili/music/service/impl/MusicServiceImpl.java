@@ -1,20 +1,20 @@
-package wnag.jilijili.music.service.impl;
+package wang.jilijili.music.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import wang.jilijili.music.common.enums.StatusCodeEnum;
 import wang.jilijili.music.exception.BizException;
-import wnag.jilijili.music.mapper.MusicMapper;
-import wnag.jilijili.music.pojo.bo.MusicConvertBo;
-import wnag.jilijili.music.pojo.dto.MusicDto;
-import wnag.jilijili.music.pojo.entity.Music;
-import wnag.jilijili.music.pojo.request.MusicCreateRequest;
-import wnag.jilijili.music.pojo.request.MusicQueryRequest;
-import wnag.jilijili.music.pojo.request.MusicUpdateRequest;
-import wnag.jilijili.music.service.MusicService;
+import wang.jilijili.music.mapper.MusicMapper;
+import wang.jilijili.music.pojo.bo.MusicConvertBo;
+import wang.jilijili.music.pojo.dto.MusicDto;
+import wang.jilijili.music.pojo.entity.Music;
+import wang.jilijili.music.pojo.request.MusicCreateRequest;
+import wang.jilijili.music.pojo.request.MusicQueryRequest;
+import wang.jilijili.music.pojo.request.MusicUpdateRequest;
+import wang.jilijili.music.service.MusicService;
 
-import static wnag.jilijili.music.pojo.bo.MusicSearchBo.getMusicLambdaQueryWrapper;
+import static wang.jilijili.music.pojo.bo.MusicSearchBo.getMusicLambdaQueryWrapper;
 
 /**
  * @author admin

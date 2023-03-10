@@ -1,12 +1,13 @@
-package wnag.jilijili.music.service;
+package wang.jilijili.music.service;
+
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import wnag.jilijili.music.pojo.dto.MusicDto;
-import wnag.jilijili.music.pojo.entity.Music;
-import wnag.jilijili.music.pojo.request.MusicCreateRequest;
-import wnag.jilijili.music.pojo.request.MusicQueryRequest;
-import wnag.jilijili.music.pojo.request.MusicUpdateRequest;
+import wang.jilijili.music.pojo.dto.MusicDto;
+import wang.jilijili.music.pojo.entity.Music;
+import wang.jilijili.music.pojo.request.MusicCreateRequest;
+import wang.jilijili.music.pojo.request.MusicQueryRequest;
+import wang.jilijili.music.pojo.request.MusicUpdateRequest;
 
 /**
  * @author admin

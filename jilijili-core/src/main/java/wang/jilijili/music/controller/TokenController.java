@@ -22,7 +22,7 @@ import wang.jilijili.music.service.UserService;
 @RestController
 @RequestMapping("/tokens")
 @Tag(name = "token服务")
-public class TokenController extends BaseController<User, UserMapper,UserService> {
+public class TokenController extends BaseController<User, UserMapper, UserService> {
 
     PasswordEncoder passwordEncoder;
 
@@ -30,6 +30,15 @@ public class TokenController extends BaseController<User, UserMapper,UserService
         super(mapper, service);
         this.passwordEncoder = passwordEncoder;
     }
+
+    /**
+     * 创建令牌
+     *
+     * @param createTokenDto 令牌类型
+     * @return wang.jilijili.music.pojo.vo.Result<java.lang.String>
+     * @author Amani
+     * @date 2023/3/10 11:59
+     */
     @JilJilOperationLog(moduleName = "用户管理", type = OperationType.ADD)
     @PostMapping("/")
     public Result<String> create(@RequestBody @Validated CreateTokenDto createTokenDto) {

@@ -1,12 +1,13 @@
-package wnag.jilijili.music.pojo.bo;
+package wang.jilijili.music.pojo.bo;
 
 
 import org.mapstruct.Mapper;
-import wnag.jilijili.music.pojo.dto.MusicDto;
-import wnag.jilijili.music.pojo.entity.Music;
-import wnag.jilijili.music.pojo.request.MusicCreateRequest;
-import wnag.jilijili.music.pojo.request.MusicUpdateRequest;
-import wnag.jilijili.music.pojo.vo.MusicVo;
+import wang.jilijili.music.pojo.dto.MusicDto;
+import wang.jilijili.music.pojo.entity.Music;
+import wang.jilijili.music.pojo.request.MusicCreateRequest;
+import wang.jilijili.music.pojo.request.MusicUpdateRequest;
+import wang.jilijili.music.pojo.vo.MusicVo;
+
 
 /**
  * @author Amani
