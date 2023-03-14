@@ -1,13 +1,14 @@
 package wang.jilijili;
 
-import io.minio.*;
+import io.minio.ListObjectsArgs;
+import io.minio.MinioClient;
+import io.minio.Result;
 import io.minio.errors.MinioException;
 import io.minio.messages.Item;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Iterator;
 
 public class FileUploader {
     public static void main(String[] args)
@@ -27,9 +28,7 @@ public class FileUploader {
 
             ListObjectsArgs listObjectsArgs = new ListObjectsArgs();
             Iterable<Result<Item>> results = minioClient.listObjects(listObjectsArgs);
-            Iterator<Result<Item>> iterator = results.iterator();
-            while(iterator.hasNext()){
-                Result<Item> next = iterator.next();
+            for (Result<Item> next : results) {
                 System.out.println(next.get().size());
             }
         } catch (MinioException e) {
