@@ -1,58 +1,112 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-    <groupId>wang.jilijili</groupId>
-    <artifactId>jilijili-system</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <name>jilijili-system</name>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <description>jilijili-music</description>
-    <modules>
-        <module>jilijili-core</module>
-    </modules>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.0.0</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <maven.compiler.compilerVersion>17</maven.compiler.compilerVersion>
+  <groupId>wang.jilijili</groupId>
+  <artifactId>jilijili</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
-        <springdoc-openapi-version>2.0.2</springdoc-openapi-version>
-        <mybatis-plus-version>3.5.3.1</mybatis-plus-version>
-        <lombok-version>1.18.24</lombok-version>
-        <fastjson2-version>2.0.12</fastjson2-version>
-        <hutool-all-version>5.8.11</hutool-all-version>
-        <ksuid-version>1.0.0</ksuid-version>
-        <mapstruct-version>1.4.2.Final</mapstruct-version>
-        <UserAgentUtils-version>1.21</UserAgentUtils-version>
-        <java-jwt-version>3.11.0</java-jwt-version>
-        <poi-ooxml-version>4.1.2</poi-ooxml-version>
-        <weixin-java-miniapp-version>4.2.0</weixin-java-miniapp-version>
+  <name>jilijili</name>
+  <url>http://maven.apache.org</url>
+  <modules>
+    <module>jilijili-system</module>
+    <module>jilijili-common</module>
+    <module>jilijili-framework</module>
+    <module>jilijili-admin</module>
+    <module>jilijili-music</module>
+  </modules>
 
-        <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
-    </properties>
+  <description>父模块</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>17</java.version>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+
+    <springdoc-openapi-version>2.0.2</springdoc-openapi-version>
+    <mybatis-plus-version>3.5.3.1</mybatis-plus-version>
+    <lombok-version>1.18.24</lombok-version>
+    <fastjson2-version>2.0.12</fastjson2-version>
+    <hutool-all-version>5.8.11</hutool-all-version>
+    <ksuid-version>1.0.0</ksuid-version>
+    <mapstruct-version>1.4.2.Final</mapstruct-version>
+    <UserAgentUtils-version>1.21</UserAgentUtils-version>
+    <java-jwt-version>3.11.0</java-jwt-version>
+    <poi-ooxml-version>4.1.2</poi-ooxml-version>
+    <weixin-java-miniapp-version>4.2.0</weixin-java-miniapp-version>
+
+    <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
 
 
 
-        <dependencies>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <optional>true</optional>
-            </dependency>
+    </dependencies>
 
-            <dependency>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-core</artifactId>
-            </dependency>
+  </dependencyManagement>
+  <dependencies>
 
-        </dependencies>
+
+
+  </dependencies>
+  <!-- 控制配置maven构建项目的参数设置，设置jdk版本 -->
+  <build>
+    <!-- 配置插件 -->
+    <plugins>
+      <!-- 配置具体插件 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <!-- 插件的名称 -->
+        <artifactId>maven-compiler-plugin</artifactId>
+        <!-- 插件的版本 -->
+        <version>3.8.1</version>
+        <!-- 配置插件的信息 -->
+        <configuration>
+          <!-- 告诉maven，项目是在jdk1.8上编译的 -->
+          <source>17</source>
+          <!-- 程序应该运行在jdk1.8上 -->
+          <target>17</target>
+        </configuration>
+      </plugin>
+
+      <!--javabean转换插件-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin-version}</version>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>${mapstruct-version}</version>
+            </path>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok-version}</version>
+            </path>
+            <!-- This is needed when using Lombok 1.18.16 and above -->
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok-mapstruct-binding</artifactId>
+              <version>0.2.0</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+
+      </plugin>
+    </plugins>
+  </build>
 </project>
