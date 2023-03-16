@@ -22,25 +22,6 @@ spring:
           url: jdbc:mysql://150.158.94.163:3337/jilijili-music?serverTimezone=Asia/Shanghai&allowMultiQueries=true
           username: root
           password: 123456
-  #    type: com.zaxxer.hikari.HikariDataSource
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT}/${DATABASE_NAME_1}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
-#    username: ${MYSQL_USER_NAME}
-#    password: ${MYSQL_PASSWORD}
-#    hikari:
-#      #最小空闲连接数量
-#      minimum-idle: 5
-#      #从池返回的连接默认自动提交
-#      auto-commit: true
-#      #空闲连接最大时间，10秒
-#      idle-timeout: 10000
-#      #连接池名字
-#      pool-name: StoreHikariCP
-#      #池中连接的最长生命周期
-#      max-lifetime: 1800000
-#      #数据库连接的超时时间
-#      connection-timeout: 30000
-#      connection-test-query: SELECT 1
 
   #  数据库版本迁移
   flyway:

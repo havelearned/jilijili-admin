@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -21,6 +22,7 @@ import java.util.Enumeration;
 public class JilijiliMusicApplication {
     private static Environment environment;
 
+    private static PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
         SpringApplication.run(JilijiliMusicApplication.class, args);
@@ -28,7 +30,7 @@ public class JilijiliMusicApplication {
         log.info("http://" + getIpAddress() + ":" + port + "/swagger-ui/index.html 接口文档");
         log.info("http://" + getIpAddress() + ":" + port + "/test/test 测试接口");
 
-
+        log.info("密码:"+passwordEncoder.encode("123456"));
     }
 
     public static String getIpAddress() {
@@ -58,5 +60,11 @@ public class JilijiliMusicApplication {
     @Autowired
     public void setEnvironment(Environment environment) {
         JilijiliMusicApplication.environment = environment;
+    }
+
+
+    @Autowired
+    public  void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        JilijiliMusicApplication.passwordEncoder = passwordEncoder;
     }
 }

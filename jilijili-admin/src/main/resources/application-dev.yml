@@ -8,25 +8,20 @@ server:
 spring:
   # 配置mysql数据库
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT}/${DATABASE_NAME_1}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
-    username: ${MYSQL_USER_NAME}
-    password: ${MYSQL_PASSWORD}
-    hikari:
-      #最小空闲连接数量
-      minimum-idle: 5
-      #从池返回的连接默认自动提交
-      auto-commit: true
-      #空闲连接最大时间，10秒
-      idle-timeout: 10000
-      #连接池名字
-      pool-name: StoreHikariCP
-      #池中连接的最长生命周期
-      max-lifetime: 1800000
-      #数据库连接的超时时间
-      connection-timeout: 30000
-      connection-test-query: SELECT 1
+    dynamic:
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      datasource:
+        master:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT}/${DATABASE_NAME_1}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+          username: ${MYSQL_USER_NAME}
+          password: ${MYSQL_PASSWORD}
+        slave_1:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT}/${DATABASE_NAME_2}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+          username: ${MYSQL_USER_NAME}
+          password: ${MYSQL_PASSWORD}
 
   #  数据库版本迁移
   flyway:
@@ -122,5 +117,20 @@ springdoc:
 wx:
   appId: ${WX_APPID}
   appSecret: ${WX_APPSECRET}
+
+upload:
+  store:
+    local:
+      domain-url: D:\.temp\tmp\upload
+      access-key: ljj
+      access-key-secret: 123456.ljj
+      endpoint: http://localhost:8080
+      bucket: jilijili-system
+    oss:
+      domain-url: ${oss_domain-url}
+      access-key: ${oss_access-key}
+      access-key-secret: ${oss_access-key-secret}
+      endpoint: ${oss_endpoint}
+      bucket: ${oss_bucket}
 
 

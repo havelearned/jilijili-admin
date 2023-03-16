@@ -21,6 +21,10 @@ public enum ExceptionType {
     USER_NOT_ENABLED(50001001,"用户未启用"),
     USER_NOT_LOCKED(50001002,"用户被锁定"),
     USER_EXPORT_ERROR(50001003,"导出失败"),
+    UPLOAD_FAILED(500061001,"文件上传失败"),
+    FILE_DOES_NOT_EXIST(500061002,"文件不存在"),
+    FILE_DIR_CREATED_FAILED(500061003,"文件夹创建失败"),
+    OSS_INIT_FAIL(500062001,"OSS init fail"),
     ;
 
     private final Integer code;

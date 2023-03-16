@@ -22,6 +22,7 @@
     <dependencies>
 
 
+
         <dependency>
             <groupId>wang.jilijili</groupId>
             <artifactId>jilijili-framework</artifactId>
@@ -33,6 +34,8 @@
             <artifactId>jilijili-music</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+
     </dependencies>
 
 

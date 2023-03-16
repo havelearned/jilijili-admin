@@ -1,7 +1,8 @@
 package wang.jilijili.framework.handler;
 
 
-import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -26,11 +27,10 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
 
-    @ExceptionHandler(value = TokenExpiredException.class)
+    @ExceptionHandler(value = JWTVerificationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Result<?> repeatException(TokenExpiredException e) {
-        e.printStackTrace();
-        return Result.fail(HttpStatus.BAD_REQUEST, "令牌过期了,请重新登录");
+    public Result<?> repeatException(Exception e) {
+        return Result.fail(HttpStatus.BAD_REQUEST, "令牌错误或者过期了,请重新登录-详细信息:"+ e.getMessage());
     }
 
     @ExceptionHandler(value = DataAccessException.class)
@@ -70,5 +70,12 @@ public class GlobalExceptionHandler {
         return Result.fail(responses);
     }
 
+
+    @ExceptionHandler(value = Exception.class)
+    @Order(99)
+    public Result<?> exception(Exception e){
+        return  Result.fail(e.getMessage());
+
+    }
 
 }

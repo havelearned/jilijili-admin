@@ -90,8 +90,8 @@ public class LogAspect {
 
     @AfterThrowing(value = "operationLogPointcut()", throwing = "ex")
     public void afterThrowing(JoinPoint joinPoint, Throwable ex) {
+        ex.printStackTrace();
         OperationLog operationLog = new OperationLog();
-
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         JilJilOperationLog jilOperationLog = signature.getMethod().getAnnotation(JilJilOperationLog.class);
