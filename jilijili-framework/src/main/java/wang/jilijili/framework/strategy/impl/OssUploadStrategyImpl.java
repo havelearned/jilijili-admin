@@ -48,16 +48,15 @@ public class OssUploadStrategyImpl extends AbstractUploadStrategyImpl{
 
     @Override
     public boolean checkFileIsExisted(String fileRelativePath) {
-        return true;
+        return false;
 
     }
 
     @Override
     public void executeUpload(MultipartFile file, String fileRelativePath) throws IOException {
-        this.ossClient.putObject(uploadStoreProperties.getOss().getBucket(),
+         this.ossClient.putObject(uploadStoreProperties.getOss().getBucket(),
                 fileRelativePath,
                 file.getInputStream());
-
     }
 
     @Override

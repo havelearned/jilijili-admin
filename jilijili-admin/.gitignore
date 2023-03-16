@@ -1,3 +1,4 @@
 /target
 /src/test/java
 src/main/resources/application-pro.yml
+src/main/resources/application-test.yml
