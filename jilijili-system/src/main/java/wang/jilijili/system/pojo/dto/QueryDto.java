@@ -1,5 +1,6 @@
 package wang.jilijili.system.pojo.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,11 +19,11 @@ public class QueryDto {
     protected Long size = 5L;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     protected Date createdTime;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     protected Date specifyTime;
 
 }

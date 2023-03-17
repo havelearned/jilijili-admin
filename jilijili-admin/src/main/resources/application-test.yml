@@ -119,3 +119,17 @@ wx:
   appSecret: ${WX_APPSECRET}
 
 
+upload:
+  store:
+    local:
+      domain-url: D:\.temp\tmp\upload
+      access-key: ljj
+      access-key-secret: 123456.ljj
+      endpoint: http://localhost:8080
+      bucket: jilijili-system
+    oss:
+      domain-url: ${oss_domain-url}
+      access-key: ${oss_access-key}
+      access-key-secret: ${oss_access-key-secret}
+      endpoint: ${oss_endpoint}
+      bucket: ${oss_bucket}

@@ -41,7 +41,6 @@ public class TokenController extends BaseController<User, UserMapper, UserServic
      * @author Amani
      * @date 2023/3/10 11:59
      */
-    @JilJilOperationLog(moduleName = "用户管理", type = OperationType.ADD)
     @PostMapping("/")
     public Result<String> create(@RequestBody @Validated CreateTokenDto createTokenDto) {
         String token = super.createToken(createTokenDto, passwordEncoder);
