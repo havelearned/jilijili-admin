@@ -54,7 +54,6 @@ public class UserController extends BaseController<User, UserMapper, UserService
      * @param username  username
      * @return wang.jilijili.music.pojo.vo.Result<?>
      */
-    @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.SELECT)
     @GetMapping("/checkUsername/{username}")
     public Result<?> checkUsername(@PathVariable("username") String username) {
         long count = this.service.count(new LambdaQueryWrapper<User>().eq(User::getUsername, username));
@@ -69,7 +68,6 @@ public class UserController extends BaseController<User, UserMapper, UserService
      * @author Amani
      * @date 2023/3/5 11:45
      */
-    @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.SELECT)
     @GetMapping("/list")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     public Result<IPage<UserVo>> search(UserQueryDto userQueryDto) {
@@ -85,7 +83,6 @@ public class UserController extends BaseController<User, UserMapper, UserService
      * @param id id
      * @return wang.jilijili.music.pojo.vo.Result<wang.jilijili.music.pojo.vo.UserVo>
      */
-    @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.SELECT)
     @GetMapping("/{id}")
     public Result<UserVo> get(@PathVariable("id") String id) {
         UserVo userVo = this.userConvertBo.toVo(this.userService.get(id));
@@ -150,7 +147,6 @@ public class UserController extends BaseController<User, UserMapper, UserService
      * @param userQueryDto  查询条件
      * @return wang.jilijili.music.pojo.vo.Result<com.baomidou.mybatisplus.core.metadata.IPage<wang.jilijili.music.pojo.vo.UserVo>>
      */
-    @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.SELECT)
     @GetMapping("/getOnlineUsers")
     public Result<IPage<UserVo>> getOnlineUsers(
             @RequestBody UserQueryDto userQueryDto) {
@@ -164,7 +160,6 @@ public class UserController extends BaseController<User, UserMapper, UserService
      * @date 2023/3/10 11:57
      * @return wang.jilijili.music.pojo.vo.Result<wang.jilijili.music.pojo.vo.UserVo>
      */
-    @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.SELECT)
     @GetMapping("/me")
     public Result<UserVo> me() {
         UserDto userDto = this.userService.currentUser();
