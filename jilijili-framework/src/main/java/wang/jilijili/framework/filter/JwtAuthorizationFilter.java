@@ -3,23 +3,24 @@ package wang.jilijili.framework.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import wang.jilijili.common.exception.BizException;
+import wang.jilijili.common.exception.ExceptionType;
 import wang.jilijili.framework.config.SecurityConfig;
 import wang.jilijili.system.mapper.UserMapper;
 import wang.jilijili.system.pojo.entity.User;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * @author admin
@@ -57,16 +58,23 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getAuthentication(String header) {
 
         // 解析token
-        String username = JWT.require(Algorithm.HMAC512(SecurityConfig.SECRET.getBytes()))
+
+        DecodedJWT verify = JWT.require(Algorithm.HMAC512(SecurityConfig.SECRET.getBytes()))
                 .build()
-                .verify(header.replace(SecurityConfig.TOKEN_PREFIX, ""))
-                .getSubject();
+                .verify(header.replace(SecurityConfig.TOKEN_PREFIX, ""));
 
-        if (username != null) {
-            User user = this.userMapper.getUserByUsername(username);
-            return new UsernamePasswordAuthenticationToken(username, null, user.getAuthorities());
+        Date expiresAt = verify.getExpiresAt();
+        Date newDate = new Date();
+        if(newDate.compareTo(expiresAt) < 0){
+            String username = verify.getSubject();
+            if (username != null) {
+                User user = this.userMapper.getUserByUsername(username);
+                return new UsernamePasswordAuthenticationToken(username, null, user.getAuthorities());
+            }
+        }else{
+            // 过期
+            throw new BizException(ExceptionType.TOKEN_EXPIRES);
         }
-
-        return null;
+        return new UsernamePasswordAuthenticationToken(null, null, null);
     }
 }

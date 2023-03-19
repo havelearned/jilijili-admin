@@ -15,6 +15,7 @@ public enum ExceptionType {
     BAD_REQUEST(400, "请求错误"),
     FORBIDDEN(403, "无权操作"),
     NOT_FOUND(404, "未找到3"),
+    TOKEN_EXPIRES(400,"登录过期,请重新登录"),
     USER_NAME_DUPLICATE(4001001, "用户名重复"),
     USER_NOT_FOND(40401001,"用户未找到"),
     USERNAME_OR_PASSWORD_ERROR(40001002,"用户名或者密码错误"),

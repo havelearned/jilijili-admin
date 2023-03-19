@@ -4,13 +4,14 @@ package wang.jilijili.music.pojo.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import wang.jilijili.common.enums.MusicStatus;
 import wang.jilijili.common.pojo.entity.SuperEntity;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 /**
+ * 数据库的对象
+ *
  * @author admin
  * @TableName music
  */
@@ -27,13 +28,31 @@ public class Music extends SuperEntity implements Serializable {
      * 歌曲状态:1可用 0不可用
      */
     @TableField(value = "status")
-    private MusicStatus status;
+    private Integer status;
 
     /**
      * 歌曲信息
-     * */
+     */
     @TableField(value = "description")
     private String description;
+
+    /**
+     * 音乐文件资源
+     * */
+    @TableField(value = "music_filepath")
+    private String musicFilepath;
+
+    /**
+     * 歌手id
+     * */
+    @TableField(value = "singer_id")
+    private String singerId;
+
+    /**
+     * 音乐专辑
+     */
+    @TableField(value = "album_id")
+    private String albumId;
 
 
     @Serial

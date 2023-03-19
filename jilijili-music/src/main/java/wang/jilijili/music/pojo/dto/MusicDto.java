@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 /**
+ * service和dao层传输对象
  * @author Amani
  * @date 2023年03月09日 10:31
  */
@@ -17,7 +18,7 @@ public class MusicDto {
 
     private String name;
 
-    private String status;
+    private Integer status;
 
     private String description;
 

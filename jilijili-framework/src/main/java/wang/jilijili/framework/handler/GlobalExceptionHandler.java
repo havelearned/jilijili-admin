@@ -30,12 +30,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = JWTVerificationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<?> repeatException(Exception e) {
-        return Result.fail(HttpStatus.BAD_REQUEST, "令牌错误或者过期了,请重新登录-详细信息:"+ e.getMessage());
+        e.printStackTrace();
+        return Result.fail(HttpStatus.BAD_REQUEST, "令牌错误或者过期了,请重新登录-详细信息:" + e.getMessage());
     }
 
     @ExceptionHandler(value = DataAccessException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<?> repeatException(DataAccessException e) {
+        e.printStackTrace();
 
         return Result.fail(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
@@ -43,6 +45,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = BizException.class)
     public Result<?> bizException(BizException e) {
+        e.printStackTrace();
         return Result.fail(
                 e.getCode(),
                 String.format("%s", e.getMessage()));
@@ -51,6 +54,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public Result<?> accessDeniedException(AccessDeniedException e) {
+        e.printStackTrace();
         return Result.fail(
                 ExceptionType.FORBIDDEN.getCode(),
                 String.format("%s %s", ExceptionType.FORBIDDEN.getMessage(), e.getMessage()));
@@ -60,6 +64,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<List<ErrorResponse>> methodArgumentNotValidException(MethodArgumentNotValidException e) {
+        e.printStackTrace();
         List<ErrorResponse> responses = new ArrayList<>();
         e.getBindingResult().getAllErrors().forEach((error) -> {
             ErrorResponse errorResponse = new ErrorResponse();
@@ -73,8 +78,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     @Order(99)
-    public Result<?> exception(Exception e){
-        return  Result.fail(e.getMessage());
+    public Result<?> exception(Exception e) {
+        e.printStackTrace();
+        return Result.fail(e.getMessage());
 
     }
 

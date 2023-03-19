@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
+ * 创建表单
  * @author Amani
  * @date 2023年03月09日 10:40
  */
@@ -15,7 +16,7 @@ public class MusicCreateRequest {
     private  String name;
 
     @NotBlank
-    private String status;
+    private Integer status;
 
     @NotBlank
     @Size(min = 0, max = 900, message = "歌曲信息长度应该在0到900个字符之间")

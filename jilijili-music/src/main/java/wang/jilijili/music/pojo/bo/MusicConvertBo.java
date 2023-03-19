@@ -10,6 +10,7 @@ import wang.jilijili.music.pojo.vo.MusicVo;
 
 
 /**
+ * 业务对象
  * @author Amani
  * @date 2023年03月09日 10:43
  */

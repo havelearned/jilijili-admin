@@ -1,10 +1,13 @@
 package wang.jilijili.common.enums;
 
+import lombok.Getter;
+
 /**
+ * 歌曲状态
  * @author admin
  */
 
-
+@Getter
 public enum MusicStatus{
     /**
      * 草稿
@@ -19,5 +22,8 @@ public enum MusicStatus{
     /**
      * 下架
      * */
-    CLOSED
+    CLOSED;
+
+
+
 }

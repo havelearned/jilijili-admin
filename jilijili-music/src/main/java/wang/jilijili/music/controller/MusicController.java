@@ -28,12 +28,12 @@ import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
 @RestController
 @RequestMapping("/multipleMusic")
 @Tag(name = "歌曲管理")
-public class MusicController  {
+public class MusicController {
 
     MusicService musicService;
     MusicConvertBo musicConvertBo;
 
-    public MusicController( MusicService musicService, MusicConvertBo musicConvertBo) {
+    public MusicController(MusicService musicService, MusicConvertBo musicConvertBo) {
         this.musicService = musicService;
         this.musicConvertBo = musicConvertBo;
     }
@@ -48,7 +48,6 @@ public class MusicController  {
      */
     @GetMapping("/list")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
-    @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.SELECT)
     public Result<IPage<MusicVo>> list(@RequestBody MusicQueryRequest musicQueryRequest) {
 
         IPage<Music> tPage = new Page<>(musicQueryRequest.getPage(), musicQueryRequest.getSize());
