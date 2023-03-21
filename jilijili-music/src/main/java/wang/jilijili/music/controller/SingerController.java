@@ -4,6 +4,7 @@ package wang.jilijili.music.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
@@ -25,13 +26,14 @@ import static wang.jilijili.common.constant.ModuleNameConstant.MUSIC_MANAGE;
 import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
 
 /**
- * 歌手表(Singer)表控制层
+ * 歌手控制器
  *
  * @author makejava
  * @since 2023-03-20 23:33:45
  */
 @RestController
 @RequestMapping("/singer")
+@Tag(name = "歌手管理")
 public class SingerController extends BaseController<SingerMapper> {
     /**
      * 服务对象
@@ -111,7 +113,7 @@ public class SingerController extends BaseController<SingerMapper> {
     @DeleteMapping("/")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.DELETED)
-    public Result<?> delete(@RequestParam("idList") List<Long> idList) {
+    public Result<?> delete(@RequestParam("idList") List<String> idList) {
         return Result.ok(this.singerService.removeByIds(idList));
     }
 

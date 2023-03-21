@@ -13,6 +13,7 @@ public enum ExceptionType {
 
     UNAUTHORIZED(401, "未登录"),
     BAD_REQUEST(400, "请求错误"),
+    REQUEST_OPERATE_ERROR(400, "操作失败"),
     FORBIDDEN(403, "无权操作"),
     NOT_FOUND(404, "未找到该页面"),
     TOKEN_EXPIRES(400,"登录过期,请重新登录"),

@@ -1,6 +1,7 @@
 package wang.jilijili.music.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.ksuid.KsuidGenerator;
 import org.springframework.stereotype.Service;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ExceptionType;
@@ -31,6 +32,7 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer>
     @Override
     public SingerDto create(SingerDto singerDto) {
         Singer singer = this.singerConvertBo.toSinger(singerDto);
+        singer.setId(KsuidGenerator.generate());
         boolean save = this.save(singer);
         if (save) {
             return this.singerConvertBo.toSingerDto(singer);
@@ -42,11 +44,13 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer>
     @Override
     public SingerDto update(SingerDto singerDto) {
         Singer singer = this.singerConvertBo.toSinger(singerDto);
-        if (this.updateById(singer)) {
-            return this.singerConvertBo.toSingerDto(singer);
+        boolean update = this.updateById(singer);
+        if (update) {
+
+            return this.singerConvertBo.toSingerDto(this.getById(singer.getId()));
         }
 
-        throw new BizException(ExceptionType.BAD_REQUEST);
+        throw new BizException(ExceptionType.REQUEST_OPERATE_ERROR);
     }
 }
 

@@ -11,9 +11,10 @@ import wang.jilijili.common.core.service.impl.AsyncServerImpl;
 import java.util.concurrent.CountDownLatch;
 
 /**
+ * 测试控制器
  * @author admin
  * @Date: 2023/1/22 21:39
- * @Description:
+ * @Description: 测试控制器
  */
 @RestController
 @RequestMapping("/test")

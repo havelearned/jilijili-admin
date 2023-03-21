@@ -22,6 +22,7 @@ import static wang.jilijili.common.constant.ModuleNameConstant.MUSIC_MANAGE;
 import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
 
 /**
+ * 歌曲控制器
  * @author Amani
  * @date 2023年03月09日 10:23
  */

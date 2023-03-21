@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 微信小程序控制器
  * @author Amani
  * @date 2023年02月21日 17:04
  */

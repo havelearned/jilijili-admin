@@ -51,6 +51,7 @@ public class BaseController<M extends BaseMapper> implements UserDetailsService 
 
     @Autowired
     public void setMapper(M mapper) {
+        log.warn("初始化mapper对象:{}", mapper.getClass());
         this.mapper = mapper;
     }
 
@@ -68,7 +69,6 @@ public class BaseController<M extends BaseMapper> implements UserDetailsService 
         } else {
             user = this.loadUserByUsername(createTokenDto.getUsername());
         }
-
 
         if (!passwordEncoder.matches(createTokenDto.getPassword(), user.getPassword())) {
             throw new BizException(ExceptionType.USERNAME_OR_PASSWORD_ERROR);
