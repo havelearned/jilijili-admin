@@ -6,8 +6,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import wang.jilijili.common.annotation.JilJilOperationLog;
+import wang.jilijili.common.core.pojo.vo.Result;
 import wang.jilijili.common.enums.OperationType;
-import wang.jilijili.framework.annotation.JilJilOperationLog;
 import wang.jilijili.music.pojo.bo.MusicConvertBo;
 import wang.jilijili.music.pojo.dto.MusicDto;
 import wang.jilijili.music.pojo.entity.Music;
@@ -16,7 +17,6 @@ import wang.jilijili.music.pojo.request.MusicQueryRequest;
 import wang.jilijili.music.pojo.request.MusicUpdateRequest;
 import wang.jilijili.music.pojo.vo.MusicVo;
 import wang.jilijili.music.service.MusicService;
-import wang.jilijili.system.pojo.vo.Result;
 
 import static wang.jilijili.common.constant.ModuleNameConstant.MUSIC_MANAGE;
 import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;

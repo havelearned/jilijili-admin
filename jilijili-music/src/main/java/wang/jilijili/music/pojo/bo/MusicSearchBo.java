@@ -1,6 +1,6 @@
 package wang.jilijili.music.pojo.bo;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.util.StringUtils;
 import wang.jilijili.music.pojo.entity.Music;
 import wang.jilijili.music.pojo.request.MusicQueryRequest;
@@ -18,10 +18,12 @@ public class MusicSearchBo {
      * @param musicQueryRequest 查询条件构造
      * @return LambdaQueryWrapper<Music>
      */
-    public static LambdaQueryWrapper<Music> getMusicLambdaQueryWrapper(MusicQueryRequest musicQueryRequest) {
-        LambdaQueryWrapper<Music> queryWrapper = new LambdaQueryWrapper<>();
+    public static QueryWrapper<Music> getMusicLambdaQueryWrapper(MusicQueryRequest musicQueryRequest) {
+        QueryWrapper<Music> queryWrapper = new QueryWrapper<>();
         queryWrapper
-                .like(StringUtils.hasText(musicQueryRequest.getName()), Music::getName, musicQueryRequest.getName());
+                .like(StringUtils.hasText(musicQueryRequest.getName()), "m.name", musicQueryRequest.getName());
+
+        System.out.println("getCustomSqlSegment====>"+queryWrapper.getCustomSqlSegment());
         return queryWrapper;
     }
 

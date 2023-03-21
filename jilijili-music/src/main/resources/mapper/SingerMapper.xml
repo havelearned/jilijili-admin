@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wang.jilijili.music.mapper.SingerMapper">
+
+    <resultMap id="BaseResultMap" type="wang.jilijili.music.pojo.entity.Singer">
+            <id property="id" column="id" jdbcType="VARCHAR"/>
+            <result property="singerName" column="singer_name" jdbcType="VARCHAR"/>
+            <result property="singerDetails" column="singer_details" jdbcType="VARCHAR"/>
+            <result property="singerPhoto" column="singer_photo" jdbcType="VARCHAR"/>
+            <result property="singerType" column="singer_type" jdbcType="TINYINT"/>
+            <result property="locked" column="locked" jdbcType="TINYINT"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,singer_name,singer_details,
+        singer_photo,singer_type,locked,
+        created_time,updated_time
+    </sql>
+</mapper>

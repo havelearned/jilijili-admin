@@ -17,7 +17,6 @@
   <name>jilijili</name>
   <url>http://maven.apache.org</url>
   <modules>
-    <module>jilijili-system</module>
     <module>jilijili-common</module>
     <module>jilijili-framework</module>
     <module>jilijili-admin</module>

@@ -10,10 +10,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import wang.jilijili.common.core.pojo.vo.Result;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ErrorResponse;
 import wang.jilijili.common.exception.ExceptionType;
-import wang.jilijili.system.pojo.vo.Result;
 
 import java.util.ArrayList;
 import java.util.List;

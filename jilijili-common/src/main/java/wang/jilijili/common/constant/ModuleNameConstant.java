@@ -8,4 +8,5 @@ public interface ModuleNameConstant {
     String USER_MANAGEMENT = "用户管理";
 
     String MUSIC_MANAGE = "音乐管理";
+
 }

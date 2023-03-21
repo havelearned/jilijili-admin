@@ -21,7 +21,7 @@ import org.springframework.security.web.csrf.MissingCsrfTokenException;
 import org.springframework.security.web.session.SessionInformationExpiredEvent;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.springframework.stereotype.Component;
-import wang.jilijili.system.pojo.vo.Result;
+import wang.jilijili.common.core.pojo.vo.Result;
 
 import java.io.IOException;
 

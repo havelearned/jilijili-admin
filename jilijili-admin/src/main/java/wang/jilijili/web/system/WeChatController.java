@@ -8,16 +8,14 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import wang.jilijili.common.annotation.JilJilOperationLog;
+import wang.jilijili.common.core.controller.BaseController;
+import wang.jilijili.common.core.mapper.UserMapper;
+import wang.jilijili.common.core.pojo.bo.UserConvertBo;
+import wang.jilijili.common.core.pojo.dto.Code2SessionDto;
+import wang.jilijili.common.core.pojo.vo.Result;
+import wang.jilijili.common.core.service.WeChatMpService;
 import wang.jilijili.common.enums.OperationType;
-import wang.jilijili.framework.annotation.JilJilOperationLog;
-import wang.jilijili.system.mapper.UserMapper;
-import wang.jilijili.system.pojo.bo.UserConvertBo;
-import wang.jilijili.system.pojo.dto.Code2SessionDto;
-import wang.jilijili.system.pojo.entity.User;
-import wang.jilijili.system.pojo.vo.Result;
-import wang.jilijili.system.service.UserService;
-import wang.jilijili.system.service.WeChatMpService;
-import wang.jilijili.web.common.BaseController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +27,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/weChat")
 @Tag(name = "微信小程序控制器")
-public class WeChatController extends BaseController<User, UserMapper, UserService> {
+public class WeChatController extends BaseController<UserMapper> {
 
 
     WxMaService wxMaService;
@@ -38,10 +36,7 @@ public class WeChatController extends BaseController<User, UserMapper, UserServi
 
     PasswordEncoder passwordEncoder;
 
-    public WeChatController(UserMapper mapper, UserService service,
-                            WxMaService wxMaService, WeChatMpService weChatMpService,
-                            PasswordEncoder passwordEncoder, UserConvertBo userConvertBo) {
-        super(mapper, service);
+    public WeChatController(WxMaService wxMaService, WeChatMpService weChatMpService, UserConvertBo userConvertBo, PasswordEncoder passwordEncoder) {
         this.wxMaService = wxMaService;
         this.weChatMpService = weChatMpService;
         this.userConvertBo = userConvertBo;
@@ -50,6 +45,7 @@ public class WeChatController extends BaseController<User, UserMapper, UserServi
 
     /**
      * 获得重定向地址
+     *
      * @param redirectUrl 重定向地址
      * @return null
      * @author Amani

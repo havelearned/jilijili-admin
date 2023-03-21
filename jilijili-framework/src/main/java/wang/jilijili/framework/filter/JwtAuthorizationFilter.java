@@ -13,11 +13,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
+import wang.jilijili.common.core.mapper.UserMapper;
+import wang.jilijili.common.core.pojo.entity.User;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ExceptionType;
 import wang.jilijili.framework.config.SecurityConfig;
-import wang.jilijili.system.mapper.UserMapper;
-import wang.jilijili.system.pojo.entity.User;
 
 import java.io.IOException;
 import java.util.Date;

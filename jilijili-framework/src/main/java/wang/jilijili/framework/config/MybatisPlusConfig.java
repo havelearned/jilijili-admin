@@ -16,10 +16,8 @@ import wang.jilijili.framework.handler.MpMetaObjectHandler;
  * @date 2023年02月12日 22:08
  */
 @Configuration
-@MapperScan(basePackages = {
-        "wang.jilijili.system.mapper",
-        "wang.jilijili.music.mapper"
-})
+@MapperScan( {"wang.jilijili.common.core.mapper",
+        "wang.jilijili.music.mapper"})
 public class MybatisPlusConfig {
 
     @Autowired

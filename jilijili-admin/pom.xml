@@ -22,13 +22,6 @@
     <dependencies>
 
 
-
-        <dependency>
-            <groupId>wang.jilijili</groupId>
-            <artifactId>jilijili-framework</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
         <dependency>
             <groupId>wang.jilijili</groupId>
             <artifactId>jilijili-music</artifactId>
@@ -59,5 +52,7 @@
                 </configuration>
             </plugin>
         </plugins>
+
+
     </build>
 </project>

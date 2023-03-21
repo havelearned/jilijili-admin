@@ -2,8 +2,12 @@ package wang.jilijili.music.mapper;
 
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.springframework.stereotype.Repository;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import wang.jilijili.music.pojo.entity.Music;
 
 /**
@@ -13,8 +17,10 @@ import wang.jilijili.music.pojo.entity.Music;
  * @Entity wang.jilijili.music.pojo.entity.Music
  */
 @DS("slave_1")
-@Repository
+@Mapper
 public interface MusicMapper extends BaseMapper<Music> {
+
+    IPage<Music> queryAllMusicInformation(IPage<Music> page, @Param(Constants.WRAPPER) Wrapper<Music> wrapper);
 
 }
 

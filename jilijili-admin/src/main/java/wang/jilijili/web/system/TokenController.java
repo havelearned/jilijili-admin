@@ -8,14 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import wang.jilijili.common.enums.OperationType;
-import wang.jilijili.framework.annotation.JilJilOperationLog;
-import wang.jilijili.system.mapper.UserMapper;
-import wang.jilijili.system.pojo.dto.CreateTokenDto;
-import wang.jilijili.system.pojo.entity.User;
-import wang.jilijili.system.pojo.vo.Result;
-import wang.jilijili.system.service.UserService;
-import wang.jilijili.web.common.BaseController;
+import wang.jilijili.common.core.controller.BaseController;
+import wang.jilijili.common.core.mapper.UserMapper;
+import wang.jilijili.common.core.pojo.dto.CreateTokenDto;
+import wang.jilijili.common.core.pojo.vo.Result;
+
+
 
 /**
  * @author Amani
@@ -24,12 +22,11 @@ import wang.jilijili.web.common.BaseController;
 @RestController
 @RequestMapping("/tokens")
 @Tag(name = "token服务")
-public class TokenController extends BaseController<User, UserMapper, UserService> {
+public class TokenController extends BaseController<UserMapper> {
 
     PasswordEncoder passwordEncoder;
 
-    public TokenController(UserMapper mapper, UserService service, PasswordEncoder passwordEncoder) {
-        super(mapper, service);
+    public TokenController(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 

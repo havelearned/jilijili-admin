@@ -10,9 +10,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsUtils;
+import wang.jilijili.common.core.service.impl.UserServiceImpl;
 import wang.jilijili.framework.filter.JwtAuthorizationFilter;
 import wang.jilijili.framework.handler.RestAuthenticationHandler;
-import wang.jilijili.system.service.impl.UserServiceImpl;
 
 
 /**

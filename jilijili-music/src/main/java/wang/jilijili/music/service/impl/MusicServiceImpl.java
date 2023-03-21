@@ -29,9 +29,12 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
 
     MusicConvertBo musicConvertBo;
 
+    MusicMapper musicMapper;
 
-    public MusicServiceImpl(MusicConvertBo musicConvertBo) {
+
+    public MusicServiceImpl(MusicConvertBo musicConvertBo, MusicMapper musicMapper) {
         this.musicConvertBo = musicConvertBo;
+        this.musicMapper = musicMapper;
     }
 
     @Override
@@ -63,7 +66,8 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
 
     @Override
     public IPage<MusicDto> search(IPage<Music> tPage, MusicQueryRequest musicQueryRequest) {
-        IPage<Music> musicIpage = this.page(tPage, getMusicLambdaQueryWrapper(musicQueryRequest));
+//        IPage<Music> musicIpage = this.page(tPage, getMusicLambdaQueryWrapper(musicQueryRequest));
+        IPage<Music> musicIpage = this.musicMapper.queryAllMusicInformation(tPage, getMusicLambdaQueryWrapper(musicQueryRequest));
         return musicIpage.convert((item) -> this.musicConvertBo.toMusicDto(item));
 
     }
