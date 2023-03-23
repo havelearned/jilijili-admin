@@ -33,9 +33,9 @@ public class AlibumController {
      * 服务对象
      */
 
-    private AlibumService alibumService;
+     AlibumService alibumService;
 
-    private AlibumConvertBo alibumConvertBo;
+     AlibumConvertBo alibumConvertBo;
 
     public AlibumController(AlibumService alibumService, AlibumConvertBo alibumConvertBo) {
         this.alibumService = alibumService;
