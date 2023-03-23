@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import jakarta.annotation.Resource;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import wang.jilijili.framework.handler.MpMetaObjectHandler;
@@ -20,7 +20,7 @@ import wang.jilijili.framework.handler.MpMetaObjectHandler;
         "wang.jilijili.music.mapper"})
 public class MybatisPlusConfig {
 
-    @Autowired
+    @Resource
     MpMetaObjectHandler mpMetaObjectHandler;
 
     @Bean

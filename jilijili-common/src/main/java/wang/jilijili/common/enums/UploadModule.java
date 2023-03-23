@@ -37,6 +37,8 @@ public enum UploadModule {
      * */
     MUSIC_WMA_LOCAL("\\jilijili","\\WMA\\","localUploadStrategyImpl"),
 
+    OSS_IMAGE_MUSIC("\\jilijili","IMAGE","ossUploadStrategyImpl"),
+
 
 
 

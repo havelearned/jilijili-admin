@@ -3,6 +3,7 @@ package wang.jilijili.common.aspect;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.github.ksuid.KsuidGenerator;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.java.Log;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -10,7 +11,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -36,10 +36,10 @@ import java.util.Objects;
 @Log
 public class LogAspect {
 
-    @Autowired
+    @Resource
     OperationLogMapper operationLogMapper;
 
-    @Autowired
+    @Resource
     UserMapper userMapper;
 
     @Pointcut(value = "@annotation(wang.jilijili.common.annotation.JilJilOperationLog)")
