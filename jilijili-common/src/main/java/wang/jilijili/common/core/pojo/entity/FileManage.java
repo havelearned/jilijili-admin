@@ -45,9 +45,9 @@ public class FileManage extends SuperEntity implements Serializable {
     /**
      * 是否锁定
      */
-    @TableField(value = "lock")
+    @TableField(value = "locked")
     @TableLogic
-    private Integer lock;
+    private Integer locked;
 
 
 

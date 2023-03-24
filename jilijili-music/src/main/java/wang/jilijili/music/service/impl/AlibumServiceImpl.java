@@ -20,11 +20,11 @@ import wang.jilijili.music.service.AlibumService;
 public class AlibumServiceImpl extends ServiceImpl<AlibumMapper, Alibum>
         implements AlibumService {
 
-    AlibumMapper alibumMapper;
-    AlibumConvertBo alibumConvertBo;
+     AlibumMapper alibumService;
+     AlibumConvertBo alibumConvertBo;
 
-    public AlibumServiceImpl(AlibumMapper alibumMapper, AlibumConvertBo alibumConvertBo) {
-        this.alibumMapper = alibumMapper;
+    public AlibumServiceImpl(AlibumMapper alibumService, AlibumConvertBo alibumConvertBo) {
+        this.alibumService = alibumService;
         this.alibumConvertBo = alibumConvertBo;
     }
 

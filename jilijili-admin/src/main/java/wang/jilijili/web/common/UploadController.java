@@ -1,6 +1,7 @@
 package wang.jilijili.web.common;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,8 +64,9 @@ public class UploadController {
      * @return 所有数据
      */
     @GetMapping("/list")
-    public Result selectAll(Page<FileManage> page, FileManage fileManage) {
+    public Result selectAll(FileManage fileManage) {
         // TODO 创建FileManageDto Vo bo
+        IPage<FileManage> page = new Page<>(1,10);
         return Result.ok(this.fileManageService.page(page, new QueryWrapper<>(fileManage)));
     }
 

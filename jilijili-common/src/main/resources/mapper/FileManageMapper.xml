@@ -10,7 +10,7 @@
             <result property="filepath" column="filepath" jdbcType="VARCHAR"/>
             <result property="type" column="type" jdbcType="VARCHAR"/>
             <result property="size" column="size" jdbcType="INTEGER"/>
-            <result property="lock" column="lock" jdbcType="TINYINT"/>
+            <result property="lock" column="locked" jdbcType="TINYINT"/>
             <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
             <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
             <result property="accessTime" column="access_time" jdbcType="TIMESTAMP"/>
@@ -18,7 +18,7 @@
 
     <sql id="Base_Column_List">
         id,filename,filepath,
-        type,size,lock,
+        type,size,locked,
         updated_time,created_time,access_time
     </sql>
 </mapper>
