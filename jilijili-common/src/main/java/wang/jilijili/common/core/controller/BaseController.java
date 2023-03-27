@@ -51,7 +51,7 @@ public class BaseController<M extends BaseMapper> implements UserDetailsService 
 
     @Autowired
     public void setMapper(M mapper) {
-        log.warn("初始化mapper对象:{}", mapper.getClass());
+        log.warn("初始化mapper对象:{}", mapper.getClass().getName());
         this.mapper = mapper;
     }
 
@@ -96,6 +96,7 @@ public class BaseController<M extends BaseMapper> implements UserDetailsService 
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         if (mapper instanceof UserMapper userMapper) {
+
             User user = userMapper.getUserByUsername(username);
             if (user != null) {
                 return user;

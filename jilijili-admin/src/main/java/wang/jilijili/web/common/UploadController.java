@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import wang.jilijili.common.enums.UploadModule;
+import wang.jilijili.common.exception.BizException;
+import wang.jilijili.common.exception.ExceptionType;
 import wang.jilijili.framework.strategy.UploadStrategyContext;
 
 /**
@@ -28,6 +30,9 @@ public class UploadController {
 
     @PostMapping("/local/image")
     public String localUpload(MultipartFile file) {
+        if (file == null) {
+            throw new BizException(ExceptionType.BAD_REQUEST);
+        }
         return this.uploadStrategyContext
                 .executeUploadStrategy(
                         file,
@@ -37,6 +42,9 @@ public class UploadController {
 
     @PostMapping("/oss/image")
     public String ossUpload(@RequestParam("file") MultipartFile file) {
+        if (file == null) {
+            throw new BizException(ExceptionType.BAD_REQUEST);
+        }
         return this.uploadStrategyContext.executeUploadStrategy(
                 file,
                 UploadModule.OSS_IMAGE_MUSIC.getType(),

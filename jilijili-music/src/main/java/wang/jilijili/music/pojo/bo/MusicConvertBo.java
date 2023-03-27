@@ -4,37 +4,18 @@ package wang.jilijili.music.pojo.bo;
 import org.mapstruct.Mapper;
 import wang.jilijili.music.pojo.dto.MusicDto;
 import wang.jilijili.music.pojo.entity.Music;
-import wang.jilijili.music.pojo.request.MusicCreateRequest;
-import wang.jilijili.music.pojo.request.MusicUpdateRequest;
 import wang.jilijili.music.pojo.vo.MusicVo;
 
 
 /**
  * 业务对象
+ *
  * @author Amani
  * @date 2023年03月09日 10:43
  */
 @Mapper(componentModel = "spring")
 public interface MusicConvertBo {
 
-    /**
-     * 转 Music
-     *
-     * @param request request
-     * @return wnag.jilijili.music.pojo.entity.Music
-     * @author Amani
-     * @date 2023/3/9 10:47
-     */
-    Music toMusic(MusicCreateRequest request);
-
-    /**
-     *  转 Music
-     * @author Amani
-     * @date 2023/3/9 11:18
-     * @param request  request
-     * @return wnag.jilijili.music.pojo.entity.Music
-     */
-    Music toMusic(MusicUpdateRequest request);
 
     /**
      * 转 MusicVo
@@ -57,4 +38,13 @@ public interface MusicConvertBo {
      */
     MusicDto toMusicDto(Music music);
 
+    /**
+     * 转entity
+     *
+     * @param musicDto
+     * @return wang.jilijili.music.pojo.entity.Music
+     * @author Amani
+     * @date 27/3/2023 上午11:09
+     */
+    Music toMusic(MusicDto musicDto);
 }
