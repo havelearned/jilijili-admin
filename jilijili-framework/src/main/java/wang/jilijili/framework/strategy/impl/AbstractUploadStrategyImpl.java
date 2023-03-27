@@ -26,7 +26,7 @@ public abstract class AbstractUploadStrategyImpl implements UploadStrategy {
             //region 获取文件md5值 -> 获取文件后缀名 -> 生成相对路径
             String fileMd5 = DigestUtil.md5Hex(file.getInputStream());
             String suffix = FileUtil.getSuffix(file.getOriginalFilename());
-            String fileRelativePath  = String.format("%s%s.%s", filePath, fileMd5, suffix);
+            String fileRelativePath  = String.format("%s/%s.%s", filePath, fileMd5, suffix);
 
             initClient();
 

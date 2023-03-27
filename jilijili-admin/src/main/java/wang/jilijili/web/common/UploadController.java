@@ -1,5 +1,6 @@
 package wang.jilijili.web.common;
 
+import cn.hutool.core.io.FileUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,7 +9,13 @@ import org.springframework.web.multipart.MultipartFile;
 import wang.jilijili.common.enums.UploadModule;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ExceptionType;
+import wang.jilijili.common.utils.FileType;
 import wang.jilijili.framework.strategy.UploadStrategyContext;
+
+import java.util.Iterator;
+import java.util.Map;
+
+import static wang.jilijili.common.utils.FileType.OTHER;
 
 /**
  * 文件上传控制器
@@ -29,26 +36,55 @@ public class UploadController {
     }
 
     @PostMapping("/local/image")
-    public String localUpload(MultipartFile file) {
-        if (file == null) {
-            throw new BizException(ExceptionType.BAD_REQUEST);
-        }
-        return this.uploadStrategyContext
-                .executeUploadStrategy(
+    public String localUploadImage(MultipartFile file) {
+        String type = getFileTypeSaveDir(file);
+
+        return this.uploadStrategyContext.executeUploadStrategy(
                         file,
-                        UploadModule.MUSIC_MPEG_LOCAL.getPath() + UploadModule.MUSIC_IMAGE_LOCAL.getType(),
+                        UploadModule.OSS_IMAGE_MUSIC.getPath() + type,
                         UploadModule.MUSIC_MPEG_LOCAL.getExecutedBeanName());
     }
 
     @PostMapping("/oss/image")
-    public String ossUpload(@RequestParam("file") MultipartFile file) {
+    public String ossUploadImage(@RequestParam("file") MultipartFile file) {
+        String type = getFileTypeSaveDir(file);
+
+        return this.uploadStrategyContext.executeUploadStrategy(
+                file,
+                UploadModule.OSS_IMAGE_MUSIC.getPath() + type,
+                UploadModule.OSS_IMAGE_MUSIC.getExecutedBeanName());
+    }
+
+    /**
+     * 保存到对应目录下
+     *
+     * @param file
+     * @return java.lang.String
+     * @author Amani
+     * @date 27/3/2023 下午7:03
+     */
+    private static String getFileTypeSaveDir(MultipartFile file) {
         if (file == null) {
             throw new BizException(ExceptionType.BAD_REQUEST);
         }
-        return this.uploadStrategyContext.executeUploadStrategy(
-                file,
-                UploadModule.OSS_IMAGE_MUSIC.getType(),
-                UploadModule.OSS_IMAGE_MUSIC.getExecutedBeanName());
+
+        String suffix = FileUtil.getSuffix(file.getOriginalFilename());
+
+        Iterator<Map.Entry<String, String[]>> iterator =
+                FileType.ASSORT_EXTENSION.entrySet().iterator();
+
+        String type = OTHER;
+        while (iterator.hasNext()) {
+            Map.Entry<String, String[]> next = iterator.next();
+            String[] value = next.getValue();
+            for (String s : value) {
+                if (s.contains(suffix)) {
+                    type = next.getKey();
+                    break;
+                }
+            }
+        }
+        return type;
     }
 
 
