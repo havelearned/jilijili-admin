@@ -1,8 +1,11 @@
 package wang.jilijili.music.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.ksuid.KsuidGenerator;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ExceptionType;
 import wang.jilijili.music.mapper.AlibumMapper;
@@ -20,20 +23,22 @@ import wang.jilijili.music.service.AlibumService;
 public class AlibumServiceImpl extends ServiceImpl<AlibumMapper, Alibum>
         implements AlibumService {
 
-     AlibumMapper alibumService;
-     AlibumConvertBo alibumConvertBo;
+    AlibumMapper alibumMapper;
+    AlibumConvertBo alibumConvertBo;
 
-    public AlibumServiceImpl(AlibumMapper alibumService, AlibumConvertBo alibumConvertBo) {
-        this.alibumService = alibumService;
+    public AlibumServiceImpl(AlibumMapper alibumMapper, AlibumConvertBo alibumConvertBo) {
+        this.alibumMapper = alibumMapper;
         this.alibumConvertBo = alibumConvertBo;
     }
 
     @Override
+    @DS("slave_1")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public AlibumDto create(AlibumDto alibumDto) {
         Alibum alibum = this.alibumConvertBo.toAlibum(alibumDto);
         alibum.setId(KsuidGenerator.generate());
-        boolean update = this.save(alibum);
-        if (update) {
+        int insert = this.alibumMapper.insert(alibum);
+        if (insert >= 1) {
 
             return this.alibumConvertBo.toAlibumDto(this.getById(alibum.getId()));
         }
@@ -42,6 +47,8 @@ public class AlibumServiceImpl extends ServiceImpl<AlibumMapper, Alibum>
     }
 
     @Override
+    @DS("slave_1")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public AlibumDto update(AlibumDto alibumDto) {
         Alibum alibum = this.alibumConvertBo.toAlibum(alibumDto);
         boolean update = this.updateById(alibum);

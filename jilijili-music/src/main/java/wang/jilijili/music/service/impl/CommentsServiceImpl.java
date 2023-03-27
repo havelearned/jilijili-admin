@@ -1,10 +1,12 @@
 package wang.jilijili.music.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.ksuid.KsuidGenerator;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ExceptionType;
 import wang.jilijili.music.mapper.CommentsMapper;
@@ -34,6 +36,8 @@ public class CommentsServiceImpl extends ServiceImpl<CommentsMapper, Comments>
     }
 
     @Override
+    @DS("slave_1")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public CommentsDto create(CommentsCreateRequest commentsCreateRequest) {
         Comments comments = commentsBo.toComment(commentsCreateRequest);
         comments.setId(KsuidGenerator.generate());

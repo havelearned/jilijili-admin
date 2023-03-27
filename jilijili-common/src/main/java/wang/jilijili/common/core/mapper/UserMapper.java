@@ -19,19 +19,21 @@ public interface UserMapper extends BaseMapper<User> {
 
     /**
      * 通过id查询用户角色
-     * @author Amani
-     * @date 2023/3/5 11:49
+     *
      * @param id
      * @return wang.jilijili.music.pojo.entity.User
+     * @author Amani
+     * @date 2023/3/5 11:49
      */
     User userRoles(String id);
 
     /**
      * 通过名称查询用户
-     * @author Amani
-     * @date 2023/3/5 11:49
+     *
      * @param username
      * @return wang.jilijili.music.pojo.entity.User
+     * @author Amani
+     * @date 2023/3/5 11:49
      */
     User getUserByUsername(String username);
 

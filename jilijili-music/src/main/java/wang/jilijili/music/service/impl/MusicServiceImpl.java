@@ -1,9 +1,12 @@
 package wang.jilijili.music.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.ksuid.KsuidGenerator;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import wang.jilijili.common.enums.StatusCodeEnum;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.music.mapper.MusicMapper;
@@ -38,6 +41,8 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
     }
 
     @Override
+    @DS("slave_1")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public MusicDto create(MusicCreateRequest musicCreateRequest) {
         Music music = musicConvertBo.toMusic(musicCreateRequest);
         music.setId(KsuidGenerator.generate());
@@ -49,6 +54,8 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
 
 
     @Override
+    @DS("slave_1")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public MusicDto update(MusicUpdateRequest musicUpdateRequest) {
         Music music = this.musicConvertBo.toMusic(musicUpdateRequest);
         if (this.updateById(music)) {
@@ -58,6 +65,8 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
     }
 
     @Override
+    @DS("slave_1")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public void delete(String id) {
         if (!this.removeById(id)) {
             throw new BizException(StatusCodeEnum.FAIL);

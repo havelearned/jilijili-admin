@@ -9,16 +9,22 @@ import wang.jilijili.common.core.pojo.dto.QueryDto;
  */
 @Data
 public class SingerDto extends QueryDto {
+
+
     /**
      * 歌手id
      */
-
     private String id;
 
     /**
      * 歌手名称
      */
     private String singerName;
+
+    /**
+     * 是否禁用
+     */
+    private Integer locked;
 
     /**
      * 歌手简介
@@ -36,7 +42,6 @@ public class SingerDto extends QueryDto {
      * 歌手类型
      */
     private Integer singerType;
-
 
 
 }

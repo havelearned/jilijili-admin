@@ -10,12 +10,13 @@ import java.util.Date;
 /**
  * 专辑表
  *
+ * @author admin
  * @TableName alibum
  */
 @Data
 public class AlibumVo implements Serializable {
 
-
+    private String id;
     /**
      * 专辑名称
      */

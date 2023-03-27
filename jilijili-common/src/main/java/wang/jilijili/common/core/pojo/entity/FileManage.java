@@ -10,10 +10,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 
  * @TableName file_manage
  */
-@TableName(value ="file_manage")
+@TableName(value = "file_manage")
 @Data
 public class FileManage extends SuperEntity implements Serializable {
 
@@ -40,7 +39,7 @@ public class FileManage extends SuperEntity implements Serializable {
      * 文件大小 字节
      */
     @TableField(value = "size")
-    private Integer size;
+    private Long size;
 
     /**
      * 是否锁定
@@ -48,7 +47,6 @@ public class FileManage extends SuperEntity implements Serializable {
     @TableField(value = "locked")
     @TableLogic
     private Integer locked;
-
 
 
     /**

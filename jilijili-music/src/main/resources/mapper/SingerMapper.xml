@@ -20,4 +20,7 @@
         singer_photo,singer_type,locked,
         created_time,updated_time
     </sql>
+    <select id="getSingerAlbumSongInformation" resultType="wang.jilijili.music.pojo.vo.SingerInfoVo">
+
+    </select>
 </mapper>

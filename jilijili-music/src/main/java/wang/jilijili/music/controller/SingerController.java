@@ -56,10 +56,11 @@ public class SingerController extends BaseController<SingerMapper> {
      * @date 2023/3/21 14:26
      */
     @GetMapping("/list")
-    public Result<IPage<Singer>> selectAll(SingerDto singerDto) {
+    public Result<IPage<SingerVo>> selectAll(SingerDto singerDto) {
         IPage<Singer> page = new Page<>(singerDto.getPage(), singerDto.getSize());
         Singer singer = this.singerConvertBo.toSinger(singerDto);
-        return Result.ok(this.singerService.page(page, new QueryWrapper<>(singer)));
+        IPage<Singer> iPage = this.singerService.page(page, new QueryWrapper<>(singer));
+        return Result.ok(iPage.convert(item -> this.singerConvertBo.toSingerVo(this.singerConvertBo.toSingerDto(item))));
     }
 
     /**
@@ -70,6 +71,7 @@ public class SingerController extends BaseController<SingerMapper> {
      */
     @GetMapping("/{id}")
     public Result<SingerVo> selectOne(@PathVariable Serializable id) {
+        // TODO [1] 查询歌手专辑歌曲信息
         Singer singer = this.singerService.getById(id);
         SingerDto singerDto = this.singerConvertBo.toSingerDto(singer);
         return Result.ok(this.singerConvertBo.toSingerVo(singerDto));
@@ -84,7 +86,7 @@ public class SingerController extends BaseController<SingerMapper> {
     @PostMapping("/")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.ADD)
-    public Result<?> insert(@RequestBody SingerDto singerDto) {
+    public Result<SingerVo> insert(@RequestBody SingerDto singerDto) {
         singerDto = this.singerService.create(singerDto);
         return Result.ok(this.singerConvertBo.toSingerVo(singerDto));
 
@@ -99,7 +101,7 @@ public class SingerController extends BaseController<SingerMapper> {
     @PutMapping("/")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.UPDATE)
-    public Result<?> update(@RequestBody SingerDto singerDto) {
+    public Result<SingerVo> update(@RequestBody SingerDto singerDto) {
         singerDto = this.singerService.update(singerDto);
         return Result.ok(this.singerConvertBo.toSingerVo(singerDto));
     }
@@ -113,15 +115,16 @@ public class SingerController extends BaseController<SingerMapper> {
     @DeleteMapping("/")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.DELETED)
-    public Result<?> delete(@RequestParam("idList") List<String> idList) {
-        return Result.ok(this.singerService.removeByIds(idList));
+    public Result<Boolean> delete(@RequestParam("idList") List<String> idList) {
+
+        return Result.ok(this.singerService.deleteBatch(idList));
     }
 
     /**
      * 导出歌手信息
      *
      * @param singerDto 导出条件
-     * @param response 响应
+     * @param response  响应
      * @author Amani
      * @date 2023/3/21 14:30
      */

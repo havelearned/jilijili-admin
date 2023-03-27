@@ -17,11 +17,27 @@ spring:
           url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT}/${DATABASE_NAME_1}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
           username: ${MYSQL_USER_NAME}
           password: ${MYSQL_PASSWORD}
+          hikari:
+            connectionTestQuery: SELECT 1
+            connectionTimeout: 30000
+            idleTimeout: 30000
+            maxLifetime: 1800000
+            maximumPoolSize: 15
+            minimumIdle: 10
+            validationTimeout: 5000
         slave_1:
           driver-class-name: com.mysql.cj.jdbc.Driver
           url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT}/${DATABASE_NAME_2}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
           username: ${MYSQL_USER_NAME}
           password: ${MYSQL_PASSWORD}
+          hikari:
+            connectionTestQuery: SELECT 1
+            connectionTimeout: 30000
+            idleTimeout: 30000
+            maxLifetime: 1800000
+            maximumPoolSize: 15
+            minimumIdle: 10
+            validationTimeout: 5000
 
   #  数据库版本迁移
   flyway:

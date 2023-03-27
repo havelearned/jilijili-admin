@@ -13,11 +13,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
+import wang.jilijili.common.constant.SecurityConstant;
 import wang.jilijili.common.core.mapper.UserMapper;
 import wang.jilijili.common.core.pojo.entity.User;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ExceptionType;
-import wang.jilijili.framework.config.SecurityConfig;
 
 import java.io.IOException;
 import java.util.Date;
@@ -44,7 +44,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
         /*鉴权,校验解析token*/
-        String header = request.getHeader(SecurityConfig.HEADER_STRING);
+        String header = request.getHeader(SecurityConstant.HEADER_STRING);
         if (header == null) {
             chain.doFilter(request, response);
             return;
@@ -59,9 +59,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         // 解析token
 
-        DecodedJWT verify = JWT.require(Algorithm.HMAC512(SecurityConfig.SECRET.getBytes()))
+        DecodedJWT verify = JWT.require(Algorithm.HMAC512(SecurityConstant.SECRET.getBytes()))
                 .build()
-                .verify(header.replace(SecurityConfig.TOKEN_PREFIX, ""));
+                .verify(header.replace(SecurityConstant.TOKEN_PREFIX, ""));
 
         Date expiresAt = verify.getExpiresAt();
         Date newDate = new Date();

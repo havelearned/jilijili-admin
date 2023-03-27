@@ -10,6 +10,7 @@ import java.io.Serializable;
 /**
  * 专辑表
  *
+ * @author admin
  * @TableName alibum
  */
 @TableName(value = "alibum")

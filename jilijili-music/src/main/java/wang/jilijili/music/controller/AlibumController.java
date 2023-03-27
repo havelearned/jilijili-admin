@@ -33,9 +33,9 @@ public class AlibumController {
      * 服务对象
      */
 
-     AlibumService alibumService;
+    AlibumService alibumService;
 
-     AlibumConvertBo alibumConvertBo;
+    AlibumConvertBo alibumConvertBo;
 
     public AlibumController(AlibumService alibumService, AlibumConvertBo alibumConvertBo) {
         this.alibumService = alibumService;
@@ -51,12 +51,11 @@ public class AlibumController {
     @GetMapping("/list")
     public Result<IPage<AlibumVo>> queryByPage(AlibumDto alibumDto) {
         IPage<Alibum> page = new Page<>(alibumDto.getPage(), alibumDto.getSize());
+
         Alibum alibum = alibumConvertBo.toAlibum(alibumDto);
+
         IPage<AlibumVo> voIpage = this.alibumService.page(page, new QueryWrapper<>(alibum))
-                .convert(item -> {
-                    AlibumDto alibumDto1 = this.alibumConvertBo.toAlibumDto(item);
-                    return this.alibumConvertBo.toAlibumVo(alibumDto1);
-                });
+                .convert(item -> this.alibumConvertBo.toAlibumVo(this.alibumConvertBo.toAlibumDto(item)));
         return Result.ok(voIpage);
     }
 
@@ -67,9 +66,13 @@ public class AlibumController {
      * @return 单条数据
      */
     @GetMapping("/{id}")
-    public Result<Alibum> queryById(@PathVariable("id") String id) {
+    public Result<AlibumVo> queryById(@PathVariable("id") String id) {
+        AlibumVo alibumVo =
+                this.alibumConvertBo.toAlibumVo(
+                        this.alibumConvertBo.toAlibumDto(
+                                this.alibumService.getById(id)));
 
-        return Result.ok(this.alibumService.getById(id));
+        return Result.ok(alibumVo);
     }
 
     /**

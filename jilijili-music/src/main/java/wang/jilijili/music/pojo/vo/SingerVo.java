@@ -24,6 +24,11 @@ public class SingerVo {
     private String singerName;
 
     /**
+     * 是否禁用
+     */
+    private Integer locked;
+
+    /**
      * 歌手简介
      */
 

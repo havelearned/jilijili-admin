@@ -9,8 +9,8 @@
             <result property="filename" column="filename" jdbcType="VARCHAR"/>
             <result property="filepath" column="filepath" jdbcType="VARCHAR"/>
             <result property="type" column="type" jdbcType="VARCHAR"/>
-            <result property="size" column="size" jdbcType="INTEGER"/>
-            <result property="lock" column="locked" jdbcType="TINYINT"/>
+            <result property="size" column="size" jdbcType="BIGINT"/>
+            <result property="locked" column="locked" jdbcType="TINYINT"/>
             <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
             <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
             <result property="accessTime" column="access_time" jdbcType="TIMESTAMP"/>

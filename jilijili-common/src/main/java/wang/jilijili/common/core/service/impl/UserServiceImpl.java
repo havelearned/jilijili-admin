@@ -2,6 +2,7 @@ package wang.jilijili.common.core.service.impl;
 
 
 import cn.hutool.core.lang.UUID;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -66,6 +67,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
+    @DS("slave_1")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public UserDto update(UserUpdateRequest userUpdateRequest) {
         User user = this.userConvertBo.toUserEntity(userUpdateRequest);
         if(user!=null){
@@ -78,14 +81,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
+    @DS("slave_1")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public Result<?> delete(String id) {
         int delete = this.userMapper.deleteById(id);
 
         return delete >= 1 ? Result.ok() : Result.fail();
     }
 
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.NEVER)
     @Override
+    @DS("slave_1")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public UserDto create(UserCreateDto userCreateDto, HttpServletRequest request) {
         User user = userConvertBo.toUserEntity(userCreateDto);
         user.setId(KsuidGenerator.generate());
