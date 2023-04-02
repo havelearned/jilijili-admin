@@ -12,7 +12,9 @@ import wang.jilijili.common.exception.ExceptionType;
 import wang.jilijili.common.utils.FileType;
 import wang.jilijili.framework.strategy.UploadStrategyContext;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import static wang.jilijili.common.utils.FileType.OTHER;
@@ -40,9 +42,9 @@ public class UploadController {
         String type = getFileTypeSaveDir(file);
 
         return this.uploadStrategyContext.executeUploadStrategy(
-                        file,
-                        UploadModule.OSS_IMAGE_MUSIC.getPath() + type,
-                        UploadModule.MUSIC_MPEG_LOCAL.getExecutedBeanName());
+                file,
+                UploadModule.OSS_IMAGE_MUSIC.getPath() + type,
+                UploadModule.MUSIC_MPEG_LOCAL.getExecutedBeanName());
     }
 
     @PostMapping("/oss/image")
@@ -53,6 +55,20 @@ public class UploadController {
                 file,
                 UploadModule.OSS_IMAGE_MUSIC.getPath() + type,
                 UploadModule.OSS_IMAGE_MUSIC.getExecutedBeanName());
+    }
+
+    @PostMapping("/multiple/oss/image")
+    public List<String> ossUploadMultipleImage(@RequestParam("files") MultipartFile[] files) {
+        List<String> urls = new ArrayList<>();
+        for (MultipartFile file : files) {
+            String type = getFileTypeSaveDir(file);
+            String url = this.uploadStrategyContext.executeUploadStrategy(
+                    file,
+                    UploadModule.OSS_IMAGE_MUSIC.getPath() + type,
+                    UploadModule.OSS_IMAGE_MUSIC.getExecutedBeanName());
+            urls.add(url);
+        }
+        return urls;
     }
 
     /**
