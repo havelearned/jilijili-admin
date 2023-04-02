@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import wang.jilijili.common.pojo.entity.SuperEntity;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -69,6 +70,7 @@ public class OperationLog extends SuperEntity implements Serializable {
     @TableField(value = "module_name")
     private String moduleName;
 
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

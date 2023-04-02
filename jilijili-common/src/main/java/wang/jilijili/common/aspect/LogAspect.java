@@ -51,7 +51,7 @@ public class LogAspect {
     }
 
     @After(value = "operationLogPointcut()")
-    public void after(JoinPoint pjp) throws Throwable {
+    public void after(JoinPoint pjp) {
         log.info("wang.jilijili.common.aspect.LogAspect.@after===>被执行了");
         OperationLog operationLog = OPERATION_LOG_THREAD_LOCAL.get();
         if (Objects.isNull(operationLog)) {

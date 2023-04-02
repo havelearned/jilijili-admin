@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import wang.jilijili.common.pojo.entity.SuperEntity;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -30,6 +31,7 @@ public class Role extends SuperEntity implements Serializable {
     private String title;
 
 
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

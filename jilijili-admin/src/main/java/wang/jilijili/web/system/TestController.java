@@ -3,7 +3,6 @@ package wang.jilijili.web.system;
 
 import com.alibaba.fastjson2.JSONObject;
 import jakarta.servlet.http.Cookie;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wang.jilijili.common.core.service.impl.AsyncServerImpl;
@@ -12,6 +11,7 @@ import java.util.concurrent.CountDownLatch;
 
 /**
  * 测试控制器
+ *
  * @author admin
  * @Date: 2023/1/22 21:39
  * @Description: 测试控制器
@@ -20,8 +20,11 @@ import java.util.concurrent.CountDownLatch;
 @RequestMapping("/test")
 public class TestController {
 
-    @Autowired
-    private AsyncServerImpl asyncServer;
+    AsyncServerImpl asyncServer;
+
+    public TestController(AsyncServerImpl asyncServer) {
+        this.asyncServer = asyncServer;
+    }
 
     @RequestMapping("/testThread")
     public JSONObject testThread() throws InterruptedException {

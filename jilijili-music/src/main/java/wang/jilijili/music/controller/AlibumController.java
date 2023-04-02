@@ -4,6 +4,7 @@ package wang.jilijili.music.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.web.bind.annotation.*;
 import wang.jilijili.common.annotation.JilJilOperationLog;
@@ -28,6 +29,7 @@ import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
  */
 @RestController
 @RequestMapping("/alibum")
+@Tag(name = "专辑管理模块")
 public class AlibumController {
     /**
      * 服务对象

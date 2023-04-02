@@ -63,21 +63,7 @@
   <build>
     <!-- 配置插件 -->
     <plugins>
-      <!-- 配置具体插件 -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <!-- 插件的名称 -->
-        <artifactId>maven-compiler-plugin</artifactId>
-        <!-- 插件的版本 -->
-        <version>3.8.1</version>
-        <!-- 配置插件的信息 -->
-        <configuration>
-          <!-- 告诉maven，项目是在jdk1.8上编译的 -->
-          <source>17</source>
-          <!-- 程序应该运行在jdk1.8上 -->
-          <target>17</target>
-        </configuration>
-      </plugin>
+   
 
       <!--javabean转换插件-->
       <plugin>
@@ -85,6 +71,10 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin-version}</version>
         <configuration>
+          <!-- 告诉maven，项目是在jdk1.8上编译的 -->
+          <source>17</source>
+          <!-- 程序应该运行在jdk1.8上 -->
+          <target>17</target>
           <annotationProcessorPaths>
             <path>
               <groupId>org.mapstruct</groupId>

@@ -8,8 +8,8 @@ import java.util.List;
 
 /**
 * @author admin
-* @description 针对表【singer(歌手表)】的数据库操作Service
-* @createDate 2023-03-20 22:54:49
+* @description: 针对表【singer(歌手表)】的数据库操作Service
+* @createDate: 2023-03-20 22:54:49
 */
 public interface SingerService extends IService<Singer> {
 

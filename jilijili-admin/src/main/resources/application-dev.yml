@@ -36,6 +36,7 @@ spring:
             max-lifetime: 60000
             maximum-pool-size: 10
             minimum-idle: 5
+
   #  数据库版本迁移
   flyway:
     # 启用或禁用 flyway
@@ -134,7 +135,7 @@ wx:
 upload:
   store:
     local:
-      domain-url: D:\.temp\tmp\upload\
+      domain-url: D:\.temp\tmp\upload
       access-key: ljj
       access-key-secret: 123456.ljj
       endpoint: http://localhost:8080
