@@ -4,6 +4,7 @@ package wang.jilijili.music.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import wang.jilijili.common.core.pojo.vo.Result;
 import wang.jilijili.music.pojo.bo.MusicConvertBo;
@@ -23,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/music")
+@Tag(name = "歌曲管理模块")
 public class MusicController {
     /**
      * 服务对象

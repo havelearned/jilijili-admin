@@ -17,11 +17,25 @@ spring:
           url: jdbc:mysql://150.158.94.163:3337/jilijili-user?serverTimezone=Asia/Shanghai&allowMultiQueries=true
           username: root
           password: 123456
+          hikari:
+            connection-timeout: 10000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 10
+            minimum-idle: 5
         slave_1:
           driver-class-name: com.mysql.cj.jdbc.Driver
           url: jdbc:mysql://150.158.94.163:3337/jilijili-music?serverTimezone=Asia/Shanghai&allowMultiQueries=true
           username: root
           password: 123456
+          hikari:
+            connection-timeout: 10000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 10
+            minimum-idle: 5
 
   #  数据库版本迁移
   flyway:

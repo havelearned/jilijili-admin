@@ -1,6 +1,6 @@
 package wang.jilijili.web;
 
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,7 +16,7 @@ import java.util.Enumeration;
 /**
  * @author admin
  */
-@Log
+@Slf4j
 @SpringBootApplication
 @ComponentScan(basePackages = "wang.jilijili")
 public class JilijiliMusicApplication {
@@ -29,8 +29,7 @@ public class JilijiliMusicApplication {
         String port = environment.getProperty("server.port");
         log.info("http://" + getIpAddress() + ":" + port + "/swagger-ui/index.html 接口文档");
         log.info("http://" + getIpAddress() + ":" + port + "/test/test 测试接口");
-
-        log.info("密码:"+passwordEncoder.encode("123456"));
+        log.info("密码:" + passwordEncoder.encode("123456"));
     }
 
     public static String getIpAddress() {
@@ -64,7 +63,7 @@ public class JilijiliMusicApplication {
 
 
     @Autowired
-    public  void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         JilijiliMusicApplication.passwordEncoder = passwordEncoder;
     }
 }

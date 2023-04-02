@@ -1,7 +1,6 @@
 package wang.jilijili.music.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,7 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("comments")
-@Tag(name = "评论控制器")
+@Tag(name = "评论管理模块")
 public class CommentsController {
     /**
      * 服务对象

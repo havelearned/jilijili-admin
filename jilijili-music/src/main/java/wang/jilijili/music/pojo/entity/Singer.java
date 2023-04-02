@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import wang.jilijili.common.pojo.entity.SuperEntity;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -50,6 +51,7 @@ public class Singer extends SuperEntity implements Serializable {
 
 
 
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

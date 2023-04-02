@@ -15,6 +15,7 @@ import static wang.jilijili.common.exception.ExceptionType.UPLOAD_FAILED;
 
 /**
  * 本地上传
+ *
  * @author Amani
  * @date 2023年03月16日 上午11:41
  */
@@ -44,15 +45,14 @@ public class LocalUploadStrategyImpl extends AbstractUploadStrategyImpl {
     }
 
     @Override
-    public void executeUpload(MultipartFile file, String fileRelativePath) throws IOException {
+    public void executeUpload(MultipartFile file, String fileRelativePath) {
         File dest = checkFolderIsExisted(fileRelativePath);
         try {
             file.transferTo(dest);
-        }catch (Exception e){
+        } catch (IOException e) {
             e.printStackTrace();
             throw new BizException(UPLOAD_FAILED);
         }
-
 
 
     }
@@ -60,9 +60,9 @@ public class LocalUploadStrategyImpl extends AbstractUploadStrategyImpl {
     @Override
     public String getPublicNetworkAccessUrl(String fileRelativePath) {
         String fileUrl = uploadStoreProperties.getLocal().getEndpoint()
-                +"/"
-                +uploadStoreProperties.getLocal().getDomainUrl()
-                +fileRelativePath;
+                + "/"
+                + uploadStoreProperties.getLocal().getDomainUrl()
+                + fileRelativePath;
         return fileUrl.replace("\\", "/");
     }
 

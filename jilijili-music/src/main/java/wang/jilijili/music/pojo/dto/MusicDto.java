@@ -1,12 +1,7 @@
 package wang.jilijili.music.pojo.dto;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 import wang.jilijili.common.core.pojo.dto.QueryDto;
-
-import java.util.Date;
 
 /**
  * service和dao层传输对象
@@ -35,7 +30,6 @@ public class MusicDto extends QueryDto {
     private Integer status;
 
     private String description;
-
 
 
 }

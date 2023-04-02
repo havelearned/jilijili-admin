@@ -16,7 +16,7 @@ public class SwaggerConfig {
 
 
     /**
-     * 访问: http://localhost:8080/swagger-ui/index.html
+     * 访问: <a href="http://localhost:8080/swagger-ui/index.html">...</a>
      * */
     @Bean
     public OpenAPI restfulOpenApi() {

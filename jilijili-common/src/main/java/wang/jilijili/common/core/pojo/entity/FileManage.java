@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import wang.jilijili.common.pojo.entity.SuperEntity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -55,6 +56,7 @@ public class FileManage extends SuperEntity implements Serializable {
     @TableField(value = "access_time")
     private Date accessTime;
 
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

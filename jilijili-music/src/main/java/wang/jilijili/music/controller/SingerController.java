@@ -33,7 +33,7 @@ import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
  */
 @RestController
 @RequestMapping("/singer")
-@Tag(name = "歌手管理")
+@Tag(name = "歌手管理模块")
 public class SingerController extends BaseController<SingerMapper> {
     /**
      * 服务对象
@@ -116,7 +116,6 @@ public class SingerController extends BaseController<SingerMapper> {
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.DELETED)
     public Result<Boolean> delete(@RequestParam("idList") List<String> idList) {
-
         return Result.ok(this.singerService.deleteBatch(idList));
     }
 

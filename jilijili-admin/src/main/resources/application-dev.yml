@@ -18,26 +18,24 @@ spring:
           username: ${MYSQL_USER_NAME}
           password: ${MYSQL_PASSWORD}
           hikari:
-            connectionTestQuery: SELECT 1
-            connectionTimeout: 30000
-            idleTimeout: 30000
-            maxLifetime: 1800000
-            maximumPoolSize: 15
-            minimumIdle: 10
-            validationTimeout: 5000
+            connection-timeout: 10000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 10
+            minimum-idle: 5
         slave_1:
           driver-class-name: com.mysql.cj.jdbc.Driver
           url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT}/${DATABASE_NAME_2}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
           username: ${MYSQL_USER_NAME}
           password: ${MYSQL_PASSWORD}
           hikari:
-            connectionTestQuery: SELECT 1
-            connectionTimeout: 30000
-            idleTimeout: 30000
-            maxLifetime: 1800000
-            maximumPoolSize: 15
-            minimumIdle: 10
-            validationTimeout: 5000
+            connection-timeout: 10000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 10
+            minimum-idle: 5
 
   #  数据库版本迁移
   flyway:

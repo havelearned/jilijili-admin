@@ -14,40 +14,43 @@ import wang.jilijili.music.pojo.vo.CommentsVo;
 public interface CommentsBo {
 
 
-
     /**
      * 转entity
-     * @author Amani
-     * @date 23/3/2023 下午3:29
+     *
      * @param commentsCreateRequest 被转换的实体类
      * @return wang.jilijili.music.pojo.entity.Comments
+     * @author Amani
+     * @date 23/3/2023 下午3:29
      */
-    public Comments toComment(CommentsCreateRequest commentsCreateRequest);
+    Comments toComment(CommentsCreateRequest commentsCreateRequest);
 
     /**
      * 转dto
-     * @author Amani
-     * @date 23/3/2023 下午3:31
+     *
      * @param comments entity
      * @return wang.jilijili.music.pojo.dto.CommentsDto
+     * @author Amani
+     * @date 23/3/2023 下午3:31
      */
     CommentsDto toCommentDto(Comments comments);
 
     /**
      * 转vo
+     *
+     * @param commentsDto dto
+     * @return wang.jilijili.music.pojo.vo.CommentsVo
      * @author Amani
      * @date 23/3/2023 下午3:33
-     * @param commentsDto  dto
-     * @return wang.jilijili.music.pojo.vo.CommentsVo
      */
     CommentsVo toCommentVo(CommentsDto commentsDto);
 
     /**
      * 转entity
-     * @author Amani
-     * @date 23/3/2023 下午3:54
+     *
      * @param commentsDto dto
      * @return wang.jilijili.music.pojo.entity.Comments
+     * @author Amani
+     * @date 23/3/2023 下午3:54
      */
     Comments toComment(CommentsDto commentsDto);
 }
