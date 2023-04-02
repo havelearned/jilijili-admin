@@ -37,7 +37,7 @@ public class FileType {
             put("IMAGE", new String[]{"bmp", "gif", "jpg", "jpeg", "png"});
             put("OFFICE", new String[]{"doc", "docx", "xls", "xlsx", "ppt", "pptx", "html", "htm", "txt"});
             put("COMPRESSED_FILE", new String[]{"rar", "zip", "gz", "bz2"});
-            put("AUDIO", new String[]{"mp4", "avi", "rmvb",});
+            put("AUDIO", new String[]{"mp4", "avi", "rmvb", "mp3", "wav", "wma", "mpeg", "mpg", "mid", "flac", "ape"});
             put("PDF", new String[]{"pdf"});
         }
     };

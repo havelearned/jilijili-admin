@@ -12,6 +12,8 @@ import wang.jilijili.music.mapper.SingerMapper;
 import wang.jilijili.music.pojo.bo.SingerConvertBo;
 import wang.jilijili.music.pojo.dto.SingerDto;
 import wang.jilijili.music.pojo.entity.Singer;
+import wang.jilijili.music.pojo.vo.AlibumSongVo;
+import wang.jilijili.music.pojo.vo.SingerInfoVo;
 import wang.jilijili.music.service.SingerService;
 
 import java.util.List;
@@ -67,6 +69,17 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer>
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public boolean deleteBatch(List<String> idList) {
         return this.singerMapper.deleteBatchIds(idList) > 0;
+    }
+
+    @Override
+    public SingerInfoVo getSingerInfo(String singerId) {
+        SingerInfoVo singerAlbumInformation = this.singerMapper.getSingerAlbumInformation(singerId);
+        return singerAlbumInformation;
+    }
+
+    @Override
+    public AlibumSongVo getSingerByAlibumBySongAll(String alibumId) {
+        return this.singerMapper.getSingerByAlibumBySongAll(alibumId);
     }
 }
 

@@ -16,6 +16,8 @@ import wang.jilijili.music.mapper.SingerMapper;
 import wang.jilijili.music.pojo.bo.SingerConvertBo;
 import wang.jilijili.music.pojo.dto.SingerDto;
 import wang.jilijili.music.pojo.entity.Singer;
+import wang.jilijili.music.pojo.vo.AlibumSongVo;
+import wang.jilijili.music.pojo.vo.SingerInfoVo;
 import wang.jilijili.music.pojo.vo.SingerVo;
 import wang.jilijili.music.service.SingerService;
 
@@ -45,6 +47,36 @@ public class SingerController extends BaseController<SingerMapper> {
     public SingerController(SingerService singerService, SingerConvertBo singerConvertBo) {
         this.singerService = singerService;
         this.singerConvertBo = singerConvertBo;
+    }
+
+    /**
+     * 通过专辑id查询歌曲
+     *
+     * @param alibumId 专辑id
+     * @return wang.jilijili.common.core.pojo.vo.Result<wang.jilijili.music.pojo.vo.AlibumSongVo>
+     * @author Amani
+     * @date 2023/4/2 14:55
+     */
+    @GetMapping("/getSingerByAlibumBySongAll/{alibumId}")
+    public Result<AlibumSongVo> getSingerByAlibumBySongAll(@PathVariable String alibumId) {
+        AlibumSongVo alibumSongVo = this.singerService.getSingerByAlibumBySongAll(alibumId);
+        return Result.ok(alibumSongVo);
+    }
+
+
+    /**
+     * 通过歌手id查询专辑
+     *
+     * @param singerId 歌手id
+     * @return wang.jilijili.common.core.pojo.vo.Result<wang.jilijili.music.pojo.vo.SingerInfoVo>
+     * @author Amani
+     * @date 2023/4/2 14:02
+     */
+    @GetMapping("/singerInfo/{singerId}")
+    public Result<SingerInfoVo> getSingerInfo(@PathVariable String singerId) {
+        SingerInfoVo singerInfo = this.singerService.getSingerInfo(singerId);
+        return Result.ok(singerInfo);
+
     }
 
     /**

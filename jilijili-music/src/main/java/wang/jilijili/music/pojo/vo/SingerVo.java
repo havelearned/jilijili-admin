@@ -16,38 +16,38 @@ public class SingerVo {
      * 歌手id
      */
 
-    private String id;
+    protected String id;
 
     /**
      * 歌手名称
      */
-    private String singerName;
+    protected String singerName;
 
     /**
      * 是否禁用
      */
-    private Integer locked;
+    protected Integer locked;
 
     /**
      * 歌手简介
      */
 
-    private String singerDetails;
+    protected String singerDetails;
 
     /**
      * 歌手头像
      */
 
-    private String singerPhoto;
+    protected String singerPhoto;
 
     /**
      * 歌手类型
      */
-    private Integer singerType;
+    protected Integer singerType;
 
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createdTime;
+    protected Date createdTime;
 
 }

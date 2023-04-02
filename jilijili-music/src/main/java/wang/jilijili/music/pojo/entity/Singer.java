@@ -22,32 +22,32 @@ public class Singer extends SuperEntity implements Serializable {
      * 歌手名称
      */
     @TableField(value = "singer_name")
-    private String singerName;
+    protected String singerName;
 
     /**
      * 歌手简介
      */
     @TableField(value = "singer_details")
-    private String singerDetails;
+    protected String singerDetails;
 
     /**
      * 歌手头像
      */
     @TableField(value = "singer_photo")
-    private String singerPhoto;
+    protected String singerPhoto;
 
     /**
      * 歌手类型
      */
     @TableField(value = "singer_type")
-    private Integer singerType;
+    protected Integer singerType;
 
     /**
      * 是否禁用
      */
     @TableField(value = "locked")
     @TableLogic
-    private Integer locked;
+    protected Integer locked;
 
 
 

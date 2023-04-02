@@ -3,6 +3,8 @@ package wang.jilijili.music.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import wang.jilijili.music.pojo.dto.SingerDto;
 import wang.jilijili.music.pojo.entity.Singer;
+import wang.jilijili.music.pojo.vo.AlibumSongVo;
+import wang.jilijili.music.pojo.vo.SingerInfoVo;
 
 import java.util.List;
 
@@ -19,4 +21,8 @@ public interface SingerService extends IService<Singer> {
     SingerDto update(SingerDto singer);
 
     boolean deleteBatch(List<String> idList);
+
+    SingerInfoVo getSingerInfo(String singerId);
+
+    AlibumSongVo getSingerByAlibumBySongAll(String alibumId);
 }
