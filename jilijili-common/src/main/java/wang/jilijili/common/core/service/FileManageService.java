@@ -1,8 +1,12 @@
 package wang.jilijili.common.core.service;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import wang.jilijili.common.core.pojo.dto.FileManageDto;
 import wang.jilijili.common.core.pojo.entity.FileManage;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.net.FileNameMap;
 
 /**
 * @author admin
@@ -12,4 +16,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 @DS("master")
 public interface FileManageService extends IService<FileManage> {
 
+    /**
+     * 分页查询
+     * @author Amani
+     * @date 2023/4/4 10:53
+     * @param iPage
+     * @param fileManageDto
+     * @return com.baomidou.mybatisplus.core.metadata.IPage<wang.jilijili.common.core.pojo.dto.FileManageDto>
+     */
+    IPage<FileManageDto> list(IPage<FileManage> iPage, FileManageDto fileManageDto);
 }

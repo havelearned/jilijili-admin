@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 歌词表(Music)表控制层
  *
- * @author makejava
+ * @author amani
  * @since 2023-03-27 11:04:54
  */
 @RestController

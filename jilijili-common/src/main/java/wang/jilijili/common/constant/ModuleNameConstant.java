@@ -9,4 +9,6 @@ public interface ModuleNameConstant {
 
     String MUSIC_MANAGE = "音乐管理";
 
+    String FILE_MANAGE = "文件管理";
+
 }

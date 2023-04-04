@@ -84,6 +84,7 @@ public class UploadController {
             throw new BizException(ExceptionType.BAD_REQUEST);
         }
 
+        // 得到文件后缀
         String suffix = FileUtil.getSuffix(file.getOriginalFilename());
 
         Iterator<Map.Entry<String, String[]>> iterator =
@@ -94,7 +95,7 @@ public class UploadController {
             Map.Entry<String, String[]> next = iterator.next();
             String[] value = next.getValue();
             for (String s : value) {
-                if (s.contains(suffix)) {
+                if (s.contains(suffix.toLowerCase())) {
                     type = next.getKey();
                     break;
                 }

@@ -30,7 +30,7 @@ import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
 /**
  * 歌手控制器
  *
- * @author makejava
+ * @author amani
  * @since 2023-03-20 23:33:45
  */
 @RestController
