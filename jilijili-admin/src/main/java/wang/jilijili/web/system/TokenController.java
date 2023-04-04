@@ -16,7 +16,7 @@ import wang.jilijili.common.core.pojo.vo.Result;
 
 
 /**
- * 令牌控制器
+ * 令牌管理
  *
  * @author Amani
  * @date 2023年02月13日 9:34

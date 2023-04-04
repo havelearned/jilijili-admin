@@ -28,7 +28,7 @@ public class FileManageDto extends QueryDto {
     /**
      * 文件大小 字节
      */
-    private Long size;
+    private Long filesize;
 
     /**
      * 是否锁定

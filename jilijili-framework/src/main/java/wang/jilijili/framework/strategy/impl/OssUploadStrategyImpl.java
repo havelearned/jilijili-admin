@@ -68,7 +68,7 @@ public class OssUploadStrategyImpl extends AbstractUploadStrategyImpl {
                 file.getInputStream());
 
         FileManage fileManage = new FileManage();
-        fileManage.setSize(file.getSize());
+        fileManage.setFilesize(file.getSize());
         fileManage.setType(Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf(".")));
         fileManage.setFilename(file.getOriginalFilename());
         fileManage.setLocked(0);

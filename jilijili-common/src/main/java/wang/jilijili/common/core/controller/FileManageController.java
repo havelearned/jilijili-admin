@@ -45,7 +45,7 @@ public class FileManageController {
      * @return 所有数据
      */
     @GetMapping("/list")
-    public Result<IPage<FileManageDto>> selectAll(FileManageDto fileManageDto) {
+    public Result<IPage<FileManage>> selectAll(FileManageDto fileManageDto) {
         IPage<FileManage> iPage = new Page<>(fileManageDto.getPage(), fileManageDto.getSize());
         return Result.ok(this.fileManageService.list(iPage, fileManageDto));
     }

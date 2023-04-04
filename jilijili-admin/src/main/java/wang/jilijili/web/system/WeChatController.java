@@ -21,13 +21,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 微信小程序控制器
+ * 微信小程序管理
  * @author Amani
  * @date 2023年02月21日 17:04
  */
 @RestController
 @RequestMapping("/weChat")
-@Tag(name = "微信小程序控制器")
+@Tag(name = "微信小程序管理")
 public class WeChatController extends BaseController<UserMapper> {
 
 

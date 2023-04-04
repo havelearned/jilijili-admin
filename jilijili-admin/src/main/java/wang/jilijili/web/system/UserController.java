@@ -28,10 +28,10 @@ import static wang.jilijili.common.constant.ModuleNameConstant.USER_MANAGEMENT;
 import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
 
 /**
- * 用户控制器
+ * 用户管理
  * @author admin
  * @Date: 2023/1/24 11:19
- * @Description: 用户控制器
+ * @Description: 用户管理
  */
 @RestController
 @RequestMapping("/users")

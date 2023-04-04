@@ -22,7 +22,7 @@ import static wang.jilijili.common.constant.ModuleNameConstant.MUSIC_MANAGE;
 import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
 
 /**
- * 专辑表控制层
+ * 专辑管理
  *
  * @author amani
  * @since 2023-03-21 15:21:52

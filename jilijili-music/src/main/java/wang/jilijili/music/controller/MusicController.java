@@ -17,14 +17,14 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 歌词表(Music)表控制层
+ * 歌曲管理
  *
  * @author amani
  * @since 2023-03-27 11:04:54
  */
 @RestController
 @RequestMapping("/music")
-@Tag(name = "歌曲管理模块")
+@Tag(name = "歌曲管理")
 public class MusicController {
     /**
      * 服务对象

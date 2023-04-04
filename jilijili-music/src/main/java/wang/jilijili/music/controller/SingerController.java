@@ -29,14 +29,14 @@ import static wang.jilijili.common.constant.ModuleNameConstant.MUSIC_MANAGE;
 import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
 
 /**
- * 歌手控制器
+ * 歌手管理
  *
  * @author amani
  * @since 2023-03-20 23:33:45
  */
 @RestController
 @RequestMapping("/singer")
-@Tag(name = "歌手管理模块")
+@Tag(name = "歌手管理")
 public class SingerController extends BaseController<SingerMapper> {
     /**
      * 服务对象

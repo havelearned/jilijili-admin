@@ -39,8 +39,8 @@ public class FileManage extends SuperEntity implements Serializable {
     /**
      * 文件大小 字节
      */
-    @TableField(value = "size")
-    private Long size;
+    @TableField(value = "filesize")
+    private Long filesize;
 
     /**
      * 是否锁定

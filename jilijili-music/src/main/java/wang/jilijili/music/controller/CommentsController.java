@@ -19,14 +19,14 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * (Comments)表控制层
+ * 评论管理
  *
  * @author amani
  * @since 2023-03-23 15:04:50
  */
 @RestController
 @RequestMapping("comments")
-@Tag(name = "评论管理模块")
+@Tag(name = "评论管理")
 public class CommentsController {
     /**
      * 服务对象

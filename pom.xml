@@ -21,6 +21,7 @@
     <module>jilijili-framework</module>
     <module>jilijili-admin</module>
     <module>jilijili-music</module>
+      <module>jilijili-video</module>
   </modules>
 
   <description>父模块</description>

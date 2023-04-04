@@ -17,7 +17,7 @@ import java.util.Map;
 import static wang.jilijili.common.utils.FileType.OTHER;
 
 /**
- * 文件上传控制器
+ * 文件上传管理
  *
  * @author Amani
  * @date 2023年03月16日 下午12:47

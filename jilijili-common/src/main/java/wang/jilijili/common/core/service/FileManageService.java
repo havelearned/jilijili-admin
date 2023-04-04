@@ -23,5 +23,5 @@ public interface FileManageService extends IService<FileManage> {
      * @author Amani
      * @date 2023/4/4 10:53
      */
-    IPage<FileManageDto> list(IPage<FileManage> iPage, FileManageDto fileManageDto);
+    IPage<FileManage> list(IPage<FileManage> iPage, FileManageDto fileManageDto);
 }
