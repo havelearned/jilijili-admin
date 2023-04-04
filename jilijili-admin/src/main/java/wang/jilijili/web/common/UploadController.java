@@ -1,10 +1,7 @@
 package wang.jilijili.web.common;
 
 import cn.hutool.core.io.FileUtil;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import wang.jilijili.common.enums.UploadModule;
 import wang.jilijili.common.exception.BizException;
@@ -60,7 +57,7 @@ public class UploadController {
      * @return 返回文件连接
      */
     @PostMapping("/oss/image")
-    public String ossUploadImage(@RequestParam("file") MultipartFile file) {
+    public String ossUploadImage(@RequestPart(value = "file") final MultipartFile file) {
         String type = getFileTypeSaveDir(file);
 
         return this.uploadStrategyContext.executeUploadStrategy(
