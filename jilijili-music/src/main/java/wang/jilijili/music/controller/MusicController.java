@@ -40,7 +40,7 @@ public class MusicController {
     /**
      * 分页查询所有数据
      *
-     * @param musicDto
+     * @param musicDto 查询实体
      * @return wang.jilijili.common.core.pojo.vo.Result<com.baomidou.mybatisplus.core.metadata.IPage < wang.jilijili.music.pojo.vo.MusicVo>>
      * @author Amani
      * @date 27/3/2023 上午11:12

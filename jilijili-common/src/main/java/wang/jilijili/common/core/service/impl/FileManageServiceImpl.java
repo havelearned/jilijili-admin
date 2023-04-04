@@ -33,7 +33,7 @@ public class FileManageServiceImpl extends ServiceImpl<FileManageMapper, FileMan
     public IPage<FileManageDto> list(IPage<FileManage> iPage, FileManageDto fileManageDto) {
         FileManage fileManage = this.fileManageConvertBo.toFileManageEntity(fileManageDto);
         IPage<FileManage> fileManageIpage = this.fileManageMapper
-                .selectPage(iPage, new QueryWrapper<FileManage>(fileManage));
+                .selectPage(iPage, new QueryWrapper<>(fileManage));
         return fileManageIpage.convert(item -> this.fileManageConvertBo.toFileManageDto(item));
     }
 }

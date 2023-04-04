@@ -37,6 +37,12 @@ public class UploadController {
         this.uploadStrategyContext = uploadStrategyContext;
     }
 
+    /**
+     * 本地上传
+     *
+     * @param file 文件实体
+     * @return 返回文件连接
+     */
     @PostMapping("/local/image")
     public String localUploadImage(MultipartFile file) {
         String type = getFileTypeSaveDir(file);
@@ -47,6 +53,12 @@ public class UploadController {
                 UploadModule.MUSIC_MPEG_LOCAL.getExecutedBeanName());
     }
 
+    /**
+     * oss文件上传
+     *
+     * @param file 文件实体
+     * @return 返回文件连接
+     */
     @PostMapping("/oss/image")
     public String ossUploadImage(@RequestParam("file") MultipartFile file) {
         String type = getFileTypeSaveDir(file);
@@ -57,6 +69,13 @@ public class UploadController {
                 UploadModule.OSS_IMAGE_MUSIC.getExecutedBeanName());
     }
 
+
+    /**
+     * oss批量上传文件
+     *
+     * @param files 多个文件
+     * @return 返回文件连接列表
+     */
     @PostMapping("/multiple/oss/image")
     public List<String> ossUploadMultipleImage(@RequestParam("files") MultipartFile[] files) {
         List<String> urls = new ArrayList<>();
@@ -74,8 +93,8 @@ public class UploadController {
     /**
      * 保存到对应目录下
      *
-     * @param file
-     * @return java.lang.String
+     * @param file 上传的文件实体
+     * @return java.lang.String 返回文件连接|文件路径包含后缀
      * @author Amani
      * @date 27/3/2023 下午7:03
      */

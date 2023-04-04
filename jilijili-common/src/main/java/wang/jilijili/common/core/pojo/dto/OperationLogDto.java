@@ -1,9 +1,12 @@
 package wang.jilijili.common.core.pojo.dto;
 
+import lombok.Data;
+
 /**
  * @author Amani
  * @date 2023年04月04日 11:22
  */
+@Data
 public class OperationLogDto extends QueryDto {
 
     /**
