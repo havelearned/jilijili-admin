@@ -9,6 +9,7 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 import wang.jilijili.common.annotation.JilJilOperationLog;
+import wang.jilijili.common.annotation.NoRepeatSubmit;
 import wang.jilijili.common.core.controller.BaseController;
 import wang.jilijili.common.core.pojo.vo.Result;
 import wang.jilijili.common.enums.OperationType;
@@ -118,6 +119,7 @@ public class SingerController extends BaseController<SingerMapper> {
     @PostMapping("/")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.ADD)
+    @NoRepeatSubmit(timeout = 2)
     public Result<SingerVo> insert(@RequestBody SingerDto singerDto) {
         singerDto = this.singerService.create(singerDto);
         return Result.ok(this.singerConvertBo.toSingerVo(singerDto));
