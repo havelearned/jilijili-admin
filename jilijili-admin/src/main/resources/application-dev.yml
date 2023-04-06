@@ -148,7 +148,7 @@ wx:
 upload:
   store:
     local:
-      domain-url: D:\.temp\tmp\upload
+      domain-url: F:\.temp\tmp\upload\
       access-key: ljj
       access-key-secret: 123456.ljj
       endpoint: http://localhost:8080

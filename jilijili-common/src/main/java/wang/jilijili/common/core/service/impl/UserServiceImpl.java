@@ -71,7 +71,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public UserDto update(UserUpdateRequest userUpdateRequest) {
         User user = this.userConvertBo.toUserEntity(userUpdateRequest);
-        if(user!=null){
+        if (user != null) {
             this.updateById(user);
             return userConvertBo.toDto(user);
         }
@@ -90,7 +90,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    @DS("slave_1")
+    @DS("master")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public UserDto create(UserCreateDto userCreateDto, HttpServletRequest request) {
         User user = userConvertBo.toUserEntity(userCreateDto);

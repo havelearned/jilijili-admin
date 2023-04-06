@@ -39,6 +39,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * controller 基类
+ *
  * @author Amani
  * @date 2023年03月01日 10:41
  */

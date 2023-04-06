@@ -3,6 +3,7 @@ package wang.jilijili.web.common;
 import cn.hutool.core.io.FileUtil;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import wang.jilijili.common.core.pojo.vo.Result;
 import wang.jilijili.common.enums.UploadModule;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ExceptionType;
@@ -41,13 +42,13 @@ public class UploadController {
      * @return 返回文件连接
      */
     @PostMapping("/local/image")
-    public String localUploadImage(MultipartFile file) {
+    public Result<String> localUploadImage(MultipartFile file) {
         String type = getFileTypeSaveDir(file);
-
-        return this.uploadStrategyContext.executeUploadStrategy(
+        String urlPath = this.uploadStrategyContext.executeUploadStrategy(
                 file,
                 UploadModule.OSS_IMAGE_MUSIC.getPath() + type,
                 UploadModule.MUSIC_MPEG_LOCAL.getExecutedBeanName());
+        return Result.ok(urlPath);
     }
 
     /**
@@ -57,13 +58,13 @@ public class UploadController {
      * @return 返回文件连接
      */
     @PostMapping("/oss/image")
-    public String ossUploadImage(@RequestPart(value = "file") final MultipartFile file) {
+    public Result<String> ossUploadImage(@RequestPart(value = "file") final MultipartFile file) {
         String type = getFileTypeSaveDir(file);
-
-        return this.uploadStrategyContext.executeUploadStrategy(
+        String urlPath = this.uploadStrategyContext.executeUploadStrategy(
                 file,
                 UploadModule.OSS_IMAGE_MUSIC.getPath() + type,
                 UploadModule.OSS_IMAGE_MUSIC.getExecutedBeanName());
+        return Result.ok(urlPath);
     }
 
 
@@ -74,7 +75,7 @@ public class UploadController {
      * @return 返回文件连接列表
      */
     @PostMapping("/multiple/oss/image")
-    public List<String> ossUploadMultipleImage(@RequestParam("files") MultipartFile[] files) {
+    public Result<List<String>> ossUploadMultipleImage(@RequestParam("files") MultipartFile[] files) {
         List<String> urls = new ArrayList<>();
         for (MultipartFile file : files) {
             String type = getFileTypeSaveDir(file);
@@ -84,7 +85,7 @@ public class UploadController {
                     UploadModule.OSS_IMAGE_MUSIC.getExecutedBeanName());
             urls.add(url);
         }
-        return urls;
+        return Result.ok(urls);
     }
 
     /**

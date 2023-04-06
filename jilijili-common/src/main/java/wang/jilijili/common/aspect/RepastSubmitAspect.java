@@ -65,7 +65,7 @@ public class RepastSubmitAspect {
         String value = (String) redisService.get(key);
         if (StringUtils.isNotBlank(value)) {
             redisService.del(key);
-            return Result.ok(null, "请勿重复提交表单");
+            return Result.ok(null);
         }
 
         redisService.set(key, KsuidGenerator.generate(), timeout);
