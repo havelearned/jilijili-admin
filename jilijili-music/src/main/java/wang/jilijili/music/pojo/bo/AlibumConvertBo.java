@@ -3,6 +3,7 @@ package wang.jilijili.music.pojo.bo;
 import org.mapstruct.Mapper;
 import wang.jilijili.music.pojo.dto.AlibumDto;
 import wang.jilijili.music.pojo.entity.Alibum;
+import wang.jilijili.music.pojo.request.AlibumCreateRequest;
 import wang.jilijili.music.pojo.vo.AlibumVo;
 
 /**
@@ -11,6 +12,11 @@ import wang.jilijili.music.pojo.vo.AlibumVo;
  */
 @Mapper(componentModel = "spring")
 public interface AlibumConvertBo {
+
+    /**
+     * 创建表单转实体类
+     */
+    Alibum toAlibum(AlibumCreateRequest alibumCreateRequest);
 
     /**
      * 转entity

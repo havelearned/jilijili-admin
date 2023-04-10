@@ -50,7 +50,7 @@ public class LocalUploadStrategyImpl extends AbstractUploadStrategyImpl {
         try {
             file.transferTo(dest);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             throw new BizException(UPLOAD_FAILED);
         }
 

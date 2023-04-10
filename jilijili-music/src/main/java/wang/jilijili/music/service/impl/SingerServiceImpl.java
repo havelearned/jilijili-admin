@@ -38,7 +38,7 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer>
 
     @Override
     @DS("slave_1")
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    
     public SingerDto create(SingerDto singerDto) {
         Singer singer = this.singerConvertBo.toSinger(singerDto);
         singer.setId(KsuidGenerator.generate());
@@ -52,7 +52,7 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer>
 
     @Override
     @DS("slave_1")
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    
     public SingerDto update(SingerDto singerDto) {
         Singer singer = this.singerConvertBo.toSinger(singerDto);
         boolean update = this.updateById(singer);
@@ -66,7 +66,7 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer>
 
     @Override
     @DS("slave_1")
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    
     public boolean deleteBatch(List<String> idList) {
         return this.singerMapper.deleteBatchIds(idList) > 0;
     }

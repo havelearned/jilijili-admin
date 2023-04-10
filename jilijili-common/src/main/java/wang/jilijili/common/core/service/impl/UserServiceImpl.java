@@ -67,12 +67,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    @DS("slave_1")
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    @DS("master")
+    
     public UserDto update(UserUpdateRequest userUpdateRequest) {
         User user = this.userConvertBo.toUserEntity(userUpdateRequest);
         if (user != null) {
-            this.updateById(user);
+            this.userMapper.updateById(user);
             return userConvertBo.toDto(user);
         }
         throw new BizException(ExceptionType.BAD_REQUEST);
@@ -81,8 +81,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    @DS("slave_1")
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    @DS("master")
+    
     public Result<?> delete(String id) {
         int delete = this.userMapper.deleteById(id);
 
@@ -91,7 +91,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     @DS("master")
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    
     public UserDto create(UserCreateDto userCreateDto, HttpServletRequest request) {
         User user = userConvertBo.toUserEntity(userCreateDto);
         user.setId(KsuidGenerator.generate());

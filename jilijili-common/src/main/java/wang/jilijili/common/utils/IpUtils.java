@@ -4,6 +4,7 @@ package wang.jilijili.common.utils;
 import com.alibaba.fastjson2.JSON;
 import eu.bitwalker.useragentutils.UserAgent;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -19,6 +20,7 @@ import java.util.Map;
  * @author 11921
  */
 @SuppressWarnings("all")
+@Slf4j
 public class IpUtils {
 
     /**
@@ -45,7 +47,7 @@ public class IpUtils {
                     try {
                         inet = InetAddress.getLocalHost();
                     } catch (UnknownHostException e) {
-                        e.printStackTrace();
+                        log.error(e.getMessage());
                     }
                     ipAddress = inet.getHostAddress();
                 }

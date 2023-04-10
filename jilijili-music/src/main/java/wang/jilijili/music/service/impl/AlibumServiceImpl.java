@@ -1,18 +1,22 @@
 package wang.jilijili.music.service.impl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.ksuid.KsuidGenerator;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ExceptionType;
 import wang.jilijili.music.mapper.AlibumMapper;
+import wang.jilijili.music.mapper.SingerAlibumMapper;
 import wang.jilijili.music.pojo.bo.AlibumConvertBo;
 import wang.jilijili.music.pojo.dto.AlibumDto;
 import wang.jilijili.music.pojo.entity.Alibum;
+import wang.jilijili.music.pojo.entity.SingerAlibum;
+import wang.jilijili.music.pojo.request.AlibumCreateRequest;
+import wang.jilijili.music.pojo.vo.SingerVo;
 import wang.jilijili.music.service.AlibumService;
+
+import java.util.List;
 
 /**
  * @author admin
@@ -25,20 +29,22 @@ public class AlibumServiceImpl extends ServiceImpl<AlibumMapper, Alibum>
 
     AlibumMapper alibumMapper;
     AlibumConvertBo alibumConvertBo;
+    SingerAlibumMapper singerAlibumMapper;
 
-    public AlibumServiceImpl(AlibumMapper alibumMapper, AlibumConvertBo alibumConvertBo) {
+    public AlibumServiceImpl(AlibumMapper alibumMapper, AlibumConvertBo alibumConvertBo, SingerAlibumMapper singerAlibumMapper) {
         this.alibumMapper = alibumMapper;
         this.alibumConvertBo = alibumConvertBo;
+        this.singerAlibumMapper = singerAlibumMapper;
     }
 
     @Override
-    @DS("slave_1")
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
-    public AlibumDto create(AlibumDto alibumDto) {
-        Alibum alibum = this.alibumConvertBo.toAlibum(alibumDto);
+    public AlibumDto create(AlibumCreateRequest alibumCreateRequest) {
+        Alibum alibum = this.alibumConvertBo.toAlibum(alibumCreateRequest);
+
         alibum.setId(KsuidGenerator.generate());
-        int insert = this.alibumMapper.insert(alibum);
-        if (insert >= 1) {
+
+        if (this.alibumMapper.insert(alibum) >= 1 &&
+                this.alibumMapper.saveBySingerIdByAlibumId(alibumCreateRequest.getSingerId(), alibum.getId()) >= 1) {
 
             return this.alibumConvertBo.toAlibumDto(this.getById(alibum.getId()));
         }
@@ -47,17 +53,22 @@ public class AlibumServiceImpl extends ServiceImpl<AlibumMapper, Alibum>
     }
 
     @Override
-    @DS("slave_1")
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
-    public AlibumDto update(AlibumDto alibumDto) {
-        Alibum alibum = this.alibumConvertBo.toAlibum(alibumDto);
-        boolean update = this.updateById(alibum);
-        if (update) {
+    public AlibumDto udpated(AlibumCreateRequest alibumCreateRequest) {
 
-            return this.alibumConvertBo.toAlibumDto(this.getById(alibum.getId()));
-        }
+        Alibum alibum = this.alibumConvertBo.toAlibum(alibumCreateRequest);
+        this.alibumMapper.updateById(alibum);
 
-        throw new BizException(ExceptionType.REQUEST_OPERATE_ERROR);
+        SingerAlibum singerAlibum = new SingerAlibum();
+        singerAlibum.setAlibumId(alibum.getId());
+        singerAlibum.setSingerId(alibumCreateRequest.getSingerId());
+
+        this.singerAlibumMapper.update(singerAlibum, new UpdateWrapper<>());
+        return this.alibumConvertBo.toAlibumDto(alibum);
+    }
+
+    @Override
+    public List<SingerVo> queryByAlibumId(String id) {
+        return this.alibumMapper.queryByAlibumId(id);
 
     }
 }

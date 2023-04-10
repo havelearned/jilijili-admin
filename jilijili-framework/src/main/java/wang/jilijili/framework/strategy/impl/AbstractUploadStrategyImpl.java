@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.framework.strategy.UploadStrategy;
@@ -17,6 +18,7 @@ import static wang.jilijili.common.exception.ExceptionType.UPLOAD_FAILED;
  */
 @Getter
 @Setter
+@Slf4j
 public abstract class AbstractUploadStrategyImpl implements UploadStrategy {
 
     @Override
@@ -37,7 +39,7 @@ public abstract class AbstractUploadStrategyImpl implements UploadStrategy {
 
             return getPublicNetworkAccessUrl(fileRelativePath);
         }catch (Exception e){
-            e.printStackTrace();
+            log.error(e.getMessage());
             throw new BizException(UPLOAD_FAILED);
         }
     }

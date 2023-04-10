@@ -11,8 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import wang.jilijili.common.annotation.JilJilOperationLog;
-import wang.jilijili.common.core.controller.BaseController;
-import wang.jilijili.common.core.mapper.UserMapper;
 import wang.jilijili.common.core.pojo.bo.UserConvertBo;
 import wang.jilijili.common.core.pojo.dto.UserCreateDto;
 import wang.jilijili.common.core.pojo.dto.UserDto;
@@ -29,6 +27,7 @@ import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
 
 /**
  * 用户管理
+ *
  * @author admin
  * @Date: 2023/1/24 11:19
  * @Description: 用户管理
@@ -37,7 +36,7 @@ import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
 @RequestMapping("/users")
 @CrossOrigin(origins = "*")
 @Tag(name = "用户管理")
-public class UserController extends BaseController<UserMapper> {
+public class UserController {
 
     private final UserService userService;
     private final UserConvertBo userConvertBo;
@@ -185,7 +184,6 @@ public class UserController extends BaseController<UserMapper> {
     public void export(@RequestBody UserQueryDto userQueryDto,
                        HttpServletResponse response) {
 
-        super.export(userQueryDto, response);
     }
 
 

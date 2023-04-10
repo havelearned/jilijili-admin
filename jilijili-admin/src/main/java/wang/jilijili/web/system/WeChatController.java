@@ -2,6 +2,8 @@ package wang.jilijili.web.system;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.websocket.server.PathParam;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -9,14 +11,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import wang.jilijili.common.annotation.JilJilOperationLog;
-import wang.jilijili.common.core.controller.BaseController;
-import wang.jilijili.common.core.mapper.UserMapper;
+import wang.jilijili.common.constant.SecurityConstant;
 import wang.jilijili.common.core.pojo.bo.UserConvertBo;
 import wang.jilijili.common.core.pojo.dto.Code2SessionDto;
 import wang.jilijili.common.core.pojo.vo.Result;
 import wang.jilijili.common.core.service.WeChatMpService;
 import wang.jilijili.common.enums.OperationType;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +30,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/weChat")
 @Tag(name = "微信小程序管理")
-public class WeChatController extends BaseController<UserMapper> {
+public class WeChatController  {
 
 
     WxMaService wxMaService;
@@ -70,8 +72,12 @@ public class WeChatController extends BaseController<UserMapper> {
     public Result<?> authUrl(@Validated @RequestBody Code2SessionDto code2SessionDto) throws WxErrorException {
         WxMaJscode2SessionResult sessionResult = wxMaService.jsCode2SessionInfo(code2SessionDto.getCode());
         code2SessionDto.setCode(sessionResult.getOpenid());
-
-        String token = super.createToken(code2SessionDto, passwordEncoder);
+        String token = JWT.create()
+                // 一般id,唯一字段
+                .withSubject(code2SessionDto.getUsername())
+                // 过期时间
+                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstant.EXPIRATION_TIME))
+                .sign(Algorithm.HMAC512(SecurityConstant.SECRET.getBytes()));
 
         Map<String, Object> map = new HashMap<>(2);
         map.put("sessionResult", sessionResult);

@@ -31,7 +31,7 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    
     public MusicDto create(MusicDto musicDto) {
         Music music = this.musicConvertBo.toMusic(musicDto);
         int insert = this.musicMapper.insert(music);
@@ -44,7 +44,7 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    
     public MusicDto update(MusicDto musicDto) {
         Music music = this.musicConvertBo.toMusic(musicDto);
         int update = this.musicMapper.updateById(music);

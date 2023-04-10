@@ -50,7 +50,7 @@ public class JilijiliMusicApplication {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         return "null";
     }

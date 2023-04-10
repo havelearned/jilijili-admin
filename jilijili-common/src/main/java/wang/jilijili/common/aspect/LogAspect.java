@@ -6,9 +6,7 @@ import com.github.ksuid.KsuidGenerator;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.java.Log;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -44,26 +42,15 @@ public class LogAspect {
     @Resource
     UserMapper userMapper;
 
-    private static final ThreadLocal<OperationLog> OPERATION_LOG_THREAD_LOCAL = new InheritableThreadLocal<>();
-
     @Pointcut(value = "@annotation(wang.jilijili.common.annotation.JilJilOperationLog)")
     public void operationLogPointcut() {
     }
 
-    @After(value = "operationLogPointcut()")
-    public void after(JoinPoint pjp) {
-        log.info("wang.jilijili.common.aspect.LogAspect.@after===>被执行了");
-        OperationLog operationLog = OPERATION_LOG_THREAD_LOCAL.get();
-        if (Objects.isNull(operationLog)) {
-            return;
-        }
-//        this.operationLogMapper.insert(operationLog);
-
-    }
 
     @Around(value = "operationLogPointcut()")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
-        log.info("wang.jilijili.common.aspect.LogAspect.@afterReturning===>被执行了");
+        log.info("wang.jilijili.common.aspect.LogAspect.@around===>被执行了");
+        Object result = null;
         MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
         Method method = methodSignature.getMethod();
 
@@ -92,14 +79,13 @@ public class LogAspect {
         operationLog.setUsername(user.getUsername());
         operationLog.setId(KsuidGenerator.generate());
 
+        // HACK 确保只调用一次pjp.proceed(),多次调用多次执行目标方法
+        result = pjp.proceed();
 
         // 设置返回值
-        operationLog.setContent(JSONObject.toJSONString(pjp.proceed()));
-
-        OPERATION_LOG_THREAD_LOCAL.set(operationLog);
-        OPERATION_LOG_THREAD_LOCAL.remove();
+        operationLog.setContent(JSONObject.toJSONString(result));
         this.operationLogMapper.insert(operationLog);
-        return pjp.proceed();
+        return result;
     }
 
 }

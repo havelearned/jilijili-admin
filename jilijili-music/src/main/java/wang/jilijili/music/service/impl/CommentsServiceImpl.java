@@ -37,7 +37,7 @@ public class CommentsServiceImpl extends ServiceImpl<CommentsMapper, Comments>
 
     @Override
     @DS("slave_1")
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    
     public CommentsDto create(CommentsCreateRequest commentsCreateRequest) {
         Comments comments = commentsBo.toComment(commentsCreateRequest);
         comments.setId(KsuidGenerator.generate());

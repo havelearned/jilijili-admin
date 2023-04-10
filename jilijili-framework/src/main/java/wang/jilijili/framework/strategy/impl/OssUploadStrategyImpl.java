@@ -46,7 +46,7 @@ public class OssUploadStrategyImpl extends AbstractUploadStrategyImpl {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             throw new BizException(ExceptionType.OSS_INIT_FAIL);
         }
         log.info("OssClient Init Success...");

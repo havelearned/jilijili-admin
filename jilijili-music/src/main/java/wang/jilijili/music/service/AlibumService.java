@@ -1,9 +1,13 @@
 package wang.jilijili.music.service;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.extension.service.IService;
 import wang.jilijili.music.pojo.dto.AlibumDto;
 import wang.jilijili.music.pojo.entity.Alibum;
-import com.baomidou.mybatisplus.extension.service.IService;
+import wang.jilijili.music.pojo.request.AlibumCreateRequest;
+import wang.jilijili.music.pojo.vo.SingerVo;
+
+import java.util.List;
 
 /**
 * @author admin
@@ -13,7 +17,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 @DS("slave_1")
 public interface AlibumService extends IService<Alibum> {
 
-    AlibumDto create(AlibumDto alibumDto);
+    AlibumDto create(AlibumCreateRequest alibumCreateRequest);
 
-    AlibumDto update(AlibumDto alibumDto);
+    AlibumDto udpated(AlibumCreateRequest alibumCreateRequest);
+
+    List<SingerVo> queryByAlibumId(String id);
+
+
 }
