@@ -16,7 +16,7 @@ import wang.jilijili.framework.handler.MpMetaObjectHandler;
  * @date 2023年02月12日 22:08
  */
 @Configuration
-@MapperScan( {"wang.jilijili.common.core.mapper",
+@MapperScan({"wang.jilijili.common.core.mapper",
         "wang.jilijili.music.mapper"})
 public class MybatisPlusConfig {
 
@@ -29,6 +29,7 @@ public class MybatisPlusConfig {
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;
     }
+
     @Bean
     public GlobalConfig globalConfig() {
         GlobalConfig globalConfig = new GlobalConfig();

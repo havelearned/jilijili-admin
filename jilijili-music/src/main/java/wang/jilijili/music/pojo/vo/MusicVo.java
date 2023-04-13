@@ -3,22 +3,24 @@ package wang.jilijili.music.pojo.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import wang.jilijili.music.enums.MusicStatus;
 
 import java.util.Date;
 
 /**
  * 返回前端的对象
+ *
  * @author Amani
  * @date 2023年03月09日 10:27
  */
 @Data
 public class MusicVo {
 
-   private String id;
+    private String id;
 
-   private String name;
+    private String name;
 
-    private Integer status;
+    private MusicStatus status;
 
     private String description;
 

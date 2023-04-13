@@ -24,4 +24,5 @@ public interface AlibumService extends IService<Alibum> {
     List<SingerVo> queryByAlibumId(String id);
 
 
+    Boolean deleteAlbumAndArtist(List<String> idList);
 }

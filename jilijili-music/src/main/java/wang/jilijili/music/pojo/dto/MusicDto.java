@@ -26,7 +26,7 @@ public class MusicDto extends QueryDto {
     private String albumId;
 
     private String name;
-
+    
     private Integer status;
 
     private String description;

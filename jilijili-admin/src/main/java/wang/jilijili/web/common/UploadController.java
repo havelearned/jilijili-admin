@@ -51,6 +51,28 @@ public class UploadController {
         return Result.ok(urlPath);
     }
 
+
+    /**
+     * local批量上传文件
+     *
+     * @param files 多个文件
+     * @return 返回文件连接列表
+     */
+    @PostMapping("/multiple/local/image")
+    public Result<List<String>> multipleLocalUploadImage(@RequestPart(value = "files") final MultipartFile[] files) {
+
+        List<String> urls = new ArrayList<>();
+        for (MultipartFile file : files) {
+            String type = getFileTypeSaveDir(file);
+            String url = this.uploadStrategyContext.executeUploadStrategy(
+                    file,
+                    UploadModule.MUSIC_MPEG_LOCAL.getPath() + type,
+                    UploadModule.MUSIC_MPEG_LOCAL.getExecutedBeanName());
+            urls.add(url);
+        }
+        return Result.ok(urls);
+    }
+
     /**
      * oss文件上传
      *
@@ -75,7 +97,7 @@ public class UploadController {
      * @return 返回文件连接列表
      */
     @PostMapping("/multiple/oss/image")
-    public Result<List<String>> ossUploadMultipleImage(@RequestParam("files") MultipartFile[] files) {
+    public Result<List<String>> ossUploadMultipleImage(@RequestPart("files") final MultipartFile[] files) {
         List<String> urls = new ArrayList<>();
         for (MultipartFile file : files) {
             String type = getFileTypeSaveDir(file);

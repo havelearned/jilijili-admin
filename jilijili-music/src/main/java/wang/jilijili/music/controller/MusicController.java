@@ -1,7 +1,6 @@
 package wang.jilijili.music.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -48,13 +47,8 @@ public class MusicController {
     @GetMapping("/list")
     public Result<IPage<MusicVo>> selectAll(MusicDto musicDto) {
         IPage<Music> iPage = new Page<>(musicDto.getPage(), musicDto.getSize());
-        Music music = this.musicConvertBo.toMusic(musicDto);
-        iPage = this.musicService.page(iPage, new QueryWrapper<>(music));
-        IPage<MusicVo> voIpage = iPage.convert(item ->
-                this.musicConvertBo.toMusicVo(
-                        this.musicConvertBo.toMusicDto(item)));
-
-        return Result.ok(voIpage);
+        IPage<MusicDto> dtoPage = this.musicService.listPage(musicDto, iPage);
+        return Result.ok(dtoPage.convert(this.musicConvertBo::toMusicVo));
     }
 
     /**

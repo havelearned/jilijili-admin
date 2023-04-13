@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.AuthorizationServiceException;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,13 +29,7 @@ import java.io.IOException;
  * @author admin
  */
 @Component
-public class RestAuthenticationHandler implements
-        AuthenticationSuccessHandler,
-        AuthenticationFailureHandler,
-        LogoutSuccessHandler,
-        SessionInformationExpiredStrategy,
-        AccessDeniedHandler,
-        AuthenticationEntryPoint {
+public class RestAuthenticationHandler implements AuthenticationSuccessHandler, AuthenticationFailureHandler, LogoutSuccessHandler, SessionInformationExpiredStrategy, AccessDeniedHandler, AuthenticationEntryPoint {
 
     public static final String APPLICATION_JSON_CHARSET_UTF_8 = "application/json;charset=UTF-8";
     public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -51,6 +45,8 @@ public class RestAuthenticationHandler implements
         String detailMessage = authException.getClass().getSimpleName() + " " + authException.getLocalizedMessage();
         if (authException instanceof InsufficientAuthenticationException) {
             detailMessage = "请登陆后再访问";
+        } else if (authException instanceof AccountExpiredException) {
+            detailMessage = "账号登录过期,请重新登录";
         }
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -62,9 +58,7 @@ public class RestAuthenticationHandler implements
      * 权限不足时的处理
      */
     @Override
-    public void handle(HttpServletRequest request,
-                       HttpServletResponse response,
-                       AccessDeniedException accessDeniedException) throws IOException {
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
         Result<String> result = new Result<>();
         result.setFlag(false);
         result.setData("");
@@ -87,10 +81,24 @@ public class RestAuthenticationHandler implements
      * 认证失败时的处理
      */
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
+    public void onAuthenticationFailure(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        AuthenticationException exception) throws IOException {
         response.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(Result.fail("登陆失败! 用户名或者密码错误")));
+        String message;
+        if (exception instanceof LockedException) {
+            message = "账户被锁定，请联系管理员";
+        } else if (exception instanceof CredentialsExpiredException) {
+            message = "密码过期，请联系管理员";
+        } else if (exception instanceof AccountExpiredException) {
+            message = "账户过期，请联系管理员";
+        } else if (exception instanceof DisabledException) {
+            message = "账户被禁用，请联系管理员";
+        } else {
+            message = "用户名或密码错误";
+        }
+        response.getWriter().println(OBJECT_MAPPER.writeValueAsString(Result.fail(message)));
 
     }
 

@@ -74,6 +74,10 @@ public class SecurityConfig {
                 .logout().logoutUrl("/logout").logoutSuccessHandler(authenticationHandler)
                 .and()
 
+                .formLogin()
+                .failureHandler(authenticationHandler)
+                .and()
+
                 // 异常处理
                 .exceptionHandling()
                 .accessDeniedHandler(authenticationHandler)

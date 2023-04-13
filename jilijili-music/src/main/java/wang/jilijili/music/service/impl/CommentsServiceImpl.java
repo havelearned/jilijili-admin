@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.ksuid.KsuidGenerator;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ExceptionType;
 import wang.jilijili.music.mapper.CommentsMapper;
@@ -37,12 +35,12 @@ public class CommentsServiceImpl extends ServiceImpl<CommentsMapper, Comments>
 
     @Override
     @DS("slave_1")
-    
+
     public CommentsDto create(CommentsCreateRequest commentsCreateRequest) {
         Comments comments = commentsBo.toComment(commentsCreateRequest);
         comments.setId(KsuidGenerator.generate());
         boolean save = this.save(comments);
-        if(save){
+        if (save) {
             return this.commentsBo.toCommentDto(comments);
         }
         throw new BizException(ExceptionType.REQUEST_OPERATE_ERROR);
@@ -50,7 +48,7 @@ public class CommentsServiceImpl extends ServiceImpl<CommentsMapper, Comments>
 
     @Override
     public IPage<CommentsVo> list(IPage<Comments> page, CommentsDto commentsDto) {
-         Comments comments =  this.commentsBo.toComment(commentsDto);
+        Comments comments = this.commentsBo.toComment(commentsDto);
 
         return null;
     }

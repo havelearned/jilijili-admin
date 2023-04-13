@@ -2,6 +2,8 @@ package wang.jilijili.music.pojo.bo;
 
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 import wang.jilijili.music.pojo.dto.MusicDto;
 import wang.jilijili.music.pojo.entity.Music;
 import wang.jilijili.music.pojo.vo.MusicVo;
@@ -16,6 +18,7 @@ import wang.jilijili.music.pojo.vo.MusicVo;
 @Mapper(componentModel = "spring")
 public interface MusicConvertBo {
 
+    MusicConvertBo INSTANCE = Mappers.getMapper(MusicConvertBo.class);
 
     /**
      * 转 MusicVo
@@ -25,6 +28,8 @@ public interface MusicConvertBo {
      * @author Amani
      * @date 2023/3/9 10:47
      */
+
+    @Mapping(target = "status", expression = "java(wang.jilijili.music.enums.MusicStatus.fromValue(dto.getStatus()))")
     MusicVo toMusicVo(MusicDto dto);
 
 

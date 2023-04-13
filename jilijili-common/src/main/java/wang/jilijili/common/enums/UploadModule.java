@@ -9,12 +9,7 @@ import lombok.Getter;
 @Getter
 public enum UploadModule {
 
-    /**
-     * 上传路径
-     * 文件类型
-     * 上传方式
-     * */
-    MUSIC_IMAGE_LOCAL("jilijili-music/","localUploadStrategyImpl"),
+
 
     /**
      * MPEG是动态图象专家组的英文缩写

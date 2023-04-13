@@ -58,7 +58,6 @@ public class AlibumController {
     @GetMapping("/list")
     public Result<IPage<AlibumVo>> queryByPage(AlibumDto alibumDto) {
         IPage<Alibum> page = new Page<>(alibumDto.getPage(), alibumDto.getSize());
-        Alibum alibum = alibumConvertBo.toAlibum(alibumDto);
         IPage<AlibumVo> voIpage = this.alibumService.page(page, new QueryWrapper<Alibum>()
                         .eq(StringUtils.hasText(alibumDto.getId()), DatabaseConstant.ID, alibumDto.getId())
                         .like(StringUtils.hasText(alibumDto.getAlbumName()), DatabaseConstant.ALBUMNAME, alibumDto.getAlbumName())
@@ -134,8 +133,8 @@ public class AlibumController {
     @DeleteMapping("/")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.DELETED)
-    public Result<?> delete(@RequestParam("idList") List<String> idList) {
-        return Result.ok(this.alibumService.removeByIds(idList));
+    public Result<Boolean> delete(@RequestParam("idList") List<String> idList) {
+        return Result.ok(this.alibumService.deleteAlbumAndArtist(idList));
     }
 
 }

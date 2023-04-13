@@ -1,13 +1,14 @@
 package wang.jilijili.music.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.ksuid.KsuidGenerator;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ExceptionType;
 import wang.jilijili.music.mapper.AlibumMapper;
-import wang.jilijili.music.mapper.SingerAlibumMapper;
 import wang.jilijili.music.pojo.bo.AlibumConvertBo;
 import wang.jilijili.music.pojo.dto.AlibumDto;
 import wang.jilijili.music.pojo.entity.Alibum;
@@ -15,6 +16,7 @@ import wang.jilijili.music.pojo.entity.SingerAlibum;
 import wang.jilijili.music.pojo.request.AlibumCreateRequest;
 import wang.jilijili.music.pojo.vo.SingerVo;
 import wang.jilijili.music.service.AlibumService;
+import wang.jilijili.music.service.SingerAlibumService;
 
 import java.util.List;
 
@@ -29,12 +31,14 @@ public class AlibumServiceImpl extends ServiceImpl<AlibumMapper, Alibum>
 
     AlibumMapper alibumMapper;
     AlibumConvertBo alibumConvertBo;
-    SingerAlibumMapper singerAlibumMapper;
 
-    public AlibumServiceImpl(AlibumMapper alibumMapper, AlibumConvertBo alibumConvertBo, SingerAlibumMapper singerAlibumMapper) {
+    SingerAlibumService singerAlibumService;
+
+
+    public AlibumServiceImpl(AlibumMapper alibumMapper, AlibumConvertBo alibumConvertBo, SingerAlibumService singerAlibumService) {
         this.alibumMapper = alibumMapper;
         this.alibumConvertBo = alibumConvertBo;
-        this.singerAlibumMapper = singerAlibumMapper;
+        this.singerAlibumService = singerAlibumService;
     }
 
     @Override
@@ -43,12 +47,15 @@ public class AlibumServiceImpl extends ServiceImpl<AlibumMapper, Alibum>
 
         alibum.setId(KsuidGenerator.generate());
 
-        if (this.alibumMapper.insert(alibum) >= 1 &&
-                this.alibumMapper.saveBySingerIdByAlibumId(alibumCreateRequest.getSingerId(), alibum.getId()) >= 1) {
+        int insert = this.alibumMapper.insert(alibum);
 
+        List<SingerAlibum> singerAlibums = alibumCreateRequest.getSingerId()
+                .stream().map(item -> new SingerAlibum(item.replace(",", ""), alibum.getId())).toList();
+
+        boolean b = this.singerAlibumService.saveBatch(singerAlibums);
+        if (insert > 0 && b) {
             return this.alibumConvertBo.toAlibumDto(this.getById(alibum.getId()));
         }
-
         throw new BizException(ExceptionType.REQUEST_OPERATE_ERROR);
     }
 
@@ -56,20 +63,39 @@ public class AlibumServiceImpl extends ServiceImpl<AlibumMapper, Alibum>
     public AlibumDto udpated(AlibumCreateRequest alibumCreateRequest) {
 
         Alibum alibum = this.alibumConvertBo.toAlibum(alibumCreateRequest);
-        this.alibumMapper.updateById(alibum);
+        int isUpdated = this.alibumMapper.updateById(alibum);
 
-        SingerAlibum singerAlibum = new SingerAlibum();
-        singerAlibum.setAlibumId(alibum.getId());
-        singerAlibum.setSingerId(alibumCreateRequest.getSingerId());
+        // 删除已有关联专辑歌手
+        this.singerAlibumService.remove(new LambdaQueryWrapper<SingerAlibum>().eq(SingerAlibum::getAlibumId, alibum.getId()));
 
-        this.singerAlibumMapper.update(singerAlibum, new UpdateWrapper<>());
-        return this.alibumConvertBo.toAlibumDto(alibum);
+        List<SingerAlibum> singerAlibums = alibumCreateRequest.getSingerId()
+                .stream().map(item -> new SingerAlibum(item.replace(",", ""), alibum.getId())).toList();
+
+        // 保存新的专辑歌手
+        boolean isSave = this.singerAlibumService.saveBatch(singerAlibums);
+
+        if (isUpdated > 0 && isSave) {
+            return this.alibumConvertBo.toAlibumDto(alibum);
+        }
+        throw new BizException(ExceptionType.REQUEST_OPERATE_ERROR);
     }
 
     @Override
     public List<SingerVo> queryByAlibumId(String id) {
         return this.alibumMapper.queryByAlibumId(id);
 
+    }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public Boolean deleteAlbumAndArtist(List<String> idList) {
+        // 通过专辑id删除绑定的歌手
+        boolean removed = this.singerAlibumService.remove(new LambdaQueryWrapper<SingerAlibum>().in(SingerAlibum::getAlibumId, idList));
+        // TODO 删除专辑内的音乐列表
+        // 删除专辑
+        this.alibumMapper.deleteBatchIds(idList);
+
+        return removed;
     }
 }
 
