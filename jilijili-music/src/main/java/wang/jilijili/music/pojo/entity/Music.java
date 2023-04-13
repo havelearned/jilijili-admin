@@ -47,11 +47,6 @@ public class Music implements Serializable {
     @TableField(value = "music_filepath")
     private String musicFilepath;
 
-    /**
-     * 歌手id
-     */
-    @TableField(value = "singer_id")
-    private String singerId;
 
     /**
      * 专辑id

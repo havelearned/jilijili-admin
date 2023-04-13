@@ -12,11 +12,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = "wang.jilijili")
 public class JilijiliMusicApplication {
-
-
     public static void main(String[] args) {
         SpringApplication.run(JilijiliMusicApplication.class, args);
-
     }
 
 }

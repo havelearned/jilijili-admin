@@ -4,8 +4,10 @@ package wang.jilijili.music.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import wang.jilijili.common.core.pojo.vo.Result;
+import wang.jilijili.common.group.Insert;
 import wang.jilijili.music.pojo.bo.MusicConvertBo;
 import wang.jilijili.music.pojo.dto.MusicDto;
 import wang.jilijili.music.pojo.entity.Music;
@@ -71,7 +73,8 @@ public class MusicController {
      * @return 新增结果
      */
     @PostMapping("/")
-    public Result<MusicVo> insert(@RequestBody MusicDto musicDto) {
+    public Result<MusicVo> insert(@RequestBody @Validated(value = Insert.class)
+                                  MusicDto musicDto) {
 
         musicDto = this.musicService.create(musicDto);
 
@@ -97,7 +100,7 @@ public class MusicController {
      * @return 删除结果
      */
     @DeleteMapping
-    public Result<Boolean> delete(@RequestParam("idList") List<Long> idList) {
+    public Result<Boolean> delete(@RequestParam("idList") List<String> idList) {
         return Result.ok(this.musicService.removeByIds(idList));
     }
 }
