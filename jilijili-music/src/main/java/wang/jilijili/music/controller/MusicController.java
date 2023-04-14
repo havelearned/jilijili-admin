@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import wang.jilijili.common.core.pojo.vo.Result;
 import wang.jilijili.common.group.Insert;
+import wang.jilijili.common.group.Updata;
 import wang.jilijili.music.pojo.bo.MusicConvertBo;
 import wang.jilijili.music.pojo.dto.MusicDto;
 import wang.jilijili.music.pojo.entity.Music;
@@ -15,6 +16,7 @@ import wang.jilijili.music.pojo.vo.MusicVo;
 import wang.jilijili.music.service.MusicService;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -88,7 +90,8 @@ public class MusicController {
      * @return 修改结果
      */
     @PutMapping
-    public Result<MusicVo> update(@RequestBody MusicDto musicDto) {
+    public Result<MusicVo> update(@RequestBody @Validated(value = Updata.class)
+                                  MusicDto musicDto) {
         musicDto = this.musicService.update(musicDto);
         return Result.ok(this.musicConvertBo.toMusicVo(musicDto));
     }
@@ -99,9 +102,10 @@ public class MusicController {
      * @param idList 主键结合
      * @return 删除结果
      */
-    @DeleteMapping
-    public Result<Boolean> delete(@RequestParam("idList") List<String> idList) {
-        return Result.ok(this.musicService.removeByIds(idList));
+    @DeleteMapping("/idList/{idList}")
+    public Result<Boolean> delete(@PathVariable String idList) {
+        List<String> list = Arrays.stream(idList.split(",")).toList();
+        return Result.ok(this.musicService.removeByIds(list));
     }
 }
 

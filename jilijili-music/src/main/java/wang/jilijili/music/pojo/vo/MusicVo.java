@@ -26,8 +26,6 @@ public class MusicVo {
 
     private String musicFilepath;
 
-    private String singerId;
-
     private String albumId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

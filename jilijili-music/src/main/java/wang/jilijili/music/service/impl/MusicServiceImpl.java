@@ -67,14 +67,14 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
 
     @Override
     public MusicDto update(MusicDto musicDto) {
-        // TODO[1] 修改歌曲信息
+        //  修改歌曲信息
         Music music = this.musicConvertBo.toMusic(musicDto);
         int update = this.musicMapper.updateById(music);
-        // TODO[2] 通过音乐id删除歌手歌曲关联表
+        //  通过音乐id删除歌手歌曲关联表
         if (update >= 1) {
             this.singerMusicService.remove(new LambdaQueryWrapper<SingerMusic>().eq(SingerMusic::getMusicId, music.getId()));
         }
-        // TODO[3] 添加歌曲歌手关联表信息
+        // 添加歌曲歌手关联表信息
         return getSingerMusicList(musicDto, music);
     }
 
