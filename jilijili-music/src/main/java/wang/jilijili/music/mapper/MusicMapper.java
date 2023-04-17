@@ -3,7 +3,9 @@ package wang.jilijili.music.mapper;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import wang.jilijili.music.pojo.entity.Music;
+import wang.jilijili.music.pojo.vo.MusicDetailVo;
 
 /**
  * @author admin
@@ -15,6 +17,14 @@ import wang.jilijili.music.pojo.entity.Music;
 @Mapper
 public interface MusicMapper extends BaseMapper<Music> {
 
+
+    /**
+     * 通过歌曲id查询歌曲歌手专辑信息
+     *
+     * @param musicId 音乐id
+     * @return
+     */
+    MusicDetailVo queryMusicInfoById(@Param("musicId") String musicId);
 }
 
 

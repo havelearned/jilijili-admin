@@ -12,6 +12,7 @@ import wang.jilijili.common.group.Updata;
 import wang.jilijili.music.pojo.bo.MusicConvertBo;
 import wang.jilijili.music.pojo.dto.MusicDto;
 import wang.jilijili.music.pojo.entity.Music;
+import wang.jilijili.music.pojo.vo.MusicDetailVo;
 import wang.jilijili.music.pojo.vo.MusicVo;
 import wang.jilijili.music.service.MusicService;
 
@@ -67,6 +68,20 @@ public class MusicController {
         MusicDto musicDto = this.musicConvertBo.toMusicDto(music);
         return Result.ok(this.musicConvertBo.toMusicVo(musicDto));
     }
+
+    /**
+     * 通过主键查询单条数据
+     *
+     * @param id 主键
+     * @return 单条数据
+     */
+    @GetMapping("/queryMusicInfoById/{id}")
+    public Result<MusicDetailVo> queryMusicInfoById(@PathVariable String id) {
+        MusicDetailVo musicDetailVo = this.musicService.queryMusicInfoById(id);
+        return Result.ok(musicDetailVo);
+
+    }
+
 
     /**
      * 新增数据

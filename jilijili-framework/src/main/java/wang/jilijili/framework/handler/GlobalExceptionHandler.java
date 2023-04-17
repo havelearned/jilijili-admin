@@ -33,14 +33,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = JWTVerificationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<?> repeatException(Exception e) {
-
-         log.error(e.getMessage());
+        e.printStackTrace();
+        log.error(e.getMessage());
         return Result.fail(HttpStatus.BAD_REQUEST, "令牌错误或者过期了,请重新登录-详细信息:" + e.getMessage());
     }
 
     @ExceptionHandler(value = QueryTimeoutException.class)
     public Result<?> queryTimeoutException(QueryTimeoutException e) {
-         log.error(e.getMessage());
+        e.printStackTrace();
+        log.error(e.getMessage());
         return Result.fail(e.getMessage());
 
     }
@@ -48,14 +49,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = DataAccessException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<?> repeatException(DataAccessException e) {
-         log.error(e.getMessage());
+        e.printStackTrace();
+        log.error(e.getMessage());
         return Result.fail(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
 
     @ExceptionHandler(value = BizException.class)
     public Result<?> bizException(BizException e) {
-         log.error(e.getMessage());
+        e.printStackTrace();
+        log.error(e.getMessage());
         return Result.fail(
                 e.getCode(),
                 String.format("%s", e.getMessage()));
@@ -64,7 +67,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public Result<?> accessDeniedException(AccessDeniedException e) {
-         log.error(e.getMessage());
+        e.printStackTrace();
+        log.error(e.getMessage());
         return Result.fail(
                 ExceptionType.FORBIDDEN.getCode(),
                 String.format("%s %s", ExceptionType.FORBIDDEN.getMessage(), e.getMessage()));
@@ -74,7 +78,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<List<ErrorResponse>> methodArgumentNotValidException(MethodArgumentNotValidException e) {
-         log.error(e.getMessage());
+        e.printStackTrace();
+        log.error(e.getMessage());
         List<ErrorResponse> responses = new ArrayList<>();
         e.getBindingResult().getAllErrors().forEach((error) -> {
             ErrorResponse errorResponse = new ErrorResponse();
@@ -89,6 +94,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @Order(99)
     public Result<?> exception(Exception e) {
+        e.printStackTrace();
         log.error(e.getMessage());
         return Result.fail(e.getMessage());
 

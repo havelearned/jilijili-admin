@@ -3,6 +3,7 @@ package wang.jilijili.music.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,10 +11,12 @@ import org.springframework.util.StringUtils;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ExceptionType;
 import wang.jilijili.music.mapper.MusicMapper;
+import wang.jilijili.music.mapper.SingerMusicMapper;
 import wang.jilijili.music.pojo.bo.MusicConvertBo;
 import wang.jilijili.music.pojo.dto.MusicDto;
 import wang.jilijili.music.pojo.entity.Music;
 import wang.jilijili.music.pojo.entity.SingerMusic;
+import wang.jilijili.music.pojo.vo.MusicDetailVo;
 import wang.jilijili.music.service.MusicService;
 import wang.jilijili.music.service.SingerMusicService;
 
@@ -30,28 +33,30 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
 
     MusicMapper musicMapper;
     MusicConvertBo musicConvertBo;
-
     SingerMusicService singerMusicService;
+    SingerMusicMapper singerMusicMapper;
 
-
-    public MusicServiceImpl(MusicMapper musicMapper, MusicConvertBo musicConvertBo, SingerMusicService singerMusicService) {
+    @Autowired
+    public MusicServiceImpl(MusicMapper musicMapper, MusicConvertBo musicConvertBo, SingerMusicService singerMusicService, SingerMusicMapper singerMusicMapper) {
         this.musicMapper = musicMapper;
         this.musicConvertBo = musicConvertBo;
         this.singerMusicService = singerMusicService;
+        this.singerMusicMapper = singerMusicMapper;
     }
+
 
     @Override
     public IPage<MusicDto> listPage(MusicDto musicDto, IPage<Music> iPage) {
         Music music = this.musicConvertBo.toMusic(musicDto);
-        if(StringUtils.hasText(musicDto.getKey())) {
+        if (StringUtils.hasText(musicDto.getKey())) {
             music.setName(musicDto.getKey());
         }
         iPage = this.musicMapper.selectPage(iPage, new LambdaQueryWrapper<Music>()
                 .eq(StringUtils.hasText(music.getId()), Music::getId, music.getId())
                 .like(StringUtils.hasText(music.getName()), Music::getName, music.getName())
-                        .eq(music.getStatus() != null, Music::getStatus, music.getStatus())
-                        // TODO 歌词全文检索
-                        .orderBy(true, false, Music::getCreatedTime)
+                .eq(music.getStatus() != null, Music::getStatus, music.getStatus())
+                // TODO 歌词全文检索
+                .orderBy(true, false, Music::getCreatedTime)
 
         );
         return iPage.convert(item -> this.musicConvertBo.toMusicDto(item));
@@ -80,6 +85,12 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
         }
         // 添加歌曲歌手关联表信息
         return getSingerMusicList(musicDto, music);
+    }
+
+    @Override
+    public MusicDetailVo queryMusicInfoById(String id) {
+        return  this.musicMapper.queryMusicInfoById(id);
+
     }
 
     /**

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import wang.jilijili.music.pojo.dto.MusicDto;
 import wang.jilijili.music.pojo.entity.Music;
+import wang.jilijili.music.pojo.vo.MusicDetailVo;
 
 /**
  * @author admin
@@ -38,4 +39,5 @@ public interface MusicService extends IService<Music> {
      */
     MusicDto update(MusicDto musicDto);
 
+    MusicDetailVo queryMusicInfoById(String id);
 }

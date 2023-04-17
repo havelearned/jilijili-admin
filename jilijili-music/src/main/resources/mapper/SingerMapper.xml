@@ -48,7 +48,6 @@
             <result property="status" column="status" jdbcType="TINYINT"/>
             <result property="description" column="description" jdbcType="VARCHAR"/>
             <result property="musicFilepath" column="music_filepath" jdbcType="VARCHAR"/>
-            <result property="singerId" column="singer_id" jdbcType="VARCHAR"/>
             <result property="albumId" column="album_id" jdbcType="VARCHAR"/>
             <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
             <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>

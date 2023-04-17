@@ -37,6 +37,7 @@ public class MusicDto extends QueryDto {
      */
     private String musicFilepath;
 
+
     /**
      * 专辑id 可以为空
      */

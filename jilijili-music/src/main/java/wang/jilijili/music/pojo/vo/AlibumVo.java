@@ -16,6 +16,8 @@ import java.util.Date;
 @Data
 public class AlibumVo implements Serializable {
 
+    private String albumId;
+
     private String id;
     /**
      * 专辑名称
