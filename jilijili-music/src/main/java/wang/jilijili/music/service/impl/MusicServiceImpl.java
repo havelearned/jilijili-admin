@@ -43,12 +43,15 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
     @Override
     public IPage<MusicDto> listPage(MusicDto musicDto, IPage<Music> iPage) {
         Music music = this.musicConvertBo.toMusic(musicDto);
+        if(StringUtils.hasText(musicDto.getKey())) {
+            music.setName(musicDto.getKey());
+        }
         iPage = this.musicMapper.selectPage(iPage, new LambdaQueryWrapper<Music>()
                 .eq(StringUtils.hasText(music.getId()), Music::getId, music.getId())
                 .like(StringUtils.hasText(music.getName()), Music::getName, music.getName())
-                .eq(music.getStatus() != null, Music::getStatus, music.getStatus())
-                // TODO 歌词全文检索
-                .orderBy(true, false, Music::getCreatedTime)
+                        .eq(music.getStatus() != null, Music::getStatus, music.getStatus())
+                        // TODO 歌词全文检索
+                        .orderBy(true, false, Music::getCreatedTime)
 
         );
         return iPage.convert(item -> this.musicConvertBo.toMusicDto(item));
@@ -60,6 +63,7 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
     public MusicDto create(MusicDto musicDto) {
         //  添加歌曲
         Music music = this.musicConvertBo.toMusic(musicDto);
+        this.save(music);
 
         // 添加歌手歌曲关联表
         return getSingerMusicList(musicDto, music);
@@ -86,8 +90,8 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
      * @return dto
      */
     private MusicDto getSingerMusicList(MusicDto musicDto, Music music) {
-        List<SingerMusic> singerMusicList = musicDto.getSingerId()
-                .stream().map(item -> new SingerMusic(item, music.getId())).toList();
+        List<SingerMusic> singerMusicList = musicDto.getSingerId().stream()
+                .map(item -> new SingerMusic(item, music.getId())).toList();
         boolean b = this.singerMusicService.saveBatch(singerMusicList);
         if (b) {
             return this.musicConvertBo.toMusicDto(music);

@@ -5,7 +5,7 @@
 <mapper namespace="wang.jilijili.music.mapper.SingerMusicMapper">
 
     <resultMap id="BaseResultMap" type="wang.jilijili.music.pojo.entity.SingerMusic">
-            <id property="id" column="id" jdbcType="VARCHAR"/>
+            <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="singerId" column="singer_id" jdbcType="VARCHAR"/>
             <result property="musicId" column="music_id" jdbcType="VARCHAR"/>
     </resultMap>

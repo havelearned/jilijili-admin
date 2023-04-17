@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -24,7 +24,7 @@ public class SingerMusic implements Serializable {
      * id
      */
     @TableId(value = "id", type = IdType.AUTO)
-    private String id;
+    private Long id;
 
     /**
      * 歌手id
@@ -38,6 +38,7 @@ public class SingerMusic implements Serializable {
     @TableField(value = "music_id")
     private String musicId;
 
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
