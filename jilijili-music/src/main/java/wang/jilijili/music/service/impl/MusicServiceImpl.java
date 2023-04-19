@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ExceptionType;
@@ -72,14 +73,27 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
         int update = this.musicMapper.updateById(music);
         // TODO[2] 通过音乐id删除歌手歌曲关联表
         if (update >= 1) {
-            this.singerMusicService.remove(new LambdaQueryWrapper<SingerMusic>().eq(SingerMusic::getMusicId, music.getId()));
+            this.singerMusicService.remove(new LambdaQueryWrapper<SingerMusic>()
+                    .eq(SingerMusic::getMusicId, music.getId()));
         }
-        // TODO[3] 添加歌曲歌手关联表信息
+        // TODO[3] 重新添加歌曲歌手关联表信息
         return getSingerMusicList(musicDto, music);
     }
 
+    @Override
+    public Boolean deletedByIds(List<String> idList) {
+        // 通过歌曲id列表删除歌曲歌手中间表信息
+        LambdaQueryWrapper<SingerMusic> queryWrapper = new LambdaQueryWrapper<SingerMusic>()
+                .in(!CollectionUtils.isEmpty(idList), SingerMusic::getMusicId, idList);
+        this.singerMusicService.remove(queryWrapper);
+        // 通过歌曲id列表删除歌曲信息
+        int row = this.musicMapper.deleteBatchIds(idList);
+
+        return row >= 1;
+    }
+
     /**
-     * 通过多个歌手id添加到 歌曲歌手中间
+     * 通过多个歌手id添加到 歌曲歌手中间表
      *
      * @param musicDto 包含有多个歌手id的dto
      * @param music    包含有歌曲id的实体类

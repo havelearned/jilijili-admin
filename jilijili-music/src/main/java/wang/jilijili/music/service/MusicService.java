@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import wang.jilijili.music.pojo.dto.MusicDto;
 import wang.jilijili.music.pojo.entity.Music;
 
+import java.util.List;
+
 /**
  * @author admin
  * @description 针对表【music(歌词表)】的数据库操作Service
@@ -18,6 +20,7 @@ public interface MusicService extends IService<Music> {
 
     /**
      * 分页查询
+     *
      * @param musicDto
      * @param iPage
      * @return 返回vo
@@ -26,6 +29,7 @@ public interface MusicService extends IService<Music> {
 
     /**
      * 创建歌曲
+     *
      * @param musicDto
      * @return 返回DTO
      */
@@ -33,9 +37,11 @@ public interface MusicService extends IService<Music> {
 
     /**
      * 修改歌曲
+     *
      * @param musicDto
      * @return 返回DTO
      */
     MusicDto update(MusicDto musicDto);
 
+    Boolean deletedByIds(List<String> idList);
 }

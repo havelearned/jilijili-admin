@@ -96,12 +96,12 @@ public class MusicController {
     /**
      * 删除数据
      *
-     * @param idList 主键结合
+     * @param idList 主键集合
      * @return 删除结果
      */
     @DeleteMapping
     public Result<Boolean> delete(@RequestParam("idList") List<String> idList) {
-        return Result.ok(this.musicService.removeByIds(idList));
+        return Result.ok(this.musicService.deletedByIds(idList));
     }
 }
 
