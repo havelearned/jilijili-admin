@@ -91,26 +91,6 @@ public class UploadController {
 
 
     /**
-     * oss批量上传文件
-     *
-     * @param files 多个文件
-     * @return 返回文件连接列表
-     */
-    @PostMapping("/multiple/oss/image")
-    public Result<List<String>> ossUploadMultipleImage(@RequestPart("files") final MultipartFile[] files) {
-        List<String> urls = new ArrayList<>();
-        for (MultipartFile file : files) {
-            String type = getFileTypeSaveDir(file);
-            String url = this.uploadStrategyContext.executeUploadStrategy(
-                    file,
-                    UploadModule.OSS_IMAGE_MUSIC.getPath() + type,
-                    UploadModule.OSS_IMAGE_MUSIC.getExecutedBeanName());
-            urls.add(url);
-        }
-        return Result.ok(urls);
-    }
-
-    /**
      * 保存到对应目录下
      *
      * @param file 上传的文件实体
@@ -141,6 +121,26 @@ public class UploadController {
             }
         }
         return type;
+    }
+
+    /**
+     * oss批量上传文件
+     *
+     * @param files 多个文件
+     * @return 返回文件连接列表
+     */
+    @PostMapping("/multiple/oss/image")
+    public Result<List<String>> ossUploadMultipleImage(@RequestPart("files") final MultipartFile[] files) {
+        List<String> urls = new ArrayList<>();
+        for (MultipartFile file : files) {
+            String type = getFileTypeSaveDir(file);
+            String url = this.uploadStrategyContext.executeUploadStrategy(
+                    file,
+                    UploadModule.OSS_IMAGE_MUSIC.getPath() + type,
+                    UploadModule.OSS_IMAGE_MUSIC.getExecutedBeanName());
+            urls.add(url);
+        }
+        return Result.ok(urls);
     }
 
 

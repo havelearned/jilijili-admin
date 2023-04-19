@@ -14,7 +14,7 @@ spring:
       datasource:
         master:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT}/${DATABASE_NAME_1}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+          url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT_LOCAL}/${DATABASE_NAME_1}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
           username: ${MYSQL_USER_NAME}
           password: ${MYSQL_PASSWORD}
           hikari:
@@ -26,7 +26,7 @@ spring:
             minimum-idle: 5
         slave_1:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT}/${DATABASE_NAME_2}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+          url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT_LOCAL}/${DATABASE_NAME_2}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
           username: ${MYSQL_USER_NAME}
           password: ${MYSQL_PASSWORD}
           hikari:

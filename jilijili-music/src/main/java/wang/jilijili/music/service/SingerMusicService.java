@@ -1,7 +1,7 @@
 package wang.jilijili.music.service;
 
-import wang.jilijili.music.pojo.entity.SingerMusic;
 import com.baomidou.mybatisplus.extension.service.IService;
+import wang.jilijili.music.pojo.entity.SingerMusic;
 
 /**
 * @author admin

@@ -8,13 +8,16 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import wang.jilijili.common.core.pojo.vo.Result;
 import wang.jilijili.common.group.Insert;
+import wang.jilijili.common.group.Updata;
 import wang.jilijili.music.pojo.bo.MusicConvertBo;
 import wang.jilijili.music.pojo.dto.MusicDto;
 import wang.jilijili.music.pojo.entity.Music;
+import wang.jilijili.music.pojo.vo.MusicDetailVo;
 import wang.jilijili.music.pojo.vo.MusicVo;
 import wang.jilijili.music.service.MusicService;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -67,6 +70,20 @@ public class MusicController {
     }
 
     /**
+     * 通过主键查询单条数据
+     *
+     * @param id 主键
+     * @return 单条数据
+     */
+    @GetMapping("/queryMusicInfoById/{id}")
+    public Result<MusicDetailVo> queryMusicInfoById(@PathVariable String id) {
+        MusicDetailVo musicDetailVo = this.musicService.queryMusicInfoById(id);
+        return Result.ok(musicDetailVo);
+
+    }
+
+
+    /**
      * 新增数据
      *
      * @param musicDto 实体对象
@@ -88,7 +105,8 @@ public class MusicController {
      * @return 修改结果
      */
     @PutMapping
-    public Result<MusicVo> update(@RequestBody MusicDto musicDto) {
+    public Result<MusicVo> update(@RequestBody @Validated(value = Updata.class)
+                                  MusicDto musicDto) {
         musicDto = this.musicService.update(musicDto);
         return Result.ok(this.musicConvertBo.toMusicVo(musicDto));
     }

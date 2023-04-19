@@ -1,27 +1,23 @@
 package wang.jilijili.music.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import wang.jilijili.common.pojo.entity.SuperEntity;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 歌词表
  *
+ * @author admin
  * @TableName music
  */
 @TableName(value = "music")
 @Data
-public class Music implements Serializable {
-    /**
-     *
-     */
-    @TableId(value = "id")
-    private String id;
+public class Music extends SuperEntity implements Serializable {
+
 
     /**
      * 歌曲名称
@@ -54,17 +50,6 @@ public class Music implements Serializable {
     @TableField(value = "album_id")
     private String albumId;
 
-    /**
-     *
-     */
-    @TableField(value = "created_time")
-    private Date createdTime;
-
-    /**
-     *
-     */
-    @TableField(value = "updated_time")
-    private Date updatedTime;
 
     @Serial
     @TableField(exist = false)

@@ -12,6 +12,8 @@ import java.util.Date;
  */
 @Data
 public class SingerVo {
+
+    private String singerId;
     /**
      * 歌手id
      */
