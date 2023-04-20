@@ -17,7 +17,6 @@ import wang.jilijili.music.pojo.vo.MusicVo;
 import wang.jilijili.music.service.MusicService;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -104,7 +103,7 @@ public class MusicController {
      * @param musicDto 实体对象
      * @return 修改结果
      */
-    @PutMapping
+    @PutMapping("/")
     public Result<MusicVo> update(@RequestBody @Validated(value = Updata.class)
                                   MusicDto musicDto) {
         musicDto = this.musicService.update(musicDto);
@@ -117,8 +116,8 @@ public class MusicController {
      * @param idList 主键集合
      * @return 删除结果
      */
-    @DeleteMapping
-    public Result<Boolean> delete(@RequestParam("idList") List<String> idList) {
+    @DeleteMapping("/idList/{idList}")
+    public Result<Boolean> delete(@PathVariable(value = "idList") List<String> idList) {
         return Result.ok(this.musicService.deletedByIds(idList));
     }
 }

@@ -22,6 +22,8 @@ import wang.jilijili.common.core.pojo.vo.UserVo;
 import wang.jilijili.common.core.service.UserService;
 import wang.jilijili.common.enums.OperationType;
 
+import java.util.List;
+
 import static wang.jilijili.common.constant.ModuleNameConstant.USER_MANAGEMENT;
 import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
 
@@ -111,16 +113,16 @@ public class UserController {
     /**
      * 删除用户
      *
-     * @param id 用户id
+     * @param ids 用户id
      * @return wang.jilijili.music.pojo.vo.Result<?>
      * @author Amani
      * @date 2023/3/5 11:46
      */
     @JilJilOperationLog(moduleName = USER_MANAGEMENT, type = OperationType.DELETED)
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{ids}")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
-    public Result<?> delete(@PathVariable("id") String id) {
-        return this.userService.delete(id);
+    public Result<Boolean> delete(@PathVariable("ids") List<String> ids) {
+        return Result.ok(this.userService.removeByIds(ids));
     }
 
     /**

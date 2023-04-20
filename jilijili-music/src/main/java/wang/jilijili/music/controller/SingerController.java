@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import wang.jilijili.common.annotation.JilJilOperationLog;
-import wang.jilijili.common.annotation.NoRepeatSubmit;
 import wang.jilijili.common.core.pojo.vo.Result;
 import wang.jilijili.common.enums.OperationType;
 import wang.jilijili.music.pojo.bo.SingerConvertBo;
@@ -124,7 +123,6 @@ public class SingerController {
     @PostMapping("/")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.ADD)
-    @NoRepeatSubmit(timeout = 2)
     public Result<SingerVo> insert(@RequestBody SingerDto singerDto) {
         singerDto = this.singerService.create(singerDto);
         return Result.ok(this.singerConvertBo.toSingerVo(singerDto));
