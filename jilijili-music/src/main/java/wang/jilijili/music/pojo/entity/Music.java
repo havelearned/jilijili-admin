@@ -1,5 +1,6 @@
 package wang.jilijili.music.pojo.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -23,12 +24,14 @@ public class Music extends SuperEntity implements Serializable {
      * 歌曲名称
      */
     @TableField(value = "name")
+    @Excel(name = "歌曲名称", width = 15, orderNum = "1", needMerge = true)
     private String name;
 
     /**
      * 歌曲状态::DRAFT 草稿, PUBLISHED 上架, CLOSED 下架
      */
     @TableField(value = "status")
+    @Excel(name = "状态", width = 15, orderNum = "2", dict = "MusicStatus")
     private Integer status;
 
     /**

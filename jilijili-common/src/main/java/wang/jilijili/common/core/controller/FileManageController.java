@@ -4,6 +4,7 @@ package wang.jilijili.common.core.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import wang.jilijili.common.annotation.JilJilOperationLog;
 import wang.jilijili.common.core.pojo.bo.FileManageConvertBo;
@@ -25,7 +26,7 @@ import static wang.jilijili.common.constant.ModuleNameConstant.FILE_MANAGE;
  */
 @RestController
 @RequestMapping("/fileManage")
-@Tag(name = "文件管理",description = "本地和oss存储")
+@Tag(name = "文件管理", description = "")
 public class FileManageController {
     /**
      * 服务对象
@@ -35,6 +36,7 @@ public class FileManageController {
 
     FileManageConvertBo fileManageConvertBo;
 
+    @Autowired
     public FileManageController(FileManageService fileManageService, FileManageConvertBo fileManageConvertBo) {
         this.fileManageService = fileManageService;
         this.fileManageConvertBo = fileManageConvertBo;

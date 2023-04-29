@@ -2,6 +2,7 @@ package wang.jilijili.framework.strategy.impl;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import wang.jilijili.common.exception.BizException;
@@ -26,17 +27,15 @@ public class LocalUploadStrategyImpl extends AbstractUploadStrategyImpl {
     private String prefixUrl;
     UploadStoreProperties uploadStoreProperties;
 
+    @Autowired
     public LocalUploadStrategyImpl(UploadStoreProperties uploadStoreProperties) {
         this.uploadStoreProperties = uploadStoreProperties;
+
     }
 
     @Override
     public void initClient() {
-
         prefixUrl = uploadStoreProperties.getLocal().getDomainUrl();
-
-        log.info("localClient Init Success...");
-
     }
 
     @Override
@@ -53,17 +52,15 @@ public class LocalUploadStrategyImpl extends AbstractUploadStrategyImpl {
             log.error(e.getMessage());
             throw new BizException(UPLOAD_FAILED);
         }
-
-
     }
 
     @Override
     public String getPublicNetworkAccessUrl(String fileRelativePath) {
-        String fileUrl = uploadStoreProperties.getLocal().getEndpoint()
-                + "/"
-                + uploadStoreProperties.getLocal().getDomainUrl()
-                + fileRelativePath;
-        return fileUrl.replace("\\", "/");
+        UploadStoreProperties.ConfigEntity local = uploadStoreProperties.getLocal();
+        return String.format("%s/%s/%s",
+                local.getEndpoint(),
+                local.getDomainUrl(),
+                fileRelativePath);
     }
 
 

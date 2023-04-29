@@ -16,7 +16,7 @@ import java.util.Date;
 public class QueryDto {
 
     protected Long page = 0L;
-    protected Long size = 5L;
+    protected Long size = 10L;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")

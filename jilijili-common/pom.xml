@@ -121,6 +121,13 @@
             <version>${poi-ooxml-version}</version>
         </dependency>
 
+        <!--easypoi 导出导入Excel-->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-spring-boot-starter</artifactId>
+            <version>4.3.0</version>
+        </dependency>
+
         <!--微信开发平台sdk-->
         <dependency>
             <groupId>com.github.binarywang</groupId>

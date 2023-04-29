@@ -29,8 +29,7 @@ import java.util.List;
  * @createDate 2023-03-27 11:04:06
  */
 @Service
-public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
-        implements MusicService {
+public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music> implements MusicService {
 
     MusicMapper musicMapper;
     MusicConvertBo musicConvertBo;
@@ -53,10 +52,7 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
         if (StringUtils.hasText(musicDto.getKey())) {
             music.setName(musicDto.getKey());
         }
-        iPage = this.musicMapper.selectPage(iPage, new LambdaQueryWrapper<Music>()
-                .eq(StringUtils.hasText(music.getId()), Music::getId, music.getId())
-                .like(StringUtils.hasText(music.getName()), Music::getName, music.getName())
-                .eq(music.getStatus() != null, Music::getStatus, music.getStatus())
+        iPage = this.musicMapper.selectPage(iPage, new LambdaQueryWrapper<Music>().eq(StringUtils.hasText(music.getId()), Music::getId, music.getId()).like(StringUtils.hasText(music.getName()), Music::getName, music.getName()).eq(music.getStatus() != null, Music::getStatus, music.getStatus())
                 // TODO 歌词全文检索
                 .orderBy(true, false, Music::getCreatedTime)
 
@@ -78,29 +74,25 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
 
     @Override
     public MusicDto update(MusicDto musicDto) {
-        // TODO[1] 修改歌曲信息
         Music music = this.musicConvertBo.toMusic(musicDto);
         int update = this.musicMapper.updateById(music);
-        // TODO[2] 通过音乐id删除歌手歌曲关联表
         if (update >= 1) {
             this.singerMusicService.remove(new LambdaQueryWrapper<SingerMusic>().eq(SingerMusic::getMusicId, music.getId()));
         }
-        // TODO[3] 重新添加歌曲歌手关联表信息
         // 添加歌曲歌手关联表信息
         return getSingerMusicList(musicDto, music);
     }
 
     @Override
     public MusicDetailVo queryMusicInfoById(String id) {
-        return  this.musicMapper.queryMusicInfoById(id);
+        return this.musicMapper.queryMusicInfoById(id);
 
     }
 
     @Override
     public Boolean deletedByIds(List<String> idList) {
         // 通过歌曲id列表删除歌曲歌手中间表信息
-        LambdaQueryWrapper<SingerMusic> queryWrapper = new LambdaQueryWrapper<SingerMusic>()
-                .in(!CollectionUtils.isEmpty(idList), SingerMusic::getMusicId, idList);
+        LambdaQueryWrapper<SingerMusic> queryWrapper = new LambdaQueryWrapper<SingerMusic>().in(!CollectionUtils.isEmpty(idList), SingerMusic::getMusicId, idList);
         this.singerMusicService.remove(queryWrapper);
         // 通过歌曲id列表删除歌曲信息
         int row = this.musicMapper.deleteBatchIds(idList);
@@ -116,8 +108,7 @@ public class MusicServiceImpl extends ServiceImpl<MusicMapper, Music>
      * @return dto
      */
     private MusicDto getSingerMusicList(MusicDto musicDto, Music music) {
-        List<SingerMusic> singerMusicList = musicDto.getSingerId()
-                .stream().map(item -> new SingerMusic(item, music.getId())).toList();
+        List<SingerMusic> singerMusicList = musicDto.getSingerId().stream().map(item -> new SingerMusic(item, music.getId())).toList();
         boolean b = this.singerMusicService.saveBatch(singerMusicList);
         if (b) {
             return this.musicConvertBo.toMusicDto(music);

@@ -20,9 +20,7 @@ public enum UploadModule {
 
     OSS_IMAGE_MUSIC("jilijili-music/","ossUploadStrategyImpl"),
 
-
-
-
+    MINIO_IMAGE_MUSIC("jilijili-music/","minioUploadStrategyImpl"),
 
     ;
 

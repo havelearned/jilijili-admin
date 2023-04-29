@@ -36,6 +36,26 @@ public class UploadController {
     }
 
     /**
+     * minio批量上传文件
+     *
+     * @param files 多个文件
+     * @return 返回文件连接列表
+     */
+    @PostMapping("/multiple/minio")
+    public Result<List<String>> multipleMinioUploadImage(@RequestPart(value = "files") final MultipartFile[] files) {
+        List<String> urls = new ArrayList<>();
+        for (MultipartFile file : files) {
+            String type = getFileTypeSaveDir(file);
+            String url = this.uploadStrategyContext.executeUploadStrategy(
+                    file,
+                    UploadModule.MINIO_IMAGE_MUSIC.getPath() + type,
+                    UploadModule.MINIO_IMAGE_MUSIC.getExecutedBeanName());
+            urls.add(url);
+        }
+        return Result.ok(urls);
+    }
+
+    /**
      * 本地上传
      *
      * @param file 文件实体

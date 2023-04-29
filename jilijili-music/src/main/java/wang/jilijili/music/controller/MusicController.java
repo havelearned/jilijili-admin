@@ -1,12 +1,22 @@
 package wang.jilijili.music.controller;
 
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import wang.jilijili.common.annotation.JilJilOperationLog;
+import wang.jilijili.common.core.controller.BaseController;
 import wang.jilijili.common.core.pojo.vo.Result;
+import wang.jilijili.common.core.service.impl.ExcelDictHandlerImpl;
+import wang.jilijili.common.enums.OperationType;
 import wang.jilijili.common.group.Insert;
 import wang.jilijili.common.group.Updata;
 import wang.jilijili.music.pojo.bo.MusicConvertBo;
@@ -16,8 +26,12 @@ import wang.jilijili.music.pojo.vo.MusicDetailVo;
 import wang.jilijili.music.pojo.vo.MusicVo;
 import wang.jilijili.music.service.MusicService;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+
+import static wang.jilijili.common.constant.ModuleNameConstant.MUSIC_MANAGE;
+import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
 
 /**
  * 歌曲管理
@@ -28,7 +42,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/music")
 @Tag(name = "歌曲管理")
-public class MusicController {
+public class MusicController extends BaseController {
     /**
      * 服务对象
      */
@@ -89,6 +103,8 @@ public class MusicController {
      * @return 新增结果
      */
     @PostMapping("/")
+    @RolesAllowed(value = {ROLE_SUPER_ADMIN})
+    @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.ADD)
     public Result<MusicVo> insert(@RequestBody @Validated(value = Insert.class)
                                   MusicDto musicDto) {
 
@@ -104,6 +120,8 @@ public class MusicController {
      * @return 修改结果
      */
     @PutMapping("/")
+    @RolesAllowed(value = {ROLE_SUPER_ADMIN})
+    @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.UPDATE)
     public Result<MusicVo> update(@RequestBody @Validated(value = Updata.class)
                                   MusicDto musicDto) {
         musicDto = this.musicService.update(musicDto);
@@ -117,8 +135,38 @@ public class MusicController {
      * @return 删除结果
      */
     @DeleteMapping("/idList/{idList}")
+    @RolesAllowed(value = {ROLE_SUPER_ADMIN})
+    @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.DELETED)
     public Result<Boolean> delete(@PathVariable(value = "idList") List<String> idList) {
         return Result.ok(this.musicService.deletedByIds(idList));
+    }
+
+
+    @GetMapping("/export")
+    @RolesAllowed(value = {ROLE_SUPER_ADMIN})
+    @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.EXPORT)
+    public void export() {
+        try {
+            List<Music> list = this.musicService.list();
+            ExportParams params = new ExportParams("歌曲数据", "歌曲列表", "第一页");
+            // 设置字典
+            params.setDictHandler(new ExcelDictHandlerImpl());
+
+            Workbook sheets = ExcelExportUtil.exportExcel(params, Music.class, list);
+            HttpServletResponse response = super.getResponse();
+            // 设置响应头信息
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment;filename=test.xls");
+            response.setHeader("Cache-Control", "no-cache");
+            // 将Workbook对象写入输出流
+            ServletOutputStream outputStream = response.getOutputStream();
+            sheets.write(outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
 
