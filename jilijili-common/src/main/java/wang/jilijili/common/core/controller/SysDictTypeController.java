@@ -16,6 +16,7 @@ import wang.jilijili.common.core.service.SysDictDataService;
 import wang.jilijili.common.core.service.SysDictTypeService;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -40,6 +41,11 @@ public class SysDictTypeController {
         this.sysDictTypeService = sysDictTypeService;
         this.sysDictDataService = sysDictDataService;
     }
+
+
+    /**
+     * TODO 通过字典类型查询当下所有数据
+     * */
 
     /**
      * 分页查询所有数据
@@ -68,23 +74,23 @@ public class SysDictTypeController {
     /**
      * 新增数据
      *
-     * @param sysDictType 实体对象
+     * @param sysDictTypeDto 实体对象
      * @return 新增结果
      */
     @PostMapping("/")
-    public Result<Boolean> insert(@RequestBody SysDictType sysDictType) {
-        return Result.ok(this.sysDictTypeService.save(sysDictType));
+    public Result<Boolean> insert(@RequestBody SysDictTypeDto sysDictTypeDto) {
+        return Result.ok(this.sysDictTypeService.create(sysDictTypeDto));
     }
 
     /**
      * 修改数据
      *
-     * @param sysDictType 实体对象
+     * @param sysDictTypeDto 实体对象
      * @return 修改结果
      */
     @PutMapping("/")
-    public Result<Boolean> update(@RequestBody SysDictType sysDictType) {
-        return Result.ok(this.sysDictTypeService.updateById(sysDictType));
+    public Result<Boolean> update(@RequestBody SysDictTypeDto sysDictTypeDto) {
+        return Result.ok(this.sysDictTypeService.update(sysDictTypeDto));
     }
 
     /**
@@ -93,8 +99,8 @@ public class SysDictTypeController {
      * @param idList 主键结合
      * @return 删除结果
      */
-    @DeleteMapping("/")
-    public Result<Boolean> delete(@RequestParam("idList") List<Long> idList) {
+    @DeleteMapping("/{idList}")
+    public Result<Boolean> delete(@PathVariable List<String> idList) {
         return Result.ok(this.sysDictTypeService.removeByIds(idList));
     }
 
@@ -109,7 +115,9 @@ public class SysDictTypeController {
     public Result<IPage<SysDictData>> selectAllItem(SysDictDataDto sysDictDataDto) {
         IPage<SysDictData> page = new Page<>(sysDictDataDto.getPage(), sysDictDataDto.getSize());
         SysDictData sysDictData = this.sysDictCovertBo.toSysDictData(sysDictDataDto);
-        return Result.ok(this.sysDictDataService.page(page, new QueryWrapper<>(sysDictData)));
+        page  = this.sysDictDataService.page(page, new QueryWrapper<>(sysDictData));
+        page.getRecords().sort(Comparator.comparing(SysDictData::getDictSort));
+        return Result.ok(page);
     }
 
     /**
@@ -151,10 +159,28 @@ public class SysDictTypeController {
      * @param idList 主键结合
      * @return 删除结果
      */
-    @DeleteMapping("/item/")
-    public Result<Boolean> deleteItem(@RequestParam("idList") List<Long> idList) {
+    @DeleteMapping("/item/{idList}")
+    public Result<Boolean> deleteItem(@PathVariable List<String> idList) {
         return Result.ok(this.sysDictDataService.removeByIds(idList));
     }
+
+
+    /**
+     * 修改致字典状态
+     *
+     * @param sysDictData 实体类
+     * @return true
+     */
+    @PutMapping("/item/status")
+    public Result<Boolean> updateByStatus(@RequestBody SysDictData sysDictData) {
+        if (sysDictData.getStatus() == 0) {
+            sysDictData.setStatus(1);
+        } else {
+            sysDictData.setStatus(0);
+        }
+        return Result.ok(this.sysDictDataService.updateById(sysDictData));
+    }
+
 
 }
 

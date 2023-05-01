@@ -1,8 +1,12 @@
 package wang.jilijili.common.core.pojo.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import wang.jilijili.common.group.Insert;
+import wang.jilijili.common.group.Updata;
 
 /**
  * @author Amani
@@ -15,6 +19,8 @@ public class SysDictDataDto extends QueryDto {
     /**
      * 字典编码
      */
+    @NotNull(message = "字典类型不能为空", groups = Updata.class)
+    @NotBlank(message = "字典类型不能为空", groups = Updata.class)
     private Long dictCode;
 
     /**
@@ -25,6 +31,8 @@ public class SysDictDataDto extends QueryDto {
     /**
      * 字典标签
      */
+    @NotNull(message = "字典类型不能为空", groups = Insert.class)
+    @NotBlank(message = "字典类型不能为空", groups = Insert.class)
     private String dictLabel;
 
     /**
@@ -35,12 +43,14 @@ public class SysDictDataDto extends QueryDto {
     /**
      * 字典类型
      */
+    @NotNull(message = "字典类型不能为空", groups = Insert.class)
+    @NotBlank(message = "字典类型不能为空", groups = Insert.class)
     private String dictType;
 
     /**
      * 状态（0正常 1停用）
      */
-    private String status;
+    private Integer status;
 
     /**
      * 备注

@@ -2,6 +2,7 @@ package wang.jilijili.common.core.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import wang.jilijili.common.core.pojo.dto.SysDictTypeDto;
 import wang.jilijili.common.core.pojo.entity.SysDictType;
 
 /**
@@ -11,4 +12,17 @@ import wang.jilijili.common.core.pojo.entity.SysDictType;
 */
 public interface SysDictTypeService extends IService<SysDictType> {
 
+    /**
+     * 插入字典类型
+     * @param sysDictTypeDto dto
+     * @return if create success return true
+     */
+    Boolean create(SysDictTypeDto sysDictTypeDto);
+
+    /**
+     * 更新字典类型
+     * @param sysDictTypeDto dto
+     * @return if update success return true
+     */
+    Boolean update(SysDictTypeDto sysDictTypeDto);
 }

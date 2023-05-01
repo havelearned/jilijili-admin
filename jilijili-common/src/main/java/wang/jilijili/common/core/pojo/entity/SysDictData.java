@@ -50,7 +50,7 @@ public class SysDictData implements Serializable {
      * 状态（0正常 1停用）
      */
     @TableField(value = "status")
-    private String status;
+    private Integer status;
 
     /**
      * 创建时间
