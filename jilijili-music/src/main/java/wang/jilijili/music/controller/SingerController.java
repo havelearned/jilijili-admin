@@ -149,10 +149,10 @@ public class SingerController {
      * @param idList 主键结合
      * @return 删除结果
      */
-    @DeleteMapping("/")
+    @DeleteMapping("/idList/{idList}")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.DELETED)
-    public Result<Boolean> delete(@RequestParam("idList") List<String> idList) {
+    public Result<Boolean> delete(@PathVariable List<String> idList) {
         return Result.ok(this.singerService.deleteBatch(idList));
     }
 
