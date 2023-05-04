@@ -4,8 +4,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.ksuid.KsuidGenerator;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ExceptionType;
 import wang.jilijili.music.mapper.SingerMapper;
@@ -52,21 +50,17 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer>
 
     @Override
     @DS("slave_1")
-    
     public SingerDto update(SingerDto singerDto) {
         Singer singer = this.singerConvertBo.toSinger(singerDto);
         boolean update = this.updateById(singer);
         if (update) {
-
             return this.singerConvertBo.toSingerDto(this.getById(singer.getId()));
         }
-
         throw new BizException(ExceptionType.REQUEST_OPERATE_ERROR);
     }
 
     @Override
     @DS("slave_1")
-    
     public boolean deleteBatch(List<String> idList) {
         return this.singerMapper.deleteBatchIds(idList) > 0;
     }

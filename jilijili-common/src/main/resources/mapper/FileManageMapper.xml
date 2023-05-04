@@ -21,4 +21,7 @@
         type,filesize,locked,
         updated_time,created_time,access_time
     </sql>
+    <select id="queryByDict" resultType="wang.jilijili.common.core.pojo.vo.FileTypeTreeVO">
+
+    </select>
 </mapper>

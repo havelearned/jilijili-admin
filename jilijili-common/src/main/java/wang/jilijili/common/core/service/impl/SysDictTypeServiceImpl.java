@@ -9,6 +9,7 @@ import wang.jilijili.common.core.pojo.bo.SysDictCovertBo;
 import wang.jilijili.common.core.pojo.dto.SysDictTypeDto;
 import wang.jilijili.common.core.pojo.entity.SysDictData;
 import wang.jilijili.common.core.pojo.entity.SysDictType;
+import wang.jilijili.common.core.pojo.vo.DictTypeVO;
 import wang.jilijili.common.core.service.SysDictTypeService;
 
 /**
@@ -52,7 +53,10 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
                 this.sysDictDataMapper.update(sysDictData, null) > 0;
     }
 
-
+    @Override
+    public DictTypeVO queryByDict(String dictType) {
+        return this.sysDictTypeMapper.queryByDictTypeAfter(dictType);
+    }
 }
 
 

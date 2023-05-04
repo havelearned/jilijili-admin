@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import wang.jilijili.common.core.pojo.dto.FileManageDto;
 import wang.jilijili.common.core.pojo.entity.FileManage;
+import wang.jilijili.common.core.pojo.vo.FileTypeTreeVO;
 
 /**
  * @author admin
@@ -24,4 +25,14 @@ public interface FileManageService extends IService<FileManage> {
      * @date 2023/4/4 10:53
      */
     IPage<FileManage> list(IPage<FileManage> iPage, FileManageDto fileManageDto);
+
+
+
+    /**
+     * 通过字典类型查询
+     *
+     * @param dictType
+     * @return 树形结构
+     */
+    FileTypeTreeVO queryByDict(String dictType);
 }

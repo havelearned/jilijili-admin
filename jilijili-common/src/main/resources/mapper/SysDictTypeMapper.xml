@@ -13,8 +13,30 @@
             <result property="remark" column="remark" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="ResulByDictTypeMap" type="wang.jilijili.common.core.pojo.vo.DictTypeVO">
+        <id property="dictId" column="dict_id" jdbcType="BIGINT"/>
+        <result property="dictName" column="dict_name" jdbcType="VARCHAR"/>
+        <result property="dictType" column="dict_type" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <collection property="sysDictDataList"  ofType="wang.jilijili.common.core.pojo.entity.SysDictData" >
+            <id property="dictCode" column="dict_code" jdbcType="BIGINT"/>
+            <result property="dictLabel" column="dict_label" jdbcType="VARCHAR"/>
+            <result property="dictValue" column="dict_value" jdbcType="VARCHAR"/>
+            <result property="dictType" column="dict_type" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
     <sql id="Base_Column_List">
                 dict_id, dict_name, dict_type,
                 created_time, updated_time, remark
     </sql>
+    <select id="queryByDictTypeAfter" resultMap="ResulByDictTypeMap">
+        SELECT t.dict_id,t.dict_name,t.remark,
+               d.dict_code,d.dict_sort,d.dict_label,d.dict_value,d.remark
+        FROM sys_dict_type t
+                 JOIN sys_dict_data d ON t.dict_type = d.dict_type
+        WHERE t.dict_type = #{dictType}
+          and d.status = 1
+        order by d.dict_sort;
+    </select>
 </mapper>

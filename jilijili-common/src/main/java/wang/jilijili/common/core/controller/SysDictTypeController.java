@@ -11,6 +11,7 @@ import wang.jilijili.common.core.pojo.dto.SysDictDataDto;
 import wang.jilijili.common.core.pojo.dto.SysDictTypeDto;
 import wang.jilijili.common.core.pojo.entity.SysDictData;
 import wang.jilijili.common.core.pojo.entity.SysDictType;
+import wang.jilijili.common.core.pojo.vo.DictTypeVO;
 import wang.jilijili.common.core.pojo.vo.Result;
 import wang.jilijili.common.core.service.SysDictDataService;
 import wang.jilijili.common.core.service.SysDictTypeService;
@@ -44,8 +45,17 @@ public class SysDictTypeController {
 
 
     /**
-     * TODO 通过字典类型查询当下所有数据
-     * */
+     * 通过DictTyp查询
+     *
+     * @param dictType 字典类型
+     * @return 字典数据
+     */
+    @GetMapping("/dictType")
+    public Result<DictTypeVO> queryByDictTypeAfter(@RequestParam(value = "dictType")
+                                                       String dictType) {
+        DictTypeVO dictTypeVO = this.sysDictTypeService.queryByDict(dictType);
+        return Result.ok(dictTypeVO);
+    }
 
     /**
      * 分页查询所有数据
@@ -115,7 +125,7 @@ public class SysDictTypeController {
     public Result<IPage<SysDictData>> selectAllItem(SysDictDataDto sysDictDataDto) {
         IPage<SysDictData> page = new Page<>(sysDictDataDto.getPage(), sysDictDataDto.getSize());
         SysDictData sysDictData = this.sysDictCovertBo.toSysDictData(sysDictDataDto);
-        page  = this.sysDictDataService.page(page, new QueryWrapper<>(sysDictData));
+        page = this.sysDictDataService.page(page, new QueryWrapper<>(sysDictData));
         page.getRecords().sort(Comparator.comparing(SysDictData::getDictSort));
         return Result.ok(page);
     }

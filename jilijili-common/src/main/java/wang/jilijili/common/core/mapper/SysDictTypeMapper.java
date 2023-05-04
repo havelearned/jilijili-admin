@@ -1,9 +1,12 @@
 package wang.jilijili.common.core.mapper;
 
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import wang.jilijili.common.core.pojo.entity.SysDictType;
+import wang.jilijili.common.core.pojo.vo.DictTypeVO;
 
 /**
 * @author admin
@@ -11,9 +14,17 @@ import wang.jilijili.common.core.pojo.entity.SysDictType;
 * @createDate 2023-04-29 11:18:36
 * @Entity wang.jilijili.music.pojo.entity.SysDictType
 */
+@DS("master")
 @Mapper
 public interface SysDictTypeMapper extends BaseMapper<SysDictType> {
 
+
+    /**
+     * 查询后按DictTyp查询
+     * @param dictType 字典类型
+     * @return 字典数据
+     */
+    DictTypeVO queryByDictTypeAfter(@Param(value = "dictType") String dictType);
 }
 
 

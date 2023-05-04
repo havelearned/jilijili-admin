@@ -1,15 +1,18 @@
 package wang.jilijili.common.core.service;
 
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.IService;
 import wang.jilijili.common.core.pojo.dto.SysDictTypeDto;
 import wang.jilijili.common.core.pojo.entity.SysDictType;
+import wang.jilijili.common.core.pojo.vo.DictTypeVO;
 
 /**
 * @author admin
 * @description 针对表【sys_dict_type(字典类型表)】的数据库操作Service
 * @createDate 2023-04-29 11:18:36
 */
+@DS("master")
 public interface SysDictTypeService extends IService<SysDictType> {
 
     /**
@@ -25,4 +28,11 @@ public interface SysDictTypeService extends IService<SysDictType> {
      * @return if update success return true
      */
     Boolean update(SysDictTypeDto sysDictTypeDto);
+
+    /**
+     * 查询后按DictTyp查询
+     * @param dictType 字典类型
+     * @return 字典数据
+     */
+    DictTypeVO queryByDict(String dictType);
 }

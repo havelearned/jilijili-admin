@@ -10,6 +10,7 @@ import wang.jilijili.common.annotation.JilJilOperationLog;
 import wang.jilijili.common.core.pojo.bo.FileManageConvertBo;
 import wang.jilijili.common.core.pojo.dto.FileManageDto;
 import wang.jilijili.common.core.pojo.entity.FileManage;
+import wang.jilijili.common.core.pojo.vo.FileTypeTreeVO;
 import wang.jilijili.common.core.pojo.vo.Result;
 import wang.jilijili.common.core.service.FileManageService;
 import wang.jilijili.common.enums.OperationType;
@@ -41,6 +42,21 @@ public class FileManageController {
         this.fileManageService = fileManageService;
         this.fileManageConvertBo = fileManageConvertBo;
     }
+
+
+    /**
+     * 通过字典类型查询
+     *
+     * @param dictType
+     * @return 树形结构
+     */
+    @GetMapping("/queryByDict")
+    public Result<FileTypeTreeVO> queryByDict(@RequestParam(value = "dictType",defaultValue = "filetype")
+                                                  String dictType) {
+        FileTypeTreeVO fileTypeTreeVO = this.fileManageService.queryByDict(dictType);
+        return Result.ok(fileTypeTreeVO);
+    }
+
 
     /**
      * 分页查询所有数据
