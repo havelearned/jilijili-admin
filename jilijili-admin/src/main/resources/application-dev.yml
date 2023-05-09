@@ -6,6 +6,11 @@ server:
       timeout: 21600
 
 spring:
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:${APPLICATION_PORT}/${spring.boot.admin.context-path}
+      context-path: /admin
   # 配置mysql数据库
   datasource:
     dynamic:

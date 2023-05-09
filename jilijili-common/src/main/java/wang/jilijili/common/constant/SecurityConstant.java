@@ -35,6 +35,9 @@ public class SecurityConstant {
             // 错误返回
             "/error",
 
+            // admin 监控
+            "/admin/**","/admin","/actuator","/actuator/**",
+
             // 接口文档
             "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html"
     };
