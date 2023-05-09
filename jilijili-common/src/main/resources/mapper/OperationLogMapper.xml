@@ -25,4 +25,12 @@
         request_url,method_execution,request_data,
         created_time,updated_time,module_name
     </sql>
+    <select id="pageList" resultType="wang.jilijili.common.core.pojo.vo.OperationLogVO">
+        select
+            l.id as operationLogId , l.user_id , l.username, l.last_login_ip, l.operation_type, l.content, l.request_url, l.method_execution, l.request_data, l.module_name, l.created_time, l.updated_time,
+            u.nickname
+        from operation_log l
+                 join user u on l.user_id = u.id
+        ${ew.customSqlSegment}
+    </select>
 </mapper>

@@ -1,9 +1,14 @@
 package wang.jilijili.common.core.mapper;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import wang.jilijili.common.core.pojo.entity.OperationLog;
+import wang.jilijili.common.core.pojo.vo.OperationLogVO;
+
+import java.util.List;
 
 /**
  * @author admin
@@ -14,6 +19,14 @@ import wang.jilijili.common.core.pojo.entity.OperationLog;
 @Mapper
 public interface OperationLogMapper extends BaseMapper<OperationLog> {
 
+    /**
+     * 分页查询
+     *
+     * @param page         分页
+     * @param queryWrapper 查询条件
+     * @return vo
+     */
+    List<OperationLogVO> pageList(IPage<OperationLogVO> page, QueryWrapper<OperationLog> queryWrapper);
 }
 
 

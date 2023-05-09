@@ -1,8 +1,13 @@
 package wang.jilijili.common.core.service;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import wang.jilijili.common.core.pojo.dto.OperationLogDto;
 import wang.jilijili.common.core.pojo.entity.OperationLog;
+import wang.jilijili.common.core.pojo.vo.OperationLogVO;
+
+import java.util.List;
 
 /**
 * @author admin
@@ -11,4 +16,11 @@ import wang.jilijili.common.core.pojo.entity.OperationLog;
 */
 public interface OperationLogService extends IService<OperationLog> {
 
+    /**
+     * 分页查询
+     * @param page 分页
+     * @param operationLogDto dto
+     * @return vo
+     */
+    List<OperationLogVO> list(IPage<OperationLogVO> page, OperationLogDto operationLogDto);
 }

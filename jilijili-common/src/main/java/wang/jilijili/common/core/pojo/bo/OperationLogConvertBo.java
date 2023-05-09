@@ -23,6 +23,7 @@ public interface OperationLogConvertBo {
      */
     OperationLog toOperationLogEntity(OperationLogDto operationLogDto);
 
+
     /**
      * 转dto
      *
