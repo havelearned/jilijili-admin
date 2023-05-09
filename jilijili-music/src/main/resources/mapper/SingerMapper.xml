@@ -9,7 +9,6 @@
         <result property="singerName" column="singer_name" jdbcType="VARCHAR"/>
         <result property="singerDetails" column="singer_details" jdbcType="VARCHAR"/>
         <result property="singerPhoto" column="singer_photo" jdbcType="VARCHAR"/>
-        <result property="singerType" column="singer_type" jdbcType="TINYINT"/>
         <result property="locked" column="locked" jdbcType="TINYINT"/>
         <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
         <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
@@ -20,7 +19,6 @@
         <result property="singerName" column="singer_name" jdbcType="VARCHAR"/>
         <result property="singerDetails" column="singer_details" jdbcType="VARCHAR"/>
         <result property="singerPhoto" column="singer_photo" jdbcType="VARCHAR"/>
-        <result property="singerType" column="singer_type" jdbcType="TINYINT"/>
         <result property="locked" column="locked" jdbcType="TINYINT"/>
         <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
         <!--一对多返回-->
@@ -57,7 +55,7 @@
     <sql id="Base_Column_List">
         id
         ,singer_name,singer_details,
-        singer_photo,singer_type,locked,
+        singer_photo,locked,
         created_time,updated_time
     </sql>
     <select id="getSingerAlbumInformation" resultMap="singerinfovo">
@@ -65,7 +63,6 @@
                s.singer_name,
                s.singer_details,
                s.singer_photo,
-               s.singer_type,
                s.locked,
                s.created_time,
                a.id,

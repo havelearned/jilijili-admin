@@ -133,7 +133,6 @@ create table if not exists `jilijili-music`.singer
     singer_name    varchar(32)       null comment '歌手名称',
     singer_details text              null comment '歌手简介',
     singer_photo   text              null comment '歌手头像',
-    singer_type    tinyint           null comment '歌手类型',
     locked         tinyint default 0 null comment '是否禁用',
     created_time   datetime          null,
     updated_time   datetime          null

@@ -67,8 +67,7 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer>
 
     @Override
     public SingerInfoVo getSingerInfo(String singerId) {
-        SingerInfoVo singerAlbumInformation = this.singerMapper.getSingerAlbumInformation(singerId);
-        return singerAlbumInformation;
+        return this.singerMapper.getSingerAlbumInformation(singerId);
     }
 
     @Override

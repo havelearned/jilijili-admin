@@ -23,7 +23,6 @@ public interface DatabaseConstant {
     /**
      * 歌手搜索字段
      */
-    String SINGERTYPE = "singer_type";
     String SINGERNAME = "singer_name";
 
     /**

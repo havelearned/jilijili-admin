@@ -36,11 +36,6 @@ public class Singer extends SuperEntity implements Serializable {
     @TableField(value = "singer_photo")
     protected String singerPhoto;
 
-    /**
-     * 歌手类型
-     */
-    @TableField(value = "singer_type")
-    protected Integer singerType;
 
     /**
      * 是否禁用

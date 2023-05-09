@@ -42,10 +42,7 @@ public class SingerVo {
 
     protected String singerPhoto;
 
-    /**
-     * 歌手类型
-     */
-    protected Integer singerType;
+
 
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

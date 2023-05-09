@@ -11,4 +11,6 @@ public interface ModuleNameConstant {
 
     String FILE_MANAGE = "文件管理";
 
+    String DICT_MANAGE = "字典管理";
+
 }

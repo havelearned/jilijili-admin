@@ -33,19 +33,13 @@ public class SingerDto extends QueryDto {
     /**
      * 歌手简介
      */
-
-    private String singerDetails;
+    private String singerDetails = "稍后补充内容哦~";
 
     /**
      * 歌手头像
      */
 
-    private String singerPhoto;
-
-    /**
-     * 歌手类型
-     */
-    private Integer singerType;
+    private String singerPhoto = "https://img1.imgtp.com/2023/05/05/Bm8bsiok.png";
 
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

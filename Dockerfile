@@ -4,7 +4,7 @@
 FROM maven:3.6-openjdk-17-slim
 VOLUME /tmp
 ADD jilijili-admin/target/jilijili-admin-1.0-SNAPSHOT.jar app.jar
-EXPOSE 9001
+EXPOSE 8848
 CMD ["java", "-jar", "app.jar", "-Xms512m -Xmx512m -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=256m -XX:+DisableExplicitGC -XX:+HeapDumpOnOutOfMemoryError"]
-
+MAINTAINER jilijili-sytem
 

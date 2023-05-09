@@ -6,10 +6,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import wang.jilijili.common.annotation.JilJilOperationLog;
+import wang.jilijili.common.core.controller.BaseController;
 import wang.jilijili.common.core.pojo.vo.Result;
 import wang.jilijili.common.enums.OperationType;
 import wang.jilijili.music.pojo.bo.SingerConvertBo;
@@ -36,7 +36,7 @@ import static wang.jilijili.common.constant.RoleConstant.ROLE_SUPER_ADMIN;
 @RestController
 @RequestMapping("/singer")
 @Tag(name = "歌手管理")
-public class SingerController {
+public class SingerController extends BaseController<Singer, SingerService> {
     /**
      * 服务对象
      */
@@ -93,7 +93,6 @@ public class SingerController {
         Singer singer = this.singerConvertBo.toSinger(singerDto);
         IPage<Singer> iPage = this.singerService.page(page, new QueryWrapper<Singer>()
                 .eq(StringUtils.hasText(singerDto.getId()), ID, singerDto.getId())
-                .eq(singerDto.getSingerType() != null, SINGERTYPE, singerDto.getSingerType())
                 .like(StringUtils.hasText(singerDto.getSingerName()), SINGERNAME, singerDto.getSingerName())
                 .between((singerDto.getCreatedTime() != null && singerDto.getSpecifyTime() != null), CREATED_TIME, singerDto.getCreatedTime(), singerDto.getSpecifyTime())
         );
@@ -108,7 +107,6 @@ public class SingerController {
      */
     @GetMapping("/{id}")
     public Result<SingerVo> selectOne(@PathVariable Serializable id) {
-        // TODO [1] 查询歌手专辑歌曲信息
         Singer singer = this.singerService.getById(id);
         SingerDto singerDto = this.singerConvertBo.toSingerDto(singer);
         return Result.ok(this.singerConvertBo.toSingerVo(singerDto));
@@ -154,21 +152,6 @@ public class SingerController {
     @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.DELETED)
     public Result<Boolean> delete(@PathVariable List<String> idList) {
         return Result.ok(this.singerService.deleteBatch(idList));
-    }
-
-    /**
-     * 导出歌手信息
-     *
-     * @param singerDto 导出条件
-     * @param response  响应
-     * @author Amani
-     * @date 2023/3/21 14:30
-     */
-    @GetMapping("/export")
-    @RolesAllowed(value = {ROLE_SUPER_ADMIN})
-    @JilJilOperationLog(moduleName = MUSIC_MANAGE, type = OperationType.EXPORT)
-    public void export(@RequestBody SingerDto singerDto, HttpServletResponse response) {
-
     }
 
 }

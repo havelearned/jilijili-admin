@@ -36,7 +36,6 @@
             <result property="singerName" column="singer_name" jdbcType="VARCHAR"/>
             <result property="singerDetails" column="singer_details" jdbcType="VARCHAR"/>
             <result property="singerPhoto" column="singer_photo" jdbcType="VARCHAR"/>
-            <result property="singerType" column="singer_type" jdbcType="TINYINT"/>
             <result property="locked" column="locked" jdbcType="TINYINT"/>
             <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
         </collection>
@@ -53,7 +52,7 @@
     <select id="queryMusicInfoById" resultMap="BaseResultMapVo">
         SELECT distinct
             m.id as musicId, m.name, m.status, m.description, m.music_filepath, m.created_time,
-            s.id as singerId, s.singer_name, s.singer_details, s.singer_photo, s.singer_type, s.created_time,
+            s.id as singerId, s.singer_name, s.singer_details, s.singer_photo, s.created_time,
             a.id as albumId ,a.created_time, a.updated_time, a.album_name, a.details, a.album_img, a.created_time
         FROM singer_music sm
                  LEFT JOIN music m ON m.id = sm.music_id
