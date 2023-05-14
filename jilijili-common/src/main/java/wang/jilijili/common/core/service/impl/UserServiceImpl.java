@@ -1,32 +1,40 @@
 package wang.jilijili.common.core.service.impl;
 
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.UUID;
+import cn.hutool.core.lang.tree.Tree;
+import cn.hutool.core.lang.tree.TreeNodeConfig;
+import cn.hutool.core.lang.tree.TreeUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.ksuid.KsuidGenerator;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import wang.jilijili.common.constant.DatabaseConstant;
 import wang.jilijili.common.core.mapper.UserMapper;
 import wang.jilijili.common.core.pojo.bo.UserConvertBo;
 import wang.jilijili.common.core.pojo.dto.UserCreateDto;
 import wang.jilijili.common.core.pojo.dto.UserDto;
 import wang.jilijili.common.core.pojo.dto.UserQueryDto;
+import wang.jilijili.common.core.pojo.entity.SysMenu;
 import wang.jilijili.common.core.pojo.entity.User;
 import wang.jilijili.common.core.pojo.request.UserUpdateRequest;
 import wang.jilijili.common.core.pojo.vo.Result;
 import wang.jilijili.common.core.pojo.vo.UserVo;
+import wang.jilijili.common.core.service.RedisService;
 import wang.jilijili.common.core.service.UserService;
 import wang.jilijili.common.exception.BizException;
 import wang.jilijili.common.exception.ExceptionType;
@@ -48,16 +56,42 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     UserMapper userMapper;
 
     SessionRegistry sessionRegistry;
-    private final UserConvertBo userConvertBo;
+    UserConvertBo userConvertBo;
 
     PasswordEncoder passwordEncoder;
 
+    RedisService redisService;
 
-    public UserServiceImpl(UserMapper userMapper, SessionRegistry sessionRegistry, UserConvertBo userConvertBo, PasswordEncoder passwordEncoder) {
+    StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    public void setStringRedisTemplate(StringRedisTemplate stringRedisTemplate) {
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
+
+    @Autowired
+    public void setUserMapper(UserMapper userMapper) {
         this.userMapper = userMapper;
+    }
+
+    @Autowired
+    public void setSessionRegistry(SessionRegistry sessionRegistry) {
         this.sessionRegistry = sessionRegistry;
+    }
+
+    @Autowired
+    public void setUserConvertBo(UserConvertBo userConvertBo) {
         this.userConvertBo = userConvertBo;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Autowired
+    public void setRedisService(RedisService redisService) {
+        this.redisService = redisService;
     }
 
     @Override
@@ -68,7 +102,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     @DS("master")
-    
+
     public UserDto update(UserUpdateRequest userUpdateRequest) {
         User user = this.userConvertBo.toUserEntity(userUpdateRequest);
         if (user != null) {
@@ -82,7 +116,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     @DS("master")
-    
+
     public Result<?> delete(String id) {
         int delete = this.userMapper.deleteById(id);
 
@@ -91,13 +125,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     @DS("master")
-    
     public UserDto create(UserCreateDto userCreateDto, HttpServletRequest request) {
         User user = userConvertBo.toUserEntity(userCreateDto);
         user.setId(KsuidGenerator.generate());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setLastLoginIp(IpUtils.getIpAddress(request));
-        user.setNickname(IpUtils.getUserAgent(request) + UUID.fastUUID().toString());
+        if (!StringUtils.hasText(user.getNickname())) {
+            user.setNickname(IpUtils.getUserAgent(request) + UUID.fastUUID().toString());
+        }
 
         // 添加用户
         this.userMapper.insert(user);
@@ -128,9 +163,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public IPage<UserVo> search(IPage<User> pageEntity, UserQueryDto userQueryDto) {
-        IPage<User> page = this.page(pageEntity, getUserLambdaQueryWrapper(userQueryDto));
-        return page.convert(item -> userConvertBo.toVo(userConvertBo.toDto(item)));
+    public IPage<UserVo> search(IPage<UserVo> pageEntity, UserQueryDto userQueryDto) {
+        UserVo userVo = this.userConvertBo.toVo(userQueryDto);
+        QueryWrapper<UserVo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like(StringUtils.hasText(userVo.getUsername()), "username", userVo.getUsername())
+                .like(StringUtils.hasText(userVo.getNickname()), "nickname", userVo.getNickname())
+                .eq(StringUtils.hasText(userVo.getGender()), "gender", userVo.getGender())
+                .eq(userQueryDto.getUnseal() != null, "enabled", userQueryDto.getUnseal())
+                .between(userQueryDto.getSpecifyTime() != null && userQueryDto.getCreatedTime() != null,
+                        "created_time", userQueryDto.getCreatedTime(), userQueryDto.getSpecifyTime())
+                .eq("locked",0)
+                .orderBy(true, false, "u.created_time");
+        List<UserVo> list = this.userMapper.pageQuery(pageEntity, queryWrapper);
+        pageEntity.setRecords(list);
+        return pageEntity;
     }
 
     @Override
@@ -150,6 +196,38 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return userConvertBo.toDto(user);
     }
 
+
+    @Override
+    public List<Tree<String>> getMenu(String userId) {
+
+        List<SysMenu> menuList = this.userMapper.getMenu(userId);
+
+        TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
+        treeNodeConfig.setWeightKey("orderNum");
+        treeNodeConfig.setIdKey("menuId");
+        treeNodeConfig.setNameKey("menuName");
+        treeNodeConfig.setParentIdKey("parentId");
+        treeNodeConfig.setChildrenKey("children");
+
+        return TreeUtil.build(menuList, "0", treeNodeConfig, (treeNode, tree) -> {
+            tree.setId(Convert.toStr(treeNode.getMenuId()));
+            tree.setParentId(Convert.toStr(treeNode.getParentId()));
+            tree.setName(Convert.toStr(treeNode.getMenuName()));
+            tree.setWeight(treeNode.getOrderNum());
+
+            tree.putExtra("path", treeNode.getPath());
+            tree.putExtra("component", treeNode.getComponent());
+            tree.putExtra("isFrame", treeNode.getIsFrame());
+            tree.putExtra("isCache", treeNode.getIsCache());
+            tree.putExtra("menuType", treeNode.getMenuType());
+            tree.putExtra("visible", treeNode.getVisible());
+            tree.putExtra("status", treeNode.getStatus());
+            tree.putExtra("perms", treeNode.getPerms());
+            tree.putExtra("icon", treeNode.getIcon());
+            tree.putExtra("remark", treeNode.getRemark());
+        });
+
+    }
 }
 
 

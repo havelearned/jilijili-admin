@@ -1,6 +1,7 @@
 package wang.jilijili.web.system;
 
 
+import cn.hutool.core.lang.tree.Tree;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -74,7 +75,7 @@ public class UserController {
     @GetMapping("/list")
     @RolesAllowed(value = {ROLE_SUPER_ADMIN})
     public Result<IPage<UserVo>> search(UserQueryDto userQueryDto) {
-        IPage<User> pageEntity = new Page<>(userQueryDto.getPage(), userQueryDto.getSize());
+        IPage<UserVo> pageEntity = new Page<>(userQueryDto.getPage(), userQueryDto.getSize());
         IPage<UserVo> voIpage = this.userService.search(pageEntity, userQueryDto);
         return Result.ok(voIpage);
     }
@@ -185,6 +186,19 @@ public class UserController {
     @PostMapping("/export")
     public void export(@RequestBody UserQueryDto userQueryDto,
                        HttpServletResponse response) {
+
+    }
+
+
+    /**
+     * 通过userId获取菜单
+     * @param userId
+     * @return 菜单列表
+     */
+    @GetMapping("/menu/{userId}")
+    public Result<List<Tree<String>>> getMenu(@PathVariable String userId) {
+        List<Tree<String>> list = this.userService.getMenu(userId);
+        return Result.ok(list);
 
     }
 

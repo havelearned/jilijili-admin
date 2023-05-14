@@ -2,6 +2,8 @@ package wang.jilijili.common.core.pojo.vo;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author Amani
  * @date 2023年05月09日 16:59
@@ -45,6 +47,11 @@ public class OperationLogVO {
      * 模块名称
      */
     private String moduleName;
+
+    /**
+     * 创建时间
+     */
+    private Date createdTime;
 
 
     private String userId;

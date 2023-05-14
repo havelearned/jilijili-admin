@@ -16,7 +16,6 @@ public class UserQueryDto extends QueryDto implements Serializable {
 
     private String id;
 
-    // TODO 构建查询字段
     /**
      * 用户名
      */
@@ -36,7 +35,7 @@ public class UserQueryDto extends QueryDto implements Serializable {
     /**
      * 是否可用,1-是,0-否
      */
-    private Integer unseal = 1;
+    private Integer unseal;
 
 
 }

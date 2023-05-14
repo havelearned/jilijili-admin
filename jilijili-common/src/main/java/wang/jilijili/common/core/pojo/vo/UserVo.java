@@ -4,8 +4,6 @@ package wang.jilijili.common.core.pojo.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-import wang.jilijili.common.core.pojo.entity.Role;
-import wang.jilijili.common.enums.Gender;
 
 import java.util.Date;
 import java.util.List;
@@ -21,7 +19,7 @@ public class UserVo {
     private String username;
     private String nickname;
 
-    private Gender gender;
+    private String gender;
 
     private Integer unseal;
 
@@ -37,5 +35,5 @@ public class UserVo {
     private Date createdTime;
 
 
-    private List<Role> roles;
+    private List<RoleVo> roles;
 }

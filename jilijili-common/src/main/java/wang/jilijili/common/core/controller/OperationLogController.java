@@ -46,7 +46,6 @@ public class OperationLogController {
     @GetMapping("/list")
     public Result<IPage<OperationLogVO>> selectAll(OperationLogDto operationLogDto) {
         IPage<OperationLogVO> page = new Page<>(operationLogDto.getPage(), operationLogDto.getSize());
-
         List<OperationLogVO> list = this.operationService.list(page, operationLogDto);
         page.setRecords(list);
         return Result.ok(page);

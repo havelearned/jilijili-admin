@@ -1,6 +1,7 @@
 package wang.jilijili.common.core.service;
 
 
+import cn.hutool.core.lang.tree.Tree;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +13,8 @@ import wang.jilijili.common.core.pojo.entity.User;
 import wang.jilijili.common.core.pojo.request.UserUpdateRequest;
 import wang.jilijili.common.core.pojo.vo.Result;
 import wang.jilijili.common.core.pojo.vo.UserVo;
+
+import java.util.List;
 
 /**
  * @author admin
@@ -77,7 +80,7 @@ public interface UserService extends IService<User>, UserDetailsService {
      * @param userQueryDto 查询条件
      * @return com.baomidou.mybatisplus.core.metadata.IPage<wang.jilijili.music.pojo.vo.UserVo>
      */
-    IPage<UserVo> search(IPage<User> pageEntity, UserQueryDto userQueryDto);
+    IPage<UserVo> search(IPage<UserVo> pageEntity, UserQueryDto userQueryDto);
 
 
     /**
@@ -87,4 +90,11 @@ public interface UserService extends IService<User>, UserDetailsService {
      * @return wang.jilijili.music.pojo.dto.UserDto
      */
     UserDto currentUser();
+
+    /**
+     * 通过userId获取菜单
+     * @param userId
+     * @return 菜单列表
+     */
+    List<Tree<String>> getMenu(String userId);
 }

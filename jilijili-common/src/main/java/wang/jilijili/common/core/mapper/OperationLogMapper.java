@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import wang.jilijili.common.core.pojo.entity.OperationLog;
 import wang.jilijili.common.core.pojo.vo.OperationLogVO;
 
@@ -26,7 +27,7 @@ public interface OperationLogMapper extends BaseMapper<OperationLog> {
      * @param queryWrapper 查询条件
      * @return vo
      */
-    List<OperationLogVO> pageList(IPage<OperationLogVO> page, QueryWrapper<OperationLog> queryWrapper);
+    List<OperationLogVO> pageList(IPage<OperationLogVO> page,@Param("ew") QueryWrapper<OperationLogVO> queryWrapper);
 }
 
 

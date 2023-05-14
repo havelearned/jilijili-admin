@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class RoleVo {
-    private String id;
+    private String roleId;
     private String title;
     private String name;
 

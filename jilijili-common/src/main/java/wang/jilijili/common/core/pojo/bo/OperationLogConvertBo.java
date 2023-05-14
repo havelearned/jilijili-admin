@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 import wang.jilijili.common.core.pojo.dto.OperationLogDto;
 import wang.jilijili.common.core.pojo.entity.OperationLog;
+import wang.jilijili.common.core.pojo.vo.OperationLogVO;
 
 /**
  * @author Amani
@@ -22,6 +23,13 @@ public interface OperationLogConvertBo {
      * @date 2023/4/4 11:27
      */
     OperationLog toOperationLogEntity(OperationLogDto operationLogDto);
+
+    /**
+     * 转vo
+     * @param operationLogDto dto
+     * @return wang.jilijili.common.core.pojo.vo.OperationLogVO
+     */
+    OperationLogVO toVo(OperationLogDto operationLogDto);
 
 
     /**

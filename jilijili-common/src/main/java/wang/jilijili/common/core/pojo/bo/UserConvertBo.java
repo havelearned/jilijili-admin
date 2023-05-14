@@ -5,6 +5,7 @@ import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 import wang.jilijili.common.core.pojo.dto.UserCreateDto;
 import wang.jilijili.common.core.pojo.dto.UserDto;
+import wang.jilijili.common.core.pojo.dto.UserQueryDto;
 import wang.jilijili.common.core.pojo.entity.User;
 import wang.jilijili.common.core.pojo.request.UserUpdateRequest;
 import wang.jilijili.common.core.pojo.vo.UserVo;
@@ -38,6 +39,13 @@ public interface UserConvertBo {
     UserVo toVo(UserDto userDto);
 
     /**
+     * 转VO
+     * @param userQueryDto
+     * @return vo
+     */
+    UserVo toVo(UserQueryDto userQueryDto);
+
+    /**
      * UserUpdateRequest 转 User
      * @author Amani
      * @date 2023/3/5 11:34
@@ -55,6 +63,13 @@ public interface UserConvertBo {
      * @return wang.jilijili.music.pojo.entity.User
      */
     User toUserEntity(UserCreateDto userCreateDto);
+
+    /**
+     * 转 entity
+     * @param userQueryDto
+     * @return entity
+     */
+    User toUser(UserQueryDto userQueryDto);
 
 
 }

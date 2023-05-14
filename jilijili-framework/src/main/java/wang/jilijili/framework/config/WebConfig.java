@@ -23,11 +23,13 @@ public class WebConfig {
     public PasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
     @Bean
     public AuthenticationEventPublisher authenticationEventPublisher
             (ApplicationEventPublisher applicationEventPublisher) {
@@ -38,6 +40,7 @@ public class WebConfig {
     public SessionRegistry sessionRegistry() {
         return new SessionRegistryImpl();
     }
+
 
 
 }

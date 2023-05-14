@@ -35,10 +35,10 @@ public class OperationLogServiceImpl extends ServiceImpl<OperationLogMapper, Ope
 
     @Override
     public List<OperationLogVO> list(IPage<OperationLogVO> page, OperationLogDto operationLogDto) {
-        OperationLog operationLog = this.operationLogConvertBo.toOperationLogEntity(operationLogDto);
-        QueryWrapper<OperationLog> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(operationLog.getOperationType()!=null,"operation_type",operationLog.getOperationType());
-        return this.operationLogMapper.pageList(page,queryWrapper);
+        OperationLogVO operationLogVO = this.operationLogConvertBo.toVo(operationLogDto);
+        QueryWrapper<OperationLogVO> queryWrapper = new QueryWrapper<>(operationLogVO);
+        queryWrapper.orderByDesc("created_time");
+        return this.operationLogMapper.pageList(page, queryWrapper);
     }
 }
 
