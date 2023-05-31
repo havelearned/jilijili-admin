@@ -1,0 +1,152 @@
+# 配置端口
+server:
+  port: 2000
+  servlet:
+    session:
+      timeout: 21600
+
+spring:
+  # 配置mysql数据库
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_H0ST}:${MYSQL_PORT}/${DATABASE_NAME}?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    username: ${MYSQL_USER_NAME}
+    password: ${MYSQL_PASSWORD}
+    hikari:
+      connection-timeout: 10000
+      validation-timeout: 3000
+      idle-timeout: 60000
+      max-lifetime: 60000
+      maximum-pool-size: 10
+      minimum-idle: 5
+
+  #  数据库版本迁移
+  flyway:
+    # 启用或禁用 flyway
+    enabled: false
+    # flyway 的 clean 命令会删除指定 schema 下的所有 table, 生产务必禁掉。这个默认值是 false 理论上作为默认配置是不科学的。
+    clean-disabled: true
+    # SQL 脚本的目录,多个路径使用逗号分隔 默认值 classpath:db/migration
+    locations: classpath:db/migration
+    #  metadata 版本控制信息表 默认 flyway_schema_history
+    table: flyway_schema_history
+    # 如果没有 flyway_schema_history 这个 metadata 表， 在执行 flyway migrate 命令之前, 必须先执行 flyway baseline 命令
+    # 设置为 true 后 flyway 将在需要 baseline 的时候, 自动执行一次 baseline。
+    baseline-on-migrate: true
+    # 指定 baseline 的版本号,默认值为 1, 低于该版本号的 SQL 文件, migrate 时会被忽略
+    baseline-version: 20230123160427
+    # 字符编码 默认 UTF-8
+    encoding: UTF-8
+    # 是否允许不按顺序迁移 开发建议 true  生产建议 false
+    out-of-order: true
+    # 需要 flyway 管控的 schema list,这里我们配置为flyway  缺省的话, 使用spring.datasource.url 配置的那个 schema,
+    # 可以指定多个schema, 但仅会在第一个schema下建立 metadata 表, 也仅在第一个schema应用migration sql 脚本.
+    # 但flyway Clean 命令会依次在这些schema下都执行一遍. 所以 确保生产 spring.flyway.clean-disabled 为 true
+    schemas: flyway
+    # 执行迁移时是否自动调用验证   当你的 版本不符合逻辑 比如 你先执行了 DML 而没有 对应的DDL 会抛出异常
+    validate-on-migrate: true
+
+  # mq配置
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_USERNAME}
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3 #最大重试次数
+          initial-interval: 3000 #重试间隔时间（单位毫秒）
+
+  # es配置 若搜索模式为mysql可删除
+  elasticsearch:
+    rest:
+      uris: ${ELASTICSEARCH_URIS}
+
+  # 邮箱配置
+  mail:
+    host: smtp.qq.com
+    username: 1918652173@qq.com
+    password: apnxignovcgdcagf
+    default-encoding: UTF-8
+    port: 587
+    properties:
+      mail:
+      smtp:
+      auth: true
+      socketFactory:
+      class: javax.net.ssl.SSLSocketFactory
+
+  # 上传图片大小限制
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+      database: 1
+      jedis:
+        pool:
+          enabled: true
+          # 连接池中的最大空闲连接，默认值也是8。
+          max-idle: 500
+          # 连接池中的最小空闲连接，默认值也是0。
+          min-idle: 50
+          # 如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)
+          max-active: 1000
+          # 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException
+          max-wait: 2000
+  security:
+    user:
+      password: 123456
+      name: admin
+
+# 配置MybatisPlus
+mybatis-plus:
+  mapperLocations: classpath*:mapper/*Mapper.xml
+  global-config:
+    db-config:
+      logic-delete-field: flag # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+wx:
+  appId: ${WX_APPID}
+  appSecret: ${WX_APPSECRET}
+
+upload:
+  strategy: minio
+  store:
+    local:
+      domain-url: /temp/tmp/upload/
+      access-key: ljj
+      access-key-secret: 123456.ljj
+      #      endpoint: http://${APPLICATION_IP}:${APPLICATION_PORT}
+      endpoint: http://127.0.0.1:8080
+      bucket: ${oss_bucket}
+    oss:
+      domain-url: ${oss_domain-url}
+      access-key: ${oss_access-key}
+      access-key-secret: ${oss_access-key-secret}
+      endpoint: ${oss_endpoint}
+      bucket: ${oss_bucket}
+    minio:
+      domain-url: ${minio_domain-url}
+      access-key: ${minio_access-key}
+      access-key-secret: ${minio_access-key-secret}
+      bucket: ${minio_bucket}
+logging:
+  level:
+    com.baomidou.mybatisplus.mapper: debug

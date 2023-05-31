@@ -1,0 +1,14 @@
+# 配置端口
+server:
+  port: 80
+spring:
+  application:
+    name: jilijili-system
+  banner:
+    location: banner/banner.txt
+  config:
+    import: optional:file:.env[.properties]
+  profiles:
+    active: dev
+#    active: pro
+
