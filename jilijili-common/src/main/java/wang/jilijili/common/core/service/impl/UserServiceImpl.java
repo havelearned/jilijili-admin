@@ -6,7 +6,6 @@ import cn.hutool.core.lang.UUID;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -101,7 +100,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    @DS("master")
+
 
     public UserDto update(UserUpdateRequest userUpdateRequest) {
         User user = this.userConvertBo.toUserEntity(userUpdateRequest);
@@ -115,7 +114,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    @DS("master")
+
 
     public Result<?> delete(String id) {
         int delete = this.userMapper.deleteById(id);
@@ -124,14 +123,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    @DS("master")
+
     public UserDto create(UserCreateDto userCreateDto, HttpServletRequest request) {
         User user = userConvertBo.toUserEntity(userCreateDto);
         user.setId(KsuidGenerator.generate());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setLastLoginIp(IpUtils.getIpAddress(request));
         if (!StringUtils.hasText(user.getNickname())) {
-            user.setNickname(IpUtils.getUserAgent(request) + UUID.fastUUID().toString());
+            user.setNickname(
+                    String.format("%s-%s", IpUtils.getUserAgent(request), UUID.randomUUID().toString()));
         }
 
         // 添加用户
@@ -172,7 +172,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
                 .eq(userQueryDto.getUnseal() != null, "enabled", userQueryDto.getUnseal())
                 .between(userQueryDto.getSpecifyTime() != null && userQueryDto.getCreatedTime() != null,
                         "created_time", userQueryDto.getCreatedTime(), userQueryDto.getSpecifyTime())
-                .eq("locked",0)
+                .eq("locked", 0)
                 .orderBy(true, false, "u.created_time");
         List<UserVo> list = this.userMapper.pageQuery(pageEntity, queryWrapper);
         pageEntity.setRecords(list);

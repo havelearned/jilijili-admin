@@ -4,7 +4,10 @@ package wang.jilijili.common.constant;
  * @author Amani
  * @date 2023年03月21日 14:07
  */
-public class SecurityConstant {
+public final class SecurityConstant {
+    private SecurityConstant() {
+    }
+
     /**
      * 密钥
      */
@@ -17,6 +20,9 @@ public class SecurityConstant {
     public static final String HEADER_STRING = "Authorization";
     public static final String SIGN_UP_URL = "/tokens/";
     public static final String[] SWAGGER_UP_URL = {
+            // 文件上传
+            "/temp/tmp/upload/**",
+
             // 测试
             "/test/**",
 
@@ -36,7 +42,7 @@ public class SecurityConstant {
             "/error",
 
             // admin 监控
-            "/admin/**","/admin","/actuator","/actuator/**",
+            "/admin/**", "/admin", "/actuator", "/actuator/**",
 
             // 接口文档
             "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html"

@@ -5,20 +5,24 @@ package wang.jilijili.common.constant;
  *
  * @author admin
  */
-public interface RedisKeyConstant {
+public final class RedisKeyConstant {
+    private RedisKeyConstant() {
+    }
+
+    public static final String  LOGIN_USER_INFO= "login_user_info::";
 
     /**
      * 1 hour = 3600 seconds
-     * */
-    Long HOUR_24 = 3600L * 24L;
+     */
+    public static final Long HOUR_24 = 3600L * 24L;
 
     /**
      * 表单重复提交 key+ip+hashcode
      */
-    String KEY_NO_REPEAT_SUBMIT = "SUBMIT-KEY-";
+    public static final String KEY_NO_REPEAT_SUBMIT = "SUBMIT-KEY-";
 
     /**
      * 菜单key 过期时间24小时
      */
-    String KEY_MENU="KEY_MENU::";
+    public static final String KEY_MENU = "KEY_MENU::";
 }

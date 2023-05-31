@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>wang.jilijili</groupId>
-        <artifactId>jilijili</artifactId>
+        <artifactId>jilijili-admin</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
@@ -21,6 +21,28 @@
     </properties>
     <dependencies>
 
+        <!--阿里云oss-->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.8.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>io.minio</groupId>
@@ -28,11 +50,17 @@
             <version>8.5.2</version>
         </dependency>
 
-        <!--动态数据源-->
+<!--        &lt;!&ndash;动态数据源&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.baomidou</groupId>-->
+<!--            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>-->
+<!--            <version>3.6.1</version>-->
+<!--        </dependency>-->
+
+
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <version>3.6.1</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
 
@@ -42,8 +70,6 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${springdoc-openapi-version}</version>
         </dependency>
-
-
 
         <!-- Spring框架基本的核心工具 -->
         <dependency>
@@ -99,8 +125,6 @@
             <version>${ksuid-version}</version>
         </dependency>
 
-
-
         <!--用户代理工具-->
         <dependency>
             <groupId>eu.bitwalker</groupId>
@@ -135,12 +159,13 @@
             <version>${weixin-java-miniapp-version}</version>
         </dependency>
 
-
+        <!--mysql-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
+        <!--mybatisPlus-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -153,8 +178,6 @@
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct-version}</version>
         </dependency>
-
-
 
         <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
         <dependency>

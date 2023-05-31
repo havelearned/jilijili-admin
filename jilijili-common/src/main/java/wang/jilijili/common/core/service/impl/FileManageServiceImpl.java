@@ -40,18 +40,6 @@ public class FileManageServiceImpl extends ServiceImpl<FileManageMapper, FileMan
     @Override
     public FileTypeTreeVO queryByDict(String dictType) {
         FileTypeTreeVO fileTypeTreeVO = this.fileManageMapper.queryByDict(dictType);
-        /**
-         * TODO 构建树形的文件类型 例如:
-         *  image:
-         *      png
-         *      jpg
-         *      .jpeg
-         *  audio:
-         *      .mp3
-         *      .mp4
-         *      .war
-         *
-         * */
 
 //        Map<String, Map<String, List<String>>> treeMap = new TreeMap<>();
 //        dictTypeVO.getSysDictDataList().forEach(item -> {

@@ -1,5 +1,8 @@
 package wang.jilijili.common.core.pojo.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelCollection;
+import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
@@ -27,7 +30,7 @@ import java.util.List;
  * @author admin
  * @TableName user
  */
-
+@ExcelTarget("user")
 @TableName(value = "user")
 @Schema(title = "用户", name = "用户实体类")
 @Data
@@ -35,17 +38,20 @@ public class User extends SuperEntity implements Serializable, UserDetails {
 
 
     @TableField(exist = false)
+    @ExcelCollection(name = "用户角色", orderNum = "4")
     List<Role> roles;
 
 
     /**
      * 用户名
      */
+    @Excel(name = "用户名称", orderNum = "1", needMerge = true)
     private String username;
 
     /**
      * 用户昵称
      */
+    @Excel(name = "用户昵称", orderNum = "2", needMerge = true)
     private String nickname;
 
     /**
@@ -56,23 +62,27 @@ public class User extends SuperEntity implements Serializable, UserDetails {
     /**
      * 性别
      */
+    @Excel(name = "性别", orderNum = "3", needMerge = true, replace = {"UNKNOWN_未知", "ALL_男女皆可", "MALE_男", "FEMALE_女"})
     private Gender gender;
 
     /**
      * 是否锁定,1-是,0-否
      */
     @TableLogic
+    @Excel(name = "锁定状态", orderNum = "4", needMerge = true, replace = {"锁定_1", "正常_0"})
     private Integer locked = 0;
 
     /**
      * 是否可用,1-是,0-否
      */
+    @Excel(name = "状态", orderNum = "5", needMerge = true, replace = {"正常_1", "停用_0"})
     @TableField(value = "enabled")
     private Integer unseal = 1;
 
     /**
      * 最后登录IP
      */
+    @Excel(name = "IP", orderNum = "6", needMerge = true)
     private String lastLoginIp;
 
     /**

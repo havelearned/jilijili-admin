@@ -8,8 +8,8 @@
             <id property="id" column="id" jdbcType="VARCHAR"/>
             <result property="name" column="name" jdbcType="VARCHAR"/>
             <result property="title" column="title" jdbcType="VARCHAR"/>
-<!--            <result property="created_time" column="created_time" jdbcType="TIMESTAMP"/>-->
-<!--            <result property="updated_time" column="updated_time" jdbcType="TIMESTAMP"/>-->
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">

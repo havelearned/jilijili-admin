@@ -49,7 +49,6 @@ public class LogAspect {
 
     @Around(value = "operationLogPointcut()")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
-        log.info("wang.jilijili.common.aspect.LogAspect.@around===>被执行了");
         Object result = null;
         MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
         Method method = methodSignature.getMethod();

@@ -1,6 +1,5 @@
 package wang.jilijili.common.core.mapper;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import wang.jilijili.common.core.pojo.entity.FileManage;
@@ -12,7 +11,7 @@ import wang.jilijili.common.core.pojo.vo.FileTypeTreeVO;
  * @createDate 2023-03-23 09:30:14
  * @Entity wang.jilijili.common.core.pojo.entity.FileManage
  */
-@DS("master")
+
 @Mapper
 public interface FileManageMapper extends BaseMapper<FileManage> {
 

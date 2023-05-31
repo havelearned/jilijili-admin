@@ -1,7 +1,6 @@
 package wang.jilijili.common.core.mapper;
 
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -19,7 +18,7 @@ import java.util.List;
  * @createDate 2023-02-12 15:32:36
  * @Entity wang.jilijili.music.pojo.entity.User
  */
-@DS("master")
+
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 

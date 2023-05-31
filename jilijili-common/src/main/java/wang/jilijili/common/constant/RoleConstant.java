@@ -7,16 +7,19 @@ package wang.jilijili.common.constant;
  * @author Amani
  * @date 2023年02月17日 16:46
  */
-public interface RoleConstant {
+public final class RoleConstant {
+
+    private RoleConstant() {
+    }
 
     /**
      * 普通用户
-     * */
-     String ROLE_USER = "USER";
+     */
+    public static final String ROLE_USER = "USER";
 
     /**
      * 超级管理员
-     * */
-     String ROLE_SUPER_ADMIN = "SUPER_ADMIN";
+     */
+    public static final String ROLE_SUPER_ADMIN = "SUPER_ADMIN";
 
 }

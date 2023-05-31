@@ -1,7 +1,10 @@
 package wang.jilijili.common.core.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import wang.jilijili.common.core.pojo.entity.FileManage;
+import wang.jilijili.common.core.service.FileManageService;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -12,6 +15,24 @@ import java.util.concurrent.CountDownLatch;
  */
 @Service
 public class AsyncServerImpl {
+
+    FileManageService fileManageService;
+
+    @Autowired
+    public void setFileManageService(FileManageService fileManageService) {
+        this.fileManageService = fileManageService;
+    }
+
+    /**
+     * 异步保存文件信息
+     *
+     * @param fileManage
+     */
+    @Async
+    public void asyncSaveFile(FileManage fileManage) {
+        this.fileManageService.save(fileManage);
+    }
+
     @Async
     public void asyncTest(Integer counter, CountDownLatch downLatch) throws InterruptedException {
         Thread.sleep(2000);
