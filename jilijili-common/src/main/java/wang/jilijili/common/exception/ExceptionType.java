@@ -9,25 +9,25 @@ public enum ExceptionType {
 
     /**
      *
-     * */
+     */
 
     UNAUTHORIZED(401, "未登录"),
     BAD_REQUEST(400, "请求错误"),
     REQUEST_OPERATE_ERROR(400, "操作失败"),
     FORBIDDEN(403, "无权操作"),
     NOT_FOUND(404, "未找到该页面"),
-    TOKEN_EXPIRES(400,"登录过期,请重新登录"),
+    TOKEN_EXPIRES(400, "登录过期,请重新登录"),
     USER_NAME_DUPLICATE(4001001, "用户名重复"),
-    USER_NOT_FOND(40401001,"用户未找到"),
-    USERNAME_OR_PASSWORD_ERROR(40001002,"用户名或者密码错误"),
+    USER_NOT_FOND(40401001, "用户未找到"),
+    USERNAME_OR_PASSWORD_ERROR(40001002, "用户名或者密码错误"),
     INNER_ERROR(500, "系统内部错误"),
-    USER_NOT_ENABLED(50001001,"用户未启用"),
-    USER_NOT_LOCKED(50001002,"用户被锁定"),
-    USER_EXPORT_ERROR(50001003,"导出失败"),
-    UPLOAD_FAILED(500061001,"文件上传失败"),
-    FILE_DOES_NOT_EXIST(500061002,"文件不存在"),
-    FILE_DIR_CREATED_FAILED(500061003,"文件夹创建失败"),
-    OSS_INIT_FAIL(500062001,"OSS init fail"),
+    USER_NOT_ENABLED(50001001, "用户未启用"),
+    USER_NOT_LOCKED(50001002, "用户被锁定"),
+    USER_EXPORT_ERROR(50001003, "导出失败"),
+    UPLOAD_FAILED(500061001, "文件上传失败"),
+    FILE_DOES_NOT_EXIST(500061002, "文件不存在"),
+    FILE_DIR_CREATED_FAILED(500061003, "文件夹创建失败"),
+    OSS_INIT_FAIL(500062001, "文件服务初始化失败"),
     ;
 
     private final Integer code;

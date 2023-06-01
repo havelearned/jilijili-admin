@@ -68,7 +68,7 @@ spring:
   mail:
     host: smtp.qq.com
     username: 1918652173@qq.com
-    password: apnxignovcgdcagf
+    password: zyilpukalydybaee
     default-encoding: UTF-8
     port: 587
     properties:
@@ -86,8 +86,10 @@ spring:
 
   data:
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
+#      host: ${REDIS_HOST}
+#      port: ${REDIS_PORT}
+      host: 8.130.75.158
+      port: 16379
       password: ${REDIS_PASSWORD}
       database: 1
       jedis:
@@ -123,8 +125,10 @@ springdoc:
     path: /swagger-ui.html
 
 wx:
-  appId: ${WX_APPID}
-  appSecret: ${WX_APPSECRET}
+#  appId: ${WX_APPID}
+#  appSecret: ${WX_APPSECRET}
+  appId: wxb5f832807c32df70
+  appSecret: dedf594ba7101cc849fbe558472ffb23
 
 upload:
   strategy: minio

@@ -20,6 +20,11 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
 
         <!--阿里云oss-->
         <dependency>
@@ -50,12 +55,12 @@
             <version>8.5.2</version>
         </dependency>
 
-<!--        &lt;!&ndash;动态数据源&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.baomidou</groupId>-->
-<!--            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>-->
-<!--            <version>3.6.1</version>-->
-<!--        </dependency>-->
+        <!--        &lt;!&ndash;动态数据源&ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.baomidou</groupId>-->
+        <!--            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>-->
+        <!--            <version>3.6.1</version>-->
+        <!--        </dependency>-->
 
 
         <dependency>

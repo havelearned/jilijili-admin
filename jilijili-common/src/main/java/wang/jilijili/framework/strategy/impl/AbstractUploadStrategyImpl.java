@@ -2,6 +2,7 @@ package wang.jilijili.framework.strategy.impl;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.crypto.digest.DigestUtil;
+import cn.hutool.http.HttpStatus;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ public abstract class AbstractUploadStrategyImpl implements UploadStrategy {
             return getPublicNetworkAccessUrl(fileRelativePath);
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new BizException(UPLOAD_FAILED);
+            throw new BizException(UPLOAD_FAILED.getMessage() + ":" + e.getMessage(), HttpStatus.HTTP_INTERNAL_ERROR);
         }
     }
 
