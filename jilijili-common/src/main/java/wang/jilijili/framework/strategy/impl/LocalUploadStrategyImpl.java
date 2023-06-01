@@ -91,7 +91,7 @@ public class LocalUploadStrategyImpl extends AbstractUploadStrategyImpl {
         FileManage fileManage = new FileManage();
         fileManage.setFilesize(file.getSize());
         fileManage.setType(Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf(".")));
-        fileManage.setFilename(file.getOriginalFilename());
+        fileManage.setFilename(fileRelativePath);
         fileManage.setLocked(0);
         fileManage.setFilepath(getPublicNetworkAccessUrl(fileRelativePath));
 
