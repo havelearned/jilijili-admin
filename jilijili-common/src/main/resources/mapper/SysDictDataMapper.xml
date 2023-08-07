@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="wang.jilijili.common.core.mapper.SysDictDataMapper">
+<mapper namespace="top.jilijili.common.core.mapper.SysDictDataMapper">
 
-    <resultMap id="BaseResultMap" type="wang.jilijili.common.core.pojo.entity.SysDictData">
+    <resultMap id="BaseResultMap" type="top.jilijili.common.core.pojo.entity.SysDictData">
             <id property="dictCode" column="dict_code" jdbcType="BIGINT"/>
             <result property="dictSort" column="dict_sort" jdbcType="INTEGER"/>
             <result property="dictLabel" column="dict_label" jdbcType="VARCHAR"/>

@@ -1,0 +1,32 @@
+package top.jilijili.system.mapper;
+
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import top.jilijili.system.entity.SysMenu;
+import top.jilijili.system.entity.SysUser;
+import top.jilijili.system.entity.vo.SysRoleVo;
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * @author admin
+ * @description 针对表【sys_user(用户表)】的数据库操作Mapper
+ * @createDate 2023-06-22 01:07:41
+ * @Entity top.jilijili.system.pojo.entity.SysUser
+ */
+@Mapper
+public interface SysUserMapper extends BaseMapper<SysUser> {
+
+
+    List<SysMenu> queryMenuByUserId(@Param(value = "userId") Long userId);
+
+    List<SysRoleVo> queryRoleByUserId(@Param(value = "userId") Serializable userId);
+
+}
+
+
+
+

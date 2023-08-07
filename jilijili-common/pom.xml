@@ -24,8 +24,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-
-
         <!--阿里云oss-->
         <dependency>
             <groupId>com.aliyun.oss</groupId>

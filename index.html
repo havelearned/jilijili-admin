@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SockJS 测试</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<h1>SockJS 测试</h1>
+<div id="messages"></div>
+<input type="text" id="messageInput" placeholder="在这里输入消息">
+<button onclick="sendMessage()">发送</button>
+
+<script>
+    const socket = new SockJS('http://localhost:8080/multiUser'); // 连接到SockJS端点
+    const stompClient = Stomp.over(socket);
+    let myId= 1;
+    let sendId = 2;
+    stompClient.connect({}, function (frame) {
+        console.log('WebSocket连接已打开');
+        subscribeToTopic('/user/'+sendId+'/queue/message'); // 订阅广播消息
+        subscribeToTopic('/user/'+myId+'/queue/message'); // 订阅广播消息
+    });
+
+    stompClient.onMessage = function (message) {
+        console.log("收到的消息=>",message)
+        showMessage("收到消息：" + message.body);
+    };
+
+    function sendMessage() {
+        const messageInput = document.getElementById("messageInput");
+        const message = {
+            senderId:myId,
+            receiverId:sendId,
+            message:messageInput.value
+        };
+
+        stompClient.send('/app/chat', {}, JSON.stringify(message)); // 发送消息
+        messageInput.value = "";
+    }
+
+    function showMessage(message) {
+        const messagesDiv = document.getElementById("messages");
+        messagesDiv.innerHTML += "<p>" + message + "</p>";
+    }
+
+    function subscribeToTopic(topic) {
+        stompClient.subscribe(topic, function (message) {
+            stompClient.onMessage(message);
+        });
+    }
+</script>
+</body>
+</html>

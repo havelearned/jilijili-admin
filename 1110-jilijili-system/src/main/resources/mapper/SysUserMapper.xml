@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.jilijili.system.mapper.SysUserMapper">
+
+    <resultMap id="BaseResultMap" type="top.jilijili.system.entity.SysUser">
+            <id property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="userType" column="user_type" jdbcType="VARCHAR"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+            <result property="gender" column="gender" jdbcType="TINYINT"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="phonenumber" column="phonenumber" jdbcType="VARCHAR"/>
+            <result property="locked" column="locked" jdbcType="TINYINT"/>
+            <result property="enabled" column="enabled" jdbcType="TINYINT"/>
+            <result property="lastLoginIp" column="last_login_ip" jdbcType="VARCHAR"/>
+            <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,username,nickname,
+        password,user_type,avatar,
+        gender,email,phonenumber,
+        locked,enabled,last_login_ip,
+        last_login_time,created_time,updated_time
+    </sql>
+
+    <select id="queryMenuByUserId" resultType="top.jilijili.system.entity.SysMenu">
+        select m.menu_id,
+               m.menu_name,
+               m.parent_id,
+               m.order_num,
+               m.path,
+               m.component,
+               m.query,
+               m.is_frame,
+               m.is_cache,
+               m.menu_type,
+               m.visible,
+               m.status,
+               m.perms,
+               m.icon,
+               m.create_by,
+               m.created_time,
+               m.updated_time,
+               m.remark
+        from sys_menu m
+                 inner join sys_role_menu srm on m.menu_id = srm.menu_id
+                 inner join sys_user_role sur on srm.role_id = sur.role_id
+        where sur.user_id = #{userId};
+    </select>
+    <select id="queryRoleByUserId" resultType="top.jilijili.system.entity.vo.SysRoleVo">
+        select sr.role_id, sr.role_name, sr.title
+        from sys_user_role sur
+                 inner join sys_role sr on sr.role_id = sur.role_id
+                 inner join sys_user su on sur.user_id = su.user_id
+        where su.user_id = ${userId};
+    </select>
+
+
+</mapper>

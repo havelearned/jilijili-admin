@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="wang.jilijili.common.core.mapper.SysDictTypeMapper">
+<mapper namespace="top.jilijili.common.core.mapper.SysDictTypeMapper">
 
-    <resultMap id="BaseResultMap" type="wang.jilijili.common.core.pojo.entity.SysDictType">
+    <resultMap id="BaseResultMap" type="top.jilijili.common.core.pojo.entity.SysDictType">
             <id property="dictId" column="dict_id" jdbcType="BIGINT"/>
             <result property="dictName" column="dict_name" jdbcType="VARCHAR"/>
             <result property="dictType" column="dict_type" jdbcType="VARCHAR"/>
@@ -13,12 +13,12 @@
             <result property="remark" column="remark" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <resultMap id="ResulByDictTypeMap" type="wang.jilijili.common.core.pojo.vo.DictTypeVO">
+    <resultMap id="ResulByDictTypeMap" type="top.jilijili.common.core.pojo.vo.DictTypeVO">
         <id property="dictId" column="dict_id" jdbcType="BIGINT"/>
         <result property="dictName" column="dict_name" jdbcType="VARCHAR"/>
         <result property="dictType" column="dict_type" jdbcType="VARCHAR"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
-        <collection property="sysDictDataList"  ofType="wang.jilijili.common.core.pojo.entity.SysDictData" >
+        <collection property="sysDictDataList"  ofType="top.jilijili.common.core.pojo.entity.SysDictData" >
             <id property="dictCode" column="dict_code" jdbcType="BIGINT"/>
             <result property="dictLabel" column="dict_label" jdbcType="VARCHAR"/>
             <result property="dictValue" column="dict_value" jdbcType="VARCHAR"/>

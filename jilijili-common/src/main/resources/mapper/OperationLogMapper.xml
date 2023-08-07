@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="wang.jilijili.common.core.mapper.OperationLogMapper">
+<mapper namespace="top.jilijili.common.core.mapper.OperationLogMapper">
 
-    <resultMap id="BaseResultMap" type="wang.jilijili.common.core.pojo.entity.OperationLog">
+    <resultMap id="BaseResultMap" type="top.jilijili.common.core.pojo.entity.OperationLog">
             <id property="id" column="id" jdbcType="VARCHAR"/>
             <result property="userId" column="user_id" jdbcType="VARCHAR"/>
             <result property="username" column="username" jdbcType="VARCHAR"/>
@@ -25,7 +25,7 @@
         request_url,method_execution,request_data,
         created_time,updated_time,module_name
     </sql>
-    <select id="pageList" resultType="wang.jilijili.common.core.pojo.vo.OperationLogVO">
+    <select id="pageList" resultType="top.jilijili.common.core.pojo.vo.OperationLogVO">
         select
             l.id as operationLogId , l.user_id , l.username, l.last_login_ip, l.operation_type, l.content, l.request_url, l.method_execution, l.request_data, l.module_name, l.created_time, l.updated_time,
             u.nickname

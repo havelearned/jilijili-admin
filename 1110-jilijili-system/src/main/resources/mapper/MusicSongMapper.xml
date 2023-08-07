@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.jilijili.system.mapper.MusicSongMapper">
+
+    <resultMap id="BaseResultMap" type="top.jilijili.system.entity.MusicSong">
+            <id property="songId" column="song_id" jdbcType="BIGINT"/>
+            <result property="albumId" column="album_id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="lyric" column="lyric" jdbcType="VARCHAR"/>
+            <result property="sourceFile" column="source_file" jdbcType="VARCHAR"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="querySongSingerAlbumBySongId" type="top.jilijili.system.entity.vo.MusicSongVo">
+        <id property="songId" column="song_id" jdbcType="BIGINT"/>
+        <result property="albumId" column="album_id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="lyric" column="lyric" jdbcType="VARCHAR"/>
+        <result property="sourceFile" column="source_file" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        <association property="musicSinger" javaType="top.jilijili.system.entity.vo.MusicSingerVo">
+            <id property="singerId" column="singer_id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="desc" column="desc" jdbcType="VARCHAR"/>
+            <result property="photo" column="photo" jdbcType="VARCHAR"/>
+            <result property="type" column="type" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="CHAR"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        </association>
+        <association property="musicAlbum" javaType="top.jilijili.system.entity.vo.MusicAlbumVo">
+            <id property="albumId" column="album_id" jdbcType="BIGINT"/>
+            <result property="albumName" column="album_name" jdbcType="VARCHAR"/>
+            <result property="desc" column="desc" jdbcType="VARCHAR"/>
+            <result property="albumCover" column="album_cover" jdbcType="VARCHAR"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        song_id,album_id,name,
+        status,lyric,source_file,
+        created_time,updated_time
+    </sql>
+
+    <select id="querySongInfoById" resultMap="querySongSingerAlbumBySongId" >
+        select ms.song_id, ms.name, ms.status, ms.lyric, ms.source_file, ms.created_time, ms.updated_time,
+               ma.album_id, ma.album_name,ma.`desc`, ma.album_cover,
+               ms2.singer_id, ms2.name, ms2.`desc`, ms2.type, ms2.photo, ms2.status
+        from music_song ms
+                 left join music_album ma on ms.album_id = ma.album_id
+                 left join music_album_singer mas on mas.album_id = ma.album_id
+                 left join music_singer ms2 on ms2.singer_id = mas.singer_id
+        where ms.song_id = ${songId}
+    </select>
+</mapper>

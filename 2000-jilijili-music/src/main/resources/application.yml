@@ -3,7 +3,7 @@ server:
   port: 80
 spring:
   application:
-    name: jilijili-system
+    name: jilijili-music
   banner:
     location: banner/banner.txt
   config:
