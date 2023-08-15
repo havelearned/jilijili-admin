@@ -3,8 +3,11 @@ package top.jilijili.system.heandler;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotRoleException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,8 +27,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotRoleException.class)
     @ResponseBody
     public Result<String> notLoginException(NotRoleException e) {
-        log.info("{}",e.getMessage());
-        return Result.fail(401,"无权访问");
+        log.info("{}", e.getMessage());
+        return Result.fail(401, "无权访问");
     }
 
     @ExceptionHandler(NotLoginException.class)
@@ -58,12 +61,13 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler(value = BindException.class)
-    @ResponseBody
-    public String validExceptionHandler(BindException e) {
-        e.printStackTrace();
-//        commonResp.setMessage(e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
-        return e.getMessage();
+    @ExceptionHandler(BindException.class)
+    public ResponseEntity<String> handleBindException(BindException ex) {
+        StringBuilder errorMessage = new StringBuilder();
+        for (FieldError error : ex.getFieldErrors()) {
+            errorMessage.append(error.getDefaultMessage()).append("; ");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage.toString());
     }
 
 }

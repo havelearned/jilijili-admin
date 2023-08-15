@@ -22,6 +22,7 @@
         <module>1999-jilijili-video</module>
         <module>1110-jilijili-system</module>
         <module>jilijili-music-reptile</module>
+        <module>_1111-jilijili-blog</module>
     </modules>
 
     <description>父模块</description>

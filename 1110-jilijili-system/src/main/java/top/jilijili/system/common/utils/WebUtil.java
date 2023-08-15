@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
  * @author Amani
  * @date 2023年07月13日 16:39
  */
-public class WebUtil {
+public class WebUtil<T, V> {
     private WebUtil() {
     }
 
@@ -31,6 +31,9 @@ public class WebUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
+
+
+
 }

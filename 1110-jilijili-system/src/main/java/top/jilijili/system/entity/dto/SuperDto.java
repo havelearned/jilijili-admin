@@ -20,7 +20,7 @@ import java.util.Date;
 @Accessors(chain = true)
 public class SuperDto {
     @NotNull
-    protected Integer page = 1;
+    protected Integer page = 0;
 
     @NotNull
     protected Integer size = 10;

@@ -4163,18 +4163,19 @@ create table sys_config
 # 多媒体聊天记录表
 CREATE TABLE cm_record
 (
-    record_id   bigint(32) AUTO_INCREMENT PRIMARY KEY comment '记录id',
-    sender_id   bigint(32) NOT NULL comment '发送者id',
-    receiver_id bigint(32) NOT NULL comment '回复者id',
-    message     TEXT       NOT NULL comment '内容',
-    `type`      TINYINT default 0 comment '内容类型:0 普通文本,2文件',
-    created_time   datetime   NOT NULL comment '发送时间',
-    is_read     TINYINT DEFAULT 0 comment '是否已读:0表示未读，1表示已读',
-    is_deleted  TINYINT DEFAULT 0 comment '是否删除:0表示未删除，1表示已删除',
+    record_id    bigint(32) AUTO_INCREMENT PRIMARY KEY comment '记录id',
+    sender_id    bigint(32) NOT NULL comment '发送者id',
+    receiver_id  bigint(32) NOT NULL comment '回复者id',
+    message      TEXT       NOT NULL comment '内容'     default '',
+    `type`       TINYINT                                default 0 comment '内容类型:0 普通文本,2文件',
+    created_time datetime   NOT NULL comment '发送时间' default CURRENT_TIMESTAMP,
+    is_read      TINYINT                                DEFAULT 0 comment '是否已读:0表示未读，1表示已读',
+    is_deleted   TINYINT                                DEFAULT 0 comment '是否删除:0表示未删除，1表示已删除',
     INDEX idx_sender_id (sender_id),
     INDEX idx_receiver_id (receiver_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   ROW_FORMAT = DYNAMIC COMMENT ='多媒体聊天记录表';
+
 
 

@@ -19,6 +19,9 @@ import java.util.Date;
 @SuperBuilder
 @Accessors(chain = true)
 public class CmRecordDto extends SuperDto{
+    private String avatar;
+    private String username;
+
     /**
      * 记录id
      */
@@ -58,5 +61,6 @@ public class CmRecordDto extends SuperDto{
      * 是否删除:0表示未删除，1表示已删除
      */
     private Integer isDeleted;
+
 
 }
