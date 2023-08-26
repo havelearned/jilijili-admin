@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.jilijili.shop.mapper.OrdersMapper">
+
+    <resultMap id="BaseResultMap" type="top.jilijili.shop.entity.Orders">
+            <id property="orderId" column="order_id" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="orderDate" column="order_date" jdbcType="TIMESTAMP"/>
+            <result property="orderStatus" column="order_status" jdbcType="VARCHAR"/>
+            <result property="totalAmount" column="total_amount" jdbcType="DECIMAL"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        order_id,user_id,order_date,
+        order_status,total_amount,created_time,
+        updated_time
+    </sql>
+</mapper>

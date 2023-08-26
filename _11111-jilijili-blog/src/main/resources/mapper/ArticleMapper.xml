@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.jilijili.blog.mapper.ArticleMapper">
+
+    <resultMap id="BaseResultMap" type="top.jilijili.blog.entity.Article">
+        <id property="articleId" column="article_id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="picture" column="picture" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="viewCount" column="view_count" jdbcType="INTEGER"/>
+        <result property="commentCount" column="comment_count" jdbcType="INTEGER"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                article_id, user_id, picture,
+                title, content, view_count,
+                comment_count, created_time, updated_time
+    </sql>
+    <select id="queryByUserIdYear" resultType="top.jilijili.blog.entity.vo.ArticleVo">
+        SELECT COALESCE(YEAR(created_time), '未知年份') AS year, GROUP_CONCAT(article_id) AS article_ids
+        FROM blog_article ba
+        WHERE ba.user_id = #{userId}
+        GROUP BY year
+        ORDER BY year DESC;
+
+    </select>
+    <select id="queryByArticleIdsList" resultType="top.jilijili.blog.entity.vo.ArticleVo">
+        SELECT ba.article_id,
+               ba.user_id,
+               ba.picture,
+               ba.title,
+               ba.content,
+               ba.view_count,
+               ba.comment_count,
+               ba.created_time,
+               ba.updated_time,
+               u.nickname,
+               u.user_id
+        FROM blog_article ba
+                 LEFT JOIN sys_user u ON ba.user_id = u.user_id
+        WHERE ba.article_id IN
+        <foreach item="id" collection="articleIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        ORDER BY ba.created_time DESC
+            LIMIT #{page}, #{size};
+    </select>
+
+
+</mapper>

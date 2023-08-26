@@ -18,17 +18,19 @@
     <url>http://maven.apache.org</url>
     <modules>
         <module>jilijili-common</module>
-        <module>2000-jilijili-music</module>
-        <module>1999-jilijili-video</module>
-        <module>1110-jilijili-system</module>
-        <module>jilijili-music-reptile</module>
-        <module>_1111-jilijili-blog</module>
+        <module>_11110-jilijili-system</module>
+        <module>_11111-jilijili-blog</module>
+        <module>_8080-jilijili-Gateway</module>
+        <module>_11112_jilijili_video</module>
+        <module>_11114_jilijili_shop</module>
+        <module>_8848_jilijili_Nacos</module>
     </modules>
 
     <description>父模块</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-cloud.version>2022.0.1</spring-cloud.version>
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -53,6 +55,16 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-dependencies</artifactId>

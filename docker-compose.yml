@@ -1,0 +1,46 @@
+version: '3'
+services:
+  base-image: # 定义基础镜像服务
+    image: springci/graalvm-ce:java17-0.12.x  # 基础镜像的名称和版本
+
+  8080-jilijili-Gateway:
+    container_name: _8080-jilijili-
+    build:
+      context: .
+      dockerfile: _1111-jilijili-blog/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      1110-jbase-image:
+        condition: service_healthy
+    volumes:
+      - /tmp
+    command: [ "java", "-jar", "app.jar", "-Xms512m", "-Xmx512m", "-XX:MetaspaceSize=256m", "-XX:MaxMetaspaceSize=256m", "-XX:+DisableExplicitGC", "-XX:+HeapDumpOnOutOfMemoryError" ]
+
+  1110-jilijili-system:
+    container_name: 1110-jilijili-system
+    build:
+      context: .
+      dockerfile: 1110-jilijili-system/Dockerfile
+    ports:
+      - "1110:8080"
+    depends_on:
+      8080-jilijili-Gateway:
+        condition: service_healthy
+    volumes:
+      - /tmp
+    command: [ "java", "-jar", "app.jar", "-Xms512m", "-Xmx512m", "-XX:MetaspaceSize=256m", "-XX:MaxMetaspaceSize=256m", "-XX:+DisableExplicitGC", "-XX:+HeapDumpOnOutOfMemoryError" ]
+
+  1111-jilijili_blog:
+    container_name: 1110-jilijili-blog
+    build:
+      context: .
+      dockerfile: _1111-jilijili-blog/Dockerfile
+    ports:
+      - "1111:8080"
+    depends_on:
+      1110-jilijili-system:
+        condition: service_healthy
+    volumes:
+      - /tmp
+    command: [ "java", "-jar", "app.jar", "-Xms512m", "-Xmx512m", "-XX:MetaspaceSize=256m", "-XX:MaxMetaspaceSize=256m", "-XX:+DisableExplicitGC", "-XX:+HeapDumpOnOutOfMemoryError" ]

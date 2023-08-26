@@ -46,7 +46,8 @@ DROP TABLE IF EXISTS blog_article;
 CREATE TABLE blog_article
 (
     article_id    bigint(32)    NOT NULL PRIMARY KEY COMMENT '文章id',
-    user_id       bigint(32)    NOT NULL COMMENT '用户id',
+    user_id       bigint(32)    NOT NULL default 0 COMMENT '用户id',
+    category_id   bigint(32)    NOT NULL default 0 COMMENT '分类id',
     picture       varchar(1024) NOT NULL DEFAULT '' COMMENT '文章顶部图像',
     title         varchar(32)   NOT NULL DEFAULT '' COMMENT '文章标题',
     content       text COMMENT '文章内容',
