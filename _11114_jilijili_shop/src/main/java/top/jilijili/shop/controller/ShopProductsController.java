@@ -98,13 +98,13 @@ public class ShopProductsController extends ShopSuperController {
     /**
      * 通过id删除商品信息
      *
-     * @param ids 一个或者多个id
+     * @param idList 一个或者多个id
      * @return
      */
     @DeleteMapping
-    public Mono<Result<?>> delete(@RequestParam("idList") List<Serializable> ids) {
-        boolean success = this.shopProductsService.removeBatchByIds(ids);
-        return Mono.just(success ? Result.ok(null, "操作成功") : Result.fail("操作失败"));
+    public Mono<Result<?>> delete(@RequestBody List<Serializable> idList) {
+        return Mono.fromCallable(() -> this.shopProductsService.removeBatchByIds(idList))
+                .map(success -> success ? Result.ok(null, "操作成功") : Result.fail("操作失败"));
     }
 
 

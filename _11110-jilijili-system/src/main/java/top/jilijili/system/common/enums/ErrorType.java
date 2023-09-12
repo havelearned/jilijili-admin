@@ -13,11 +13,11 @@ public enum ErrorType {
     /**
      * 错误码
      */
-    private int code;
+    private final int code;
 
     /**
      * 提示信息
      */
-    private String msg;
+    private final String msg;
 
 }

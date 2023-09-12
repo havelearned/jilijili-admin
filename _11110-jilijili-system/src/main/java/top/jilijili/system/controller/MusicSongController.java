@@ -174,7 +174,7 @@ public class MusicSongController extends SuperController {
     @GetMapping("/get/exportTemplate")
     public void getExportTemplate(HttpServletResponse response) {
         String url = MinioUtil.getFileUrl(KeyConstants.SONG_DATA_IMPORT_TEMPLATE);
-        byte[] bytes = new byte[0];
+        byte[] bytes;
         WebUtil.setDownloadRequestHeader(response, "歌曲数据导入模板.xlsx");
         try {
             bytes = UrlResource.from(url).getInputStream().readAllBytes();

@@ -1,6 +1,5 @@
 package top.jilijili.shop.entity.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +12,7 @@ import java.util.Date;
 
 /**
  * 订单表
+ *
  * @TableName shop_orders
  */
 @AllArgsConstructor
@@ -24,7 +24,7 @@ public class OrdersVo implements Serializable {
     /**
      * 订单ID
      */
-    private String  orderId;
+    private String orderId;
 
     /**
      * 用户ID
