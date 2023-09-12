@@ -1,13 +1,13 @@
 package top.jilijili.shop.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 购物车明细表
@@ -20,19 +20,19 @@ public class CartItems implements Serializable {
      * 明细ID
      */
     @TableId(value = "item_id")
-    private Integer itemId;
+    private Long itemId;
 
     /**
      * 购物车ID
      */
     @TableField(value = "cart_id")
-    private Integer cartId;
+    private Long cartId;
 
     /**
      * 商品ID
      */
     @TableField(value = "product_id")
-    private Integer productId;
+    private Long productId;
 
     /**
      * 数量

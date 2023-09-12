@@ -1,17 +1,16 @@
-package top.jilijili.blog;
+package top.jilijili.shop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 博客服务
- *
- * @author Amani
- * @date 2023年08月13日 23:06
+ * 启动类
  */
 @SpringBootApplication
-public class JilijiliBlogApplication {
+public class JnilibShopApplication {
     public static void main(String[] args) {
-        SpringApplication.run(JilijiliBlogApplication.class, args);
+
+        SpringApplication.run(JnilibShopApplication.class, args);
+
     }
 }

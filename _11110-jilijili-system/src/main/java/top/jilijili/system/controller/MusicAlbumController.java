@@ -75,8 +75,9 @@ public class MusicAlbumController extends SuperController {
     @PostMapping
     public Result<MusicAlbumDto> insert(@RequestBody @Validated MusicAlbumDto musicAlbumDto) {
         Boolean saved = this.musicAlbumService.saveAlbum(musicAlbumDto);
+        log.info("添加歌曲专辑:{},是否成功:{}", musicAlbumDto, saved);
         if (saved) {
-            return Result.ok(musicAlbumDto, "操作失败");
+            return Result.ok(musicAlbumDto, "操作成功");
         }
         return Result.fail("操作失败");
     }
@@ -88,8 +89,14 @@ public class MusicAlbumController extends SuperController {
      * @return 修改结果
      */
     @PutMapping
-    public Result<Boolean> update(@RequestBody MusicAlbumDto musicAlbumDto) {
-        return Result.ok(null, this.musicAlbumService.updateAlbum(musicAlbumDto));
+    public Result<?> update(@RequestBody MusicAlbumDto musicAlbumDto) {
+        Boolean isSuccess = this.musicAlbumService.updateAlbum(musicAlbumDto);
+        log.info("修改歌曲专辑:{},是否成功:{}", musicAlbumDto, isSuccess);
+
+        if (isSuccess) {
+            return Result.ok(musicAlbumDto, "操作成功");
+        }
+        return Result.fail("操作失败");
     }
 
     /**
@@ -100,6 +107,7 @@ public class MusicAlbumController extends SuperController {
      */
     @DeleteMapping
     public Result<Boolean> delete(@RequestParam("idList") List<Long> idList) {
+        log.info("删除歌曲专辑:{}", idList);
         return Result.ok(null, this.musicAlbumService.removeAlbum(idList));
     }
 

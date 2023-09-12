@@ -43,7 +43,7 @@ public class CategoryDto extends SuperDto implements Serializable {
     /**
      * 排序
      */
-    private Integer order;
+    private Integer categoryOrder;
 
     /**
      * 创建时间

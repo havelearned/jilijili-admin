@@ -33,6 +33,12 @@
     </repositories>
 
     <dependencies>
+        <!--消息队列-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
 
         <!--webSocket-->
         <dependency>
@@ -192,8 +198,6 @@
         </dependency>
 
 
-
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -236,7 +240,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <!-- 指定该Main Class为全局的唯一入口 -->
-                    <mainClass>top.jilijili.JilliSystemApplication</mainClass>
+                    <mainClass>top.jilijili.JnilibSystemApplication</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
                 <executions>

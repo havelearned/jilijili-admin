@@ -4,7 +4,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.jilijili.system.entity.SysMenu;
 import top.jilijili.system.entity.dto.SysMenuDto;
+import top.jilijili.system.entity.dto.SysRoleMenuDto;
 import top.jilijili.system.entity.vo.SysMenuVo;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
 * @author admin
@@ -15,4 +19,8 @@ public interface SysMenuService extends IService<SysMenu> {
 
 
     IPage<SysMenuVo> selectAll(SysMenuDto sysMenuDto);
+
+    List<SysMenuVo> getRoleMenuList(Serializable id);
+
+    boolean bindingMenuAndRole(SysRoleMenuDto sysRoleDto);
 }

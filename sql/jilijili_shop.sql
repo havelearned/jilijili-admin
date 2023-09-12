@@ -2,8 +2,8 @@
 DROP TABLE IF EXISTS shop_categories;
 CREATE TABLE shop_categories
 (
-    category_id   INT PRIMARY KEY COMMENT '分类ID',
-    category_name VARCHAR(255) COMMENT '分类名称',
+    category_id   BIGINT PRIMARY KEY COMMENT '分类ID',
+    category_name VARCHAR(32) COMMENT '分类名称',
     created_time  DATETIME COMMENT '创建时间',
     updated_time  DATETIME COMMENT '更新时间'
 ) ENGINE = InnoDB
@@ -13,8 +13,8 @@ CREATE TABLE shop_categories
 DROP TABLE IF EXISTS shop_products;
 CREATE TABLE shop_products
 (
-    product_id     INT PRIMARY KEY COMMENT '商品ID',
-    category_id    INT COMMENT '分类ID',
+    product_id     BIGINT PRIMARY KEY COMMENT '商品ID',
+    category_id    BIGINT COMMENT '分类ID',
     product_name   VARCHAR(255) COMMENT '商品名称',
     description    TEXT COMMENT '商品描述',
     price          DECIMAL(10, 2) COMMENT '价格',
@@ -29,10 +29,8 @@ CREATE TABLE shop_products
 DROP TABLE IF EXISTS shop_carts;
 CREATE TABLE shop_carts
 (
-    cart_id      INT PRIMARY KEY COMMENT '购物车ID',
-    user_id      INT COMMENT '用户ID',
-    created_time DATETIME COMMENT '创建时间',
-    updated_time DATETIME COMMENT '更新时间'
+    cart_id      BIGINT PRIMARY KEY COMMENT '购物车ID',
+    user_id      BIGINT COMMENT '用户ID'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='购物车表';
 
@@ -40,9 +38,9 @@ CREATE TABLE shop_carts
 DROP TABLE IF EXISTS shop_cart_items;
 CREATE TABLE shop_cart_items
 (
-    item_id      INT PRIMARY KEY COMMENT '明细ID',
-    cart_id      INT COMMENT '购物车ID',
-    product_id   INT COMMENT '商品ID',
+    item_id      BIGINT PRIMARY KEY COMMENT '明细ID',
+    cart_id      BIGINT COMMENT '购物车ID',
+    product_id   BIGINT COMMENT '商品ID',
     quantity     INT COMMENT '数量',
     subtotal     DECIMAL(10, 2) COMMENT '小计金额',
     created_time DATETIME COMMENT '创建时间',
@@ -54,8 +52,8 @@ CREATE TABLE shop_cart_items
 DROP TABLE IF EXISTS shop_orders;
 CREATE TABLE shop_orders
 (
-    order_id     INT PRIMARY KEY COMMENT '订单ID',
-    user_id      INT COMMENT '用户ID',
+    order_id     BIGINT PRIMARY KEY COMMENT '订单ID',
+    user_id      BIGINT COMMENT '用户ID',
     order_date   DATETIME COMMENT '下单日期',
     order_status VARCHAR(50) COMMENT '订单状态',
     total_amount DECIMAL(10, 2) COMMENT '总金额',
@@ -68,9 +66,9 @@ CREATE TABLE shop_orders
 DROP TABLE IF EXISTS shop_order_items;
 CREATE TABLE shop_order_items
 (
-    item_id      INT PRIMARY KEY COMMENT '明细ID',
-    order_id     INT COMMENT '订单ID',
-    product_id   INT COMMENT '商品ID',
+    item_id      BIGINT PRIMARY KEY COMMENT '明细ID',
+    order_id     BIGINT COMMENT '订单ID',
+    product_id   BIGINT COMMENT '商品ID',
     quantity     INT COMMENT '数量',
     subtotal     DECIMAL(10, 2) COMMENT '小计金额',
     created_time DATETIME COMMENT '创建时间',
@@ -98,13 +96,13 @@ VALUES
     (5, 5, '编程入门', '编程基础教程', 19.99, 100, 'programming.jpg', NOW(), NOW());
 
 -- 向购物车表插入默认数据
-INSERT INTO shop_carts (cart_id, user_id, created_time, updated_time)
+INSERT INTO shop_carts (cart_id, user_id)
 VALUES
-    (1, 101, NOW(), NOW()),
-    (2, 102, NOW(), NOW()),
-    (3, 103, NOW(), NOW()),
-    (4, 104, NOW(), NOW()),
-    (5, 105, NOW(), NOW());
+    (1, 101),
+    (2, 102),
+    (3, 103),
+    (4, 104),
+    (5, 105);
 
 -- 向购物车明细表插入默认数据
 INSERT INTO shop_cart_items (item_id, cart_id, product_id, quantity, subtotal, created_time, updated_time)

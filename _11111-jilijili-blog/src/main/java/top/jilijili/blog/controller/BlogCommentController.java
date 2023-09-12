@@ -24,7 +24,7 @@ import java.util.List;
  * @since 2023-08-14 14:19:28
  */
 @RestController
-@RequestMapping("/blogComment")
+@RequestMapping("/comment")
 @AllArgsConstructor
 public class BlogCommentController extends SuperController {
     /**

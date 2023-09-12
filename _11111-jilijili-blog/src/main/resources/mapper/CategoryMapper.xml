@@ -8,13 +8,13 @@
             <id property="categoryId" column="category_id" jdbcType="BIGINT"/>
             <result property="childId" column="child_id" jdbcType="BIGINT"/>
             <result property="title" column="title" jdbcType="VARCHAR"/>
-            <result property="order" column="order" jdbcType="TINYINT"/>
+            <result property="categoryOrder" column="category_order" jdbcType="TINYINT"/>
             <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
             <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         category_id,child_id,title,
-        order,created_time,updated_time
+        categoryOrder,created_time,updated_time
     </sql>
 </mapper>

@@ -52,12 +52,13 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
 
     /**
      * 递归获取评论
+     *
      * @param list
-     * @param rootFalg
+     * @param rootFlag
      * @return
      */
-    public List<CommentVo> getRootList(List<CommentVo> list, String rootFalg) {
-        return list.stream().filter(item -> Objects.equals(item.getChildId(), rootFalg)).collect(Collectors.toList());
+    public List<CommentVo> getRootList(List<CommentVo> list, String rootFlag) {
+        return list.stream().filter(item -> Objects.equals(item.getChildId(), rootFlag)).collect(Collectors.toList());
     }
 
     public List<CommentVo> getChildList(String commentId, List<CommentVo> data) {

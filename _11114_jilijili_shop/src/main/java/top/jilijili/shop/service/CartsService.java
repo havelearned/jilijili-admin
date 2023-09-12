@@ -2,6 +2,10 @@ package top.jilijili.shop.service;
 
 import top.jilijili.shop.entity.Carts;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.jilijili.shop.entity.vo.CartsVo;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
 * @author admin
@@ -10,4 +14,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface CartsService extends IService<Carts> {
 
+    /**
+     * 通过用户id查询购物车信息
+     *
+     * @param userId
+     * @return
+     */
+    List<CartsVo> queryCartsByUserIdList(Serializable userId);
 }

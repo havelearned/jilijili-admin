@@ -1,38 +1,41 @@
+server:
+  port: 8080
+
 spring:
   application:
-    name: 8080-jilijili-Gateway
-  output:
-    ansi:
-      enabled: always
+    name: _8080-jilijili-Gateway
+
   cloud:
     gateway:
-      globalcors: # 全局的跨域配置
-        add-to-simple-url-handler-mapping: true # 解决options请求被拦截问题
-        corsConfigurations:
+      globalcors:
+        cors-configurations:
           '[/**]':
-            allowedOriginPatterns: # 允许哪些网站的跨域请求
-              - "*"
+            allowedOrigins: "http://localhost:9111"
+            allowCredentials: true
             allowedMethods: # 允许的跨域ajax的请求方式
               - "GET"
               - "POST"
               - "DELETE"
               - "PUT"
               - "OPTIONS"
-            allowedHeaders: "*"    # 允许在请求中携带的头信息
-            allowCredentials: true    # 允许在请求中携带cookie
-            maxAge: 360000            # 本次跨域检测的有效期(单位毫秒)
-#      discovery:
-#        locator:
-#          enabled: true
-#      routes:
-#        - id: 1110-jilijili-system
-#          #          uri: lb://1110-jilijili-system
-#          uri: http://localhost:11110
-#          predicates:
-#            - Path=/system/**
-#        - id: _1111-jilijili-blog
-#          #          uri: lb://_1111-jilijili-blog
-#          uri: http://localhost:11111
-#          predicates:
-#            - Path=/blog**
-
+            allowedHeaders: "*"
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      httpclient:
+        connect-timeout: 2000
+        response-timeout: 60s
+      routes:
+        - id: _11111-jilijili-blog
+          uri: http://127.0.0.1:11111
+          predicates:
+            - Path=/blog/**
+        - id: _11112_jilijili_video
+          uri: http://127.0.0.1:11112
+          predicates:
+            - Path=/video/**
+        - id: _11114_jilijili_shop
+          uri: http://127.0.0.1:11114
+          predicates:
+            - Path=/shop/**

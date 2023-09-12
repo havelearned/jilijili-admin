@@ -6,7 +6,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import top.jilijili.blog.entity.Article;
 import top.jilijili.blog.entity.dto.ArticleDto;
+import top.jilijili.blog.entity.dto.CategoryDto;
+import top.jilijili.blog.entity.dto.TagDto;
 import top.jilijili.blog.entity.vo.ArticleVo;
+import top.jilijili.blog.entity.vo.TagVo;
 import top.jilijili.blog.mapper.ConvertMapper;
 import top.jilijili.blog.service.ArticleService;
 import top.jilijili.blog.service.TagCategoryArticleService;
@@ -18,13 +21,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 博客文章管理
+ * 文章管理
  *
  * @author makejava
  * @since 2023-08-13 23:22:12
  */
 @RestController
-@RequestMapping("/blogArticle")
+@RequestMapping("/article")
 @AllArgsConstructor
 public class BlogArticleController extends SuperController {
     /**
@@ -34,7 +37,49 @@ public class BlogArticleController extends SuperController {
     private ConvertMapper convertMapper;
     private TagCategoryArticleService tagCategoryArticleService;
 
+
+    // TODO 浏览量,评论量维护
+
+
     /**
+     * 通过分类id查询文章信息
+     *
+     * @param categoryDto
+     * @return
+     */
+    @GetMapping("/articleByCategoryId")
+    public Result<List<ArticleVo>> selectArticleByCategoryId(CategoryDto categoryDto) {
+        return Result.ok(this.articleService.queryArticleByCategoryId(
+                categoryDto.getPage(), categoryDto.getSize(), categoryDto.getCategoryId()));
+    }
+
+
+    /**
+     * 查询标签下的所有博客
+     *
+     * @param tagDto 使用分页所以使用Dto
+     * @return
+     */
+    @GetMapping("/articleByTagId")
+    public Result<List<ArticleVo>> selectArticleByTagId(TagDto tagDto) {
+        return Result.ok(this.articleService.queryArticleByTagId(tagDto.getPage(), tagDto.getSize(), tagDto.getTagId()));
+    }
+
+    /**
+     * 通过文章id查询该文章下的所有标签
+     *
+     * @param articleId
+     * @return
+     */
+    @GetMapping("/tagsByArticleId/{articleId}")
+    public Result<List<TagVo>> selectTagsByArticleId(@PathVariable("articleId") Long articleId) {
+        return Result.ok(this.articleService.queryTagsByArticleId(articleId));
+    }
+
+
+    /**
+     * 查询文章的时间轴
+     *
      * @param articleDto
      * @return
      */
@@ -105,7 +150,7 @@ public class BlogArticleController extends SuperController {
      * @return 删除结果
      */
     @DeleteMapping
-    public Result<Boolean> delete(@RequestParam("idList") List<Long> idList) {
+    public Result<Boolean> delete(@RequestBody List<Long> idList) {
         Boolean bool = this.articleService.removeByArticle(idList);
         return Result.ok(bool);
     }

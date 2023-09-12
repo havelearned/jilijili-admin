@@ -33,10 +33,7 @@ public class TagVo implements Serializable {
 
     private String childId;
 
-    /**
-     * 排序
-     */
-    private Integer order;
+
 
     /**
      * 标签名称

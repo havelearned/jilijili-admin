@@ -19,6 +19,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.jilijili.system.common.aspect.annotation.RestrictAccess;
+import top.jilijili.system.common.aspect.annotation.SysNotify;
 import top.jilijili.system.common.utils.KeyConstants;
 import top.jilijili.system.entity.SysMenu;
 import top.jilijili.system.entity.SysRole;
@@ -308,7 +309,7 @@ public class SysUserController {
      * @return 是否成功
      */
     @PostMapping("/role")
-    public Result<Boolean> addRole(@RequestBody SysRoleDto sysRoleDto) {
+    public Result<Boolean> insert(@RequestBody SysRoleDto sysRoleDto) {
         SysRole sysRole = this.convertMapper.toSysRoleEnetity(sysRoleDto);
         return Result.ok(this.sysRoleService.save(sysRole));
     }
@@ -328,11 +329,11 @@ public class SysUserController {
     /**
      * 批量或者单独删除角色信息
      *
-     * @param ids 角色id
+     * @param idList 角色id
      * @return 是否成功
      */
     @DeleteMapping("/role")
-    public Result<Boolean> updatedRole(@RequestBody List<Long> ids) {
-        return Result.ok(sysRoleService.removeBatchByIds(ids));
+    public Result<Boolean> removeRoles(@RequestBody List<Long> idList) {
+        return Result.ok(sysRoleService.removeRoleByRoleIds(idList));
     }
 }

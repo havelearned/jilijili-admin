@@ -5,9 +5,9 @@
 <mapper namespace="top.jilijili.shop.mapper.OrderItemsMapper">
 
     <resultMap id="BaseResultMap" type="top.jilijili.shop.entity.OrderItems">
-            <id property="itemId" column="item_id" jdbcType="INTEGER"/>
-            <result property="orderId" column="order_id" jdbcType="INTEGER"/>
-            <result property="productId" column="product_id" jdbcType="INTEGER"/>
+            <id property="itemId" column="item_id" jdbcType="BIGINT"/>
+            <result property="orderId" column="order_id" jdbcType="BIGINT"/>
+            <result property="productId" column="product_id" jdbcType="BIGINT"/>
             <result property="quantity" column="quantity" jdbcType="INTEGER"/>
             <result property="subtotal" column="subtotal" jdbcType="DECIMAL"/>
             <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>

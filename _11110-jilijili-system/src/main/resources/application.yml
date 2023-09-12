@@ -77,7 +77,10 @@ spring:
           max-idle: 10
           # 连接池中的最小空闲连接
           min-idle: 0
-
+  rabbitmq:
+    username: admin_A
+    password: admin_A
+    addresses: 8.130.75.158:5672
 
 
 mybatis-plus:

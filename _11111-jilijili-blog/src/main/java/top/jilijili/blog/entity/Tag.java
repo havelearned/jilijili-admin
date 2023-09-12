@@ -37,11 +37,6 @@ public class Tag implements Serializable {
     @TableField(value = "child_id")
     private Long childId;
 
-    /**
-     * 排序
-     */
-    @TableField(value = "order")
-    private Integer order;
 
     /**
      * 标签名称

@@ -1,7 +1,10 @@
 package top.jilijili.shop.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import top.jilijili.shop.entity.Products;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.jilijili.shop.entity.dto.ProductsDto;
+import top.jilijili.shop.entity.vo.ProductsVo;
 
 /**
 * @author admin
@@ -10,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface ProductsService extends IService<Products> {
 
+    /**
+     * 分页查询商品
+     * @param productsDto
+     * @return
+     */
+    IPage<ProductsVo> queryProductList(ProductsDto productsDto);
 }

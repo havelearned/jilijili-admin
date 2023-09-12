@@ -4178,4 +4178,44 @@ CREATE TABLE cm_record
   ROW_FORMAT = DYNAMIC COMMENT ='多媒体聊天记录表';
 
 
+# 系统字典表
+CREATE TABLE sys_dict
+(
+    dictionary_id         bigint AUTO_INCREMENT PRIMARY KEY,
+    dictionary_type       VARCHAR(255) NOT NULL comment '字段类型',
+    dictionary_code       VARCHAR(255) NOT NULL comment '字段代码',
+    dictionary_item_name  VARCHAR(255) NOT NULL comment '字段项名称',
+    dictionary_item_value VARCHAR(255) comment '字段项值',
+    dictionary_item_order INT comment '排序',
+    status                tinyint      NOT null                    DEFAULT '1' comment '状态:1开启 0停用',
+    created_time          datetime     NOT NULL comment '创建时间' default CURRENT_TIMESTAMP,
+    updated_time          datetime     NOT NULL comment '更新时间' default CURRENT_TIMESTAMP
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  ROW_FORMAT = DYNAMIC COMMENT ='字典表';
+CREATE INDEX idx_DictionaryType ON sys_dict (dictionary_type);
+-- 插入测试数据
+INSERT INTO sys_dict (dictionary_type, dictionary_code, dictionary_item_name, dictionary_item_value,
+                      dictionary_item_order, status, created_time, updated_time)
+VALUES ('Role', 'ADMIN', 'Administrator', 'Admin', 1, 1, NOW(), NOW()),
+       ('Role', 'USER', 'User', 'User', 2, 1, NOW(), NOW()),
+       ('Status', 'PENDING', 'Pending', '0', 1, 1, NOW(), NOW()),
+       ('Status', 'APPROVED', 'Approved', '1', 2, 1, NOW(), NOW()),
+       ('Status', 'REJECTED', 'Rejected', '2', 3, 1, NOW(), NOW());
 
+
+-- 通知公告表
+-- auto-generated definition
+create table sys_notice
+(
+    notice_id      bigint auto_increment comment '公告ID'
+        primary key,
+    notice_title   varchar(50)      not null comment '公告标题',
+    notice_type    tinyint(1)          not null comment '公告类型（1通知 2公告）',
+    notice_content longblob         null comment '公告内容',
+    status         char default '0' null comment '公告状态（0正常 1关闭）',
+    created_time          datetime     NOT NULL comment '创建时间' default CURRENT_TIMESTAMP,
+    updated_time          datetime     NOT NULL comment '更新时间' default CURRENT_TIMESTAMP
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  ROW_FORMAT = DYNAMIC COMMENT ='通知公告表';

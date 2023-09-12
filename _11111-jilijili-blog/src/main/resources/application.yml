@@ -1,6 +1,8 @@
 server:
   port: 11111
-#  port: 8080
+  #  port: 8080
+  servlet:
+    context-path: /blog
 
 spring:
   application:

@@ -16,30 +16,40 @@ import top.jilijili.system.entity.vo.*;
 public interface ConvertMapper {
     /*-----------------system----------------*/
     SysUser toSysUserEnetity(SysUserDto sysUserDto);
+
     SysUserVo toSysUserVo(SysUser sysUser);
+
     SysRole toSysRoleEnetity(SysRoleDto sysRoleDto);
+
     SysRoleVo toSysRoleVo(SysRole sysRole);
 
     SysMenu toSysMenuEntity(SysMenuDto sysMenuDto);
 
     SysMenuVo toSysMenuVo(SysMenu sysMenu);
 
+    SysDict toSysDict(SysDictDto sysDictDto);
+
+
     /*---------------music singer------------------*/
     MusicSinger toSingerEntity(MusicSingerDto musicSingerDto);
+
     MusicSingerVo toSingerVo(MusicSinger musicSinger);
+
     MusicSingerDto toSingerDto(MusicSinger musicSinger);
 
     /*---------------music song------------------*/
     MusicSong toSongEntity(MusicSongDto musicSongDto);
+
     MusicSongVo toSongVo(MusicSong musicSong);
 
     /*---------------music album------------------*/
     MusicAlbum toAlbumEntity(MusicAlbumDto musicAlbumDto);
-    MusicAlbumVo toAlbumVo(MusicAlbum musicAlbum);
 
+    MusicAlbumVo toAlbumVo(MusicAlbum musicAlbum);
 
 
     /*---------------多媒体通讯------------------*/
     CmRecord toCmRecord(CmRecordDto cmRecordDto);
+
     CmRecordVo toCmRecordVo(CmRecord cmRecord);
 }

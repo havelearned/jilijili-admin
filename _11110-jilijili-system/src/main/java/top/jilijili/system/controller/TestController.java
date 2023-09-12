@@ -3,12 +3,13 @@ package top.jilijili.system.controller;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+import top.jilijili.system.common.aspect.annotation.SysNotify;
 import top.jilijili.system.common.config.MinioConfig;
+import top.jilijili.system.entity.vo.Result;
 
 /**
  * @author Amani
@@ -20,9 +21,14 @@ import top.jilijili.system.common.config.MinioConfig;
 @RequestMapping("/test")
 @AllArgsConstructor
 public class TestController {
-
-    @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
+
+
+    @SysNotify(title = "用户上线")
+    @GetMapping("/login")
+    public Result<?> rabbitTest() {
+        return Result.ok("管理员上线了");
+    }
 
 
     @MessageMapping("/hello")

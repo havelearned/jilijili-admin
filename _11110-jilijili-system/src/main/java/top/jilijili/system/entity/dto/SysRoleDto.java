@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 /**
  * @author Amani
  * @date 2023年06月22日 13:51
@@ -17,6 +19,8 @@ import lombok.experimental.SuperBuilder;
 @Accessors(chain = true)
 public class SysRoleDto extends SuperDto {
     private Long roleId;
+
+    private List<Long> menuIds;
 
     /**
      * 角色名称

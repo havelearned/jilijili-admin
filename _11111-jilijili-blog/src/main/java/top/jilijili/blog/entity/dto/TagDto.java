@@ -22,22 +22,18 @@ import java.util.Date;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class TagDto extends SuperDto implements Serializable {
+
     /**
      * 标签id
      */
-
-    private String tagId;
+    private Long tagId;
 
     /**
      * 多级标签
      */
 
-    private String childId;
+    private Long childId;
 
-    /**
-     * 排序
-     */
-    private Integer order;
 
     /**
      * 标签名称

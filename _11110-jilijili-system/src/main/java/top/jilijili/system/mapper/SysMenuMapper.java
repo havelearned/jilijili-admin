@@ -1,8 +1,13 @@
 package top.jilijili.system.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import top.jilijili.system.entity.SysMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import top.jilijili.system.entity.SysMenu;
+import top.jilijili.system.entity.vo.SysMenuVo;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author admin
@@ -12,6 +17,16 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 @Mapper
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
+
+
+    /**
+     * 通过角色id获取菜单列表
+     *
+     * @param roleId
+     * @return
+     */
+    List<SysMenuVo> queryRoleMenuListByRoleId(@Param(("roleId")) Serializable roleId);
+
 
 }
 

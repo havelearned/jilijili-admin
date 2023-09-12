@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import top.jilijili.system.entity.SysMenu;
 import top.jilijili.system.entity.dto.SysMenuDto;
+import top.jilijili.system.entity.dto.SysRoleMenuDto;
 import top.jilijili.system.entity.vo.Result;
 import top.jilijili.system.entity.vo.SysMenuVo;
 import top.jilijili.system.mapper.ConvertMapper;
@@ -31,6 +32,18 @@ public class SysMenuController extends SuperController {
     private ConvertMapper convertMapper;
 
     /**
+     * 通过id角色获取菜单列表
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/getRoleMenuList/{id}")
+    public Result<List<SysMenuVo>> getRoleMenuList(@PathVariable("id") Serializable id) {
+        List<SysMenuVo> menuList = this.sysMenuService.getRoleMenuList(id);
+        return Result.ok(menuList);
+    }
+
+    /**
      * 分页查询所有数据
      *
      * @param sysMenuDto
@@ -51,6 +64,20 @@ public class SysMenuController extends SuperController {
     @GetMapping("{id}")
     public Result<SysMenuVo> selectOne(@PathVariable Serializable id) {
         return Result.ok(this.convertMapper.toSysMenuVo(this.sysMenuService.getById(id)));
+    }
+
+
+    /**
+     * 角色重新绑定菜单
+     * @param sysRoleMenuDto
+     * @return
+     */
+    @PostMapping("/bindingRole")
+    public Result<?> bindingMenuAndRole(@RequestBody SysRoleMenuDto sysRoleMenuDto) {
+        boolean isSuccess = this.sysMenuService.bindingMenuAndRole(sysRoleMenuDto);
+        return isSuccess ? Result.ok("操作成功") : Result.fail("操作失败");
+
+
     }
 
     /**

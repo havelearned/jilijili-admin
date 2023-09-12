@@ -1,8 +1,13 @@
 package top.jilijili.system.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import top.jilijili.system.entity.SysRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import top.jilijili.system.entity.SysRole;
+import top.jilijili.system.entity.vo.SysMenuVo;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author admin
@@ -12,6 +17,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 @Mapper
 public interface SysRoleMapper extends BaseMapper<SysRole> {
+
+
+
+
 
 }
 

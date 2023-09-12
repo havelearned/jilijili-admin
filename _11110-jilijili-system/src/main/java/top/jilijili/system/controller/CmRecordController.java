@@ -70,6 +70,7 @@ public class CmRecordController extends SuperController {
     public Result<CmRecordVo> insert(@RequestBody CmRecordDto cmRecordDto) {
         CmRecord cmRecord = this.convertMapper.toCmRecord(cmRecordDto);
         boolean save = this.cmRecordService.save(cmRecord);
+        log.info("添加聊天记录:{},是否成功{}", cmRecordDto, save);
         if (save) {
             return Result.ok(this.convertMapper.toCmRecordVo(cmRecord), "操作成功");
         }
@@ -86,6 +87,7 @@ public class CmRecordController extends SuperController {
     public Result<CmRecordVo> update(@RequestBody CmRecordDto cmRecordDto) {
         CmRecord cmRecord = this.convertMapper.toCmRecord(cmRecordDto);
         boolean update = this.cmRecordService.updateById(cmRecord);
+        log.info("修改聊天记录:{},是否成功{}", cmRecordDto, update);
         if (update) {
             return Result.ok(this.convertMapper.toCmRecordVo(cmRecord), "操作成功");
         }
@@ -100,6 +102,7 @@ public class CmRecordController extends SuperController {
      */
     @DeleteMapping
     public Result<Boolean> delete(@RequestParam("idList") List<Long> idList) {
+        log.info("删除聊天记录:{}", idList.toString());
         return Result.ok(this.cmRecordService.removeByIds(idList));
     }
 }

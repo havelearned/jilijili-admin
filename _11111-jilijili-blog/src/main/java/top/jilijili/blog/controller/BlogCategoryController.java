@@ -1,10 +1,10 @@
 package top.jilijili.blog.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import top.jilijili.blog.entity.Category;
 import top.jilijili.blog.entity.dto.CategoryDto;
@@ -39,12 +39,14 @@ public class BlogCategoryController extends SuperController {
      * @param categoryDto 查询实体
      * @return 所有数据
      */
-    @GetMapping
+    @GetMapping("/list")
     public Result<IPage<CategoryVo>> selectAll(CategoryDto categoryDto) {
         IPage<Category> page = new Page<>(categoryDto.getPage(), categoryDto.getSize());
-        Category category = this.convertMapper.toCategory(categoryDto);
-        page = this.categoryService.page(page, new QueryWrapper<>(category));
-        IPage<CategoryVo> convert = page.convert(this.convertMapper::toCategoryVo);
+        IPage<CategoryVo> convert = this.categoryService.lambdaQuery()
+                .like(StringUtils.hasText(categoryDto.getKeyword()),Category::getTitle,categoryDto.getTitle())
+                .orderByDesc(Category::getCreatedTime)
+                .page(page)
+                .convert(this.convertMapper::toCategoryVo);
         return Result.ok(convert);
     }
 
@@ -98,7 +100,7 @@ public class BlogCategoryController extends SuperController {
      * @return 删除结果
      */
     @DeleteMapping
-    public Result<Boolean> delete(@RequestParam("idList") List<Long> idList) {
+    public Result<Boolean> delete(@RequestBody List<Long> idList) {
         return Result.ok(this.categoryService.removeBatchByIds(idList));
     }
 }

@@ -1,7 +1,6 @@
 package top.jilijili.system.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.servlet.http.HttpServletResponse;
@@ -53,11 +52,10 @@ public class MusicSongController extends SuperController {
     @GetMapping("/list")
     public Result<IPage<MusicSongVo>> selectAll(MusicSongDto musicSongDto) {
         IPage<MusicSong> page = new Page<>(musicSongDto.getPage(), musicSongDto.getSize());
-        MusicSong songEntity = this.convertMapper.toSongEntity(musicSongDto);
-        LambdaQueryWrapper<MusicSong> queryWrapper = new LambdaQueryWrapper<>(songEntity);
-        queryWrapper.orderByDesc(MusicSong::getCreatedTime);
-        page = this.musicSongService.page(page, queryWrapper);
-        return Result.ok(page.convert(item -> this.convertMapper.toSongVo(item)));
+        IPage<MusicSongVo> voIPage = this.musicSongService.lambdaQuery()
+                .orderByDesc(MusicSong::getCreatedTime)
+                .page(page).convert(this.convertMapper::toSongVo);
+        return Result.ok(voIPage);
     }
 
     /**
@@ -82,18 +80,26 @@ public class MusicSongController extends SuperController {
         MusicSong musicSong = this.musicSongService.addOrUpdateBefore(musicSongDto);
         boolean save = this.musicSongService.save(musicSong);
         MusicSongVo songVo = this.convertMapper.toSongVo(musicSong);
+        log.info("添加歌曲信息:{},是否成功{}", musicSongDto, save);
         if (!save) {
             return Result.fail(songVo, "操作失败");
         }
         return Result.ok(songVo, "操作成功");
     }
 
+    /**
+     * 修改歌曲状态
+     *
+     * @param musicSong
+     * @return
+     */
     @PutMapping("/putStatus")
     public Result<String> changeStatus(@RequestBody MusicSong musicSong) {
         boolean update = this.musicSongService.lambdaUpdate()
                 .set(musicSong.getStatus() != null, MusicSong::getStatus, musicSong.getStatus())
                 .eq(MusicSong::getSongId, musicSong.getSongId())
                 .update();
+        log.info("修改歌曲状态:{},是否成功{}", musicSong, update);
         if (update) {
             return Result.ok("操作成功");
         }
@@ -110,10 +116,9 @@ public class MusicSongController extends SuperController {
     @PutMapping
     public Result<MusicSongVo> update(@RequestBody MusicSongDto musicSongDto) {
         MusicSong musicSong = this.musicSongService.addOrUpdateBefore(musicSongDto);
-
         boolean b = this.musicSongService.updateById(musicSong);
-
         MusicSongVo songVo = this.convertMapper.toSongVo(musicSong);
+        log.info("修改歌曲信息:{},是否成功{}", musicSongDto, b);
         if (b) {
             return Result.ok(songVo, "操作成功");
         }
@@ -128,6 +133,7 @@ public class MusicSongController extends SuperController {
      */
     @DeleteMapping
     public Result<Boolean> delete(@RequestParam("idList") List<Long> idList) {
+        log.info("删除歌曲信息:{}", idList);
         return Result.ok(this.musicSongService.removeByIds(idList));
     }
 

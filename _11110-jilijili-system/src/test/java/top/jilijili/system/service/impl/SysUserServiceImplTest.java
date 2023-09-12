@@ -12,12 +12,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.jilijili.system.entity.MusicAlbum;
-import top.jilijili.system.entity.dto.SysMenuDto;
 import top.jilijili.system.entity.vo.MusicAlbumVo;
 import top.jilijili.system.entity.vo.MusicSongVo;
+import top.jilijili.system.entity.vo.SysMenuVo;
 import top.jilijili.system.mapper.ConvertMapper;
 import top.jilijili.system.mapper.MusicAlbumMapper;
 import top.jilijili.system.mapper.MusicSongMapper;
+import top.jilijili.system.mapper.SysMenuMapper;
 import top.jilijili.system.service.MusicSongService;
 import top.jilijili.system.service.SysMenuService;
 
@@ -46,17 +47,21 @@ public class SysUserServiceImplTest {
     @Autowired
     private SysMenuService sysMenuService;
 
-    @Test
-    public void TestFile() {
+    @Autowired
+    private SysMenuMapper sysMenuMapper;
 
+
+    @Test
+    public void RoleBindingMenuTest(){
 
     }
 
     @Test
     public void TestMenu() {
+        List<SysMenuVo> sysMenus = sysMenuMapper.queryRoleMenuListByRoleId(1);
 
         System.out.println("=================================================");
-        System.out.println(JSONObject.toJSONString(this.sysMenuService.selectAll(new SysMenuDto())));
+        System.out.println(JSONObject.toJSONString(sysMenus));
         System.out.println("=================================================");
 
 

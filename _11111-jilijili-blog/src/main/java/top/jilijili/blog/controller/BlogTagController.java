@@ -1,10 +1,10 @@
 package top.jilijili.blog.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import top.jilijili.blog.entity.Tag;
 import top.jilijili.blog.entity.dto.TagDto;
@@ -33,6 +33,7 @@ public class BlogTagController extends SuperController {
     private TagService tagService;
     private ConvertMapper convertMapper;
 
+
     /**
      * 分页查询所有数据
      *
@@ -42,9 +43,12 @@ public class BlogTagController extends SuperController {
     @GetMapping("/list")
     public Result<IPage<TagVo>> selectAll(TagDto tagDto) {
         IPage<Tag> page = new Page<>(tagDto.getPage(), tagDto.getSize());
-        Tag tag = this.convertMapper.toTag(tagDto);
-        page = this.tagService.page(page, new QueryWrapper<>(tag));
-        IPage<TagVo> convert = page.convert(this.convertMapper::toTagVo);
+        IPage<TagVo> convert = this.tagService.lambdaQuery()
+                .select(Tag::getTagId, Tag::getTagTitle, Tag::getChildId, Tag::getUpdatedTime, Tag::getCreatedTime)
+                .like(StringUtils.hasText(tagDto.getTagTitle()), Tag::getTagTitle, tagDto.getKeyword())
+                .eq(tagDto.getTagId() != null, Tag::getTagId, tagDto.getTagId())
+                .between(tagDto.getCreatedTime() != null, Tag::getCreatedTime, tagDto.getCreatedTime(), tagDto.getComparisonTime())
+                .page(page).convert(this.convertMapper::toTagVo);
         return Result.ok(convert);
     }
 
@@ -98,7 +102,7 @@ public class BlogTagController extends SuperController {
      * @return 删除结果
      */
     @DeleteMapping
-    public Result<Boolean> delete(@RequestParam("idList") List<Long> idList) {
+    public Result<Boolean> delete(@RequestBody List<Long> idList) {
         return Result.ok(this.tagService.removeBatchByIds(idList));
     }
 }

@@ -5,14 +5,28 @@
 <mapper namespace="top.jilijili.shop.mapper.CartsMapper">
 
     <resultMap id="BaseResultMap" type="top.jilijili.shop.entity.Carts">
-            <id property="cartId" column="cart_id" jdbcType="INTEGER"/>
-            <result property="userId" column="user_id" jdbcType="INTEGER"/>
-            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
-            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+            <id property="cartId" column="cart_id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        cart_id,user_id,created_time,
-        updated_time
+        cart_id,user_id
     </sql>
+    <select id="queryByUserId" resultType="top.jilijili.shop.entity.vo.CartsVo">
+        select i.item_id,
+               i.product_id,
+               i.quantity,
+               i.subtotal,
+               i.created_time,
+               p.product_name,
+               p.description,
+               p.image_url,
+               p.price
+        from shop_carts c
+                 join shop_cart_items i on c.cart_id = i.cart_id
+                 left join shop_products p on i.product_id = p.product_id
+        where c.user_id = #{userId}
+    </select>
+
+
 </mapper>

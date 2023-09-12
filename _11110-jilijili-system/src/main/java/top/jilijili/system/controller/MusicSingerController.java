@@ -1,7 +1,6 @@
 package top.jilijili.system.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.servlet.http.HttpServletResponse;
@@ -65,14 +64,13 @@ public class MusicSingerController extends SuperController {
     public Result<IPage<MusicSingerVo>> selectAll(MusicSingerDto musicSingerDto) {
         Page<MusicSinger> page = new Page<MusicSinger>(musicSingerDto.getPage(), musicSingerDto.getSize());
         MusicSinger musicSinger = this.convertMapper.toSingerEntity(musicSingerDto);
-
-        LambdaQueryWrapper<MusicSinger> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper
+        IPage<MusicSingerVo> voIPage = this.musicSingerService.lambdaQuery()
                 .like(StringUtils.hasText(musicSinger.getName()), MusicSinger::getName, musicSinger.getName())
                 .eq(musicSinger.getStatus() != null, MusicSinger::getStatus, musicSinger.getStatus())
                 .like(StringUtils.hasText(musicSinger.getDesc()), MusicSinger::getDesc, musicSinger.getDesc())
-                .orderByDesc(MusicSinger::getCreatedTime);
-        return Result.ok(this.musicSingerService.page(page, lambdaQueryWrapper).convert(this.convertMapper::toSingerVo));
+                .orderByDesc(MusicSinger::getCreatedTime)
+                .page(page).convert(this.convertMapper::toSingerVo);
+        return Result.ok(voIPage);
     }
 
     /**
@@ -98,8 +96,9 @@ public class MusicSingerController extends SuperController {
             musicSinger.setDesc("暂无介绍");
         }
         boolean saved = this.musicSingerService.save(musicSinger);
-        if (saved) {
 
+        log.info("添加歌手信息:{},是否成功:{}", musicSinger, saved);
+        if (saved) {
             return Result.ok(musicSinger, "操作成功", saved);
         }
         return Result.fail("操作失败");
@@ -114,6 +113,7 @@ public class MusicSingerController extends SuperController {
     @PutMapping
     public Result<MusicSinger> update(@RequestBody MusicSinger musicSinger) {
         boolean updated = this.musicSingerService.updateById(musicSinger);
+        log.info("修改歌手信息:{},是否成功:{}", musicSinger, updated);
         if (updated) {
             return Result.ok(musicSinger, "操作成功", updated);
         }
@@ -129,6 +129,7 @@ public class MusicSingerController extends SuperController {
      */
     @DeleteMapping
     public Result<Boolean> delete(@RequestParam("idList") List<Long> idList) {
+        log.info("删除歌手:{}", idList.toString());
         return Result.ok(this.musicSingerService.removeByIds(idList));
     }
 

@@ -1,13 +1,14 @@
 package top.jilijili.shop.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 商品表
@@ -61,13 +62,13 @@ public class Products implements Serializable {
     /**
      * 创建时间
      */
-    @TableField(value = "created_time")
+    @TableField(value = "created_time",fill = FieldFill.INSERT)
     private Date createdTime;
 
     /**
      * 更新时间
      */
-    @TableField(value = "updated_time")
+    @TableField(value = "updated_time",fill = FieldFill.UPDATE)
     private Date updatedTime;
 
     @TableField(exist = false)

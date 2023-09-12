@@ -17,4 +17,11 @@
                 role_id, role_name, title, icon,
                 created_time, updated_time
     </sql>
+    <select id="queryMenuByRoleId" resultType="top.jilijili.system.entity.vo.SysMenuVo">
+        select m.*
+        from sys_role_menu srm
+                 join sys_menu m on m.menu_id = srm.menu_id
+        where srm.role_id = #{roleId};
+
+    </select>
 </mapper>

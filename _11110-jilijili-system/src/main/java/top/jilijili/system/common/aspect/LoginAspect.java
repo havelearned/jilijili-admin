@@ -2,12 +2,12 @@ package top.jilijili.system.common.aspect;
 
 import cn.hutool.json.JSONUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -25,10 +25,9 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Aspect
 @Component
-
+@AllArgsConstructor
 public class LoginAspect {
 
-    @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
     // 切入点
@@ -39,6 +38,7 @@ public class LoginAspect {
 
     /**
      * 登录接口限制
+     *
      * @param pjp
      * @return
      */
@@ -78,6 +78,4 @@ public class LoginAspect {
         }
         return result;
     }
-
-
 }

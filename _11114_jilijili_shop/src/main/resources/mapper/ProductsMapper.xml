@@ -5,8 +5,8 @@
 <mapper namespace="top.jilijili.shop.mapper.ProductsMapper">
 
     <resultMap id="BaseResultMap" type="top.jilijili.shop.entity.Products">
-            <id property="productId" column="product_id" jdbcType="INTEGER"/>
-            <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
+            <id property="productId" column="product_id" jdbcType="BIGINT"/>
+            <result property="categoryId" column="category_id" jdbcType="BIGINT"/>
             <result property="productName" column="product_name" jdbcType="VARCHAR"/>
             <result property="description" column="description" jdbcType="VARCHAR"/>
             <result property="price" column="price" jdbcType="DECIMAL"/>

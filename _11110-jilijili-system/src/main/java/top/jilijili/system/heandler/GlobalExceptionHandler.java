@@ -23,6 +23,13 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+    @ExceptionHandler(JiliException.class)
+    @ResponseBody
+    public Result<String> jiliException(JiliException e) {
+        log.info("{}", e.getMessage());
+        return Result.fail(e.getCode(), e.getMsg());
+    }
+
 
     @ExceptionHandler(NotRoleException.class)
     @ResponseBody

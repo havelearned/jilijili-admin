@@ -41,4 +41,19 @@ public class KeyConstants {
             SINGER_DATA_IMPORT_TEMPLATE,
             Album_DATA_IMPORT_TEMPLATE);
 
+
+    /*---------------------------------消息队列----------------------------------------------*/
+    /**
+     * 系统通知队列
+     */
+    public final static String SYS_NOTIFY_QUEUE = "sys_notify_queue";
+    /**
+     * 系统通知路由
+     */
+    public final static String SYS_ROUTER = "SYS_ROUTER";
+
+    /**
+     * 通知交换机
+     */
+    public final static String NOTIFY_EXCHANGE = "notify_exchange";
 }

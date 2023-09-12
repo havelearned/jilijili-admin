@@ -1,6 +1,8 @@
 server:
   port: 11114
 #  port: 8080
+  servlet:
+    context-path: /shop
 
 spring:
   application:

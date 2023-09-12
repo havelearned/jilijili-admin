@@ -8,9 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2023年08月25日 23:37
  */
 @SpringBootApplication
-public class JilijiliVideoApplication {
+public class JnilibVideoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(JilijiliVideoApplication.class, args);
+        SpringApplication.run(JnilibVideoApplication.class, args);
     }
 }

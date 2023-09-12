@@ -46,8 +46,8 @@ public class Category implements Serializable {
     /**
      * 排序
      */
-    @TableField(value = "order")
-    private Integer order;
+    @TableField(value = "category_order")
+    private Integer categoryOrder;
 
     /**
      * 创建时间

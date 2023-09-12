@@ -50,6 +50,47 @@
         ORDER BY ba.created_time DESC
             LIMIT #{page}, #{size};
     </select>
+    <select id="queryArticleByTagId" resultType="top.jilijili.blog.entity.vo.ArticleVo">
+        select ba.article_id,
+               ba.user_id,
+               ba.category_id,
+               ba.picture,
+               ba.title,
+               ba.content,
+               ba.view_count,
+               ba.comment_count,
+               ba.created_time,
+               ba.updated_time
+        from blog_tag_category_article btca
+                 join blog_article ba on ba.article_id = btca.article_id
+        where btca.tag_id = #{tagId}
+        order by ba.created_time desc
+        limit #{page},#{size};
+
+    </select>
+    <select id="queryArticleByCategoryId" resultType="top.jilijili.blog.entity.vo.ArticleVo">
+        select ba.article_id,
+               ba.user_id,
+               ba.category_id,
+               ba.picture,
+               ba.title,
+               ba.content,
+               ba.view_count,
+               ba.comment_count,
+               ba.created_time,
+               ba.updated_time
+        from blog_tag_category_article btca
+                 join blog_article ba on ba.article_id = btca.article_id
+        where btca.category_id = #{categoryId}
+        order by ba.created_time desc
+        limit #{page}, #{size}
+    </select>
+    <select id="queryTagsByArticleId" resultType="top.jilijili.blog.entity.vo.TagVo">
+        select t.*
+        from blog_tag_category_article btca
+                 join blog_tag t on btca.tag_id = t.tag_id
+        where btca.article_id = #{articleId};
+    </select>
 
 
 </mapper>

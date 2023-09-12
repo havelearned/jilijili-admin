@@ -12,11 +12,13 @@ import top.jilijili.blog.entity.Article;
 import top.jilijili.blog.entity.TagCategoryArticle;
 import top.jilijili.blog.entity.dto.ArticleDto;
 import top.jilijili.blog.entity.vo.ArticleVo;
+import top.jilijili.blog.entity.vo.TagVo;
 import top.jilijili.blog.mapper.ArticleMapper;
 import top.jilijili.blog.mapper.ConvertMapper;
 import top.jilijili.blog.service.ArticleService;
 import top.jilijili.blog.service.TagCategoryArticleService;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +37,21 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     private ConvertMapper convertMapper;
     private ArticleMapper articleMapper;
     private TagCategoryArticleService tagCategoryArticleService;
+
+    @Override
+    public List<ArticleVo> queryArticleByTagId(Serializable page, Serializable size, Serializable tagId) {
+        return this.articleMapper.queryArticleByTagId(page, size, tagId);
+    }
+
+    @Override
+    public List<ArticleVo> queryArticleByCategoryId(Serializable page, Serializable size, Serializable categoryId) {
+        return this.articleMapper.queryArticleByCategoryId(page, size, categoryId);
+    }
+
+    @Override
+    public List<TagVo> queryTagsByArticleId(Serializable articleId) {
+        return this.articleMapper.queryTagsByArticleId(articleId);
+    }
 
     @Override
     public Map<String, List<ArticleVo>> selectYearArticleMap(ArticleDto articleDto) {
@@ -59,6 +76,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         Article article = this.convertMapper.toArticle(articleDto);
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>(article);
         page = this.page(page, queryWrapper);
+        // TODO 返回前端 [1]分类内容 [2]标签列表
         return page.convert(this.convertMapper::toArticleVo);
     }
 
@@ -74,7 +92,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
                     .categoryId(Long.valueOf(articleDto.getCategoryId()))
                     .articleId(article.getArticleId()).build();
             boolean saved = this.tagCategoryArticleService.save(build);
-            if (saved && (saveBatchByTagCatgoryArticle(articleDto, article))) {
+            if (saved && (saveBatchByTagCategoryArticle(articleDto, article))) {
                 return this.convertMapper.toArticleVo(article);
             }
 
@@ -100,7 +118,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
             this.tagCategoryArticleService.save(build);
 
             // 保存关联的标签
-            if (saveBatchByTagCatgoryArticle(articleDto, article)) {
+            if (saveBatchByTagCategoryArticle(articleDto, article)) {
                 return this.convertMapper.toArticleVo(article);
             }
 
@@ -126,7 +144,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
      * @param article
      * @return 保存成功?
      */
-    private boolean saveBatchByTagCatgoryArticle(ArticleDto articleDto, Article article) {
+    private boolean saveBatchByTagCategoryArticle(ArticleDto articleDto, Article article) {
         List<TagCategoryArticle> list = articleDto.getTagId().stream().map(tagId ->
                 new TagCategoryArticle()
                         .setArticleId(article.getArticleId())
