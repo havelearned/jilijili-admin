@@ -2,14 +2,14 @@ package top.jilijili.shop.mapper;
 
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
-import top.jilijili.shop.entity.CartItems;
-import top.jilijili.shop.entity.Orders;
-import top.jilijili.shop.entity.Products;
-import top.jilijili.shop.entity.dto.OrdersDto;
-import top.jilijili.shop.entity.dto.ProductsDto;
-import top.jilijili.shop.entity.vo.CartsVo;
-import top.jilijili.shop.entity.vo.OrdersVo;
-import top.jilijili.shop.entity.vo.ProductsVo;
+import top.jilijili.module.entity.CartItems;
+import top.jilijili.module.entity.Orders;
+import top.jilijili.module.entity.Products;
+import top.jilijili.module.entity.dto.OrdersDto;
+import top.jilijili.module.entity.dto.ProductsDto;
+import top.jilijili.module.entity.vo.CartsVo;
+import top.jilijili.module.entity.vo.OrdersVo;
+import top.jilijili.module.entity.vo.ProductsVo;
 
 /**
  * @author Amani

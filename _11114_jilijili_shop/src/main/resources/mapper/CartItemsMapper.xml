@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.shop.mapper.CartItemsMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.shop.entity.CartItems">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.CartItems">
             <id property="itemId" column="item_id" jdbcType="BIGINT"/>
             <result property="cartId" column="cart_id" jdbcType="BIGINT"/>
             <result property="productId" column="product_id" jdbcType="BIGINT"/>

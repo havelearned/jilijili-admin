@@ -6,12 +6,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import top.jilijili.shop.entity.Products;
-import top.jilijili.shop.entity.dto.ProductsDto;
-import top.jilijili.shop.entity.vo.ProductsVo;
+import top.jilijili.module.entity.Products;
+import top.jilijili.module.entity.dto.ProductsDto;
+import top.jilijili.module.entity.vo.ProductsEChartsVo;
+import top.jilijili.module.entity.vo.ProductsVo;
 import top.jilijili.shop.mapper.ConvertMapper;
 import top.jilijili.shop.mapper.ProductsMapper;
 import top.jilijili.shop.service.ProductsService;
+
+import java.util.*;
 
 /**
  * @author admin
@@ -45,6 +48,31 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
                 .orderByDesc(Products::getCreatedTime)
                 .page(iPage);
         return iPage.convert(this.convertMapper::toProductsVo);
+    }
+
+    @Override
+    public Map<String, Object> queryProductsTodayInfo(ProductsDto productsDto) {
+        // 查询今日上架商品数量
+        Integer todayData = this.productsMapper.queryProductsByToDayData();
+
+        // 查询总上架商品数量
+        Long count = this.lambdaQuery().count();
+
+        // 默认查询7天商品数据
+        List<ProductsEChartsVo> productsEChartsVos;
+        if (productsDto.getCreatedTime() == null) {
+            Calendar instance = Calendar.getInstance();
+            instance.add(Calendar.DAY_OF_YEAR, -7);
+            productsDto.setCreatedTime(instance.getTime());
+            productsDto.setComparisonTime(new Date());
+        }
+        productsEChartsVos = this.productsMapper.queryProductsByDateData(productsDto);
+
+        HashMap<String, Object> resultMap = new HashMap<>(3);
+        resultMap.put("todayData", todayData);
+        resultMap.put("eCharts", productsEChartsVos);
+        resultMap.put("count", count);
+        return resultMap;
     }
 }
 

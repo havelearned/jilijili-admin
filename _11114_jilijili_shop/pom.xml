@@ -19,12 +19,18 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>wang.jilijili</groupId>
-            <artifactId>jilijili-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
 
+        <dependency>
+            <groupId>top.jilijili.module</groupId>
+            <artifactId>jilijili-management-module</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,7 +46,27 @@
             <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- 指定该Main Class为全局的唯一入口 -->
+                    <mainClass>top.jilijili.shop.JnilibShopApplication</mainClass>
+                    <layout>ZIP</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!--可以把依赖的包都打包到生成的Jar包中-->
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

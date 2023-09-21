@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.blog.mapper.TagCategoryArticleMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.blog.entity.TagCategoryArticle">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.TagCategoryArticle">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="articleId" column="article_id" jdbcType="BIGINT"/>
             <result property="categoryId" column="category_id" jdbcType="BIGINT"/>

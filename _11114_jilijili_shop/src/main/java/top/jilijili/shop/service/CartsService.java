@@ -1,8 +1,8 @@
 package top.jilijili.shop.service;
 
-import top.jilijili.shop.entity.Carts;
+import top.jilijili.module.entity.Carts;
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.jilijili.shop.entity.vo.CartsVo;
+import top.jilijili.module.entity.vo.CartsVo;
 
 import java.io.Serializable;
 import java.util.List;

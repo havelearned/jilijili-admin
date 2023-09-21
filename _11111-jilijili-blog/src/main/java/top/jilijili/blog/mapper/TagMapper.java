@@ -1,8 +1,8 @@
 package top.jilijili.blog.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import top.jilijili.blog.entity.Tag;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import top.jilijili.module.entity.Tag;
 
 /**
 * @author admin

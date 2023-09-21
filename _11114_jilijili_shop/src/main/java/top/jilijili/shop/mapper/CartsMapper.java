@@ -3,8 +3,8 @@ package top.jilijili.shop.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import top.jilijili.shop.entity.Carts;
-import top.jilijili.shop.entity.vo.CartsVo;
+import top.jilijili.module.entity.Carts;
+import top.jilijili.module.entity.vo.CartsVo;
 
 import java.io.Serializable;
 import java.util.List;

@@ -8,15 +8,20 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import top.jilijili.blog.entity.Article;
-import top.jilijili.blog.entity.TagCategoryArticle;
-import top.jilijili.blog.entity.dto.ArticleDto;
-import top.jilijili.blog.entity.vo.ArticleVo;
-import top.jilijili.blog.entity.vo.TagVo;
+import org.springframework.util.StringUtils;
 import top.jilijili.blog.mapper.ArticleMapper;
+import top.jilijili.blog.mapper.CategoryMapper;
 import top.jilijili.blog.mapper.ConvertMapper;
+import top.jilijili.blog.mapper.TagMapper;
 import top.jilijili.blog.service.ArticleService;
 import top.jilijili.blog.service.TagCategoryArticleService;
+import top.jilijili.common.entity.Item;
+import top.jilijili.module.entity.Article;
+import top.jilijili.module.entity.Tag;
+import top.jilijili.module.entity.TagCategoryArticle;
+import top.jilijili.module.entity.dto.ArticleDto;
+import top.jilijili.module.entity.vo.ArticleVo;
+import top.jilijili.module.entity.vo.TagVo;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -31,12 +36,13 @@ import java.util.Map;
  */
 @Service
 @AllArgsConstructor
-public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
-        implements ArticleService {
+public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
     private ConvertMapper convertMapper;
     private ArticleMapper articleMapper;
     private TagCategoryArticleService tagCategoryArticleService;
+    private CategoryMapper categoryMapper;
+    private TagMapper tagMapper;
 
     @Override
     public List<ArticleVo> queryArticleByTagId(Serializable page, Serializable size, Serializable tagId) {
@@ -73,11 +79,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     @Override
     public IPage<ArticleVo> pageList(ArticleDto articleDto) {
         IPage<Article> page = new Page<>(articleDto.getPage(), articleDto.getSize());
-        Article article = this.convertMapper.toArticle(articleDto);
-        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>(article);
-        page = this.page(page, queryWrapper);
-        // TODO 返回前端 [1]分类内容 [2]标签列表
-        return page.convert(this.convertMapper::toArticleVo);
+        return this.lambdaQuery()
+                .like(StringUtils.hasText(articleDto.getTitle()), Article::getTitle, articleDto.getTitle())
+                .page(page)
+                .convert(this.convertMapper::toArticleVo);
+
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
@@ -111,10 +117,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
             queryWrapper.eq(TagCategoryArticle::getArticleId, article.getArticleId());
             this.tagCategoryArticleService.remove(queryWrapper);
 
-            TagCategoryArticle build = TagCategoryArticle.builder()
-                    .articleId(article.getArticleId())
-                    .tagId(null)
-                    .categoryId(Long.valueOf(articleDto.getCategoryId())).build();
+            TagCategoryArticle build = TagCategoryArticle.builder().articleId(article.getArticleId()).tagId(null).categoryId(Long.valueOf(articleDto.getCategoryId())).build();
             this.tagCategoryArticleService.save(build);
 
             // 保存关联的标签
@@ -131,10 +134,32 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     public Boolean removeByArticle(List<Long> idList) {
         boolean removed = this.removeByIds(idList);
         if (removed) {
-            this.tagCategoryArticleService.remove(new LambdaQueryWrapper<TagCategoryArticle>()
-                    .in(TagCategoryArticle::getArticleId, idList));
+            this.tagCategoryArticleService.remove(new LambdaQueryWrapper<TagCategoryArticle>().in(TagCategoryArticle::getArticleId, idList));
         }
         return removed;
+    }
+
+    @Override
+    public ArticleVo queryArticleById(Serializable id) {
+        ArticleVo articleVo = this.convertMapper.toArticleVo(this.getById(id));
+
+        // 更新访问量+1
+        this.lambdaUpdate()
+                .set(Article::getViewCount, articleVo.getViewCount() + 1)
+                .eq(Article::getArticleId, id)
+                .update();
+
+        // 查询标签
+        List<Long> tagIds = this.tagCategoryArticleService.lambdaQuery()
+                .eq(TagCategoryArticle::getArticleId, articleVo.getArticleId())
+                .list().stream().map(TagCategoryArticle::getTagId).toList();
+        List<Tag> tags = this.tagMapper.selectBatchIds(tagIds);
+        articleVo.setTagId(tags.stream()
+                .map(tag -> new Item()
+                        .setLabel(tag.getTagTitle())
+                        .setValue(String.valueOf(tag.getTagId()))).toList());
+
+        return articleVo;
     }
 
     /**
@@ -145,11 +170,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
      * @return 保存成功?
      */
     private boolean saveBatchByTagCategoryArticle(ArticleDto articleDto, Article article) {
-        List<TagCategoryArticle> list = articleDto.getTagId().stream().map(tagId ->
-                new TagCategoryArticle()
-                        .setArticleId(article.getArticleId())
-                        .setCategoryId(null)
-                        .setTagId(Long.valueOf(tagId))).toList();
+        List<TagCategoryArticle> list = articleDto.getTagId().stream()
+                .map(tagId -> TagCategoryArticle.builder()
+                        .articleId(article.getArticleId())
+                        .categoryId(null)
+                        .tagId(Long.valueOf(tagId.getValue()))
+                        .build())
+                .toList();
         return this.tagCategoryArticleService.saveBatch(list);
     }
 }

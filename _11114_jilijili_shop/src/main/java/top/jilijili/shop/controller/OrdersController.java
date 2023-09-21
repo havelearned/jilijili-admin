@@ -1,18 +1,21 @@
 package top.jilijili.shop.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 import top.jilijili.common.entity.Result;
-import top.jilijili.shop.entity.Orders;
-import top.jilijili.shop.entity.dto.OrdersDto;
-import top.jilijili.shop.entity.vo.OrdersVo;
+import top.jilijili.module.entity.Orders;
+import top.jilijili.module.entity.dto.OrdersDto;
+import top.jilijili.module.entity.vo.OrdersVo;
 import top.jilijili.shop.mapper.ConvertMapper;
 import top.jilijili.shop.service.OrdersService;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -26,6 +29,20 @@ public class OrdersController {
     private final ConvertMapper convertMapper;
 
     /*---------------------------订单------------------------------*/
+
+    /**
+     * * # 总订单量:完成,未完成,过期
+     * * # 获取指定时间内的总订单量:完成,未完成,过期
+     * * # 订单今日数量:完成 未完成 过期
+     *
+     * @param ordersDto
+     * @return
+     */
+    @GetMapping("/orderToDayInfo")
+    public Mono<Result<Map<String, Object>>> orderToDayInfo(OrdersDto ordersDto) {
+        return Mono.just(Result.ok(this.ordersService.queryOrdersTodayData(ordersDto)));
+    }
+
     /**
      * 通过id查询订单信息
      *
@@ -44,7 +61,7 @@ public class OrdersController {
      * @return
      */
     @GetMapping("/user/{userId}")
-    public Mono<Result<?>> getOrdersByUserId(OrdersDto ordersDto) {
+    public Mono<Result<IPage<OrdersVo>>> getOrdersByUserId(OrdersDto ordersDto) {
         return Mono.just(Result.ok(this.ordersService.lambdaQuery()
                 .eq(!Objects.isNull(ordersDto.getUserId()), Orders::getUserId, ordersDto.getUserId())
                 .page(new Page<>(ordersDto.getPage(), ordersDto.getSize()))
@@ -84,8 +101,10 @@ public class OrdersController {
      * @return
      */
     @DeleteMapping
-    public Mono<Result<Void>> deleteOrder(@RequestParam("idList") List<Serializable> idList) {
-        boolean success = ordersService.removeBatchByIds(idList);
-        return Mono.just(success ? Result.ok(null) : Result.fail("操作失败"));
+    public Mono<Result<Object>> deleteOrder(List<Serializable> idList) {
+        return Mono.fromCallable(() -> {
+            boolean success = ordersService.removeBatchByIds(idList);
+            return success ? Result.ok(null) : Result.fail("操作失败");
+        }).subscribeOn(Schedulers.boundedElastic());
     }
 }

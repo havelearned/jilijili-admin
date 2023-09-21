@@ -1,16 +1,23 @@
 package top.jilijili.blog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import top.jilijili.blog.entity.Comment;
-import top.jilijili.blog.entity.dto.CommentDto;
-import top.jilijili.blog.entity.vo.CommentVo;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import top.jilijili.blog.mapper.CommentMapper;
 import top.jilijili.blog.mapper.ConvertMapper;
+import top.jilijili.blog.service.ArticleService;
 import top.jilijili.blog.service.CommentService;
+import top.jilijili.common.heandler.JiliException;
+import top.jilijili.module.entity.Article;
+import top.jilijili.module.entity.Comment;
+import top.jilijili.module.entity.dto.CommentDto;
+import top.jilijili.module.entity.vo.CommentVo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,17 +31,43 @@ import java.util.stream.Collectors;
  */
 @Service
 @AllArgsConstructor
-public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
-        implements CommentService {
+public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
     private ConvertMapper convertMapper;
     private CommentMapper commentMapper;
+    private ArticleService articleService;
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public CommentVo saveComment(CommentDto commentDto) {
+        Comment comment = this.convertMapper.toComment(commentDto);
+        boolean save = this.save(comment);
+        Article article = this.articleService.getById(commentDto.getArticleId());
+        if (save) {
+            try {
+                this.articleService.lambdaUpdate().set(Article::getCommentCount, article.getCommentCount() + 1).eq(Article::getArticleId, article.getArticleId());
+            } catch (Exception e) {
+                throw new JiliException("评论数量更新失败");
+            }
+        }
+        return this.convertMapper.toCommentVo(comment);
+    }
+
+    @Override
+    public IPage<CommentVo> queryCommentAll(CommentDto commentDto) {
+        IPage<Comment> commentVoPage = new Page<>(commentDto.getPage(), commentDto.getSize());
+        QueryWrapper<Comment> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .like(StringUtils.hasText(commentDto.getContent()), "c.content", commentDto.getContent())
+                .eq(commentDto.getCommentStatus() != null, "c.comment_status", commentDto.getCommentStatus())
+                .orderByDesc("created_time");
+        return this.commentMapper.queryCommentAntUserAll(commentVoPage, queryWrapper);
+    }
 
     @Override
     public IPage<CommentVo> pageList(CommentDto commentDto) {
         IPage<CommentVo> convert = new Page<>(commentDto.getPage(), commentDto.getSize());
-
-        List<CommentVo> commentVoList = this.commentMapper.queryCommentAntUserByCommentId(commentDto.getArticleId(), commentDto.getPage(), commentDto.getSize());
-
+        List<CommentVo> commentVoList = this.commentMapper
+                .queryCommentAntUserByCommentId(commentDto.getArticleId(), commentDto.getPage(), commentDto.getSize());
         // 得到最顶级评论
         List<CommentVo> root = getRootList(commentVoList, "0");
 
@@ -58,7 +91,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      * @return
      */
     public List<CommentVo> getRootList(List<CommentVo> list, String rootFlag) {
-        return list.stream().filter(item -> Objects.equals(item.getChildId(), rootFlag)).collect(Collectors.toList());
+        return list.stream().filter(item -> item != null && (item.getChildId().equals(rootFlag)))
+                .collect(Collectors.toList());
     }
 
     public List<CommentVo> getChildList(String commentId, List<CommentVo> data) {

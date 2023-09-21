@@ -80,7 +80,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
     @Override
     public Result<?> login(SysUserDto sysUserDto) {
         SysUser sysUserEntity = this.convertMapper.toSysUserEnetity(sysUserDto);
-        // todo 验证 验证码
+        // TODO 验证 验证码
         String token;
         SysUser currentUser = this.lambdaQuery()
                 .eq(SysUser::getUsername, sysUserEntity.getUsername()).one();

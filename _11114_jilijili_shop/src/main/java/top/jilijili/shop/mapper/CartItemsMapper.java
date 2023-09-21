@@ -1,7 +1,7 @@
 package top.jilijili.shop.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import top.jilijili.shop.entity.CartItems;
+import top.jilijili.module.entity.CartItems;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

@@ -3,10 +3,10 @@ package top.jilijili.blog.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.ibatis.annotations.Param;
-import top.jilijili.blog.entity.Article;
-import top.jilijili.blog.entity.dto.ArticleDto;
-import top.jilijili.blog.entity.vo.ArticleVo;
-import top.jilijili.blog.entity.vo.TagVo;
+import top.jilijili.module.entity.Article;
+import top.jilijili.module.entity.dto.ArticleDto;
+import top.jilijili.module.entity.vo.ArticleVo;
+import top.jilijili.module.entity.vo.TagVo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -43,6 +43,7 @@ public interface ArticleService extends IService<Article> {
 
     /**
      * 通过文章id查询该文章下的所有标签
+     *
      * @param articleId
      * @return
      */
@@ -87,4 +88,11 @@ public interface ArticleService extends IService<Article> {
      * @return
      */
     Boolean removeByArticle(List<Long> idList);
+
+    /**
+     * 通过文章id查询文章信息
+     *
+     * @return
+     */
+    ArticleVo queryArticleById(Serializable Id);
 }

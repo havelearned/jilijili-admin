@@ -81,7 +81,10 @@ spring:
     username: admin_A
     password: admin_A
     addresses: 8.130.75.158:5672
-
+  boot:
+    admin:
+      client:
+        url: http://localhost:9092
 
 mybatis-plus:
   mapperLocations: classpath*:mapper/*Mapper.xml

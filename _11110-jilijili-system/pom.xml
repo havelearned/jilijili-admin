@@ -33,6 +33,12 @@
     </repositories>
 
     <dependencies>
+        <!--spring boot admin 客户端依赖-->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+        </dependency>
+
         <!--消息队列-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

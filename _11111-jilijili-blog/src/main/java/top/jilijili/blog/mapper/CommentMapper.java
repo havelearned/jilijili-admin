@@ -1,9 +1,13 @@
 package top.jilijili.blog.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import org.apache.ibatis.annotations.Mapper;
-import top.jilijili.blog.entity.Comment;
-import top.jilijili.blog.entity.vo.CommentVo;
+import org.apache.ibatis.annotations.Param;
+import top.jilijili.module.entity.Comment;
+import top.jilijili.module.entity.vo.CommentVo;
 
 import java.util.List;
 
@@ -17,8 +21,11 @@ import java.util.List;
 public interface CommentMapper extends BaseMapper<Comment> {
 
 
-
     List<CommentVo> queryCommentAntUserByCommentId(Long articleId, Integer page, Integer size);
+
+
+    IPage<CommentVo> queryCommentAntUserAll(@Param("page") IPage<Comment> page,
+                                            @Param(Constants.WRAPPER) QueryWrapper<Comment> ew);
 }
 
 

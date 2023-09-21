@@ -3,18 +3,18 @@ package top.jilijili.blog.mapper;
 
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
-import top.jilijili.blog.entity.Article;
-import top.jilijili.blog.entity.Category;
-import top.jilijili.blog.entity.Comment;
-import top.jilijili.blog.entity.Tag;
-import top.jilijili.blog.entity.dto.ArticleDto;
-import top.jilijili.blog.entity.dto.CategoryDto;
-import top.jilijili.blog.entity.dto.CommentDto;
-import top.jilijili.blog.entity.dto.TagDto;
-import top.jilijili.blog.entity.vo.ArticleVo;
-import top.jilijili.blog.entity.vo.CategoryVo;
-import top.jilijili.blog.entity.vo.CommentVo;
-import top.jilijili.blog.entity.vo.TagVo;
+import top.jilijili.module.entity.Article;
+import top.jilijili.module.entity.Category;
+import top.jilijili.module.entity.Comment;
+import top.jilijili.module.entity.Tag;
+import top.jilijili.module.entity.dto.ArticleDto;
+import top.jilijili.module.entity.dto.CategoryDto;
+import top.jilijili.module.entity.dto.CommentDto;
+import top.jilijili.module.entity.dto.TagDto;
+import top.jilijili.module.entity.vo.ArticleVo;
+import top.jilijili.module.entity.vo.CategoryVo;
+import top.jilijili.module.entity.vo.CommentVo;
+import top.jilijili.module.entity.vo.TagVo;
 
 /**
  * @author Amani

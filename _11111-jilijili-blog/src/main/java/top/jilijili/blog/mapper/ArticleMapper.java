@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import top.jilijili.blog.entity.Article;
-import top.jilijili.blog.entity.vo.ArticleVo;
-import top.jilijili.blog.entity.vo.TagVo;
+import top.jilijili.module.entity.Article;
+import top.jilijili.module.entity.vo.ArticleVo;
+import top.jilijili.module.entity.vo.TagVo;
 
 import java.io.Serializable;
 import java.util.List;

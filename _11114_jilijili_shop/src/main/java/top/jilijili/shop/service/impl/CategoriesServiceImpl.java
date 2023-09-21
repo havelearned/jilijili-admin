@@ -1,7 +1,7 @@
 package top.jilijili.shop.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import top.jilijili.shop.entity.Categories;
+import top.jilijili.module.entity.Categories;
 import top.jilijili.shop.service.CategoriesService;
 import top.jilijili.shop.mapper.CategoriesMapper;
 import org.springframework.stereotype.Service;

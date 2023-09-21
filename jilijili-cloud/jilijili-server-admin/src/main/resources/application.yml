@@ -1,0 +1,23 @@
+# tomcat configuration
+server:
+  port: 9092
+  servlet :
+    context-path:
+
+
+# log level
+logging.level:
+  root: WARN
+  org.springframework: DEBUG
+  org.apache.coyote.http11.Http11InputBuffer: DEBUG
+  sample.mybatis.mapper: DEBUG
+  org.apache.ibatis: DEBUG
+spring:
+  application:
+    name: jilijili-server-admin
+management:
+  endpoints:
+    web:
+      exposure:
+        include: *
+

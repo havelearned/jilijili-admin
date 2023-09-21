@@ -69,6 +69,7 @@ public class SysMenuController extends SuperController {
 
     /**
      * 角色重新绑定菜单
+     *
      * @param sysRoleMenuDto
      * @return
      */
@@ -117,7 +118,7 @@ public class SysMenuController extends SuperController {
      * @return 删除结果
      */
     @DeleteMapping
-    public Result<?> delete(@RequestParam("idList") List<Long> idList) {
+    public Result<?> delete(@RequestBody List<Serializable> idList) {
         return Result.ok(this.sysMenuService.removeByIds(idList));
     }
 }

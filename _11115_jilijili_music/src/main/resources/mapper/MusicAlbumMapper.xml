@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wang.jilijili.musics.mapper.MusicAlbumMapper">
+
+    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.MusicAlbum">
+            <id property="albumId" column="album_id" jdbcType="BIGINT"/>
+            <result property="albumName" column="album_name" jdbcType="VARCHAR"/>
+            <result property="desc" column="desc" jdbcType="VARCHAR"/>
+            <result property="albumCover" column="album_cover" jdbcType="VARCHAR"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="AlbumVoAndSingerVo" type="top.jilijili.module.entity.vo.MusicAlbumVo">
+        <id property="albumId" column="album_id" jdbcType="BIGINT"/>
+        <result property="albumName" column="album_name" jdbcType="VARCHAR"/>
+        <result property="desc" column="desc" jdbcType="VARCHAR"/>
+        <result property="albumCover" column="album_cover" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        <collection property="singerList" ofType="top.jilijili.module.entity.vo.MusicSingerVo">
+            <id property="singerId" column="singer_id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="desc" column="desc" jdbcType="VARCHAR"/>
+            <result property="photo" column="photo" jdbcType="VARCHAR"/>
+            <result property="type" column="type" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="CHAR"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        album_id,album_name,desc,
+        album_cover,created_time,updated_time
+    </sql>
+
+    <select id="queryAlbumAndSingerPage" resultMap="AlbumVoAndSingerVo">
+        select distinct ma.album_id, ma.album_name, ma.desc, ma.album_cover,ma.created_time, ma.updated_time,
+                        ms.singer_id, ms.name, ms.desc as 'singerDesc', ms.type, ms.photo, ms.status
+        from music_album_singer mas
+                 left join music_album ma on mas.album_id = ma.album_id
+                 left join music_singer ms on mas.singer_id = ms.singer_id
+            ${ew.customSqlSegment}
+    </select>
+
+</mapper>

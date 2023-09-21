@@ -20,6 +20,12 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
     <dependencies>
+        <!--spring boot admin 客户端依赖-->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+        </dependency>
+
         <!--数据源-->
         <dependency>
             <groupId>com.alibaba</groupId>

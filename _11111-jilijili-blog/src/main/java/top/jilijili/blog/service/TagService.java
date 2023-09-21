@@ -1,6 +1,6 @@
 package top.jilijili.blog.service;
 
-import top.jilijili.blog.entity.Tag;
+import top.jilijili.module.entity.Tag;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

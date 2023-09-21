@@ -4,12 +4,11 @@ package top.jilijili.blog.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import top.jilijili.blog.entity.Article;
-import top.jilijili.blog.entity.dto.ArticleDto;
-import top.jilijili.blog.entity.dto.CategoryDto;
-import top.jilijili.blog.entity.dto.TagDto;
-import top.jilijili.blog.entity.vo.ArticleVo;
-import top.jilijili.blog.entity.vo.TagVo;
+import top.jilijili.module.entity.dto.ArticleDto;
+import top.jilijili.module.entity.dto.CategoryDto;
+import top.jilijili.module.entity.dto.TagDto;
+import top.jilijili.module.entity.vo.ArticleVo;
+import top.jilijili.module.entity.vo.TagVo;
 import top.jilijili.blog.mapper.ConvertMapper;
 import top.jilijili.blog.service.ArticleService;
 import top.jilijili.blog.service.TagCategoryArticleService;
@@ -108,8 +107,7 @@ public class BlogArticleController extends SuperController {
      */
     @GetMapping("{id}")
     public Result<ArticleVo> selectOne(@PathVariable Serializable id) {
-        Article byId = this.articleService.getById(id);
-        ArticleVo articleVo = this.convertMapper.toArticleVo(byId);
+        ArticleVo articleVo = this.articleService.queryArticleById(id);
         return Result.ok(articleVo);
     }
 

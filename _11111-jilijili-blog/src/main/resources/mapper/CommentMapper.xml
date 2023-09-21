@@ -4,19 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.blog.mapper.CommentMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.blog.entity.Comment">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.Comment">
         <id property="commentId" column="comment_id" jdbcType="BIGINT"/>
         <result property="childId" column="child_id" jdbcType="BIGINT"/>
         <result property="articleId" column="article_id" jdbcType="BIGINT"/>
         <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="commentStatus" column="comment_status" jdbcType="TINYINT"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
         <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <resultMap id="queryCommentAntUserByCommentIdMap" type="top.jilijili.blog.entity.vo.CommentVo">
+    <resultMap id="queryCommentAntUserByCommentIdMap" type="top.jilijili.module.entity.vo.CommentVo">
         <id property="commentId" column="comment_id" jdbcType="BIGINT"/>
         <result property="childId" column="child_id" jdbcType="BIGINT"/>
+        <result property="commentStatus" column="comment_status" jdbcType="TINYINT"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
         <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
@@ -33,10 +35,32 @@
                 user_id, content, created_time,
                 updated_time
     </sql>
-    <select id="queryCommentAntUserByCommentId" resultType="top.jilijili.blog.entity.vo.CommentVo">
+
+    <select id="queryCommentAntUserAll" resultType="top.jilijili.module.entity.vo.CommentVo">
         select c.comment_id,
                c.child_id,
                c.article_id,
+               c.comment_status,
+               c.content,
+               c.created_time,
+               c.updated_time,
+               u.user_id,
+               u.nickname,
+               u.avatar,
+               u.gender,
+               u.last_login_ip
+        from sys_user u
+                 inner join blog_comment c on u.user_id = c.user_id
+                 left join blog_article a  on a.article_id =c.article_id
+            ${ew.customSqlSegment}
+
+    </select>
+
+    <select id="queryCommentAntUserByCommentId" resultType="top.jilijili.module.entity.vo.CommentVo">
+        select c.comment_id,
+               c.child_id,
+               c.article_id,
+               c.comment_status,
                c.content,
                c.created_time,
                c.updated_time,
@@ -48,7 +72,8 @@
         from blog_article a
                  left join blog_comment c on c.article_id = a.article_id
                  left join sys_user u on u.user_id = c.user_id
-        where a.article_id = ${articleId} limit ${page}, ${size};
+        where a.article_id = ${articleId} limit ${page}
+            , ${size};
     </select>
 
 

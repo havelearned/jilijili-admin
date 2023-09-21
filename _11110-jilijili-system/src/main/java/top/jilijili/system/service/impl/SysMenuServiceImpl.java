@@ -74,27 +74,22 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
         } catch (JiliException e) {
             log.error(e.getMessage());
         }
-
         return false;
-
     }
 
     @Override
     public IPage<SysMenuVo> selectAll(SysMenuDto sysMenuDto) {
-        IPage<SysMenu> page = new Page<>(sysMenuDto.getPage(), sysMenuDto.getSize());
-        SysMenu sysMenu = this.convertMapper.toSysMenuEntity(sysMenuDto);
+        IPage<SysMenu> page = new Page<>(sysMenuDto.getPage(), 1000);
         IPage<SysMenuVo> voIPage = this.lambdaQuery()
-                .like(StringUtils.hasText(sysMenu.getMenuName()), SysMenu::getMenuName, sysMenu.getMenuName())
+                .like(StringUtils.hasText(sysMenuDto.getMenuName()), SysMenu::getMenuName, sysMenuDto.getMenuName())
                 .orderBy(true, false, SysMenu::getCreatedTime)
                 .page(page).convert(this.convertMapper::toSysMenuVo);
-        List<SysMenuVo> records = voIPage.getRecords();
-
         // 带参数查询直接返回,搜索到的内容
         if (StringUtils.hasText(sysMenuDto.getMenuName())) {
             return voIPage;
         }
-
         // 得到最顶层菜单
+        List<SysMenuVo> records = voIPage.getRecords();
         List<SysMenuVo> parentList = records.stream()
                 .filter(item -> Objects.equals(item.getParentId(), "0"))
                 .sorted(Comparator.comparing(SysMenuVo::getOrderNum))

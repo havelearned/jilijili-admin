@@ -5,17 +5,18 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import top.jilijili.blog.entity.Comment;
-import top.jilijili.blog.entity.dto.CommentDto;
-import top.jilijili.blog.entity.vo.CommentVo;
 import top.jilijili.blog.mapper.ConvertMapper;
 import top.jilijili.blog.service.CommentService;
 import top.jilijili.common.control.SuperController;
 import top.jilijili.common.entity.Result;
 import top.jilijili.common.group.Query;
+import top.jilijili.module.entity.Comment;
+import top.jilijili.module.entity.dto.CommentDto;
+import top.jilijili.module.entity.vo.CommentVo;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 文章评论管理
@@ -42,8 +43,19 @@ public class BlogCommentController extends SuperController {
      * @return 所有数据
      */
     @GetMapping("/list")
-    public Result<IPage<CommentVo>> selectAll(@Validated(Query.class) CommentDto commentDto) {
+    public Result<IPage<CommentVo>> selectAll(CommentDto commentDto) {
+        IPage<CommentVo> commentAll = this.commentService.queryCommentAll(commentDto);
+        return Result.ok(commentAll);
+    }
 
+    /**
+     * 分页查询所有数据
+     *
+     * @param commentDto 查询实体
+     * @return 所有数据
+     */
+    @GetMapping("/listByArticleId")
+    public Result<IPage<CommentVo>> selectListByArticleId(@Validated(Query.class) CommentDto commentDto) {
         IPage<CommentVo> convert = this.commentService.pageList(commentDto);
         return Result.ok(convert);
     }
@@ -67,10 +79,9 @@ public class BlogCommentController extends SuperController {
      */
     @PostMapping
     public Result<CommentVo> insert(@RequestBody CommentDto commentDto) {
-        Comment comment = this.convertMapper.toComment(commentDto);
-        boolean save = this.commentService.save(comment);
-        if (save) {
-            return Result.ok(this.convertMapper.toCommentVo(comment), "操作成功");
+        CommentVo commentVo = this.commentService.saveComment(commentDto);
+        if (!Objects.isNull(commentVo)) {
+            return Result.ok(commentVo, "操作成功");
         }
         return Result.fail("操作失败");
     }
@@ -98,7 +109,7 @@ public class BlogCommentController extends SuperController {
      * @return 删除结果
      */
     @DeleteMapping
-    public Result<Boolean> delete(@RequestParam("idList") List<Long> idList) {
+    public Result<Boolean> delete(@RequestBody List<Long> idList) {
         return Result.ok(this.commentService.removeByIds(idList));
     }
 }
