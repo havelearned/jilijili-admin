@@ -30,7 +30,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author admin
@@ -91,7 +90,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
             log.info("用户=>{}-{}-{}登录", currentUser.getUsername(), currentUser.getUserId(), currentUser.getUserType());
             return Result.ok(token);
         }
-        return Result.fail(200, "登录失败!账号或者密码错误!!!");
+        return Result.fail(200, "账号或者密码错误!!!");
     }
 
     @Override
@@ -109,7 +108,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
             // 收集RoleId, 映射构建SysUserRole对象,最后转list批量添加
             List<SysUserRole> roleList = ownedItems.stream().map(SysRoleDto::getRoleId)
                     .map(roleId -> SysUserRole.builder().userId(userId).roleId(roleId).build())
-                    .collect(Collectors.toList());
+                    .toList();
             return this.sysUserRoleService.saveBatch(roleList);
         }
         return false;

@@ -1,70 +1,58 @@
-package top.jilijili.system.entity;
+package top.jilijili.system.entity.dto;
 
-import com.baomidou.mybatisplus.annotation.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
+import top.jilijili.system.service.group.Query;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 文件管理表
- *
- * @TableName file_management
+ * @author Amani
+ * @date 2023年09月28日 9:07
  */
-@TableName(value = "file_management")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
 @Accessors(chain = true)
-public final class FileManagement implements Serializable {
+public class FileManagementDto extends SuperDto {
     /**
      *
      */
-    @TableId(value = "file_id")
     private Long fileId;
 
     /**
      * 文件名称
      */
-    @TableField(value = "file_name")
     private String fileName;
 
     /**
      * 文件路径
      */
-    @TableField(value = "file_path")
+    @Pattern(regexp = "^.*/$", message = "文件路径格式不正确", groups = Query.class)
     private String filePath;
 
     /**
      * 文件类型id
      */
-    @TableField(value = "file_type")
     private String fileType;
 
     /**
      *
      */
-    @TableField(value = "updated_time", fill = FieldFill.UPDATE)
     private Date updatedTime;
 
     /**
      *
      */
-    @TableField(value = "created_time", fill = FieldFill.INSERT)
     private Date createdTime;
 
     /**
      * 文件版本号
      */
-    @Version
-    @TableField(value = "version")
     private Integer version;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

@@ -8,7 +8,7 @@
             <id property="fileId" column="file_id" jdbcType="BIGINT"/>
             <result property="fileName" column="file_name" jdbcType="VARCHAR"/>
             <result property="filePath" column="file_path" jdbcType="VARCHAR"/>
-            <result property="fileTypeId" column="file_type_id" jdbcType="BIGINT"/>
+            <result property="fileType" column="file_type" jdbcType="BIGINT"/>
             <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
             <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
             <result property="version" column="version" jdbcType="INTEGER"/>
@@ -16,7 +16,7 @@
 
     <sql id="Base_Column_List">
         file_id,file_name,file_path,
-        file_type_id,updated_time,created_time,
+        file_type,updated_time,created_time,
         version
     </sql>
 </mapper>

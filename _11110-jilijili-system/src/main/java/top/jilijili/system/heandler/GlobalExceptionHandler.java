@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(JiliException.class)
     @ResponseBody
     public Result<String> jiliException(JiliException e) {
-        log.info("{}", e.getMessage());
+        log.error("{}", e.getMessage());
         return Result.fail(e.getCode(), e.getMsg());
     }
 
@@ -34,14 +34,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotRoleException.class)
     @ResponseBody
     public Result<String> notLoginException(NotRoleException e) {
-        log.info("{}", e.getMessage());
+        log.error("{}", e.getMessage());
         return Result.fail(401, "无权访问");
     }
 
     @ExceptionHandler(NotLoginException.class)
     @ResponseBody
     public Result<String> notLoginException(NotLoginException e) {
-        log.info("token错误=>{}", e.getMessage());
+        log.error("token错误=>{}", e.getMessage());
         return Result.fail(e.getMessage());
     }
 
@@ -51,8 +51,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseBody
-    public String HttpMessageNotReadableExceptionHandler(HttpMessageNotReadableException e) {
-        return e.getMessage();
+    public Result<String> httpMessageNotReadableExceptionHandler(HttpMessageNotReadableException e) {
+        log.error(e.getMessage());
+        return Result.fail(e.getMessage());
     }
 
 
@@ -61,13 +62,18 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    public Result<String> MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+    public Result<String> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         return Result.fail(e.getBindingResult().getFieldErrors().stream()
                 .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
                 .collect(Collectors.joining("; ")));
     }
 
 
+    /**
+     *
+     * @param ex
+     * @return
+     */
     @ExceptionHandler(BindException.class)
     public ResponseEntity<String> handleBindException(BindException ex) {
         StringBuilder errorMessage = new StringBuilder();

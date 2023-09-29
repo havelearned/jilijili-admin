@@ -29,7 +29,7 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
     private ProductsMapper productsMapper;
     private ConvertMapper convertMapper;
 
-    // todo 通过上传图片相似度查询商品
+    // todo 通过上传图片相似度查询商品,无限延期
 
 
     /**
@@ -50,6 +50,14 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
         return iPage.convert(this.convertMapper::toProductsVo);
     }
 
+    /**
+     * # 商品今日上架总数量
+     * # 商品指定时间段的上架统计图数据
+     * # 商品总数量
+     *
+     * @param productsDto 查询参数
+     * @return Mono<Result < Map < String, Object>>> 商品可视化数据
+     */
     @Override
     public Map<String, Object> queryProductsTodayInfo(ProductsDto productsDto) {
         // 查询今日上架商品数量

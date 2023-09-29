@@ -96,6 +96,7 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
+    cache-enabled: true
 
 sa-token:
   # token名称 (同时也是cookie名称)

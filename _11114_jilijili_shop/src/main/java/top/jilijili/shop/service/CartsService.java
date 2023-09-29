@@ -18,7 +18,7 @@ public interface CartsService extends IService<Carts> {
      * 通过用户id查询购物车信息
      *
      * @param userId
-     * @return
+     * @return 返回用户的购物车数据
      */
     List<CartsVo> queryCartsByUserIdList(Serializable userId);
 }

@@ -24,6 +24,7 @@ public class GlobalRouteFilter implements GlobalFilter {
         MultiValueMap<String, String> queryParams = request.getQueryParams();
         MultiValueMap<String, HttpCookie> cookies = request.getCookies();
 
+
         log.info("请求地址:{}\n 请求参数:{}\n cookies:{}",
                 reqUrl, queryParams.toString(), cookies.toString());
         Mono<Void> filter = chain.filter(exchange);

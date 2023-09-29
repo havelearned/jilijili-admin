@@ -41,8 +41,8 @@ public class ProductController extends ShopSuperController {
      * # 商品指定时间段的上架统计图数据
      * # 商品总数量
      *
-     * @param productsDto
-     * @return
+     * @param productsDto 查询参数
+     * @return Mono<Result < Map < String, Object>>> 商品可视化数据
      */
     @GetMapping("/productsToDayInfo")
     public Mono<Result<Map<String, Object>>> productsToDayInfo(@RequestBody ProductsDto productsDto) {
@@ -61,8 +61,7 @@ public class ProductController extends ShopSuperController {
      */
     @GetMapping("/list")
     public Mono<Result<IPage<ProductsVo>>> selectList(ProductsDto productsDto) {
-        IPage<ProductsVo> voIPage = this.shopProductsService.queryProductList(productsDto);
-        return Mono.just(Result.ok(voIPage));
+        return Mono.just(Result.ok(this.shopProductsService.queryProductList(productsDto)));
     }
 
     /**
@@ -73,8 +72,8 @@ public class ProductController extends ShopSuperController {
      */
     @GetMapping("/{id}")
     public Mono<Result<Object>> selectOne(@PathVariable Serializable id) {
-        Products byId = this.shopProductsService.getById(id);
-        return Mono.just(Result.ok(this.convertMapper.toProductsVo(byId)));
+        Products products = this.shopProductsService.getById(id);
+        return Mono.just(Result.ok(this.convertMapper.toProductsVo(products)));
     }
 
     /**
@@ -132,7 +131,7 @@ public class ProductController extends ShopSuperController {
      * 通过用户id查询购物车信息
      *
      * @param userId
-     * @return
+     * @return 返回用户的购物车数据
      */
     @GetMapping("/cart/list/{userId}")
     public Mono<Result<List<CartsVo>>> cartList(@PathVariable("userId") Serializable userId) {
@@ -141,7 +140,10 @@ public class ProductController extends ShopSuperController {
     }
 
     /**
-     * 删除购物车
+     * 删除购物车一个或者多个
+     *
+     * @param idList
+     * @return
      */
     @DeleteMapping("/cart")
     public Mono<Result<?>> delCart(List<Serializable> idList) {

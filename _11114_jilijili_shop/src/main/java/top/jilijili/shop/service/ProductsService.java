@@ -23,5 +23,14 @@ public interface ProductsService extends IService<Products> {
      */
     IPage<ProductsVo> queryProductList(ProductsDto productsDto);
 
+
+    /**
+     * 商品今日上架总数量
+     * 商品指定时间段的上架统计图数据
+     * 商品总数量
+     *
+     * @param productsDto 查询参数
+     * @return Mono<Result < Map < String, Object>>> 商品可视化数据
+     */
     Map<String, Object> queryProductsTodayInfo(ProductsDto productsDto);
 }

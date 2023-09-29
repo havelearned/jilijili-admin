@@ -4,6 +4,7 @@ import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,10 +14,11 @@ import org.springframework.stereotype.Component;
  * @author Amani
  * @date 2023年07月11日 11:21
  */
-@Component
-@ConfigurationProperties(prefix = "minio")
 @Data
 @Slf4j
+@Getter
+@Component
+@ConfigurationProperties(prefix = "minio")
 public class MinioConfig implements InitializingBean {
 
     private String domainUrl;
@@ -48,7 +50,7 @@ public class MinioConfig implements InitializingBean {
                         .build());
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("minio初始化失败,错误信息:{}",e.getMessage());
         }
 
     }
