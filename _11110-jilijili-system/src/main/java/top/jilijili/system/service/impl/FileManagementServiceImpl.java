@@ -1,21 +1,34 @@
 package top.jilijili.system.service.impl;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.crypto.digest.DigestUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.ListObjectsArgs;
+import io.minio.PutObjectArgs;
+import io.minio.http.Method;
 import io.minio.messages.DeleteObject;
 import io.minio.messages.Item;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import top.jilijili.system.common.config.MinioConfig;
+import top.jilijili.system.common.utils.FileType;
 import top.jilijili.system.common.utils.MinioUtil;
-import top.jilijili.system.entity.FileItem;
-import top.jilijili.system.entity.FileManagement;
-import top.jilijili.system.entity.dto.FileManagementDto;
-import top.jilijili.system.entity.vo.Result;
+import top.jilijili.module.entity.FileItem;
+import top.jilijili.module.entity.FileManagement;
+import top.jilijili.module.entity.dto.FileManagementDto;
+import top.jilijili.module.entity.vo.FileManagementVo;
+import top.jilijili.module.entity.vo.Result;
 import top.jilijili.system.heandler.JiliException;
+import top.jilijili.system.mapper.ConvertMapper;
 import top.jilijili.system.mapper.FileManagementMapper;
 import top.jilijili.system.service.FileManagementService;
 
@@ -29,6 +42,7 @@ import java.util.Objects;
  * @description 针对表【file_management(文件管理表)】的数据库操作Service实现
  * @createDate 2023-07-11 13:33:01
  */
+@Slf4j
 @Service
 @AllArgsConstructor
 public class FileManagementServiceImpl extends ServiceImpl<FileManagementMapper, FileManagement>
@@ -36,6 +50,53 @@ public class FileManagementServiceImpl extends ServiceImpl<FileManagementMapper,
 
     private MinioConfig minioConfig;
 
+    private ConvertMapper convertMapper;
+
+    /**
+     * 文件上传
+     *
+     * @param files 一个或者多个文件
+     * @return 一个或多个url
+     */
+    @Override
+    public Result<Object> upload(MultipartFile[] files) {
+        if (files.length < 1) {
+            return Result.fail(403, "请选择文件后再上传");
+        }
+        StringBuilder builder = new StringBuilder(5);
+        List<String> resulUrl = new ArrayList<>();
+        try {
+            for (MultipartFile file : files) {
+
+                // 获取基本信息
+                String endName = FileUtil.extName(file.getOriginalFilename());
+                String prefix = FileType.assignFileTypes(endName);
+                String md5Hex = DigestUtil.md5Hex(file.getInputStream());
+                String filepath = builder.append(prefix).append("/").append(md5Hex).append(".").append(endName).toString();
+                builder.setLength(0);
+
+                // 文件上传
+                MinioConfig.minioClient.putObject(PutObjectArgs
+                        .builder()
+                        .bucket(minioConfig.getBucket())
+                        .object(filepath)
+                        .stream(file.getInputStream(), file.getSize(), -1).build());
+
+                // 获取文件url
+                String url = MinioConfig.minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder().bucket(minioConfig.getBucket()).method(Method.GET).object(filepath).build());
+                resulUrl.add(url);
+
+                // 持久化到数据库
+                this.save(FileManagement.builder()
+                        .fileName(md5Hex + "." + endName)
+                        .size(file.getSize())
+                        .filePath(filepath).build());
+            }
+        } catch (Exception e) {
+            throw new JiliException("文件上传失败");
+        }
+        return Result.ok(resulUrl);
+    }
 
     /**
      * 获取文件列表
@@ -44,7 +105,7 @@ public class FileManagementServiceImpl extends ServiceImpl<FileManagementMapper,
      * @return
      */
     @Override
-    public Result<Page<FileManagement>> getList(FileManagementDto fileManagementDto) {
+    public Result<IPage<FileManagementVo>> getList(FileManagementDto fileManagementDto) {
         // 通过文件夹搜索
         if (StringUtils.hasText(fileManagementDto.getFilePath())) {
             String[] split = fileManagementDto.getFilePath().split("/");
@@ -52,11 +113,14 @@ public class FileManagementServiceImpl extends ServiceImpl<FileManagementMapper,
         }
         Page<FileManagement> page = this.lambdaQuery()
                 .eq(!Objects.isNull(fileManagementDto.getFileType()), FileManagement::getFileType, fileManagementDto.getFileType())
+                .like(StringUtils.hasText(fileManagementDto.getFileName()), FileManagement::getFileName, fileManagementDto.getFileName())
                 .like(StringUtils.hasText(fileManagementDto.getFilePath()), FileManagement::getFilePath, fileManagementDto.getFilePath())
                 .between(!Objects.isNull(fileManagementDto.getCreatedTime()), FileManagement::getCreatedTime, fileManagementDto.getCreatedTime(), fileManagementDto.getComparisonTime())
                 .orderByDesc(FileManagement::getCreatedTime)
                 .page(new Page<>(fileManagementDto.getPage(), fileManagementDto.getSize()));
-        return Result.ok(page);
+
+
+        return Result.ok(page.convert(this.convertMapper::toFileManagementVo));
     }
 
     /**
@@ -109,13 +173,23 @@ public class FileManagementServiceImpl extends ServiceImpl<FileManagementMapper,
      * @param fileManagementDtoList
      * @return
      */
+    @Transactional(rollbackFor = JiliException.class, propagation = Propagation.REQUIRES_NEW)
     @Override
     public Result<String> delFile(List<FileManagementDto> fileManagementDtoList) {
         if (fileManagementDtoList.isEmpty()) {
             throw new JiliException("操作失败");
         }
+
+        // 同步数据库
+        boolean b = this.removeBatchByIds(fileManagementDtoList);
+        log.error("删除文件从成功? =>{}", b);
+        if (!b) {
+            throw new JiliException("操作失败");
+        }
         List<DeleteObject> objectList = fileManagementDtoList.stream().map(item -> new DeleteObject(item.getFilePath())).toList();
         MinioUtil.removeFile(minioConfig.getBucket(), objectList);
+
+
         return Result.ok("操作成功");
     }
 

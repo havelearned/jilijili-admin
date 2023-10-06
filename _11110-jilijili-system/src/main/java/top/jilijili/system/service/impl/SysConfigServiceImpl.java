@@ -1,7 +1,7 @@
 package top.jilijili.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import top.jilijili.system.entity.SysConfig;
+import top.jilijili.module.entity.SysConfig;
 import top.jilijili.system.service.SysConfigService;
 import top.jilijili.system.mapper.SysConfigMapper;
 import org.springframework.stereotype.Service;

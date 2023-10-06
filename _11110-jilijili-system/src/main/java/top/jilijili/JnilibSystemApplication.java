@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author Amani
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 @Slf4j
 @SpringBootApplication
 @ComponentScan(basePackages = "top.jilijili.system.*")
+@EnableScheduling
 public class JnilibSystemApplication {
     public static void main(String[] args) {
         SpringApplication.run(JnilibSystemApplication.class, args);

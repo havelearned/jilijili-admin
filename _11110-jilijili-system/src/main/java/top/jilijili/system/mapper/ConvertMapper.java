@@ -3,9 +3,9 @@ package top.jilijili.system.mapper;
 
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
-import top.jilijili.system.entity.*;
-import top.jilijili.system.entity.dto.*;
-import top.jilijili.system.entity.vo.*;
+import top.jilijili.module.entity.*;
+import top.jilijili.module.entity.dto.*;
+import top.jilijili.module.entity.vo.*;
 
 /**
  * @author Amani
@@ -52,4 +52,14 @@ public interface ConvertMapper {
     CmRecord toCmRecord(CmRecordDto cmRecordDto);
 
     CmRecordVo toCmRecordVo(CmRecord cmRecord);
+
+
+    /*---------------文件管理------------------*/
+    FileManagementVo toFileManagementVo(FileManagement fileManagement);
+
+    /*---------------通知------------------*/
+    SysNotifyVo toNotifyVo(SysNotify sysNotify);
+
+    SysNotify toNotify(SysNotifyDto sysNotifyDto);
+
 }

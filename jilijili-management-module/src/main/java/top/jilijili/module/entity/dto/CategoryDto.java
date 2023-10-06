@@ -1,11 +1,14 @@
 package top.jilijili.module.entity.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 import top.jilijili.common.entity.SuperDto;
+import top.jilijili.common.group.Insert;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -37,7 +40,8 @@ public class CategoryDto extends SuperDto implements Serializable {
     /**
      * 分类名称
      */
-
+    @NotBlank(groups = Insert.class,message = "分类名称不能为空")
+    @NotNull(groups = Insert.class,message = "分类名称不能为空")
     private String title;
 
     /**

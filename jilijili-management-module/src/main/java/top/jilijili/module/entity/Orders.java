@@ -35,10 +35,10 @@ public class Orders implements Serializable {
     private Date orderDate;
 
     /**
-     * 订单状态
+     * 订单状态:1 已完成 2 待支付 3过期
      */
     @TableField(value = "order_status")
-    private String orderStatus;
+    private Integer orderStatus;
 
     /**
      * 总金额

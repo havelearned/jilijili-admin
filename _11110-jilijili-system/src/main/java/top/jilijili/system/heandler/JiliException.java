@@ -14,6 +14,7 @@ public class JiliException extends RuntimeException {
 
     public JiliException(String msg) {
         super(msg);
+        this.msg = msg;
 
     }
 

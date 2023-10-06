@@ -1,7 +1,7 @@
 package top.jilijili.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import top.jilijili.system.entity.MusicAlbumSinger;
+import top.jilijili.module.entity.MusicAlbumSinger;
 import top.jilijili.system.service.MusicAlbumSingerService;
 import top.jilijili.system.mapper.MusicAlbumSingerMapper;
 import org.springframework.stereotype.Service;

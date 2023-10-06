@@ -1,7 +1,6 @@
 package top.jilijili.shop.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -16,7 +15,6 @@ import top.jilijili.shop.service.OrdersService;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * 订单管理
@@ -31,9 +29,9 @@ public class OrdersController {
     /*---------------------------订单------------------------------*/
 
     /**
-     * * # 总订单量:完成,未完成,过期
-     * * # 获取指定时间内的总订单量:完成,未完成,过期
-     * * # 订单今日数量:完成 未完成 过期
+     * 总订单量:完成,未完成,过期
+     * 获取指定时间内的总订单量:完成,未完成,过期
+     * 订单今日数量:完成 未完成 过期
      *
      * @param ordersDto
      * @return
@@ -51,7 +49,7 @@ public class OrdersController {
      */
     @GetMapping("/{orderId}")
     public Mono<Result<OrdersVo>> getOrderById(@PathVariable Serializable orderId) {
-        return Mono.just(Result.ok(this.convertMapper.toOrdersVo(ordersService.getById(orderId))));
+        return Mono.just(Result.ok(ordersService.getOrderInfoById(orderId)));
     }
 
     /**
@@ -60,12 +58,21 @@ public class OrdersController {
      * @param ordersDto 查询对象
      * @return
      */
-    @GetMapping("/user/{userId}")
+    @GetMapping("/user")
     public Mono<Result<IPage<OrdersVo>>> getOrdersByUserId(OrdersDto ordersDto) {
-        return Mono.just(Result.ok(this.ordersService.lambdaQuery()
-                .eq(!Objects.isNull(ordersDto.getUserId()), Orders::getUserId, ordersDto.getUserId())
-                .page(new Page<>(ordersDto.getPage(), ordersDto.getSize()))
-                .convert(this.convertMapper::toOrdersVo)));
+
+        return Mono.just(Result.ok(this.ordersService.getOrderListByUserId(ordersDto)));
+    }
+
+    /**
+     * 查询所有订单数据
+     *
+     * @param ordersDto 查询对象
+     * @return
+     */
+    @GetMapping("/list")
+    public Mono<Result<IPage<OrdersVo>>> list(OrdersDto ordersDto) {
+        return Mono.just(Result.ok(this.ordersService.getOrderList(ordersDto)));
     }
 
     /**
@@ -87,7 +94,7 @@ public class OrdersController {
      * @param ordersDto 厂修改对象
      * @return
      */
-    @PutMapping("/{orderId}")
+    @PutMapping
     public Mono<Result<Orders>> updateOrder(@RequestBody OrdersDto ordersDto) {
         Orders orders = this.convertMapper.toOrders(ordersDto);
         boolean success = ordersService.updateById(orders);

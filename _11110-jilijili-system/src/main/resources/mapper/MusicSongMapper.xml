@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.system.mapper.MusicSongMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.system.entity.MusicSong">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.MusicSong">
             <id property="songId" column="song_id" jdbcType="BIGINT"/>
             <result property="albumId" column="album_id" jdbcType="BIGINT"/>
             <result property="name" column="name" jdbcType="VARCHAR"/>
@@ -15,7 +15,7 @@
             <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <resultMap id="querySongSingerAlbumBySongId" type="top.jilijili.system.entity.vo.MusicSongVo">
+    <resultMap id="querySongSingerAlbumBySongId" type="top.jilijili.module.entity.vo.MusicSongVo">
         <id property="songId" column="song_id" jdbcType="BIGINT"/>
         <result property="albumId" column="album_id" jdbcType="BIGINT"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
@@ -24,7 +24,7 @@
         <result property="sourceFile" column="source_file" jdbcType="VARCHAR"/>
         <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
         <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
-        <association property="musicSinger" javaType="top.jilijili.system.entity.vo.MusicSingerVo">
+        <association property="musicSinger" javaType="top.jilijili.module.entity.vo.MusicSingerVo">
             <id property="singerId" column="singer_id" jdbcType="BIGINT"/>
             <result property="name" column="name" jdbcType="VARCHAR"/>
             <result property="desc" column="desc" jdbcType="VARCHAR"/>
@@ -34,7 +34,7 @@
             <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
             <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
         </association>
-        <association property="musicAlbum" javaType="top.jilijili.system.entity.vo.MusicAlbumVo">
+        <association property="musicAlbum" javaType="top.jilijili.module.entity.vo.MusicAlbumVo">
             <id property="albumId" column="album_id" jdbcType="BIGINT"/>
             <result property="albumName" column="album_name" jdbcType="VARCHAR"/>
             <result property="desc" column="desc" jdbcType="VARCHAR"/>

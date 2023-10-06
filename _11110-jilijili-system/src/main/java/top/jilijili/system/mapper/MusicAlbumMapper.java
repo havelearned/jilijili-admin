@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import top.jilijili.system.entity.MusicAlbum;
-import top.jilijili.system.entity.vo.MusicAlbumVo;
+import top.jilijili.module.entity.MusicAlbum;
+import top.jilijili.module.entity.vo.MusicAlbumVo;
 
 /**
  * @author admin

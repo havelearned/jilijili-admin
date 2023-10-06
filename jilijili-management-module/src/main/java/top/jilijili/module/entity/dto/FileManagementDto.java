@@ -1,10 +1,12 @@
 package top.jilijili.module.entity.dto;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
+import top.jilijili.common.group.Query;
 
 import java.util.Date;
 
@@ -17,7 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @SuperBuilder
 @Accessors(chain = true)
-public class FileManagementDto {
+public class FileManagementDto extends SuperDto {
     /**
      *
      */
@@ -31,12 +33,13 @@ public class FileManagementDto {
     /**
      * 文件路径
      */
+    @Pattern(regexp = "^.*/$", message = "文件路径格式不正确", groups = Query.class)
     private String filePath;
 
     /**
      * 文件类型id
      */
-    private Long fileTypeId;
+    private String fileType;
 
     /**
      *
@@ -52,4 +55,5 @@ public class FileManagementDto {
      * 文件版本号
      */
     private Integer version;
+
 }

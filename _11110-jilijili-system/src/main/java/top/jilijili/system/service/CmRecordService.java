@@ -1,6 +1,6 @@
 package top.jilijili.system.service;
 
-import top.jilijili.system.entity.CmRecord;
+import top.jilijili.module.entity.CmRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

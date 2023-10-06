@@ -1,11 +1,13 @@
 package top.jilijili.system.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.jilijili.system.entity.FileItem;
-import top.jilijili.system.entity.FileManagement;
-import top.jilijili.system.entity.dto.FileManagementDto;
-import top.jilijili.system.entity.vo.Result;
+import org.springframework.web.multipart.MultipartFile;
+import top.jilijili.module.entity.FileItem;
+import top.jilijili.module.entity.FileManagement;
+import top.jilijili.module.entity.dto.FileManagementDto;
+import top.jilijili.module.entity.vo.FileManagementVo;
+import top.jilijili.module.entity.vo.Result;
 
 import java.util.List;
 
@@ -22,7 +24,7 @@ public interface FileManagementService extends IService<FileManagement> {
      * @param fileManagementDto
      * @return
      */
-    Result<Page<FileManagement>> getList(FileManagementDto fileManagementDto);
+    Result<IPage<FileManagementVo>> getList(FileManagementDto fileManagementDto);
 
     /**
      * 获取顶级目录列表
@@ -54,4 +56,11 @@ public interface FileManagementService extends IService<FileManagement> {
      * @return 返回url
      */
     Result<String> fileDownload(String filePath, Integer expiry);
+
+    /**
+     * 文件上传
+     * @param files 一个或者多个文件
+     * @return 一个或多个url
+     */
+    Result<Object> upload(MultipartFile[] files);
 }

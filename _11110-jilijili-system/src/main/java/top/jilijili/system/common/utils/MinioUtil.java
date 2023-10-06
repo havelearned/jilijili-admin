@@ -14,7 +14,6 @@ import top.jilijili.system.heandler.JiliException;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Amani
@@ -91,10 +90,10 @@ public class MinioUtil {
                     .bucket(bucket)
                     .method(Method.GET)
                     .object(path)
-                    .expiry(expiry, TimeUnit.DAYS)
+                    .expiry(expiry)
                     .build());
         } catch (Exception e) {
-            throw new JiliException("文件不存在或者已过期!");
+            throw new JiliException(e.getMessage());
         }
     }
 
@@ -113,13 +112,14 @@ public class MinioUtil {
                     .build());
             return true;
         } catch (Exception e) {
-            throw new JiliException("文件不存在或者已过期!");
+            throw new JiliException(e.getMessage());
         }
     }
 
     /**
      * 批量删除一个或者多个文件
      * minio 目录下没有文件时会自动删除目录
+     *
      * @param bucket     同
      * @param objectList 要删除的文件信息
      * @return 是否产出成功
@@ -133,7 +133,7 @@ public class MinioUtil {
                     .build());
             return true;
         } catch (Exception e) {
-            throw new JiliException("操作失败");
+            throw new JiliException(e.getMessage());
         }
     }
 

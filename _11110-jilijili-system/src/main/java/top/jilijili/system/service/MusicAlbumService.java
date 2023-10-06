@@ -2,9 +2,9 @@ package top.jilijili.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.jilijili.system.entity.MusicAlbum;
-import top.jilijili.system.entity.dto.MusicAlbumDto;
-import top.jilijili.system.entity.vo.MusicAlbumVo;
+import top.jilijili.module.entity.MusicAlbum;
+import top.jilijili.module.entity.dto.MusicAlbumDto;
+import top.jilijili.module.entity.vo.MusicAlbumVo;
 
 import java.util.List;
 

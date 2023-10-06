@@ -8,9 +8,9 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.socket.BinaryMessage;
-import top.jilijili.system.entity.dto.CmRecordDto;
-import top.jilijili.system.entity.dto.WebRTCDto;
-import top.jilijili.system.entity.vo.Result;
+import top.jilijili.module.entity.dto.CmRecordDto;
+import top.jilijili.module.entity.dto.WebRTCDto;
+import top.jilijili.module.entity.vo.Result;
 import top.jilijili.system.mapper.ConvertMapper;
 import top.jilijili.system.service.CmRecordService;
 

@@ -41,10 +41,14 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
     @Override
     public IPage<ProductsVo> queryProductList(ProductsDto productsDto) {
         IPage<Products> iPage = new Page<>(productsDto.getPage(), productsDto.getSize());
-        Products products = this.convertMapper.toProducts(productsDto);
         iPage = this.lambdaQuery()
-                .like(StringUtils.hasText(products.getProductName()), Products::getProductName, products.getProductName())
-                .like(StringUtils.hasText(products.getDescription()), Products::getDescription, products.getDescription())
+                .eq(productsDto.getCategoryId() != null, Products::getCategoryId, productsDto.getCategoryId())
+                .like(StringUtils.hasText(productsDto.getProductName()), Products::getProductName, productsDto.getProductName())
+                .like(StringUtils.hasText(productsDto.getDescription()), Products::getDescription, productsDto.getDescription())
+                .between(Objects.nonNull(productsDto.getMax()) && Objects.nonNull(productsDto.getMin()),
+                        Products::getPrice, productsDto.getMin(), productsDto.getMax())
+                .between(Objects.nonNull(productsDto.getCreatedTime()),
+                        Products::getCreatedTime, productsDto.getCreatedTime(), productsDto.getComparisonTime())
                 .orderByDesc(Products::getCreatedTime)
                 .page(iPage);
         return iPage.convert(this.convertMapper::toProductsVo);

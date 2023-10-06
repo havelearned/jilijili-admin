@@ -42,12 +42,14 @@ public class OrdersDto extends SuperDto implements Serializable {
     /**
      * 订单状态
      */
-    private String orderStatus;
+    private Integer orderStatus;
 
     /**
      * 总金额
      */
     private BigDecimal totalAmount;
+    private BigDecimal min;
+    private BigDecimal max;
 
     /**
      * 创建时间

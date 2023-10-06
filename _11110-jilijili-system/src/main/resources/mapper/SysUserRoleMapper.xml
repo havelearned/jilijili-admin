@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.system.mapper.SysUserRoleMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.system.entity.SysUserRole">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.SysUserRole">
             <result property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="roleId" column="role_id" jdbcType="BIGINT"/>
     </resultMap>

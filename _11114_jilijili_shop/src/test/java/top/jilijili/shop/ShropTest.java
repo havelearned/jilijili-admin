@@ -9,9 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.jilijili.module.entity.dto.ProductsDto;
 import top.jilijili.module.entity.vo.CartsVo;
+import top.jilijili.module.entity.vo.OrdersVo;
 import top.jilijili.shop.mapper.OrdersMapper;
 import top.jilijili.shop.mapper.ProductsMapper;
 import top.jilijili.shop.service.CartsService;
+import top.jilijili.shop.service.OrdersService;
 import top.jilijili.shop.service.ProductsService;
 
 import java.util.Calendar;
@@ -26,13 +28,27 @@ public class ShropTest {
 
     @Autowired
     CartsService cartsService;
+
     @Autowired
     OrdersMapper ordersMapper;
+
+    @Autowired
+    OrdersService ordersService;
+
     @Autowired
     ProductsMapper productsMapper;
 
     @Autowired
     ProductsService productsService;
+
+
+    @Test
+    public void testOrderQuery() {
+        OrdersVo ordersVo = this.ordersMapper.selectOrderInfoById(20);
+
+        System.out.println("====================================================================>");
+        System.out.println(JSON.toJSONString(ordersVo));
+    }
 
     @Test
     public void _02() {
@@ -46,7 +62,6 @@ public class ShropTest {
 
         System.out.println("====================================================================>");
         System.out.println(JSON.toJSONString(stringObjectMap));
-        System.out.println("====================================================================>");
 
     }
 

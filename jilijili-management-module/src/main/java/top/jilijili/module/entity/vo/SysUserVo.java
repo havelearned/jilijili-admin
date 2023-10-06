@@ -1,7 +1,9 @@
 package top.jilijili.module.entity.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
@@ -11,6 +13,8 @@ import java.util.List;
  * @author Amani
  * @date 2023年06月22日 11:12
  */
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
 @Accessors(chain = true)

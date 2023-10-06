@@ -2,17 +2,22 @@ package top.jilijili.shop.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+import top.jilijili.common.entity.Item;
 import top.jilijili.common.entity.Result;
+import top.jilijili.module.entity.Categories;
 import top.jilijili.module.entity.Products;
+import top.jilijili.module.entity.dto.CategoryDto;
 import top.jilijili.module.entity.dto.ProductsDto;
 import top.jilijili.module.entity.vo.CartsVo;
 import top.jilijili.module.entity.vo.ProductsVo;
 import top.jilijili.shop.mapper.ConvertMapper;
 import top.jilijili.shop.service.CartsService;
+import top.jilijili.shop.service.CategoriesService;
 import top.jilijili.shop.service.ProductsService;
 
 import java.io.Serializable;
@@ -35,11 +40,77 @@ public class ProductController extends ShopSuperController {
     private ProductsService shopProductsService;
     private ConvertMapper convertMapper;
     private CartsService cartsService;
+    private CategoriesService categoriesService;
+
+    /*-------------------------------------分类信息--------------------------------------------*/
 
     /**
-     * # 商品今日上架总数量
-     * # 商品指定时间段的上架统计图数据
-     * # 商品总数量
+     * 通过一个或者多个id删除商品分类
+     *
+     * @param idList 要给或者多个id
+     * @return
+     */
+    @DeleteMapping("/categories")
+    public Mono<Result<?>> categoriesDelete(@RequestBody List<Serializable> idList) {
+        return Mono.fromCallable(() -> {
+            if (idList.isEmpty()) return Result.ok("操作成功");
+            boolean deleted = this.categoriesService.removeBatchByIds(idList);
+            if (deleted) {
+                return Result.ok("操作成功");
+            }
+            return Result.fail("操作失败");
+        }).subscribeOn(Schedulers.boundedElastic());
+    }
+
+    /**
+     * 添加或者修改商品分类
+     *
+     * @param categoryDto 请求参数
+     * @return
+     */
+    @PostMapping("/categories")
+    public Mono<Result<Categories>> add(@RequestBody CategoryDto categoryDto) {
+        return Mono.just(this.categoriesService.addOrUpdate(categoryDto));
+    }
+
+    /**
+     * 分页查询商品分类字典列表
+     *
+     * @param categoryDto
+     * @return label, value object a list
+     */
+    @GetMapping("/categories/list/dict")
+    public Mono<Result<IPage<Item>>> getCategoriesListDict(CategoryDto categoryDto) {
+        return Mono.just(this.categoriesService.getCategoriesListDict(categoryDto));
+    }
+
+    /**
+     * 分页查询商品分类列表
+     *
+     * @param categoryDto
+     * @return 分类列表
+     */
+    @GetMapping("/categories/list")
+    public Mono<Result<Page<Categories>>> getCategoriesList(CategoryDto categoryDto) {
+        return Mono.just(this.categoriesService.getCategoriesList(categoryDto));
+    }
+
+    /**
+     * 通过Id获取商品分类
+     *
+     * @param id
+     * @return 分类Entity
+     */
+    @GetMapping("/categories/{id}")
+    public Mono<Result<Categories>> getCategories(@PathVariable Long id) {
+        return Mono.just(Result.ok(this.categoriesService.getById(id)));
+    }
+
+
+    /**
+     * 商品今日上架总数量
+     * 商品指定时间段的上架统计图数据
+     * 商品总数量
      *
      * @param productsDto 查询参数
      * @return Mono<Result < Map < String, Object>>> 商品可视化数据
@@ -116,7 +187,7 @@ public class ProductController extends ShopSuperController {
      * @return
      */
     @DeleteMapping
-    public Mono<Result<Object>> delete(List<Serializable> idList) {
+    public Mono<Result<Object>> delete(@RequestBody List<Long> idList) {
         return Mono.fromCallable(() -> this.shopProductsService.removeBatchByIds(idList))
                 .map(success -> Boolean.TRUE.equals(success) ? Result.ok(null, "操作成功") : Result.fail("操作失败"))
                 .subscribeOn(Schedulers.boundedElastic());

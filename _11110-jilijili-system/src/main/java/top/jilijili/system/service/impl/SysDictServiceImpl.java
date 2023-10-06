@@ -2,7 +2,7 @@ package top.jilijili.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-import top.jilijili.system.entity.SysDict;
+import top.jilijili.module.entity.SysDict;
 import top.jilijili.system.mapper.SysDictMapper;
 import top.jilijili.system.service.SysDictService;
 

@@ -1,6 +1,6 @@
 package top.jilijili.system.service;
 
-import top.jilijili.system.entity.SysConfig;
+import top.jilijili.module.entity.SysConfig;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

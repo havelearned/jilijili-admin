@@ -1,7 +1,7 @@
 package top.jilijili.system.service.impl;
 
 import org.springframework.stereotype.Service;
-import top.jilijili.system.entity.vo.Result;
+import top.jilijili.module.entity.vo.Result;
 
 /**
  * @author Amani

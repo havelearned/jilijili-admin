@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.system.mapper.SysUserMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.system.entity.SysUser">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.SysUser">
             <id property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="username" column="username" jdbcType="VARCHAR"/>
             <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
@@ -30,7 +30,7 @@
         last_login_time,created_time,updated_time
     </sql>
 
-    <select id="queryMenuByUserId" resultType="top.jilijili.system.entity.SysMenu">
+    <select id="queryMenuByUserId" resultType="top.jilijili.module.entity.SysMenu">
         select m.menu_id,
                m.menu_name,
                m.parent_id,
@@ -54,7 +54,7 @@
                  inner join sys_user_role sur on srm.role_id = sur.role_id
         where sur.user_id = #{userId};
     </select>
-    <select id="queryRoleByUserId" resultType="top.jilijili.system.entity.vo.SysRoleVo">
+    <select id="queryRoleByUserId" resultType="top.jilijili.module.entity.vo.SysRoleVo">
         select sr.role_id, sr.role_name, sr.title
         from sys_user_role sur
                  inner join sys_role sr on sr.role_id = sur.role_id

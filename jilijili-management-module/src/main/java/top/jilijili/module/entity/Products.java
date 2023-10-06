@@ -1,9 +1,6 @@
 package top.jilijili.module.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -20,14 +17,14 @@ public class Products implements Serializable {
     /**
      * 商品ID
      */
-    @TableId(value = "product_id")
-    private Integer productId;
+    @TableId(value = "product_id",type = IdType.AUTO)
+    private Long productId;
 
     /**
      * 分类ID
      */
     @TableField(value = "category_id")
-    private Integer categoryId;
+    private Long categoryId;
 
     /**
      * 商品名称

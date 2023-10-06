@@ -46,8 +46,8 @@ public final class FileManagement implements Serializable {
     /**
      * 文件类型id
      */
-    @TableField(value = "file_type_id")
-    private Long fileTypeId;
+    @TableField(value = "file_type")
+    private String fileType;
 
     /**
      *
@@ -61,12 +61,16 @@ public final class FileManagement implements Serializable {
     @TableField(value = "created_time")
     private Date createdTime;
 
+
     /**
      * 文件版本号
      */
     @Version
     @TableField(value = "version")
     private Integer version;
+
+    @TableField(value = "size")
+    private Long size;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

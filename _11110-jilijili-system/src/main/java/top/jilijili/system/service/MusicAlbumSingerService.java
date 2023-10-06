@@ -1,6 +1,6 @@
 package top.jilijili.system.service;
 
-import top.jilijili.system.entity.MusicAlbumSinger;
+import top.jilijili.module.entity.MusicAlbumSinger;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

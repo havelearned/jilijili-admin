@@ -1,9 +1,9 @@
 package top.jilijili.system.service;
 
-import top.jilijili.system.entity.MusicSong;
+import top.jilijili.module.entity.MusicSong;
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.jilijili.system.entity.dto.MusicSongDto;
-import top.jilijili.system.entity.vo.MusicSongVo;
+import top.jilijili.module.entity.dto.MusicSongDto;
+import top.jilijili.module.entity.vo.MusicSongVo;
 
 import java.io.Serializable;
 

@@ -3,8 +3,8 @@ package top.jilijili.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import top.jilijili.system.entity.SysMenu;
-import top.jilijili.system.entity.vo.SysMenuVo;
+import top.jilijili.module.entity.SysMenu;
+import top.jilijili.module.entity.vo.SysMenuVo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author admin
  * @description 针对表【sys_menu(菜单权限表)】的数据库操作Mapper
  * @createDate 2023-06-22 22:03:11
- * @Entity top.jilijili.system.entity.SysMenu
+ * @Entity top.jilijili.module.entity.SysMenu
  */
 @Mapper
 public interface SysMenuMapper extends BaseMapper<SysMenu> {

@@ -2,8 +2,10 @@ package top.jilijili.system.service.impl;
 
 import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson2.JSONObject;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.minio.*;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.minio.ListObjectsArgs;
+import io.minio.RemoveObjectsArgs;
+import io.minio.Result;
 import io.minio.errors.*;
 import io.minio.messages.DeleteError;
 import io.minio.messages.DeleteObject;
@@ -18,9 +20,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.jilijili.system.common.config.MinioConfig;
-import top.jilijili.system.entity.FileItem;
-import top.jilijili.system.entity.FileManagement;
-import top.jilijili.system.entity.dto.FileManagementDto;
+import top.jilijili.module.entity.FileItem;
+import top.jilijili.module.entity.FileManagement;
+import top.jilijili.module.entity.dto.FileManagementDto;
+import top.jilijili.module.entity.vo.FileManagementVo;
 import top.jilijili.system.service.FileManagementService;
 
 import java.io.IOException;
@@ -48,7 +51,7 @@ public class FileManagementServiceImplTest {
 
     @Test
     public void download() {
-        top.jilijili.system.entity.vo.Result<String> stringResult = this.fileManagementService.fileDownload("other/asd.webp", 10);
+        top.jilijili.module.entity.vo.Result<String> stringResult = this.fileManagementService.fileDownload("other/asd.webp", 10);
 
         System.out.println("===============================================================>");
         System.out.println(JSONObject.toJSONString(stringResult));
@@ -61,7 +64,7 @@ public class FileManagementServiceImplTest {
                 .size(100)
                 .filePath("other/")
                 .build();
-        top.jilijili.system.entity.vo.Result<Page<FileManagement>> list = fileManagementService.getList(build);
+        top.jilijili.module.entity.vo.Result<IPage<FileManagementVo>> list = fileManagementService.getList(build);
         System.out.println("===============================================================>");
         System.out.println(JSONObject.toJSONString(list));
     }
@@ -98,7 +101,7 @@ public class FileManagementServiceImplTest {
                 .build();
         List<FileManagementDto> objects = new ArrayList<>();
         objects.add(build);
-        top.jilijili.system.entity.vo.Result<String> stringResult = fileManagementService.addFileDir(objects);
+        top.jilijili.module.entity.vo.Result<String> stringResult = fileManagementService.addFileDir(objects);
         System.out.println(stringResult);
     }
 
