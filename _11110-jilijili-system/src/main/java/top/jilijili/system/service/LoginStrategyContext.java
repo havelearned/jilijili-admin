@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jilijili.system.common.enums.LoginOptionEnum;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 
 import java.util.Map;
 

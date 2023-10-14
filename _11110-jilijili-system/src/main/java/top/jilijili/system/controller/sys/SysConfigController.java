@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import top.jilijili.module.entity.SysConfig;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 import top.jilijili.system.controller.SuperController;
 import top.jilijili.system.service.SysConfigService;
 

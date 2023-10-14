@@ -17,7 +17,7 @@ import top.jilijili.system.common.utils.WebUtil;
 import top.jilijili.module.entity.MusicAlbum;
 import top.jilijili.module.entity.dto.MusicAlbumDto;
 import top.jilijili.module.entity.vo.MusicAlbumVo;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 import top.jilijili.system.controller.SuperController;
 import top.jilijili.system.mapper.ConvertMapper;
 import top.jilijili.system.service.MusicAlbumService;

@@ -22,12 +22,20 @@
 
     <dependencies>
 
+        <!--spring boot admin 客户端依赖-->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>top.jilijili.module</groupId>
             <artifactId>jilijili-management-module</artifactId>
             <version>1.0-SNAPSHOT</version>
 
         </dependency>
+
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -52,7 +60,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <!-- 指定该Main Class为全局的唯一入口 -->
-                    <mainClass>top.jilijili.shop.JnilibShopApplication</mainClass>
+                    <mainClass>top.jilijili.mall.JnilibShopApplication</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
                 <executions>

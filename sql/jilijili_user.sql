@@ -31,7 +31,7 @@ create table sys_dict_item
     `status`        tinyint default 1 not null comment '状态:1开启 0停用'
 ) comment '字典item表' row_format = DYNAMIC;
 
-drop table if exists  sys_notify;
+drop table if exists sys_notify;
 create table sys_notify
 (
     notify_id      bigint primary key auto_increment comment '通知id，唯一标识符',
@@ -43,6 +43,4 @@ create table sys_notify
     created_time   datetime comment '通知创建时间',
     updated_time   datetime comment '通知更新时间'
 );
-
-
 

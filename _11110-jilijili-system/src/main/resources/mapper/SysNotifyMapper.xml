@@ -20,4 +20,45 @@
         notify_type,notify_content,notify_status,
         created_time,updated_time
     </sql>
+
+
+
+    <resultMap id="BaseResultMapVo" type="top.jilijili.module.entity.vo.SysNotifyVo">
+        <id property="notifyId" column="notify_id" jdbcType="BIGINT"/>
+        <result property="senderId" column="sender_id" jdbcType="BIGINT"/>
+        <result property="receiverId" column="receiver_id" jdbcType="BIGINT"/>
+        <result property="notifyType" column="notify_type" jdbcType="VARCHAR"/>
+        <result property="notifyContent" column="notify_content" jdbcType="VARCHAR"/>
+        <result property="notifyStatus" column="notify_status" jdbcType="TINYINT"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        <association property="senderUser" javaType="top.jilijili.module.entity.vo.SysUserVo">
+            <id property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="username" column="username" />
+            <result property="nickname" column="nickname" />
+            <result property="avatar" column="avatar" />
+            <result property="gender" column="gender" />
+            <result property="email" column="email" />
+            <result property="phonenumber" column="phonenumber" />
+        </association>
+        <association property="receiverUser" javaType="top.jilijili.module.entity.vo.SysUserVo">
+            <id property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="username" column="username" />
+            <result property="nickname" column="nickname" />
+            <result property="avatar" column="avatar" />
+            <result property="gender" column="gender" />
+            <result property="email" column="email" />
+            <result property="phonenumber" column="phonenumber" />
+        </association>
+    </resultMap>
+
+    <select id="selectNotifyList" resultMap="BaseResultMapVo">
+        select n.notify_id, n.sender_id, n.receiver_id, n.notify_type, n.notify_content, n.notify_status, n.created_time, n.updated_time,
+               s.user_id, s.username, s.nickname, s.avatar, s.gender, s.email, s.phonenumber,
+               s2.user_id, s2.username, s2.nickname, s2.avatar, s2.gender, s2.email, s2.phonenumber
+        from sys_notify n
+                 left join sys_user s on s.user_id = n.sender_id
+                 left join sys_user s2 on s2.user_id = n.receiver_id
+            ${ew.customSqlSegment}
+    </select>
 </mapper>

@@ -9,7 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 
 import static top.jilijili.system.common.utils.KeyConstants.NOTIFY_EXCHANGE;
 import static top.jilijili.system.common.utils.KeyConstants.SYS_ROUTER;

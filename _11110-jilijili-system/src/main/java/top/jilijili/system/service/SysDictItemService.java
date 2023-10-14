@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.jilijili.module.entity.SysDictItem;
 import top.jilijili.module.entity.dto.ChooseEntityDto;
+import top.jilijili.module.entity.vo.SysDictItemVo;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface SysDictItemService extends IService<SysDictItem> {
      * @param sysDictItem
      * @return 字典子项分页列表
      */
-    IPage<SysDictItem> getDictItemList(SysDictItem sysDictItem);
+    IPage<SysDictItemVo> getDictItemList(SysDictItem sysDictItem);
 
     /**
      * 通过字典类型查询字典项信息

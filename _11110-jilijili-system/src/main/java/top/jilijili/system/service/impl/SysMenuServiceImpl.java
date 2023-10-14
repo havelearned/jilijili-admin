@@ -41,6 +41,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
     private SysRoleMenuService sysRoleMenuService;
 
 
+    /**
+     * 绑定菜单
+     *
+     * @param sysRoleMenuDto
+     * @return
+     */
     @Transactional(rollbackFor = JiliException.class, propagation = Propagation.REQUIRES_NEW)
     @Override
     public boolean bindingMenuAndRole(SysRoleMenuDto sysRoleMenuDto) {
@@ -49,32 +55,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
                 .eq(SysRoleMenu::getRoleId, sysRoleMenuDto.getRoleId()));
         log.info("删除角色的菜单:{}", sysRoleMenuDto.toString());
 
-        // 重新添加角色菜单
+
+        log.info("菜单重新绑定菜单:{}", sysRoleMenuDto.getMenuIds());
         List<SysRoleMenu> collect = sysRoleMenuDto.getMenuIds().stream()
                 .map(menuId -> SysRoleMenu.builder()
                         .roleId(sysRoleMenuDto.getRoleId())
-                        .menuId(menuId).build())
-                .collect(Collectors.toList());
-
-        // 要绑定菜单的子菜单列表
-        List<Long> menuIds = sysRoleMenuDto.getMenuIds();
-        List<SysMenu> list = this.lambdaQuery().in(SysMenu::getParentId, menuIds).list();
-        if (!list.isEmpty()) {
-            list.forEach(item -> {
-                SysRoleMenu build = SysRoleMenu.builder()
-                        .roleId(sysRoleMenuDto.getRoleId())
-                        .menuId(item.getMenuId()).build();
-                collect.add(build);
-            });
-        }
-
-        try {
-            log.info("菜单重新绑定菜单:{}", collect.toString());
-            return this.sysRoleMenuService.saveBatch(collect);
-        } catch (JiliException e) {
-            log.error(e.getMessage());
-        }
-        return false;
+                        .menuId(menuId).build()).collect(Collectors.toList());
+        return this.sysRoleMenuService.saveBatch(collect);
     }
 
     @Override
@@ -104,8 +91,23 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
     }
 
     @Override
-    public List<SysMenuVo> getRoleMenuList(Serializable id) {
-        return this.sysMenuMapper.queryRoleMenuListByRoleId(id);
+    public Map<String, Object> getRoleMenuList(Serializable id) {
+        List<SysMenuVo> resulList = this.sysMenuMapper.queryRoleMenuListByRoleId(id);
+        // 当前菜单的勾选条目
+        List<String> selected = resulList.stream().map(SysMenuVo::getMenuId).toList();
+
+        // 当前不可选条目
+        SysMenuDto sysMenuDto = SysMenuDto.builder()
+                .page(0)
+                .size(1000).build();
+        IPage<SysMenuVo> result = this.selectAll(sysMenuDto);
+        resulList = result.getRecords();
+
+        Map<String, Object> resulMap = new HashMap<>(3);
+        resulMap.put("ticked", selected);
+        resulMap.put("treeMenu", resulList);
+        resulMap.put("expanded", selected);
+        return resulMap;
 
     }
 

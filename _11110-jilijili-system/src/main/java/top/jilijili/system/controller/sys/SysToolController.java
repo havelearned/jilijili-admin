@@ -9,14 +9,17 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import top.jilijili.common.group.Insert;
 import top.jilijili.module.entity.SysDict;
 import top.jilijili.module.entity.SysDictItem;
 import top.jilijili.module.entity.dto.ChooseEntityDto;
 import top.jilijili.module.entity.dto.SysDictDto;
 import top.jilijili.module.entity.dto.SysNotifyDto;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
+import top.jilijili.module.entity.vo.SysDictItemVo;
 import top.jilijili.module.entity.vo.SysNotifyVo;
 import top.jilijili.system.mapper.ConvertMapper;
 import top.jilijili.system.service.SysDictItemService;
@@ -53,13 +56,33 @@ public class SysToolController {
     /*======================================================通知服务======================================================================*/
 
     /**
+     * 通过Id发布通知
+     *
+     * @param notifyId
+     * @return
+     */
+    @GetMapping("/notify/publish/{notifyId}")
+    public Result<String> publishNotifyById(@PathVariable Long notifyId) {
+        try {
+            sysNotifyService.sendSysNotify(notifyId, null);
+            return Result.ok("操作成功");
+        } catch (Exception e) {
+            return Result.fail("操作失败");
+        }
+
+
+    }
+
+    /**
      * 添加或者修改通知信息
      *
      * @param sysNotifyDto
      * @return 操作是否成功
      */
     @PostMapping("/notify")
-    public Result<String> addOrEditNotify(@RequestBody SysNotifyDto sysNotifyDto) {
+    public Result<String> addOrEditNotify(
+            @Validated(Insert.class)
+            @RequestBody SysNotifyDto sysNotifyDto) {
         return sysNotifyService.addOrEditNotify(sysNotifyDto);
     }
 
@@ -86,7 +109,7 @@ public class SysToolController {
     }
 
     /**
-     * 通过通知id查询通知信息
+     * 通过id查询通知信息
      *
      * @param notifyId 通知id
      * @return 通知对象
@@ -149,7 +172,7 @@ public class SysToolController {
      * @return 字典子项分页列表
      */
     @GetMapping("/dict/item")
-    public Result<IPage<SysDictItem>> getDictItemList(SysDictItem sysDictItem) {
+    public Result<IPage<SysDictItemVo>> getDictItemList(SysDictItem sysDictItem) {
         return Result.ok(this.sysDictItemService.getDictItemList(sysDictItem));
     }
 

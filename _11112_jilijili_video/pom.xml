@@ -20,12 +20,18 @@
     </properties>
 
     <dependencies>
+
+        <!--spring boot admin 客户端依赖-->
         <dependency>
-            <groupId>wang.jilijili</groupId>
-            <artifactId>jilijili-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>top.jilijili.comment</groupId>
+            <artifactId>jilijili-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

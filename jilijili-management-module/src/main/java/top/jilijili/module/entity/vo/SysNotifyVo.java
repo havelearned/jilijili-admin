@@ -58,5 +58,11 @@ public class SysNotifyVo implements Serializable {
      */
     private Date updatedTime;
 
+    // 发送者
+    private SysUserVo senderUser;
+
+    // 接收者
+    private SysUserVo receiverUser;
+
 
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import top.jilijili.module.entity.SysMenu;
 import top.jilijili.module.entity.dto.SysMenuDto;
 import top.jilijili.module.entity.dto.SysRoleMenuDto;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 import top.jilijili.module.entity.vo.SysMenuVo;
 import top.jilijili.system.controller.SuperController;
 import top.jilijili.system.mapper.ConvertMapper;
@@ -15,6 +15,7 @@ import top.jilijili.system.service.SysMenuService;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 菜单权限表(SysMenu)表控制层
@@ -39,9 +40,8 @@ public class SysMenuController extends SuperController {
      * @return
      */
     @GetMapping("/getRoleMenuList/{id}")
-    public Result<List<SysMenuVo>> getRoleMenuList(@PathVariable("id") Serializable id) {
-        List<SysMenuVo> menuList = this.sysMenuService.getRoleMenuList(id);
-        return Result.ok(menuList);
+    public Result<Map<String, Object>> getRoleMenuList(@PathVariable("id") Serializable id) {
+        return Result.ok(this.sysMenuService.getRoleMenuList(id));
     }
 
     /**
@@ -75,11 +75,9 @@ public class SysMenuController extends SuperController {
      * @return
      */
     @PostMapping("/bindingRole")
-    public Result<?> bindingMenuAndRole(@RequestBody SysRoleMenuDto sysRoleMenuDto) {
-        boolean isSuccess = this.sysMenuService.bindingMenuAndRole(sysRoleMenuDto);
-        return isSuccess ? Result.ok("操作成功") : Result.fail("操作失败");
-
-
+    public Result<String> bindingMenuAndRole(@RequestBody SysRoleMenuDto sysRoleMenuDto) {
+        this.sysMenuService.bindingMenuAndRole(sysRoleMenuDto);
+        return Result.ok("操作成功");
     }
 
     /**

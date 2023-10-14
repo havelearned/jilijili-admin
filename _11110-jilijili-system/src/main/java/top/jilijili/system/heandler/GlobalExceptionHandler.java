@@ -12,7 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 
 import java.util.stream.Collectors;
 

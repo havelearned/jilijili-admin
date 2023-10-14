@@ -6,11 +6,15 @@ server:
 
 spring:
   application:
-    name: _1111-jilijili-shop
+    name: _11114_jilijili_shop
   servlet:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+  boot:
+    admin:
+      client:
+        url: http://localhost:9092
   datasource:
     # 数据源基本配置
     username: root

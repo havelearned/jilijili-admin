@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import top.jilijili.module.entity.CmRecord;
 import top.jilijili.module.entity.dto.CmRecordDto;
 import top.jilijili.module.entity.vo.CmRecordVo;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 import top.jilijili.system.controller.SuperController;
 import top.jilijili.system.mapper.ConvertMapper;
 import top.jilijili.system.service.CmRecordService;

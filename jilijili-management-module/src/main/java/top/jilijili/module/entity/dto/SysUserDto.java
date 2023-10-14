@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.Length;
 import top.jilijili.common.enums.LoginOptionEnum;
 import top.jilijili.common.group.Insert;
@@ -20,6 +21,7 @@ import top.jilijili.common.group.Update;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 @Accessors(chain = true)
 public class SysUserDto extends SuperDto {
 

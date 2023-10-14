@@ -10,11 +10,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import top.jilijili.module.entity.dto.ProductsDto;
 import top.jilijili.module.entity.vo.CartsVo;
 import top.jilijili.module.entity.vo.OrdersVo;
-import top.jilijili.shop.mapper.OrdersMapper;
-import top.jilijili.shop.mapper.ProductsMapper;
-import top.jilijili.shop.service.CartsService;
-import top.jilijili.shop.service.OrdersService;
-import top.jilijili.shop.service.ProductsService;
+import top.jilijili.mall.shop.mapper.OrdersMapper;
+import top.jilijili.mall.shop.mapper.ProductsMapper;
+import top.jilijili.mall.shop.service.CartsService;
+import top.jilijili.mall.shop.service.OrdersService;
+import top.jilijili.mall.shop.service.ProductsService;
 
 import java.util.Calendar;
 import java.util.Date;

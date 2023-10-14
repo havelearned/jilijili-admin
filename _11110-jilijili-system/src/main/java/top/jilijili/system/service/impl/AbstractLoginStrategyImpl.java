@@ -3,7 +3,7 @@ package top.jilijili.system.service.impl;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 import top.jilijili.system.service.LoginStrategy;
 
 /**

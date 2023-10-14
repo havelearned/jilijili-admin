@@ -8,7 +8,7 @@ import top.jilijili.module.entity.dto.SysRoleMenuDto;
 import top.jilijili.module.entity.vo.SysMenuVo;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Map;
 
 /**
 * @author admin
@@ -20,7 +20,7 @@ public interface SysMenuService extends IService<SysMenu> {
 
     IPage<SysMenuVo> selectAll(SysMenuDto sysMenuDto);
 
-    List<SysMenuVo> getRoleMenuList(Serializable id);
+    Map<String, Object> getRoleMenuList(Serializable id);
 
     boolean bindingMenuAndRole(SysRoleMenuDto sysRoleDto);
 }

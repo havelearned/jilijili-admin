@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.jilijili.shop.mapper.CartItemsMapper">
+<mapper namespace="top.jilijili.mall.shop.mapper.CartItemsMapper">
 
     <resultMap id="BaseResultMap" type="top.jilijili.module.entity.CartItems">
             <id property="itemId" column="item_id" jdbcType="BIGINT"/>

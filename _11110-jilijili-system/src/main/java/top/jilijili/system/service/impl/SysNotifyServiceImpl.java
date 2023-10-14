@@ -1,23 +1,32 @@
 package top.jilijili.system.service.impl;
 
+import com.alibaba.fastjson2.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import top.jilijili.common.entity.Result;
 import top.jilijili.module.entity.SysNotify;
 import top.jilijili.module.entity.dto.SysNotifyDto;
-import top.jilijili.module.entity.vo.Result;
 import top.jilijili.module.entity.vo.SysNotifyVo;
+import top.jilijili.system.common.enums.ErrorType;
+import top.jilijili.system.heandler.JiliException;
 import top.jilijili.system.mapper.ConvertMapper;
 import top.jilijili.system.mapper.SysNotifyMapper;
+import top.jilijili.system.pattern.PublishService;
 import top.jilijili.system.service.SysNotifyService;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static top.jilijili.common.utils.KeyConstants.NOTIFY_EXCHANGE;
 import static top.jilijili.system.common.utils.KeyConstants.SYS_ROUTER;
@@ -33,8 +42,8 @@ public class SysNotifyServiceImpl extends ServiceImpl<SysNotifyMapper, SysNotify
 
     private ConvertMapper convertMapper;
     private RabbitTemplate rabbitTemplate;
-
-
+    private PublishService publishService;
+    private SysNotifyMapper sysNotifyMapper;
 
 
     /**
@@ -56,13 +65,17 @@ public class SysNotifyServiceImpl extends ServiceImpl<SysNotifyMapper, SysNotify
      */
     @Override
     public Result<IPage<SysNotifyVo>> getNotifyList(SysNotifyDto sysNotifyDto) {
-        IPage<SysNotifyVo> page = this.lambdaQuery()
-                .eq(sysNotifyDto.getNotifyId() != null, SysNotify::getNotifyId, sysNotifyDto.getNotifyId())
-                .eq(sysNotifyDto.getNotifyStatus() != null, SysNotify::getNotifyStatus, sysNotifyDto.getNotifyStatus())
-                .eq(StringUtils.hasText(sysNotifyDto.getNotifyType()), SysNotify::getNotifyType, sysNotifyDto.getNotifyType())
-                .between(sysNotifyDto.getComparisonTime() != null && sysNotifyDto.getCreatedTime() != null, SysNotify::getCreatedTime, sysNotifyDto.getCreatedTime(), sysNotifyDto.getComparisonTime()).orderByDesc(SysNotify::getCreatedTime)
-                .page(new Page<>(sysNotifyDto.getPage(), sysNotifyDto.getSize()))
-                .convert(this.convertMapper::toNotifyVo);
+        QueryWrapper<SysNotify> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(sysNotifyDto.getNotifyId() != null, "n.notify_id", sysNotifyDto.getNotifyId())
+                .eq(sysNotifyDto.getNotifyStatus() != null, "n.notify_status", sysNotifyDto.getNotifyStatus())
+                .eq(StringUtils.hasText(sysNotifyDto.getNotifyType()), "n.notify_type", sysNotifyDto.getNotifyType())
+
+                .eq(StringUtils.hasText(sysNotifyDto.getUsername()), "s.username", sysNotifyDto.getUsername())
+                .eq(sysNotifyDto.getUserId() != null, "s.user_id", sysNotifyDto.getUserId())
+
+                .between(sysNotifyDto.getComparisonTime() != null && sysNotifyDto.getCreatedTime() != null, "n.created_time",
+                        sysNotifyDto.getCreatedTime(), sysNotifyDto.getComparisonTime()).orderByDesc("n.created_time");
+        IPage<SysNotifyVo> page = this.sysNotifyMapper.selectNotifyList(new Page<>(sysNotifyDto.getPage(), sysNotifyDto.getSize()), queryWrapper);
         return Result.ok(page);
     }
 
@@ -72,47 +85,69 @@ public class SysNotifyServiceImpl extends ServiceImpl<SysNotifyMapper, SysNotify
      * @param sysNotifyDto
      * @return 操作是否成功
      */
+    @Transactional(rollbackFor = JiliException.class, propagation = Propagation.REQUIRES_NEW)
     @Override
     public Result<String> addOrEditNotify(SysNotifyDto sysNotifyDto) {
         SysNotify notify = this.convertMapper.toNotify(sysNotifyDto);
 
-        // 修改操作
-        if (sysNotifyDto.getNotifyId() != null) {
-            return this.updateById(notify) ? Result.ok("操作成功") : Result.fail("操作失败");
-        }
+        // 如果是修改
+        if (Objects.nonNull(sysNotifyDto.getNotifyId())) {
+            boolean updated = this.updateById(notify);
+            return updated ? Result.ok() : Result.fail();
 
+        }
+        // 添加操作
+        List<SysNotify> sysNotifies = new ArrayList<>();
+
+        if (sysNotifyDto.getReceiverIds() != null && !sysNotifyDto.getReceiverIds().isEmpty()) {
+            sysNotifies = sysNotifyDto.getReceiverIds().stream().map(item -> {
+                SysNotify sysNotify = new SysNotify();
+                BeanUtils.copyProperties(notify, sysNotify);
+                sysNotify.setReceiverId(item);
+                return sysNotify;
+            }).collect(Collectors.toList());
+        } else {
+            sysNotifies.add(notify);
+        }
         // 添加
-        Integer publish = sysNotifyDto.getPublish();
-        boolean flag = false;
-
-        switch (publish) {
-            case 1 -> { // 保存并立即发布
-                this.save(notify);
-                this.rabbitTemplate.convertAndSend(NOTIFY_EXCHANGE, SYS_ROUTER, notify);
-                flag = true;
-            }
-            case 2 -> { // 仅保存
-                this.save(notify);
-                flag = true;
-            }
-            case 3 -> { // 定时发布
-                // 临时解决,请考虑使用第三方 任务调用框架
-                if (sysNotifyDto.getComparisonTime() != null) {
-                    // 指定的时间差，以秒为单位
-                    long timeDelayInSeconds = sysNotifyDto.getComparisonTime().getTime();
-                    // 得到一个线程
-                    ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-                    // 在指定的时间后执行通知发布任务
-                    executorService.schedule(() -> this.rabbitTemplate.convertAndSend(NOTIFY_EXCHANGE, SYS_ROUTER, notify), timeDelayInSeconds, TimeUnit.SECONDS);
-                    flag = true;
-                }
-            }default -> Result.fail("操作失败");
+        boolean saved = this.saveBatch(sysNotifies);
+        if (!saved) {// 操作失败
+            throw new JiliException(ErrorType.OPERATION_FAILED);
         }
 
-        return flag ? Result.ok("操作成功") : Result.fail("操作失败");
+        // 1: 添加并且立即发布      * 2: 草稿      * 3: 定时发布
+        switch (sysNotifyDto.getPublish()) {
+            case 1 -> this.publishService.publishNotify(1, sysNotifies);
+            case 2 -> this.publishService.publishNotify(2, sysNotifies);
+            case 3 -> this.publishService.publishNotify(3, sysNotifies);
+            default -> Result.fail("操作失败");
+        }
+        return Result.ok("操作成功");
     }
 
 
+    /**
+     * @param notifyId  通过id查询通知并发布
+     * @param sysNotify 通过已知通知发布公告
+     */
+    public void sendSysNotify(Long notifyId, SysNotify sysNotify) {
+        if (sysNotify == null) {
+            sysNotify = this.getById(notifyId);
+        }
+
+        sendSysNotify(sysNotify);
+    }
+
+    /**
+     * 发送系统通知
+     *
+     * @param sysNotify 系统通知对象
+     */
+    public void sendSysNotify(SysNotify sysNotify) {
+        if (sysNotify != null) {
+            this.rabbitTemplate.convertAndSend(NOTIFY_EXCHANGE, SYS_ROUTER, JSON.toJSONString(sysNotify));
+        }
+    }
 }
 
 

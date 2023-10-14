@@ -51,7 +51,7 @@ public class FileManagementServiceImplTest {
 
     @Test
     public void download() {
-        top.jilijili.module.entity.vo.Result<String> stringResult = this.fileManagementService.fileDownload("other/asd.webp", 10);
+        top.jilijili.common.entity.Result<String> stringResult = this.fileManagementService.fileDownload("other/asd.webp", 10);
 
         System.out.println("===============================================================>");
         System.out.println(JSONObject.toJSONString(stringResult));
@@ -64,7 +64,7 @@ public class FileManagementServiceImplTest {
                 .size(100)
                 .filePath("other/")
                 .build();
-        top.jilijili.module.entity.vo.Result<IPage<FileManagementVo>> list = fileManagementService.getList(build);
+        top.jilijili.common.entity.Result<IPage<FileManagementVo>> list = fileManagementService.getList(build);
         System.out.println("===============================================================>");
         System.out.println(JSONObject.toJSONString(list));
     }
@@ -101,7 +101,7 @@ public class FileManagementServiceImplTest {
                 .build();
         List<FileManagementDto> objects = new ArrayList<>();
         objects.add(build);
-        top.jilijili.module.entity.vo.Result<String> stringResult = fileManagementService.addFileDir(objects);
+        top.jilijili.common.entity.Result<String> stringResult = fileManagementService.addFileDir(objects);
         System.out.println(stringResult);
     }
 

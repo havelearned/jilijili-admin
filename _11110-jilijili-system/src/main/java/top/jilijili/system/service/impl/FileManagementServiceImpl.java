@@ -26,7 +26,7 @@ import top.jilijili.module.entity.FileItem;
 import top.jilijili.module.entity.FileManagement;
 import top.jilijili.module.entity.dto.FileManagementDto;
 import top.jilijili.module.entity.vo.FileManagementVo;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 import top.jilijili.system.heandler.JiliException;
 import top.jilijili.system.mapper.ConvertMapper;
 import top.jilijili.system.mapper.FileManagementMapper;

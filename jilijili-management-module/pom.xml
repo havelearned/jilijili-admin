@@ -21,8 +21,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>wang.jilijili</groupId>
-            <artifactId>jilijili-common</artifactId>
+            <groupId>top.jilijili.comment</groupId>
+            <artifactId>jilijili-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

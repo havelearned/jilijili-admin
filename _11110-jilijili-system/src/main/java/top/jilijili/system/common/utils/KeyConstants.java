@@ -47,10 +47,14 @@ public class KeyConstants {
      * 系统通知队列
      */
     public final static String SYS_NOTIFY_QUEUE = "sys_notify_queue";
+    public final static String SYS_NOTIFY_ALL_QUEUE = "sys_notify_all_queue";
+    public final static String SYS_NOTIFY_ALL_SCHEDULED_QUEUE = "sys_notify_all_scheduled_queue";
     /**
      * 系统通知路由
      */
     public final static String SYS_ROUTER = "SYS_ROUTER";
+    public final static String SYS_ROUTER_NOTIFY_ALL = "sys_router_notify_all";
+    public final static String SYS_ROUTER_NOTIFY_SCHEDULED = "sys_router_notify_scheduled";
 
     /**
      * 通知交换机

@@ -115,4 +115,6 @@ public class SysMenuVo {
      */
     private String remark;
 
+
+
 }

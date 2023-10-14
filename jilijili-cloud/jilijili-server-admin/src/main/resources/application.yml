@@ -1,7 +1,7 @@
 # tomcat configuration
 server:
   port: 9092
-  servlet :
+  servlet:
     context-path:
 
 
@@ -12,12 +12,28 @@ logging.level:
   org.apache.coyote.http11.Http11InputBuffer: DEBUG
   sample.mybatis.mapper: DEBUG
   org.apache.ibatis: DEBUG
+
 spring:
   application:
     name: jilijili-server-admin
+
+
 management:
+  # 是否开放
+  endpoint:
+    # 最基本属性
+    health:
+      show-details: always
+    info:
+      enabled: true
+  # 在web端是否能看到
   endpoints:
     web:
       exposure:
-        include: *
-
+        include: "*"
+      #include: health,info
+    # 控制对外开放数据（端点）
+    enabled-by-default: true
+  info: #配置info信息
+    env:
+      enabled: true

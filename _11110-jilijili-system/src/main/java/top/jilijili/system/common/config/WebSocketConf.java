@@ -28,18 +28,14 @@ public class WebSocketConf implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
 
-        registry.addEndpoint("/multiUser")
+        registry.addEndpoint("/Jnilib")
 //                .addInterceptors(myHandshakeInterceptor())  //添加 websocket握手拦截器
 //                .setHandshakeHandler(myDefaultHandshakeHandler())   //添加 websocket握手处理器
                 .setAllowedOriginPatterns("*")
                 .withSockJS();
 
-        registry.addEndpoint("/video")
-                .setAllowedOriginPatterns("*")
-                .withSockJS();
-
-        registry.addEndpoint("/server/*")
-                .setAllowedOrigins("*");
+//        registry.addEndpoint("/Jnilib/*")
+//                .setAllowedOrigins("*");
 
     }
 

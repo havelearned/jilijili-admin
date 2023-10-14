@@ -11,6 +11,10 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+  boot:
+    admin:
+      client:
+        url: http://localhost:9092
   datasource:
     # 数据源基本配置
     username: root
@@ -123,3 +127,12 @@ logging:
   level:
     com.baomidou.mybatisplus: DEBUG
     com.dragonsof.demojar.mapper: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

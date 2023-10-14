@@ -12,7 +12,7 @@ import top.jilijili.common.group.Query;
 import top.jilijili.module.entity.FileItem;
 import top.jilijili.module.entity.dto.FileManagementDto;
 import top.jilijili.module.entity.vo.FileManagementVo;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 import top.jilijili.system.common.config.MinioConfig;
 import top.jilijili.system.common.utils.MinioUtil;
 import top.jilijili.system.controller.SuperController;

@@ -24,7 +24,7 @@ import top.jilijili.module.entity.SysRole;
 import top.jilijili.module.entity.SysUser;
 import top.jilijili.module.entity.dto.SysRoleDto;
 import top.jilijili.module.entity.dto.SysUserDto;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 import top.jilijili.module.entity.vo.SysRoleVo;
 import top.jilijili.module.entity.vo.SysUserVo;
 import top.jilijili.system.common.aspect.annotation.RestrictAccess;

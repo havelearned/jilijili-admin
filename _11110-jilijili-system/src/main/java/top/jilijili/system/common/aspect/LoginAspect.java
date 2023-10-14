@@ -14,7 +14,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import top.jilijili.system.common.utils.IpUtils;
 import top.jilijili.system.common.utils.KeyConstants;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 
 import java.util.concurrent.TimeUnit;
 

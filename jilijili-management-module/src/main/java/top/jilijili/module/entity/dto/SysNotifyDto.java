@@ -1,13 +1,16 @@
 package top.jilijili.module.entity.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
+import top.jilijili.common.group.Insert;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @TableName sys_notify
@@ -32,6 +35,7 @@ public class SysNotifyDto extends SuperDto implements Serializable {
      * 接收通知的用户或系统组件的标识符
      */
     private Long receiverId;
+    private List<Long> receiverIds;
 
     /**
      * 通知类型，例如警报、错误、新用户注册,全体通告等
@@ -64,7 +68,11 @@ public class SysNotifyDto extends SuperDto implements Serializable {
      * 2: 草稿
      * 3: 定时发布
      */
+    @NotNull(message = "发布模式不能为空",groups = Insert.class)
     private Integer publish;
+
+    private String username;
+    private Long userId;
 
 
 }

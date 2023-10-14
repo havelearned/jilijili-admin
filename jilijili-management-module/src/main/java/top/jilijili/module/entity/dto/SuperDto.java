@@ -1,5 +1,6 @@
 package top.jilijili.module.entity.dto;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,17 +21,21 @@ import java.util.Date;
 @Accessors(chain = true)
 public class SuperDto {
     @NotNull
+    @TableField(exist = false)
     protected Integer page = 0;
 
     @NotNull
+    @TableField(exist = false)
     protected Integer size = 10;
 
     /**
      * 关键字
      */
+    @TableField(exist = false)
     protected String keyword;
     /**
      * 比较时间
      */
+    @TableField(exist = false)
     protected Date comparisonTime;
 }

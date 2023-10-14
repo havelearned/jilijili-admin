@@ -1,7 +1,7 @@
 package top.jilijili.system.service;
 
 
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 
 /**
  * 登录策略

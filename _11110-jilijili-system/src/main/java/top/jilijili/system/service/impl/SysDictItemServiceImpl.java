@@ -3,10 +3,13 @@ package top.jilijili.system.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import top.jilijili.module.entity.SysDictItem;
 import top.jilijili.module.entity.dto.ChooseEntityDto;
+import top.jilijili.module.entity.vo.SysDictItemVo;
+import top.jilijili.system.mapper.ConvertMapper;
 import top.jilijili.system.mapper.SysDictItemMapper;
 import top.jilijili.system.service.SysDictItemService;
 
@@ -19,7 +22,10 @@ import java.util.stream.Collectors;
  * @createDate 2023-10-06 14:40:49
  */
 @Service
+@AllArgsConstructor
 public class SysDictItemServiceImpl extends ServiceImpl<SysDictItemMapper, SysDictItem> implements SysDictItemService {
+
+    private ConvertMapper convertMapper;
 
 
     /**
@@ -29,7 +35,7 @@ public class SysDictItemServiceImpl extends ServiceImpl<SysDictItemMapper, SysDi
      * @return 字典子项分页列表
      */
     @Override
-    public IPage<SysDictItem> getDictItemList(SysDictItem sysDictItem) {
+    public IPage<SysDictItemVo> getDictItemList(SysDictItem sysDictItem) {
         if (!StringUtils.hasText(sysDictItem.getDictionaryType())) {
             return null;
         }
@@ -37,7 +43,8 @@ public class SysDictItemServiceImpl extends ServiceImpl<SysDictItemMapper, SysDi
                 .eq(sysDictItem.getDictItemId() != null, SysDictItem::getDictItemId, sysDictItem.getDictItemId())
                 .eq(StringUtils.hasText(sysDictItem.getDictionaryType()), SysDictItem::getDictionaryType, sysDictItem.getDictionaryType())
                 .eq(sysDictItem.getStatus() != null, SysDictItem::getStatus, sysDictItem.getStatus())
-                .page(new Page<>(sysDictItem.getPage(), sysDictItem.getSize()));
+                .page(new Page<>(sysDictItem.getPage(), sysDictItem.getSize()))
+                .convert(this.convertMapper::toDictItemVo);
     }
 
     /**
@@ -50,7 +57,8 @@ public class SysDictItemServiceImpl extends ServiceImpl<SysDictItemMapper, SysDi
     @Override
     public List<ChooseEntityDto> getDictItemByDictType(String dictType) {
         List<SysDictItem> list = this.lambdaQuery()
-                .eq(StringUtils.hasText(dictType), SysDictItem::getDictItemId, dictType).list();
+                .eq(StringUtils.hasText(dictType), SysDictItem::getDictionaryType, dictType)
+                .list();
 
         return list.stream().map(item -> ChooseEntityDto.builder()
                 .label(item.getItemLabel())

@@ -9,7 +9,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import top.jilijili.system.common.aspect.annotation.SysNotify;
 import top.jilijili.system.common.config.MinioConfig;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 
 /**
  * @author Amani

@@ -62,4 +62,6 @@ public interface ConvertMapper {
 
     SysNotify toNotify(SysNotifyDto sysNotifyDto);
 
+    SysDictItemVo toDictItemVo(SysDictItem sysDictItem);
+
 }

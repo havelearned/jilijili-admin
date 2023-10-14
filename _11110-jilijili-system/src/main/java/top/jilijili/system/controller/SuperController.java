@@ -18,7 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -125,3 +125,13 @@ logging:
   level:
     com.baomidou.mybatisplus: DEBUG
     com.dragonsof.demojar.mapper: DEBUG
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

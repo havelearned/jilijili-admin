@@ -28,5 +28,6 @@ public class SysRoleMenuDto implements Serializable {
      */
     private Long menuId;
 
+    // 绑定菜单列表
     private List<Long> menuIds;
 }

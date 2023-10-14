@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.jilijili.module.entity.SysNotify;
 import top.jilijili.module.entity.dto.SysNotifyDto;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 import top.jilijili.module.entity.vo.SysNotifyVo;
 
 /**
@@ -38,4 +38,18 @@ public interface SysNotifyService extends IService<SysNotify> {
      * @return 操作是否成功
      */
     Result<String> addOrEditNotify(SysNotifyDto sysNotifyDto);
+
+    /**
+     * @param notifyId  通过id查询通知并发布
+     * @param sysNotify 通过已知通知发布公告
+     */
+    void sendSysNotify(Long notifyId, SysNotify sysNotify);
+
+    /**
+     * 发送系统通知
+     * @param sysNotify 系统通知对象
+     */
+     void sendSysNotify(SysNotify sysNotify);
+
+
 }

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import top.jilijili.module.entity.MusicSinger;
 import top.jilijili.module.entity.MusicSong;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 import top.jilijili.system.mapper.MusicSingerMapper;
 import top.jilijili.system.mapper.MusicSongMapper;
 import top.jilijili.system.service.MusicSingerService;

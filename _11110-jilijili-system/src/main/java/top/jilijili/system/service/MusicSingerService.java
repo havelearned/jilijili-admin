@@ -3,7 +3,7 @@ package top.jilijili.system.service;
 import top.jilijili.module.entity.MusicSinger;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.jilijili.module.entity.MusicSong;
-import top.jilijili.module.entity.vo.Result;
+import top.jilijili.common.entity.Result;
 
 import java.io.Serializable;
 
