@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.jilijili.mall.currency.mapper.CurrencyTypesMapper">
+
+    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.CurrencyTypes">
+        <id property="currencyTypeId" column="currency_type_id" jdbcType="BIGINT"/>
+        <result property="currencyName" column="currency_name" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="createdTime"/>
+        <result property="updatedTime" column="updatedTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        currency_type_id, currency_name
+    </sql>
+</mapper>

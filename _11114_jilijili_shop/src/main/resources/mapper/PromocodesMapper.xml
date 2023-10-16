@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.jilijili.mall.shop.mapper.PromocodesMapper">
+
+    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.Promocodes">
+            <id property="promoCodeId" column="promo_code_id" jdbcType="BIGINT"/>
+            <result property="couponId" column="coupon_id" jdbcType="BIGINT"/>
+            <result property="shopId" column="shop_id" jdbcType="BIGINT"/>
+            <result property="promoCode" column="promo_code" jdbcType="VARCHAR"/>
+            <result property="isUsed" column="is_used" jdbcType="TINYINT"/>
+            <result property="genCount" column="gen_count" jdbcType="VARCHAR"/>
+            <result property="expirationDate" column="expiration_date" jdbcType="TIMESTAMP"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapVo" type="top.jilijili.module.entity.vo.PromocodesVo">
+        <id property="promoCodeId" column="promo_code_id" jdbcType="BIGINT"/>
+        <result property="couponId" column="coupon_id" jdbcType="BIGINT"/>
+        <result property="shopId" column="shop_id" jdbcType="BIGINT"/>
+        <result property="promoCode" column="promo_code" jdbcType="VARCHAR"/>
+        <result property="isUsed" column="is_used" jdbcType="TINYINT"/>
+        <result property="genCount" column="gen_count" jdbcType="VARCHAR"/>
+        <result property="expirationDate" column="expiration_date" jdbcType="TIMESTAMP"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        <association property="coupons" javaType="top.jilijili.module.entity.vo.CouponsVo">
+            <id property="couponId" column="coupon_id" jdbcType="BIGINT"/>
+            <result property="couponType" column="coupon_type" jdbcType="TINYINT"/>
+            <result property="couponAmount" column="coupon_amount" jdbcType="DECIMAL"/>
+            <result property="minPurchaseAmount" column="min_purchase_amount" jdbcType="DECIMAL"/>
+            <result property="expirationDate" column="expiration_date" jdbcType="TIMESTAMP"/>
+            <result property="otherCouponInfo" column="other_coupon_info" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+
+
+    <sql id="Base_Column_List">
+        promo_code_id,coupon_id,shop_id,
+        promo_code,is_used,gen_count,
+        expiration_date,created_time,updated_time
+    </sql>
+    <select id="selectAllPromocodes" resultMap="BaseResultMapVo">
+        select sp.promo_code_id, sp.coupon_id, sp.shop_id, sp.promo_code, sp.is_used, sp.gen_count, sp.expiration_date, sp.created_time, sp.updated_time,
+               sc.coupon_id, sc.coupon_type, sc.coupon_amount, sc.min_purchase_amount, sc.expiration_date, sc.other_coupon_info
+        from shop_promocodes sp
+                 inner join  shop_coupons sc on sp.coupon_id = sc.coupon_id
+        ${ew.customSqlSegment}
+    </select>
+</mapper>
