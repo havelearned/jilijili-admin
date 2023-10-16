@@ -11,31 +11,31 @@
 
 ### 系统效果预览
 
-![](image\Snipaste_2023-10-16_17-20-59.png)
+![](https://github.com/havelearned/jilijili-admin/blob/main/image\Snipaste_2023-10-16_17-20-59.png)
 
 
 
-![](image\Snipaste_2023-10-16_17-25-00.png)
+![](https://github.com/havelearned/jilijili-admin/blob/main/image\Snipaste_2023-10-16_17-25-00.png)
 
-![](image\Snipaste_2023-10-16_17-25-36.png)
+![](https://github.com/havelearned/jilijili-admin/blob/main/image\Snipaste_2023-10-16_17-25-36.png)
 
-![](image\Snipaste_2023-10-16_17-25-136.png)
+![](https://github.com/havelearned/jilijili-admin/blob/main/image\Snipaste_2023-10-16_17-25-136.png)
 
-![](image\Snipaste_2023-10-16_17-27-25.png)
+![](https://github.com/havelearned/jilijili-admin/blob/main/image\Snipaste_2023-10-16_17-27-25.png)
 
-![](image\Snipaste_2023-10-16_17-28-19.png)
+![](https://github.com/havelearned/jilijili-admin/blob/main/image\Snipaste_2023-10-16_17-28-19.png)
 
-![](image\Snipaste_2023-10-16_17-28-52.png)
+![](https://github.com/havelearned/jilijili-admin/blob/main/image\Snipaste_2023-10-16_17-28-52.png)
 
-![](image\Snipaste_2023-10-16_17-29-44.png)
+![](https://github.com/havelearned/jilijili-admin/blob/main/image\Snipaste_2023-10-16_17-29-44.png)
 
-![](image\image-20231016173033389.png)
+![](https://github.com/havelearned/jilijili-admin/blob/main/image\https://github.com/havelearned/jilijili-admin/blob/main/image-20231016173033389.png)
 
-![](image\Snipaste_2023-10-16_17-31-16.png)
+![](https://github.com/havelearned/jilijili-admin/blob/main/image\Snipaste_2023-10-16_17-31-16.png)
 
 ### 后台目录结构
 
-![image-20231016165618150](image\image-20231016165618150.png)
+![https://github.com/havelearned/jilijili-admin/blob/main/image-20231016165618150](https://github.com/havelearned/jilijili-admin/blob/main/image\https://github.com/havelearned/jilijili-admin/blob/main/image-20231016165618150.png)
 
 ### 技术架构
 
@@ -106,7 +106,7 @@
 
 #### 微服务架构图
 
-![](image\Snipaste_2023-10-16_17-19-03.png)
+![](https://github.com/havelearned/jilijili-admin/blob/main/image\Snipaste_2023-10-16_17-19-03.png)
 
 
 
