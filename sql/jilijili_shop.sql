@@ -188,17 +188,22 @@ VALUES (1, 101, 1, 0, NULL),
 
 
 -- 创建货币类型表
+drop table if exists shop_currency_types;
 create table shop_currency_types
 (
     currency_type_id bigint auto_increment primary key comment '货币类型id',
-    currency_name    varchar(32) not null unique comment '货币类型名称，例如"b币"'
+    currency_name    varchar(32) not null unique comment '货币类型名称，例如"b币"',
+    currency_code    varchar(32) not null unique comment '货币代码',
+    `status`         tinyint     not null default 0 comment '1:冻结,0:可用',
+    created_time     datetime comment '创建时间',
+    updated_time     datetime comment '更新时间'
 );
 
 -- 插入初始货币类型数据
-insert into shop_currency_types (currency_name)
-values ('肌理豆'),
-       ('肌理币'),
-       ('狗粮');
+insert into shop_currency_types (currency_name, created_time)
+values ('肌理豆', now()),
+       ('肌理币', now()),
+       ('狗粮', now());
 
 -- 创建虚拟货币表
 create table shop_virtual_currency
@@ -218,6 +223,7 @@ create table shop_transaction_history
     user_id          bigint         not null comment '用户id',
     currency_type_id bigint         not null comment '货币类型id',
     transaction_type tinyint        not null comment '充值 购买商品 充值会员',
+    action           tinyint        not null comment '收入还是支出: 1收入 2支出',
     amount           decimal(10, 2) not null comment '每次交易的金额',
     created_time     datetime comment '创建时间,交易日期',
     updated_time     datetime comment '最后更新时间'
@@ -275,10 +281,12 @@ VALUES (6, 3, 2, 30.00, NOW(), NOW());
 
 
 
-select  * from shop_user_ratings;
+select *
+from shop_user_ratings;
 
 
-select user_id from sys_user;
+select user_id
+from sys_user;
 
 insert into shop_user_ratings (user_id, item_id, rating, timestamp)
 values (15217, 2, 1.1 + RAND() * (9.9 - 1.1), UNIX_TIMESTAMP()),

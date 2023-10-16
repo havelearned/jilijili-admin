@@ -134,8 +134,22 @@ public class SysNotifyServiceImpl extends ServiceImpl<SysNotifyMapper, SysNotify
         if (sysNotify == null) {
             sysNotify = this.getById(notifyId);
         }
-
-        sendSysNotify(sysNotify);
+        List<SysNotify> list = new ArrayList<>();
+        list.add(sysNotify);
+        switch (sysNotify.getNotifyType()) {
+            case "3","5" -> {
+                this.publishService.publishNotify(1, list);
+            }
+            case "2" -> {
+                this.publishService.publishNotify(2, list);
+            }
+            case "1" -> {
+                this.publishService.publishNotify(3, list);
+            }
+            default -> {
+                throw new JiliException(ErrorType.OPERATION_FAILED);
+            }
+        }
     }
 
     /**

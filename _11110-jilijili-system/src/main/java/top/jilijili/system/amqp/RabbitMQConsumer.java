@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import top.jilijili.module.entity.SysNotify;
 import top.jilijili.common.entity.Result;
+import top.jilijili.module.entity.vo.SysNotifyVo;
+import top.jilijili.system.mapper.ConvertMapper;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +27,7 @@ import static top.jilijili.system.common.utils.KeyConstants.SYS_NOTIFY_QUEUE;
 @AllArgsConstructor
 public class RabbitMQConsumer {
     private final SimpMessagingTemplate simpMessagingTemplate;
+    private  final ConvertMapper convertMapper;
 
     /**
      * 通知队列消费
@@ -35,16 +38,18 @@ public class RabbitMQConsumer {
     public void notifyConsumer(String message) {
         if (Objects.nonNull(message) && StringUtils.hasText(message)) {
             List<SysNotify> sysNotifies = JSON.parseArray(message, SysNotify.class);
+            SysNotifyVo notifyVo;
             for (SysNotify notify : sysNotifies) {
+                notifyVo = this.convertMapper.toNotifyVo(notify);
                 // 发送指定用户
                 if (notify.getReceiverId() != null) {
                     this.simpMessagingTemplate
-                            .convertAndSendToUser(String.valueOf(notify.getReceiverId()), "/queue/notify", Result.ok(notify));
+                            .convertAndSendToUser(String.valueOf(notify.getReceiverId()), "/queue/notify", Result.ok(notifyVo));
 
                     // 发送全体用户
                 } else {
                     this.simpMessagingTemplate
-                            .convertAndSend("/queue/notify", Result.ok(notify));
+                            .convertAndSend("/queue/notify", Result.ok(notifyVo));
                 }
             }
         }

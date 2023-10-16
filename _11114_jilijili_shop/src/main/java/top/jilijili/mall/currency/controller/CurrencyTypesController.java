@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import top.jilijili.common.entity.ApiController;
-import top.jilijili.common.entity.R;
+import top.jilijili.common.control.SuperController;
+import top.jilijili.common.entity.Result;
 import top.jilijili.mall.currency.service.CurrencyTypesService;
 import top.jilijili.module.entity.CurrencyTypes;
 
@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/currencyTypes")
 @AllArgsConstructor
-public class CurrencyTypesController extends ApiController {
+public class CurrencyTypesController extends SuperController {
     /**
      * 服务对象
      */
@@ -36,8 +36,8 @@ public class CurrencyTypesController extends ApiController {
      * @return 所有数据
      */
     @GetMapping("/type/list")
-    public R selectAll(Page<CurrencyTypes> page, CurrencyTypes shopCurrencyTypes) {
-        return success(this.currencyTypesService.page(page, new QueryWrapper<>(shopCurrencyTypes)));
+    public Result<Page<CurrencyTypes>> selectAll(Page<CurrencyTypes> page, CurrencyTypes shopCurrencyTypes) {
+        return Result.ok(this.currencyTypesService.page(page, new QueryWrapper<>(shopCurrencyTypes)));
     }
 
     /**
@@ -47,30 +47,30 @@ public class CurrencyTypesController extends ApiController {
      * @return 单条数据
      */
     @GetMapping("/type/{id}")
-    public R selectOne(@PathVariable Serializable id) {
-        return success(this.currencyTypesService.getById(id));
+    public Result<CurrencyTypes> selectOne(@PathVariable Serializable id) {
+        return Result.ok(this.currencyTypesService.getById(id));
     }
 
     /**
      * 新增数据
      *
-     * @param shopCurrencyTypes 实体对象
+     * @param currencyTypes 实体对象
      * @return 新增结果
      */
     @PostMapping("/type")
-    public R insert(@RequestBody CurrencyTypes shopCurrencyTypes) {
-        return success(this.currencyTypesService.save(shopCurrencyTypes));
+    public Result<CurrencyTypes> insert(@RequestBody CurrencyTypes currencyTypes) {
+        return this.currencyTypesService.save(currencyTypes) ? Result.ok(currencyTypes, "操作成功") : Result.fail(currencyTypes, "操作失败");
     }
 
     /**
      * 修改数据
      *
-     * @param shopCurrencyTypes 实体对象
+     * @param currencyTypes 实体对象
      * @return 修改结果
      */
     @PutMapping("/type")
-    public R update(@RequestBody CurrencyTypes shopCurrencyTypes) {
-        return success(this.currencyTypesService.updateById(shopCurrencyTypes));
+    public Result<CurrencyTypes> update(@RequestBody CurrencyTypes currencyTypes) {
+        return this.currencyTypesService.updateById(currencyTypes) ? Result.ok(currencyTypes, "操作成功") : Result.fail(currencyTypes, "操作失败");
     }
 
     /**
@@ -80,8 +80,8 @@ public class CurrencyTypesController extends ApiController {
      * @return 删除结果
      */
     @DeleteMapping("/type")
-    public R delete(@RequestParam("idList") List<Long> idList) {
-        return success(this.currencyTypesService.removeByIds(idList));
+    public Result<Boolean> delete(@RequestBody List<Long> idList) {
+        return Result.ok(this.currencyTypesService.removeByIds(idList), "操作成功");
     }
 }
 
