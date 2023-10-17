@@ -11,31 +11,25 @@
 
 ### 系统效果预览
 
-![](https://github.com/havelearned/jilijili-admin/blob/main/image/Snipaste_2023-10-16_17-20-59.png)
+![](https://picst.sunbangyan.cn/2023/10/17/50ee4d467ad5027abec85bcd34680328.png)
+![](https://picst.sunbangyan.cn/2023/10/17/941e9ccae5440e7fb4e732041bdac525.png)
+![](https://picst.sunbangyan.cn/2023/10/17/3668ba9084dae0d84e2a771b2614cb04.png)
+![](https://picst.sunbangyan.cn/2023/10/17/b300c2dd34c2855db70e9663d9090e75.png)
+![](https://picdl.sunbangyan.cn/2023/10/17/17e34f7902e485edff23435340c8d2e5.png)
+![](https://picss.sunbangyan.cn/2023/10/17/a5624d86bc436a36da9969704f3ba7a1.png)
+![](https://picdm.sunbangyan.cn/2023/10/17/08aa7e5a88a5a4a4cdb8359d208f7909.png)
+![](https://picdm.sunbangyan.cn/2023/10/17/eee6c87f713696865a3a734b4ad834fe.png)
+![](https://picss.sunbangyan.cn/2023/10/17/c441e6ae6c55a4e374165c5b3a59f82f.png)
+![](https://picdl.sunbangyan.cn/2023/10/17/69e5ad41f22bc91b891b0ada0b966000.png)
+![](https://picdm.sunbangyan.cn/2023/10/17/9a36a2d467308fa0059f383d5fda14e7.png)
+![](https://picdl.sunbangyan.cn/2023/10/17/6f19d333126622ac52caed269e2509a6.png)
+![](https://picss.sunbangyan.cn/2023/10/17/ac9b398aad30372a3c48d9526ac791a6.png)
 
 
-
-![](https://github.com/havelearned/jilijili-admin/blob/main/image/Snipaste_2023-10-16_17-25-00.png)
-
-![](https://github.com/havelearned/jilijili-admin/blob/main/image/Snipaste_2023-10-16_17-25-36.png)
-
-![](https://github.com/havelearned/jilijili-admin/blob/main/image/Snipaste_2023-10-16_17-25-136.png)
-
-![](https://github.com/havelearned/jilijili-admin/blob/main/image/Snipaste_2023-10-16_17-27-25.png)
-
-![](https://github.com/havelearned/jilijili-admin/blob/main/image/Snipaste_2023-10-16_17-28-19.png)
-
-![](https://github.com/havelearned/jilijili-admin/blob/main/image/Snipaste_2023-10-16_17-28-52.png)
-
-![](https://github.com/havelearned/jilijili-admin/blob/main/image/Snipaste_2023-10-16_17-29-44.png)
-
-![](https://github.com/havelearned/jilijili-admin/blob/main/image/image-20231016173033389.png)
-
-![](https://github.com/havelearned/jilijili-admin/blob/main/image/Snipaste_2023-10-16_17-31-16.png)
 
 ### 后台目录结构
 
-![image-20231016165618150](https://github.com/havelearned/jilijili-admin/blob/main/image/image-20231016165618150.png)
+![](https://picdl.sunbangyan.cn/2023/10/17/c784dbb7db7a7031f0338872d62aaac8.png)
 
 ### 技术架构
 
@@ -106,7 +100,7 @@
 
 #### 微服务架构图
 
-![](https://github.com/havelearned/jilijili-admin/blob/main/image/Snipaste_2023-10-16_17-19-03.png)
+![](image\Snipaste_2023-10-16_17-19-03.png)
 
 
 
