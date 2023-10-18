@@ -1,7 +1,12 @@
 package top.jilijili.mall.currency.service;
 
-import top.jilijili.module.entity.VirtualCurrency;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.jilijili.module.pojo.dto.currency.VirtualCurrencyDto;
+import top.jilijili.module.pojo.entity.currency.VirtualCurrency;
+import top.jilijili.module.pojo.vo.currency.VirtualCurrencyVo;
+
+import java.io.Serializable;
 
 /**
 * @author admin
@@ -10,4 +15,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface VirtualCurrencyService extends IService<VirtualCurrency> {
 
+    Page<VirtualCurrencyVo> selectAll(VirtualCurrencyDto dto);
+
+
+
+    VirtualCurrencyVo selectOne(Serializable id);
 }

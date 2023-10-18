@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.mall.shop.mapper.OrdersMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.Orders">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.pojo.entity.shop.Orders">
         <id property="orderId" column="order_id" jdbcType="BIGINT"/>
         <result property="userId" column="user_id" jdbcType="BIGINT"/>
         <result property="orderDate" column="order_date" jdbcType="TIMESTAMP"/>
@@ -20,7 +20,7 @@
                 order_status, total_amount, created_time,
                 updated_time
     </sql>
-    <select id="queryOrderToDayData" resultType="top.jilijili.module.entity.vo.OrderEChartsVo">
+    <select id="queryOrderToDayData" resultType="top.jilijili.module.pojo.vo.shop.OrderEChartsVo">
         select date(created_time)                      as created_time,
                sum(if (order_status = '已完成', 1, 0)) as completed_orders,
                sum(if (order_status = '未完成', 1, 0)) as incomplete_orders,
@@ -30,7 +30,7 @@
         where date(created_time) = curdate()
         group by created_time;
     </select>
-    <select id="queryOrdersByDate" resultType="top.jilijili.module.entity.vo.OrderEChartsVo">
+    <select id="queryOrdersByDate" resultType="top.jilijili.module.pojo.vo.shop.OrderEChartsVo">
         select date(created_time) as created_time,
         sum(if (order_status = '已完成', 1, 0)) as completed_orders,
         sum(if (order_status = '未完成', 1, 0)) as incomplete_orders,
@@ -45,7 +45,7 @@
         group by created_time;
     </select>
 
-    <select id="selectOrderListByUserId" resultType="top.jilijili.module.entity.vo.OrdersVo">
+    <select id="selectOrderListByUserId" resultType="top.jilijili.module.pojo.vo.shop.OrdersVo">
         select o.*, u.user_id, u.nickname, u.avatar
         from shop_orders o
                  inner join sys_user u on o.user_id = u.user_id
@@ -54,7 +54,7 @@
 
     </select>
 
-    <select id="selectOrderList" resultType="top.jilijili.module.entity.vo.OrdersVo">
+    <select id="selectOrderList" resultType="top.jilijili.module.pojo.vo.shop.OrdersVo">
         select o.*, u.user_id, u.nickname, u.avatar
         from shop_orders o
                  left join sys_user u on o.user_id = u.user_id
@@ -92,7 +92,7 @@
         WHERE o.order_id = #{orderId}
     </select>
 
-    <resultMap id="orderInfoResultMap" type="top.jilijili.module.entity.vo.OrdersVo">
+    <resultMap id="orderInfoResultMap" type="top.jilijili.module.pojo.vo.shop.OrdersVo">
         <id property="orderId" column="order_id"/>
 
         <result property="userId" column="user_id" jdbcType="BIGINT"/>
@@ -101,18 +101,18 @@
         <result property="totalAmount" column="total_amount" jdbcType="DECIMAL"/>
         <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
         <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
-        <association property="user" javaType="top.jilijili.module.entity.vo.SysUserVo">
+        <association property="user" javaType="top.jilijili.module.pojo.vo.sys.SysUserVo">
             <id property="userId" column="user_id"/>
             <result property="nickname" column="nickname"/>
             <result property="avatar" column="avatar"/>
         </association>
 
-        <collection property="ordersItem" ofType="top.jilijili.module.entity.vo.OrdersItemVo">
+        <collection property="ordersItem" ofType="top.jilijili.module.pojo.vo.shop.OrdersItemVo">
             <result property="itemId" column="item_id"/>
             <result property="quantity" column="quantity"/>
             <result property="subtotal" column="subtotal"/>
 
-            <association property="products" javaType="top.jilijili.module.entity.vo.ProductsVo">
+            <association property="products" javaType="top.jilijili.module.pojo.vo.shop.ProductsVo">
                 <id property="productId" column="product_id"/>
                 <result property="productName" column="product_name"/>
                 <result property="imageUrl" column="image_url"/>
@@ -121,7 +121,7 @@
                 <!-- Other properties of Product -->
             </association>
 
-            <association property="categories" javaType="top.jilijili.module.entity.Categories">
+            <association property="categories" javaType="top.jilijili.module.pojo.entity.shop.Categories">
                 <id property="categoryId" column="category_id"/>
                 <result property="categoryName" column="category_name"/>
                 <!-- Other properties of Category -->

@@ -19,14 +19,14 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.jilijili.common.group.Insert;
-import top.jilijili.module.entity.SysMenu;
-import top.jilijili.module.entity.SysRole;
-import top.jilijili.module.entity.SysUser;
-import top.jilijili.module.entity.dto.SysRoleDto;
-import top.jilijili.module.entity.dto.SysUserDto;
+import top.jilijili.module.pojo.entity.sys.SysMenu;
+import top.jilijili.module.pojo.entity.sys.SysRole;
+import top.jilijili.module.pojo.entity.sys.SysUser;
+import top.jilijili.module.pojo.dto.sys.SysRoleDto;
+import top.jilijili.module.pojo.dto.sys.SysUserDto;
 import top.jilijili.common.entity.Result;
-import top.jilijili.module.entity.vo.SysRoleVo;
-import top.jilijili.module.entity.vo.SysUserVo;
+import top.jilijili.module.pojo.vo.sys.SysRoleVo;
+import top.jilijili.module.pojo.vo.sys.SysUserVo;
 import top.jilijili.system.common.aspect.annotation.RestrictAccess;
 import top.jilijili.system.common.utils.KeyConstants;
 import top.jilijili.system.mapper.ConvertMapper;
@@ -184,10 +184,7 @@ public class SysUserController {
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>(convertMapper.toSysUserEnetity(sysUserDto));
         page = this.sysUserService.page(page, queryWrapper);
 
-        return Result.ok(page.convert(item -> {
-            SysUserVo sysUserVo = convertMapper.toSysUserVo(item);
-            return sysUserVo;
-        }));
+        return Result.ok(page.convert(convertMapper::toSysUserVo));
 
     }
 

@@ -1,6 +1,6 @@
 package top.jilijili.mall.currency.service;
 
-import top.jilijili.module.entity.TransactionHistory;
+import top.jilijili.module.pojo.entity.currency.TransactionHistory;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

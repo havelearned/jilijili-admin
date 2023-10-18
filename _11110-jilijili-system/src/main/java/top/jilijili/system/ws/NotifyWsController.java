@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
-import top.jilijili.module.entity.SysNotify;
+import top.jilijili.module.pojo.entity.sys.SysNotify;
 
 import java.util.Objects;
 

@@ -17,10 +17,10 @@ import top.jilijili.common.entity.Result;
 import top.jilijili.common.utils.KeyConstants;
 import top.jilijili.common.utils.MinioUtil;
 import top.jilijili.common.utils.WebUtil;
-import top.jilijili.module.entity.MusicSinger;
-import top.jilijili.module.entity.MusicSong;
-import top.jilijili.module.entity.dto.MusicSingerDto;
-import top.jilijili.module.entity.vo.MusicSingerVo;
+import top.jilijili.module.pojo.entity.music.MusicSinger;
+import top.jilijili.module.pojo.entity.music.MusicSong;
+import top.jilijili.module.pojo.dto.music.MusicSingerDto;
+import top.jilijili.module.pojo.vo.music.MusicSingerVo;
 import wang.jilijili.musics.mapper.ConvertMapper;
 import wang.jilijili.musics.service.MusicSingerService;
 

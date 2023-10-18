@@ -1,7 +1,7 @@
 package top.jilijili.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.jilijili.module.entity.SysDict;
+import top.jilijili.module.pojo.entity.sys.SysDict;
 
 /**
 * @author admin

@@ -2,10 +2,10 @@ package top.jilijili.mall.shop.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import top.jilijili.common.entity.Result;
-import top.jilijili.module.entity.Promocodes;
+import top.jilijili.module.pojo.entity.shop.Promocodes;
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.jilijili.module.entity.dto.PromocodesDto;
-import top.jilijili.module.entity.vo.PromocodesVo;
+import top.jilijili.module.pojo.dto.shop.PromocodesDto;
+import top.jilijili.module.pojo.vo.shop.PromocodesVo;
 
 import java.io.Serializable;
 import java.util.List;

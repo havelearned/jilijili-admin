@@ -2,7 +2,7 @@ package top.jilijili.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import top.jilijili.module.entity.SysDict;
+import top.jilijili.module.pojo.entity.sys.SysDict;
 
 /**
 * @author admin

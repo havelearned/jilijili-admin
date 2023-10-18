@@ -1,6 +1,6 @@
 package top.jilijili.system.service;
 
-import top.jilijili.module.entity.SysUserRole;
+import top.jilijili.module.pojo.entity.sys.SysUserRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

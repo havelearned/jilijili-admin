@@ -1,7 +1,7 @@
 package top.jilijili.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import top.jilijili.module.entity.SysUserRole;
+import top.jilijili.module.pojo.entity.sys.SysUserRole;
 import top.jilijili.system.service.SysUserRoleService;
 import top.jilijili.system.mapper.SysUserRoleMapper;
 import org.springframework.stereotype.Service;

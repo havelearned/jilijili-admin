@@ -7,9 +7,9 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 import top.jilijili.common.entity.Result;
 import top.jilijili.mall.shop.mapper.ConvertMapper;
-import top.jilijili.module.entity.Orders;
-import top.jilijili.module.entity.dto.OrdersDto;
-import top.jilijili.module.entity.vo.OrdersVo;
+import top.jilijili.module.pojo.entity.shop.Orders;
+import top.jilijili.module.pojo.dto.shop.OrdersDto;
+import top.jilijili.module.pojo.vo.shop.OrdersVo;
 import top.jilijili.mall.shop.service.OrdersService;
 
 import java.io.Serializable;

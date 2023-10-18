@@ -2,10 +2,10 @@ package top.jilijili.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.jilijili.module.entity.SysMenu;
-import top.jilijili.module.entity.dto.SysMenuDto;
-import top.jilijili.module.entity.dto.SysRoleMenuDto;
-import top.jilijili.module.entity.vo.SysMenuVo;
+import top.jilijili.module.pojo.entity.sys.SysMenu;
+import top.jilijili.module.pojo.dto.sys.SysMenuDto;
+import top.jilijili.module.pojo.dto.sys.SysRoleMenuDto;
+import top.jilijili.module.pojo.vo.sys.SysMenuVo;
 
 import java.io.Serializable;
 import java.util.Map;

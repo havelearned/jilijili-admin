@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
-import top.jilijili.module.entity.SysNotify;
+import top.jilijili.module.pojo.entity.sys.SysNotify;
 import top.jilijili.system.pattern.PublishMode;
 
 import java.util.List;

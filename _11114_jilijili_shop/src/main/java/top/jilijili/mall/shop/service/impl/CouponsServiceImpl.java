@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import top.jilijili.common.entity.Result;
 import top.jilijili.mall.shop.mapper.ConvertMapper;
-import top.jilijili.module.entity.Coupons;
-import top.jilijili.module.entity.dto.CouponsDto;
-import top.jilijili.module.entity.dto.SysUserDto;
-import top.jilijili.module.entity.vo.CouponsVo;
-import top.jilijili.module.entity.vo.UserWithCouponsVo;
+import top.jilijili.module.pojo.entity.shop.Coupons;
+import top.jilijili.module.pojo.dto.shop.CouponsDto;
+import top.jilijili.module.pojo.dto.sys.SysUserDto;
+import top.jilijili.module.pojo.vo.shop.CouponsVo;
+import top.jilijili.module.pojo.vo.shop.UserWithCouponsVo;
 import top.jilijili.mall.shop.mapper.CouponsMapper;
 import top.jilijili.mall.shop.service.CouponsService;
 

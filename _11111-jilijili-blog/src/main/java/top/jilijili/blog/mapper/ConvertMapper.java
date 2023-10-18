@@ -3,18 +3,18 @@ package top.jilijili.blog.mapper;
 
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
-import top.jilijili.module.entity.Article;
-import top.jilijili.module.entity.Category;
-import top.jilijili.module.entity.Comment;
-import top.jilijili.module.entity.Tag;
-import top.jilijili.module.entity.dto.ArticleDto;
-import top.jilijili.module.entity.dto.CategoryDto;
-import top.jilijili.module.entity.dto.CommentDto;
-import top.jilijili.module.entity.dto.TagDto;
-import top.jilijili.module.entity.vo.ArticleVo;
-import top.jilijili.module.entity.vo.CategoryVo;
-import top.jilijili.module.entity.vo.CommentVo;
-import top.jilijili.module.entity.vo.TagVo;
+import top.jilijili.module.pojo.entity.blog.Article;
+import top.jilijili.module.pojo.entity.blog.Category;
+import top.jilijili.module.pojo.entity.blog.Comment;
+import top.jilijili.module.pojo.entity.blog.Tag;
+import top.jilijili.module.pojo.dto.blog.ArticleDto;
+import top.jilijili.module.pojo.dto.blog.CategoryDto;
+import top.jilijili.module.pojo.dto.blog.CommentDto;
+import top.jilijili.module.pojo.dto.blog.TagDto;
+import top.jilijili.module.pojo.vo.blog.ArticleVo;
+import top.jilijili.module.pojo.vo.blog.CategoryVo;
+import top.jilijili.module.pojo.vo.blog.CommentVo;
+import top.jilijili.module.pojo.vo.blog.TagVo;
 
 /**
  * @author Amani

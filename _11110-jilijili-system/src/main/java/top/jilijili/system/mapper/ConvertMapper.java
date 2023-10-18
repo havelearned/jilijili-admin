@@ -3,9 +3,21 @@ package top.jilijili.system.mapper;
 
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
-import top.jilijili.module.entity.*;
-import top.jilijili.module.entity.dto.*;
-import top.jilijili.module.entity.vo.*;
+import top.jilijili.module.pojo.dto.music.MusicAlbumDto;
+import top.jilijili.module.pojo.dto.music.MusicSingerDto;
+import top.jilijili.module.pojo.dto.music.MusicSongDto;
+import top.jilijili.module.pojo.dto.shop.CmRecordDto;
+import top.jilijili.module.pojo.dto.sys.*;
+import top.jilijili.module.pojo.entity.chat.CmRecord;
+import top.jilijili.module.pojo.entity.music.MusicAlbum;
+import top.jilijili.module.pojo.entity.music.MusicSinger;
+import top.jilijili.module.pojo.entity.music.MusicSong;
+import top.jilijili.module.pojo.entity.sys.*;
+import top.jilijili.module.pojo.vo.chat.CmRecordVo;
+import top.jilijili.module.pojo.vo.music.MusicAlbumVo;
+import top.jilijili.module.pojo.vo.music.MusicSingerVo;
+import top.jilijili.module.pojo.vo.music.MusicSongVo;
+import top.jilijili.module.pojo.vo.sys.*;
 
 /**
  * @author Amani

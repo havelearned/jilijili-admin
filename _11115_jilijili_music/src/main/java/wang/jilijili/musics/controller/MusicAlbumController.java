@@ -16,9 +16,9 @@ import top.jilijili.common.entity.Result;
 import top.jilijili.common.utils.KeyConstants;
 import top.jilijili.common.utils.MinioUtil;
 import top.jilijili.common.utils.WebUtil;
-import top.jilijili.module.entity.MusicAlbum;
-import top.jilijili.module.entity.dto.MusicAlbumDto;
-import top.jilijili.module.entity.vo.MusicAlbumVo;
+import top.jilijili.module.pojo.entity.music.MusicAlbum;
+import top.jilijili.module.pojo.dto.music.MusicAlbumDto;
+import top.jilijili.module.pojo.vo.music.MusicAlbumVo;
 import wang.jilijili.musics.mapper.ConvertMapper;
 import wang.jilijili.musics.service.MusicAlbumService;
 

@@ -10,7 +10,7 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import top.jilijili.system.common.config.MinioConfig;
-import top.jilijili.system.heandler.JiliException;
+import top.jilijili.common.heandler.JiliException;;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;

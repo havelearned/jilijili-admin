@@ -2,7 +2,7 @@ package top.jilijili.system.pattern;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import top.jilijili.module.entity.SysNotify;
+import top.jilijili.module.pojo.entity.sys.SysNotify;
 
 import java.util.List;
 

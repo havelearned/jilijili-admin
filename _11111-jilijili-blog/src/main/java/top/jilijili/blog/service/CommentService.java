@@ -2,9 +2,9 @@ package top.jilijili.blog.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.jilijili.module.entity.Comment;
-import top.jilijili.module.entity.dto.CommentDto;
-import top.jilijili.module.entity.vo.CommentVo;
+import top.jilijili.module.pojo.entity.blog.Comment;
+import top.jilijili.module.pojo.dto.blog.CommentDto;
+import top.jilijili.module.pojo.vo.blog.CommentVo;
 
 /**
 * @author admin

@@ -2,8 +2,8 @@ package wang.jilijili.musics.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.jilijili.common.entity.Result;
-import top.jilijili.module.entity.MusicSinger;
-import top.jilijili.module.entity.MusicSong;
+import top.jilijili.module.pojo.entity.music.MusicSinger;
+import top.jilijili.module.pojo.entity.music.MusicSong;
 
 import java.io.Serializable;
 

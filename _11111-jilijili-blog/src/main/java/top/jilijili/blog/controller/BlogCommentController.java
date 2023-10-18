@@ -10,9 +10,9 @@ import top.jilijili.blog.service.CommentService;
 import top.jilijili.common.control.SuperController;
 import top.jilijili.common.entity.Result;
 import top.jilijili.common.group.Query;
-import top.jilijili.module.entity.Comment;
-import top.jilijili.module.entity.dto.CommentDto;
-import top.jilijili.module.entity.vo.CommentVo;
+import top.jilijili.module.pojo.entity.blog.Comment;
+import top.jilijili.module.pojo.dto.blog.CommentDto;
+import top.jilijili.module.pojo.vo.blog.CommentVo;
 
 import java.io.Serializable;
 import java.util.List;

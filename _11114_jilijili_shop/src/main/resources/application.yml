@@ -4,6 +4,11 @@ server:
   servlet:
     context-path: /shop
 
+figen:
+  client:
+    url:
+      sys: http://localhost:11110
+
 spring:
   application:
     name: _11114_jilijili_shop

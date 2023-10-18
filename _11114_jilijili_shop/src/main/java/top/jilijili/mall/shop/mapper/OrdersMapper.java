@@ -6,10 +6,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import top.jilijili.module.entity.Orders;
-import top.jilijili.module.entity.dto.OrdersDto;
-import top.jilijili.module.entity.vo.OrderEChartsVo;
-import top.jilijili.module.entity.vo.OrdersVo;
+import top.jilijili.module.pojo.entity.shop.Orders;
+import top.jilijili.module.pojo.dto.shop.OrdersDto;
+import top.jilijili.module.pojo.vo.shop.OrderEChartsVo;
+import top.jilijili.module.pojo.vo.shop.OrdersVo;
 
 import java.io.Serializable;
 import java.util.List;

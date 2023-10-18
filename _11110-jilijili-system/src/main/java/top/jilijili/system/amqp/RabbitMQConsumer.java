@@ -7,9 +7,9 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import top.jilijili.module.entity.SysNotify;
+import top.jilijili.module.pojo.entity.sys.SysNotify;
 import top.jilijili.common.entity.Result;
-import top.jilijili.module.entity.vo.SysNotifyVo;
+import top.jilijili.module.pojo.vo.sys.SysNotifyVo;
 import top.jilijili.system.mapper.ConvertMapper;
 
 import java.util.List;

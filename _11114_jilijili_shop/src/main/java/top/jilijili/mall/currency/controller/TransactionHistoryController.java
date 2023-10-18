@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import top.jilijili.common.entity.ApiController;
 import top.jilijili.common.entity.Result;
 import top.jilijili.mall.currency.service.TransactionHistoryService;
-import top.jilijili.module.entity.TransactionHistory;
+import top.jilijili.module.pojo.entity.currency.TransactionHistory;
 
 import java.io.Serializable;
 import java.util.List;

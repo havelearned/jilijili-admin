@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
-import top.jilijili.module.entity.dto.CmRecordDto;
+import top.jilijili.module.pojo.dto.shop.CmRecordDto;
 import top.jilijili.common.entity.Result;
 import top.jilijili.system.mapper.ConvertMapper;
 import top.jilijili.system.service.CmRecordService;

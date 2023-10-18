@@ -13,11 +13,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import top.jilijili.common.entity.Result;
-import top.jilijili.module.entity.SysNotify;
-import top.jilijili.module.entity.dto.SysNotifyDto;
-import top.jilijili.module.entity.vo.SysNotifyVo;
-import top.jilijili.system.common.enums.ErrorType;
-import top.jilijili.system.heandler.JiliException;
+import top.jilijili.common.heandler.JiliException;
+import top.jilijili.module.pojo.entity.sys.SysNotify;
+import top.jilijili.module.pojo.dto.sys.SysNotifyDto;
+import top.jilijili.module.pojo.vo.sys.SysNotifyVo;
 import top.jilijili.system.mapper.ConvertMapper;
 import top.jilijili.system.mapper.SysNotifyMapper;
 import top.jilijili.system.pattern.PublishService;
@@ -112,7 +111,7 @@ public class SysNotifyServiceImpl extends ServiceImpl<SysNotifyMapper, SysNotify
         // 添加
         boolean saved = this.saveBatch(sysNotifies);
         if (!saved) {// 操作失败
-            throw new JiliException(ErrorType.OPERATION_FAILED);
+            throw new JiliException(top.jilijili.common.enums.ErrorType.OPERATION_FAILED);
         }
 
         // 1: 添加并且立即发布      * 2: 草稿      * 3: 定时发布
@@ -147,7 +146,7 @@ public class SysNotifyServiceImpl extends ServiceImpl<SysNotifyMapper, SysNotify
                 this.publishService.publishNotify(3, list);
             }
             default -> {
-                throw new JiliException(ErrorType.OPERATION_FAILED);
+                throw new JiliException(top.jilijili.common.enums.ErrorType.OPERATION_FAILED);
             }
         }
     }

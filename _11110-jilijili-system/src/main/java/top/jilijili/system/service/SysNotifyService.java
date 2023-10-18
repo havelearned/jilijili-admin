@@ -2,10 +2,10 @@ package top.jilijili.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.jilijili.module.entity.SysNotify;
-import top.jilijili.module.entity.dto.SysNotifyDto;
+import top.jilijili.module.pojo.entity.sys.SysNotify;
+import top.jilijili.module.pojo.dto.sys.SysNotifyDto;
 import top.jilijili.common.entity.Result;
-import top.jilijili.module.entity.vo.SysNotifyVo;
+import top.jilijili.module.pojo.vo.sys.SysNotifyVo;
 
 /**
 * @author admin

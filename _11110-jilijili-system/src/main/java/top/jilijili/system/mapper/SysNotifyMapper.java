@@ -7,8 +7,8 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import top.jilijili.module.entity.SysNotify;
-import top.jilijili.module.entity.vo.SysNotifyVo;
+import top.jilijili.module.pojo.entity.sys.SysNotify;
+import top.jilijili.module.pojo.vo.sys.SysNotifyVo;
 
 /**
  * @author admin

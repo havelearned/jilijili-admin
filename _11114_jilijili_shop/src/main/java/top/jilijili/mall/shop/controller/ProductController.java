@@ -1,7 +1,7 @@
 package top.jilijili.mall.shop.controller;
 
 
-import  com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -10,15 +10,16 @@ import reactor.core.scheduler.Schedulers;
 import top.jilijili.common.entity.Item;
 import top.jilijili.common.entity.Result;
 import top.jilijili.mall.shop.mapper.ConvertMapper;
-import top.jilijili.module.entity.Categories;
-import top.jilijili.module.entity.Products;
-import top.jilijili.module.entity.dto.CategoryDto;
-import top.jilijili.module.entity.dto.ProductsDto;
-import top.jilijili.module.entity.vo.CartsVo;
-import top.jilijili.module.entity.vo.ProductsVo;
 import top.jilijili.mall.shop.service.CartsService;
 import top.jilijili.mall.shop.service.CategoriesService;
 import top.jilijili.mall.shop.service.ProductsService;
+import top.jilijili.module.pojo.dto.blog.CategoryDto;
+import top.jilijili.module.pojo.dto.shop.CategoriesDto;
+import top.jilijili.module.pojo.dto.shop.ProductsDto;
+import top.jilijili.module.pojo.entity.shop.Categories;
+import top.jilijili.module.pojo.entity.shop.Products;
+import top.jilijili.module.pojo.vo.shop.CartsVo;
+import top.jilijili.module.pojo.vo.shop.ProductsVo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -76,12 +77,12 @@ public class ProductController extends ShopSuperController {
     /**
      * 分页查询商品分类字典列表
      *
-     * @param categoryDto
+     * @param dto
      * @return label, value object a list
      */
     @GetMapping("/categories/list/dict")
-    public Mono<Result<IPage<Item>>> getCategoriesListDict(CategoryDto categoryDto) {
-        return Mono.just(this.categoriesService.getCategoriesListDict(categoryDto));
+    public Mono<Result<IPage<Item>>> getCategoriesListDict(CategoriesDto dto) {
+        return Mono.just(this.categoriesService.getCategoriesListDict(dto));
     }
 
     /**
@@ -91,7 +92,7 @@ public class ProductController extends ShopSuperController {
      * @return 分类列表
      */
     @GetMapping("/categories/list")
-    public Mono<Result<Page<Categories>>> getCategoriesList(CategoryDto categoryDto) {
+    public Mono<Result<Page<Categories>>> getCategoriesList(CategoriesDto categoryDto) {
         return Mono.just(this.categoriesService.getCategoriesList(categoryDto));
     }
 

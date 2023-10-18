@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import top.jilijili.module.entity.Comment;
-import top.jilijili.module.entity.vo.CommentVo;
+import top.jilijili.module.pojo.entity.blog.Comment;
+import top.jilijili.module.pojo.vo.blog.CommentVo;
 
 import java.util.List;
 

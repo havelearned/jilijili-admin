@@ -1,14 +1,19 @@
 package top.jilijili.mall.currency.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import top.jilijili.common.control.SuperController;
 import top.jilijili.common.entity.Result;
+import top.jilijili.mall.currency.feign.UserServiceFigen;
 import top.jilijili.mall.currency.service.CurrencyTypesService;
-import top.jilijili.module.entity.CurrencyTypes;
+import top.jilijili.module.pojo.dto.currency.CurrencyTypesDto;
+import top.jilijili.module.pojo.dto.sys.SysUserDto;
+import top.jilijili.module.pojo.entity.currency.CurrencyTypes;
+import top.jilijili.module.pojo.vo.sys.SysUserVo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/currencyTypes")
 @AllArgsConstructor
+@Slf4j
 public class CurrencyTypesController extends SuperController {
     /**
      * 服务对象
@@ -31,13 +37,13 @@ public class CurrencyTypesController extends SuperController {
     /**
      * 分页查询所有数据
      *
-     * @param page              分页对象
-     * @param shopCurrencyTypes 查询实体
+     * @param dto 查询实体
      * @return 所有数据
      */
     @GetMapping("/type/list")
-    public Result<Page<CurrencyTypes>> selectAll(Page<CurrencyTypes> page, CurrencyTypes shopCurrencyTypes) {
-        return Result.ok(this.currencyTypesService.page(page, new QueryWrapper<>(shopCurrencyTypes)));
+    public Result<Page<CurrencyTypes>> selectAll(CurrencyTypesDto dto) {
+
+        return Result.ok(this.currencyTypesService.selectAll(dto));
     }
 
     /**
@@ -59,7 +65,8 @@ public class CurrencyTypesController extends SuperController {
      */
     @PostMapping("/type")
     public Result<CurrencyTypes> insert(@RequestBody CurrencyTypes currencyTypes) {
-        return this.currencyTypesService.save(currencyTypes) ? Result.ok(currencyTypes, "操作成功") : Result.fail(currencyTypes, "操作失败");
+        return this.currencyTypesService.save(currencyTypes) ?
+                Result.ok(currencyTypes, "操作成功") : Result.fail(currencyTypes, "操作失败");
     }
 
     /**
@@ -70,7 +77,8 @@ public class CurrencyTypesController extends SuperController {
      */
     @PutMapping("/type")
     public Result<CurrencyTypes> update(@RequestBody CurrencyTypes currencyTypes) {
-        return this.currencyTypesService.updateById(currencyTypes) ? Result.ok(currencyTypes, "操作成功") : Result.fail(currencyTypes, "操作失败");
+        return this.currencyTypesService.updateById(currencyTypes) ?
+                Result.ok(currencyTypes, "操作成功") : Result.fail(currencyTypes, "操作失败");
     }
 
     /**
@@ -81,7 +89,8 @@ public class CurrencyTypesController extends SuperController {
      */
     @DeleteMapping("/type")
     public Result<Boolean> delete(@RequestBody List<Long> idList) {
-        return Result.ok(this.currencyTypesService.removeByIds(idList), "操作成功");
+        return this.currencyTypesService.removeByIds(idList) ?
+                Result.ok(null, "操作成功") : Result.fail("操作失败");
     }
 }
 

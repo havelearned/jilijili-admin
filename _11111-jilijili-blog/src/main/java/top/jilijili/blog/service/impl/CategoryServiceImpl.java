@@ -1,7 +1,7 @@
 package top.jilijili.blog.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import top.jilijili.module.entity.Category;
+import top.jilijili.module.pojo.entity.blog.Category;
 import top.jilijili.blog.service.CategoryService;
 import top.jilijili.blog.mapper.CategoryMapper;
 import org.springframework.stereotype.Service;

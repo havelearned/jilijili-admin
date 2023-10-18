@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.mall.shop.mapper.UserCouponsMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.UserCoupons">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.pojo.entity.shop.UserCoupons">
             <id property="userCouponId" column="user_coupon_id" jdbcType="BIGINT"/>
             <result property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="couponId" column="coupon_id" jdbcType="BIGINT"/>

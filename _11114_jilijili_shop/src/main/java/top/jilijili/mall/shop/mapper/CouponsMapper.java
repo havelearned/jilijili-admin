@@ -6,9 +6,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import top.jilijili.module.entity.Coupons;
-import top.jilijili.module.entity.vo.CouponsVo;
-import top.jilijili.module.entity.vo.UserWithCouponsVo;
+import top.jilijili.module.pojo.entity.shop.Coupons;
+import top.jilijili.module.pojo.vo.shop.CouponsVo;
+import top.jilijili.module.pojo.vo.shop.UserWithCouponsVo;
 
 /**
  * @author admin

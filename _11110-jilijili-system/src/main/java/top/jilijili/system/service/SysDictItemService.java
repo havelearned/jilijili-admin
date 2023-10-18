@@ -2,9 +2,9 @@ package top.jilijili.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.jilijili.module.entity.SysDictItem;
-import top.jilijili.module.entity.dto.ChooseEntityDto;
-import top.jilijili.module.entity.vo.SysDictItemVo;
+import top.jilijili.module.pojo.entity.sys.SysDictItem;
+import top.jilijili.module.pojo.dto.ChooseEntityDto;
+import top.jilijili.module.pojo.vo.sys.SysDictItemVo;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.mall.currency.mapper.TransactionHistoryMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.TransactionHistory">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.pojo.entity.currency.TransactionHistory">
             <id property="transactionId" column="transaction_id" jdbcType="BIGINT"/>
             <result property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="currencyTypeId" column="currency_type_id" jdbcType="BIGINT"/>

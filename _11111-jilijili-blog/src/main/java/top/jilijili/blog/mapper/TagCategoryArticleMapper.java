@@ -2,7 +2,7 @@ package top.jilijili.blog.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import top.jilijili.module.entity.TagCategoryArticle;
+import top.jilijili.module.pojo.entity.blog.TagCategoryArticle;
 
 /**
 * @author admin

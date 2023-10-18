@@ -15,9 +15,9 @@ import top.jilijili.common.entity.Result;
 import top.jilijili.common.heandler.JiliException;
 import top.jilijili.mall.shop.mapper.ConvertMapper;
 import top.jilijili.mall.shop.service.PromocodesService;
-import top.jilijili.module.entity.Promocodes;
-import top.jilijili.module.entity.dto.PromocodesDto;
-import top.jilijili.module.entity.vo.PromocodesVo;
+import top.jilijili.module.pojo.entity.shop.Promocodes;
+import top.jilijili.module.pojo.dto.shop.PromocodesDto;
+import top.jilijili.module.pojo.vo.shop.PromocodesVo;
 import top.jilijili.mall.shop.mapper.PromocodesMapper;
 
 import java.io.Serializable;

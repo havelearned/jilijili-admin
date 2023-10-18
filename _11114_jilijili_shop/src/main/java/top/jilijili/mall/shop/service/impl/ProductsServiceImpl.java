@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import top.jilijili.mall.shop.mapper.ConvertMapper;
 import top.jilijili.mall.shop.mapper.ProductsMapper;
-import top.jilijili.module.entity.Products;
-import top.jilijili.module.entity.dto.ProductsDto;
-import top.jilijili.module.entity.vo.ProductsEChartsVo;
-import top.jilijili.module.entity.vo.ProductsVo;
+import top.jilijili.module.pojo.entity.shop.Products;
+import top.jilijili.module.pojo.dto.shop.ProductsDto;
+import top.jilijili.module.pojo.vo.shop.ProductsEChartsVo;
+import top.jilijili.module.pojo.vo.shop.ProductsVo;
 import top.jilijili.mall.shop.service.ProductsService;
 
 import java.util.*;

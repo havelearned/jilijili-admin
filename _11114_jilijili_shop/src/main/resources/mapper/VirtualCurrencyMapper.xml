@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.mall.currency.mapper.VirtualCurrencyMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.VirtualCurrency">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.pojo.entity.currency.VirtualCurrency">
             <id property="currencyId" column="currency_id" jdbcType="BIGINT"/>
             <result property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="currencyTypeId" column="currency_type_id" jdbcType="BIGINT"/>
@@ -17,4 +17,32 @@
         currency_id,user_id,currency_type_id,
         balance,created_time,updated_time
     </sql>
+
+
+    <resultMap id="BaseResultMapVo" type="top.jilijili.module.pojo.vo.currency.VirtualCurrencyVo">
+        <id property="currencyId" column="currency_id" jdbcType="BIGINT"/>
+        <result property="balance" column="balance" jdbcType="DECIMAL"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        <association property="sysUser" javaType="top.jilijili.module.pojo.vo.sys.SysUserVo">
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+            <result property="userType" column="user_type" jdbcType="VARCHAR"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+            <result property="gender" column="gender" jdbcType="TINYINT"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="phonenumber" column="phonenumber" jdbcType="VARCHAR"/>
+        </association>
+        <association property="currencyTypes" resultMap="top.jilijili.mall.currency.mapper.CurrencyTypesMapper.BaseResultMap"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="BaseResultMapVo">
+        select svc.currency_id,  svc.balance, svc.created_time, svc.updated_time,
+               sct.currency_type_id, sct.currency_name, sct.currency_code,
+               su.user_id, su.username, su.nickname, su.avatar, su.gender, su.email, su.phonenumber
+        from shop_virtual_currency svc
+                 left join sys_user su on svc.user_id = su.user_id
+                 left join shop_currency_types sct on sct.currency_type_id = svc.currency_type_id
+        ${ew.customSqlSegment}
+    </select>
 </mapper>

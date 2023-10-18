@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.mall.shop.mapper.ProductsMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.Products">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.pojo.entity.shop.Products">
             <id property="productId" column="product_id" jdbcType="BIGINT"/>
             <result property="categoryId" column="category_id" jdbcType="BIGINT"/>
             <result property="productName" column="product_name" jdbcType="VARCHAR"/>
@@ -28,7 +28,7 @@
         where date(created_time) = curdate();
     </select>
 
-    <select id="queryProductsByDateData" resultType="top.jilijili.module.entity.vo.ProductsEChartsVo">
+    <select id="queryProductsByDateData" resultType="top.jilijili.module.pojo.vo.shop.ProductsEChartsVo">
         select date(created_time) as created_time, count(*) as today_added_total
         from shop_products
         where created_time between #{productsDto.createdTime} and #{productsDto.comparisonTime}

@@ -194,18 +194,18 @@ create table shop_currency_types
     currency_type_id bigint auto_increment primary key comment '货币类型id',
     currency_name    varchar(32) not null unique comment '货币类型名称，例如"b币"',
     currency_code    varchar(32) not null unique comment '货币代码',
-    `status`         tinyint     not null default 0 comment '1:冻结,0:可用',
     created_time     datetime comment '创建时间',
     updated_time     datetime comment '更新时间'
 );
 
 -- 插入初始货币类型数据
-insert into shop_currency_types (currency_name, created_time)
-values ('肌理豆', now()),
-       ('肌理币', now()),
-       ('狗粮', now());
+insert into shop_currency_types (currency_name,currency_code, created_time)
+values ('肌理豆','JLB', now()),
+       ('肌理币','JLC', now()),
+       ('狗粮','GLC', now());
 
 -- 创建虚拟货币表
+drop table if exists shop_virtual_currency;
 create table shop_virtual_currency
 (
     currency_id      bigint auto_increment primary key comment '货币id',
@@ -217,6 +217,7 @@ create table shop_virtual_currency
 );
 
 -- 创建交易历史表
+drop table if exists shop_transaction_history;
 create table shop_transaction_history
 (
     transaction_id   bigint auto_increment primary key comment '交易历史id',
@@ -281,10 +282,14 @@ VALUES (6, 3, 2, 30.00, NOW(), NOW());
 
 
 
+
+
+
+
+
+
 select *
 from shop_user_ratings;
-
-
 select user_id
 from sys_user;
 

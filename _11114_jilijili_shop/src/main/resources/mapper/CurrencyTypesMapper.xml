@@ -4,9 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.mall.currency.mapper.CurrencyTypesMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.CurrencyTypes">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.pojo.entity.currency.CurrencyTypes">
         <id property="currencyTypeId" column="currency_type_id" jdbcType="BIGINT"/>
         <result property="currencyName" column="currency_name" jdbcType="VARCHAR"/>
+        <result property="currencyCode" column="currency_code" jdbcType="VARCHAR"/>
         <result property="createdTime" column="createdTime"/>
         <result property="updatedTime" column="updatedTime" />
     </resultMap>

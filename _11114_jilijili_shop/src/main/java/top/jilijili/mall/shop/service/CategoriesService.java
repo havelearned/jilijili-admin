@@ -4,9 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import top.jilijili.common.entity.Item;
 import top.jilijili.common.entity.Result;
-import top.jilijili.module.entity.Categories;
+import top.jilijili.module.pojo.dto.shop.CategoriesDto;
+import top.jilijili.module.pojo.entity.shop.Categories;
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.jilijili.module.entity.dto.CategoryDto;
+import top.jilijili.module.pojo.dto.blog.CategoryDto;
 
 /**
 * @author admin
@@ -18,10 +19,10 @@ public interface CategoriesService extends IService<Categories> {
     /**
      * 分页查询商品分类列表
      *
-     * @param categoryDto
+     * @param dto
      * @return 分类列表
      */
-    Result<Page<Categories>> getCategoriesList(CategoryDto categoryDto);
+    Result<Page<Categories>> getCategoriesList(CategoriesDto dto);
 
     /**
      * 分页查询商品类字典列表
@@ -29,7 +30,7 @@ public interface CategoriesService extends IService<Categories> {
      * @param categoryDto
      * @return label, value object a list
      */
-    Result<IPage<Item>> getCategoriesListDict(CategoryDto categoryDto);
+    Result<IPage<Item>> getCategoriesListDict(CategoriesDto categoryDto);
 
     /**
      * 添加或者修改商品分类

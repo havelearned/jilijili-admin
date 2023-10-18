@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.jilijili.common.entity.Result;
-import top.jilijili.module.entity.dto.CouponsDto;
-import top.jilijili.module.entity.dto.SysUserDto;
-import top.jilijili.module.entity.vo.UserWithCouponsVo;
+import top.jilijili.module.pojo.dto.shop.CouponsDto;
+import top.jilijili.module.pojo.dto.sys.SysUserDto;
+import top.jilijili.module.pojo.vo.shop.UserWithCouponsVo;
 import top.jilijili.mall.shop.service.CouponsService;
 
 @SpringBootTest

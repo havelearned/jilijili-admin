@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import top.jilijili.module.entity.SysConfig;
+import top.jilijili.module.pojo.entity.sys.SysConfig;
 import top.jilijili.common.entity.Result;
 import top.jilijili.system.controller.SuperController;
 import top.jilijili.system.service.SysConfigService;

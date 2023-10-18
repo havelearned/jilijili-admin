@@ -1,7 +1,7 @@
 package top.jilijili.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import top.jilijili.module.entity.CmRecord;
+import top.jilijili.module.pojo.entity.chat.CmRecord;
 import top.jilijili.system.service.CmRecordService;
 import top.jilijili.system.mapper.CmRecordMapper;
 import org.springframework.stereotype.Service;

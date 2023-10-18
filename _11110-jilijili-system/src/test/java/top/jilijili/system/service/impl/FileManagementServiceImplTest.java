@@ -20,10 +20,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.jilijili.system.common.config.MinioConfig;
-import top.jilijili.module.entity.FileItem;
-import top.jilijili.module.entity.FileManagement;
-import top.jilijili.module.entity.dto.FileManagementDto;
-import top.jilijili.module.entity.vo.FileManagementVo;
+import top.jilijili.module.pojo.entity.sys.FileItem;
+import top.jilijili.module.pojo.entity.sys.FileManagement;
+import top.jilijili.module.pojo.dto.sys.FileManagementDto;
+import top.jilijili.module.pojo.vo.sys.FileManagementVo;
 import top.jilijili.system.service.FileManagementService;
 
 import java.io.IOException;

@@ -3,15 +3,15 @@ package wang.jilijili.musics.mapper;
 
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
-import top.jilijili.module.entity.MusicAlbum;
-import top.jilijili.module.entity.MusicSinger;
-import top.jilijili.module.entity.MusicSong;
-import top.jilijili.module.entity.dto.MusicAlbumDto;
-import top.jilijili.module.entity.dto.MusicSingerDto;
-import top.jilijili.module.entity.dto.MusicSongDto;
-import top.jilijili.module.entity.vo.MusicAlbumVo;
-import top.jilijili.module.entity.vo.MusicSingerVo;
-import top.jilijili.module.entity.vo.MusicSongVo;
+import top.jilijili.module.pojo.entity.music.MusicAlbum;
+import top.jilijili.module.pojo.entity.music.MusicSinger;
+import top.jilijili.module.pojo.entity.music.MusicSong;
+import top.jilijili.module.pojo.dto.music.MusicAlbumDto;
+import top.jilijili.module.pojo.dto.music.MusicSingerDto;
+import top.jilijili.module.pojo.dto.music.MusicSongDto;
+import top.jilijili.module.pojo.vo.music.MusicAlbumVo;
+import top.jilijili.module.pojo.vo.music.MusicSingerVo;
+import top.jilijili.module.pojo.vo.music.MusicSongVo;
 
 
 /**

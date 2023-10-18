@@ -2,9 +2,9 @@ package top.jilijili.mall.shop.mapper;
 
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
-import top.jilijili.module.entity.*;
-import top.jilijili.module.entity.dto.*;
-import top.jilijili.module.entity.vo.*;
+import top.jilijili.module.pojo.dto.shop.*;
+import top.jilijili.module.pojo.entity.shop.*;
+import top.jilijili.module.pojo.vo.shop.*;
 
 /**
  * @author Amani

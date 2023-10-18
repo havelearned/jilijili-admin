@@ -3,10 +3,10 @@ package top.jilijili.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
-import top.jilijili.module.entity.FileItem;
-import top.jilijili.module.entity.FileManagement;
-import top.jilijili.module.entity.dto.FileManagementDto;
-import top.jilijili.module.entity.vo.FileManagementVo;
+import top.jilijili.module.pojo.entity.sys.FileItem;
+import top.jilijili.module.pojo.entity.sys.FileManagement;
+import top.jilijili.module.pojo.dto.sys.FileManagementDto;
+import top.jilijili.module.pojo.vo.sys.FileManagementVo;
 import top.jilijili.common.entity.Result;
 
 import java.util.List;

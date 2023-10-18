@@ -14,10 +14,10 @@ import top.jilijili.blog.mapper.ConvertMapper;
 import top.jilijili.blog.service.ArticleService;
 import top.jilijili.blog.service.CommentService;
 import top.jilijili.common.heandler.JiliException;
-import top.jilijili.module.entity.Article;
-import top.jilijili.module.entity.Comment;
-import top.jilijili.module.entity.dto.CommentDto;
-import top.jilijili.module.entity.vo.CommentVo;
+import top.jilijili.module.pojo.entity.blog.Article;
+import top.jilijili.module.pojo.entity.blog.Comment;
+import top.jilijili.module.pojo.dto.blog.CommentDto;
+import top.jilijili.module.pojo.vo.blog.CommentVo;
 
 import java.util.ArrayList;
 import java.util.List;

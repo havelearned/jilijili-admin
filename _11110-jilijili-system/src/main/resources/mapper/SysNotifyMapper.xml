@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.system.mapper.SysNotifyMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.SysNotify">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.pojo.entity.sys.SysNotify">
             <id property="notifyId" column="notify_id" jdbcType="BIGINT"/>
             <result property="senderId" column="sender_id" jdbcType="BIGINT"/>
             <result property="receiverId" column="receiver_id" jdbcType="BIGINT"/>
@@ -23,7 +23,7 @@
 
 
 
-    <resultMap id="BaseResultMapVo" type="top.jilijili.module.entity.vo.SysNotifyVo">
+    <resultMap id="BaseResultMapVo" type="top.jilijili.module.pojo.vo.sys.SysNotifyVo">
         <id property="notifyId" column="notify_id" jdbcType="BIGINT"/>
         <result property="senderId" column="sender_id" jdbcType="BIGINT"/>
         <result property="receiverId" column="receiver_id" jdbcType="BIGINT"/>
@@ -32,7 +32,7 @@
         <result property="notifyStatus" column="notify_status" jdbcType="TINYINT"/>
         <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
         <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
-        <association property="senderUser" javaType="top.jilijili.module.entity.vo.SysUserVo">
+        <association property="senderUser" javaType="top.jilijili.module.pojo.vo.sys.SysUserVo">
             <id property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="username" column="username" />
             <result property="nickname" column="nickname" />
@@ -41,7 +41,7 @@
             <result property="email" column="email" />
             <result property="phonenumber" column="phonenumber" />
         </association>
-        <association property="receiverUser" javaType="top.jilijili.module.entity.vo.SysUserVo">
+        <association property="receiverUser" javaType="top.jilijili.module.pojo.vo.sys.SysUserVo">
             <id property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="username" column="username" />
             <result property="nickname" column="nickname" />

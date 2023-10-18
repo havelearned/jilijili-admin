@@ -1,6 +1,6 @@
 package top.jilijili.system.pattern;
 
-import top.jilijili.module.entity.SysNotify;
+import top.jilijili.module.pojo.entity.sys.SysNotify;
 
 import java.util.List;
 

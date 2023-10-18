@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.cache.decorators.ScheduledCache;
-import top.jilijili.module.entity.SysMenu;
-import top.jilijili.module.entity.SysUser;
-import top.jilijili.module.entity.vo.SysRoleVo;
+import top.jilijili.module.pojo.entity.sys.SysMenu;
+import top.jilijili.module.pojo.entity.sys.SysUser;
+import top.jilijili.module.pojo.vo.sys.SysRoleVo;
 
 import java.io.Serializable;
 import java.util.List;

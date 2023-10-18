@@ -10,7 +10,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import top.jilijili.module.entity.vo.SysRoleVo;
+import top.jilijili.module.pojo.vo.sys.SysRoleVo;
 import top.jilijili.system.mapper.SysUserMapper;
 
 import java.util.List;

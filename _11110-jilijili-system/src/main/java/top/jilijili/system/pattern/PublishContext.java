@@ -2,7 +2,7 @@ package top.jilijili.system.pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import top.jilijili.module.entity.SysNotify;
+import top.jilijili.module.pojo.entity.sys.SysNotify;
 
 import java.util.HashMap;
 import java.util.List;

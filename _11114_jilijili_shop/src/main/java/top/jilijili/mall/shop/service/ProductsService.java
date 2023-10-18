@@ -2,9 +2,9 @@ package top.jilijili.mall.shop.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.jilijili.module.entity.Products;
-import top.jilijili.module.entity.dto.ProductsDto;
-import top.jilijili.module.entity.vo.ProductsVo;
+import top.jilijili.module.pojo.entity.shop.Products;
+import top.jilijili.module.pojo.dto.shop.ProductsDto;
+import top.jilijili.module.pojo.vo.shop.ProductsVo;
 
 import java.util.Map;
 

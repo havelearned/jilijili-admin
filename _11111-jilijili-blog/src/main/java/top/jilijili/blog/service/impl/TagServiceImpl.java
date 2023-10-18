@@ -1,7 +1,7 @@
 package top.jilijili.blog.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import top.jilijili.module.entity.Tag;
+import top.jilijili.module.pojo.entity.blog.Tag;
 import top.jilijili.blog.service.TagService;
 import top.jilijili.blog.mapper.TagMapper;
 import org.springframework.stereotype.Service;

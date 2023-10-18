@@ -1,7 +1,7 @@
 package top.jilijili.mall.currency.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import top.jilijili.module.entity.CurrencyTypes;
+import top.jilijili.module.pojo.entity.currency.CurrencyTypes;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

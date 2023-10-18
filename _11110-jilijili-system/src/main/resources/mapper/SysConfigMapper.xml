@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.system.mapper.SysConfigMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.SysConfig">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.pojo.entity.sys.SysConfig">
             <id property="configId" column="config_id" jdbcType="BIGINT"/>
             <result property="userId" column="user_id" jdbcType="VARCHAR"/>
             <result property="configName" column="config_name" jdbcType="VARCHAR"/>

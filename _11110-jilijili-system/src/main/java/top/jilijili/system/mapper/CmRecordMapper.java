@@ -1,7 +1,7 @@
 package top.jilijili.system.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import top.jilijili.module.entity.CmRecord;
+import top.jilijili.module.pojo.entity.chat.CmRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

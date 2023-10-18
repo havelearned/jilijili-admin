@@ -3,8 +3,8 @@ package top.jilijili.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import top.jilijili.module.entity.MusicSong;
-import top.jilijili.module.entity.vo.MusicSongVo;
+import top.jilijili.module.pojo.entity.music.MusicSong;
+import top.jilijili.module.pojo.vo.music.MusicSongVo;
 
 import java.io.Serializable;
 

@@ -21,6 +21,11 @@
     </properties>
 
     <dependencies>
+<!--        远程调用-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
 
         <!--spring boot admin 客户端依赖-->
         <dependency>

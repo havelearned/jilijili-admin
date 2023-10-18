@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.blog.mapper.CommentMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.Comment">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.pojo.entity.blog.Comment">
         <id property="commentId" column="comment_id" jdbcType="BIGINT"/>
         <result property="childId" column="child_id" jdbcType="BIGINT"/>
         <result property="articleId" column="article_id" jdbcType="BIGINT"/>
@@ -15,7 +15,7 @@
         <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <resultMap id="queryCommentAntUserByCommentIdMap" type="top.jilijili.module.entity.vo.CommentVo">
+    <resultMap id="queryCommentAntUserByCommentIdMap" type="top.jilijili.module.pojo.vo.blog.CommentVo">
         <id property="commentId" column="comment_id" jdbcType="BIGINT"/>
         <result property="childId" column="child_id" jdbcType="BIGINT"/>
         <result property="commentStatus" column="comment_status" jdbcType="TINYINT"/>
@@ -36,7 +36,7 @@
                 updated_time
     </sql>
 
-    <select id="queryCommentAntUserAll" resultType="top.jilijili.module.entity.vo.CommentVo">
+    <select id="queryCommentAntUserAll" resultType="top.jilijili.module.pojo.vo.blog.CommentVo">
         select c.comment_id,
                c.child_id,
                c.article_id,
@@ -56,7 +56,7 @@
 
     </select>
 
-    <select id="queryCommentAntUserByCommentId" resultType="top.jilijili.module.entity.vo.CommentVo">
+    <select id="queryCommentAntUserByCommentId" resultType="top.jilijili.module.pojo.vo.blog.CommentVo">
         select c.comment_id,
                c.child_id,
                c.article_id,

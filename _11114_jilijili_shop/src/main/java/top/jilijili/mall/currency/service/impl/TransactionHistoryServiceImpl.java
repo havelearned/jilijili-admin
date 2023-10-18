@@ -1,7 +1,7 @@
 package top.jilijili.mall.currency.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import top.jilijili.module.entity.TransactionHistory;
+import top.jilijili.module.pojo.entity.currency.TransactionHistory;
 import top.jilijili.mall.currency.service.TransactionHistoryService;
 import top.jilijili.mall.currency.mapper.TransactionHistoryMapper;
 import org.springframework.stereotype.Service;

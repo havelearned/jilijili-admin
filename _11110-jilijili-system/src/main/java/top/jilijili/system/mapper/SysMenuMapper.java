@@ -3,8 +3,8 @@ package top.jilijili.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import top.jilijili.module.entity.SysMenu;
-import top.jilijili.module.entity.vo.SysMenuVo;
+import top.jilijili.module.pojo.entity.sys.SysMenu;
+import top.jilijili.module.pojo.vo.sys.SysMenuVo;
 
 import java.io.Serializable;
 import java.util.List;

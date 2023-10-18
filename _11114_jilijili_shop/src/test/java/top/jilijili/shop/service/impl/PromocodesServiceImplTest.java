@@ -8,8 +8,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import top.jilijili.module.entity.dto.PromocodesDto;
-import top.jilijili.module.entity.vo.PromocodesVo;
+import top.jilijili.module.pojo.dto.shop.PromocodesDto;
+import top.jilijili.module.pojo.vo.shop.PromocodesVo;
 import top.jilijili.mall.shop.service.PromocodesService;
 
 

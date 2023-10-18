@@ -4,7 +4,7 @@ server:
 
 spring:
   application:
-    name: _11110-jilijili-system
+    name: 11110-jilijili-system
   servlet:
     multipart:
       max-file-size: 100MB

@@ -1,6 +1,8 @@
 package top.jilijili.mall.currency.service;
 
-import top.jilijili.module.entity.CurrencyTypes;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import top.jilijili.module.pojo.dto.currency.CurrencyTypesDto;
+import top.jilijili.module.pojo.entity.currency.CurrencyTypes;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface CurrencyTypesService extends IService<CurrencyTypes> {
 
+    Page<CurrencyTypes> selectAll(CurrencyTypesDto dto);
 }

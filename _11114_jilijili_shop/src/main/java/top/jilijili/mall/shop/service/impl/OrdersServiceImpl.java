@@ -7,10 +7,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import top.jilijili.mall.shop.mapper.OrdersMapper;
-import top.jilijili.module.entity.Orders;
-import top.jilijili.module.entity.dto.OrdersDto;
-import top.jilijili.module.entity.vo.OrderEChartsVo;
-import top.jilijili.module.entity.vo.OrdersVo;
+import top.jilijili.module.pojo.entity.shop.Orders;
+import top.jilijili.module.pojo.dto.shop.OrdersDto;
+import top.jilijili.module.pojo.vo.shop.OrderEChartsVo;
+import top.jilijili.module.pojo.vo.shop.OrdersVo;
 import top.jilijili.mall.shop.service.OrdersService;
 
 import java.io.Serializable;

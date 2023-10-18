@@ -16,12 +16,12 @@ import top.jilijili.blog.mapper.TagMapper;
 import top.jilijili.blog.service.ArticleService;
 import top.jilijili.blog.service.TagCategoryArticleService;
 import top.jilijili.common.entity.Item;
-import top.jilijili.module.entity.Article;
-import top.jilijili.module.entity.Tag;
-import top.jilijili.module.entity.TagCategoryArticle;
-import top.jilijili.module.entity.dto.ArticleDto;
-import top.jilijili.module.entity.vo.ArticleVo;
-import top.jilijili.module.entity.vo.TagVo;
+import top.jilijili.module.pojo.entity.blog.Article;
+import top.jilijili.module.pojo.entity.blog.Tag;
+import top.jilijili.module.pojo.entity.blog.TagCategoryArticle;
+import top.jilijili.module.pojo.dto.blog.ArticleDto;
+import top.jilijili.module.pojo.vo.blog.ArticleVo;
+import top.jilijili.module.pojo.vo.blog.TagVo;
 
 import java.io.Serializable;
 import java.util.Arrays;

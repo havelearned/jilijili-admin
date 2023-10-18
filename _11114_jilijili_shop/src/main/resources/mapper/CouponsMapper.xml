@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jilijili.mall.shop.mapper.CouponsMapper">
 
-    <resultMap id="BaseResultMap" type="top.jilijili.module.entity.Coupons">
+    <resultMap id="BaseResultMap" type="top.jilijili.module.pojo.entity.shop.Coupons">
             <id property="couponId" column="coupon_id" jdbcType="BIGINT"/>
             <result property="couponType" column="coupon_type" jdbcType="TINYINT"/>
             <result property="couponAmount" column="coupon_amount" jdbcType="DECIMAL"/>
@@ -19,14 +19,14 @@
     </sql>
 
 
-    <resultMap id="UserWithCouponsVo" type="top.jilijili.module.entity.vo.UserWithCouponsVo">
+    <resultMap id="UserWithCouponsVo" type="top.jilijili.module.pojo.vo.shop.UserWithCouponsVo">
         <id property="userCouponId" column="user_coupon_id" />
         <result property="isUsed" column="is_used" />
         <result property="usageDate" column="usageDate" />
         <result property="userId" column="user_id" />
         <result property="nickname" column="nickname" />
         <result property="avatar" column="avatar" />
-        <collection property="coupons" ofType="top.jilijili.module.entity.vo.CouponsVo">
+        <collection property="coupons" ofType="top.jilijili.module.pojo.vo.shop.CouponsVo">
             <id property="couponId" column="coupon_id" jdbcType="BIGINT"/>
             <result property="couponType" column="coupon_type" jdbcType="TINYINT"/>
             <result property="couponAmount" column="coupon_amount" jdbcType="DECIMAL"/>

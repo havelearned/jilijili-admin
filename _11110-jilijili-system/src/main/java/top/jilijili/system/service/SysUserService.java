@@ -3,13 +3,13 @@ package top.jilijili.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import jakarta.servlet.http.HttpServletRequest;
-import top.jilijili.module.entity.SysMenu;
-import top.jilijili.module.entity.SysUser;
-import top.jilijili.module.entity.dto.SysRoleDto;
-import top.jilijili.module.entity.dto.SysUserDto;
+import top.jilijili.module.pojo.entity.sys.SysMenu;
+import top.jilijili.module.pojo.entity.sys.SysUser;
+import top.jilijili.module.pojo.dto.sys.SysRoleDto;
+import top.jilijili.module.pojo.dto.sys.SysUserDto;
 import top.jilijili.common.entity.Result;
-import top.jilijili.module.entity.vo.SysRoleVo;
-import top.jilijili.module.entity.vo.SysUserVo;
+import top.jilijili.module.pojo.vo.sys.SysRoleVo;
+import top.jilijili.module.pojo.vo.sys.SysUserVo;
 
 import java.io.Serializable;
 import java.util.List;
