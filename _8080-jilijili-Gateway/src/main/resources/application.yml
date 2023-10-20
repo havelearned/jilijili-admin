@@ -3,8 +3,7 @@ server:
 
 spring:
   application:
-    name: _8080-jilijili-Gateway
-
+    name: 8080-jilijili-Gateway
   cloud:
     gateway:
       globalcors:
@@ -53,3 +52,17 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+logging:
+  file:
+    name: /Users/jili/logs/cloud-gateway.log
+    path:
+      - /Users/jili/logs/cloud-gateway.log
+  level:
+    org.springframework.cloud.gateway: debug
+    root: debug
+  pattern:
+    dateformat: 'yyyy-MM-dd HH:mm:ss.SSS'
+  logback:
+    rollingpolicy:
+      max-history: 30
+      max-file-size: 10MB

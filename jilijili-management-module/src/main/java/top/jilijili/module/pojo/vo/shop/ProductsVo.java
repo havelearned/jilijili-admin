@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
+import top.jilijili.module.pojo.entity.shop.Categories;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -30,11 +31,16 @@ public class ProductsVo implements Serializable {
      * 分类ID
      */
     private String categoryId;
+    /**
+     * 商品分类
+     */
+    private Categories categories;
 
     /**
      * 商品名称
      */
     private String productName;
+
 
     /**
      * 商品描述

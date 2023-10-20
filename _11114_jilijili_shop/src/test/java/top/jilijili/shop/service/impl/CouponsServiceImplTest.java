@@ -32,7 +32,7 @@ public class CouponsServiceImplTest {
                 .size(10)
                 .sysUserDto(build1)
                 .build();
-        Result<IPage<UserWithCouponsVo>> iPageResult = this.couponsService.selectAllCoupons(build);
+        Result<IPage<UserWithCouponsVo>> iPageResult = this.couponsService.selectAllUserCoupons(build);
         System.out.println("========================================================================================");
         System.out.println(JSONObject.toJSONString(iPageResult));
     }

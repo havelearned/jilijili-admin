@@ -7,7 +7,6 @@ import top.jilijili.common.entity.Result;
 import top.jilijili.module.pojo.dto.shop.CategoriesDto;
 import top.jilijili.module.pojo.entity.shop.Categories;
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.jilijili.module.pojo.dto.blog.CategoryDto;
 
 /**
 * @author admin
@@ -37,5 +36,5 @@ public interface CategoriesService extends IService<Categories> {
      * @param categoryDto 操作对象
      * @return 操作后的对象
      */
-    Result<Categories> addOrUpdate(CategoryDto categoryDto);
+    Result<Categories> addOrUpdate(CategoriesDto categoryDto);
 }

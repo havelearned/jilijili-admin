@@ -16,7 +16,7 @@ public class TreeUtils<T> {
      * @param records  所有的记录
      * @return 树结构
      */
-    public static  <T extends TreeNode> List<T> buildTree(String parentId, List<T> records) {
+    public static <T extends TreeNode> List<T> buildTree(String parentId, List<T> records) {
         List<T> childNodes = new ArrayList<>();
         for (T node : records) {
             if (node.getParentId().equals(parentId)) {
@@ -24,6 +24,9 @@ public class TreeUtils<T> {
                 node.editChildNodes(subNodes);
                 childNodes.add(node);
             }
+        }
+        if (childNodes.isEmpty()) {
+            return null;
         }
         return childNodes;
     }

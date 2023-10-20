@@ -25,10 +25,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GlobalExceptionHandler {
 
+
+
     @ExceptionHandler(value = SQLNonTransientConnectionException.class)
     public Result<String> handleSQLNonTransientConnectionException(SQLNonTransientConnectionException e) {
         // 在此处处理 SQLNonTransientConnectionException 异常
-        return Result.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(),"无法连接到数据库服务器：" + e.getMessage());
+        return Result.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), "无法连接到数据库服务器：" + e.getMessage());
     }
 
     @ExceptionHandler(top.jilijili.common.heandler.JiliException.class)

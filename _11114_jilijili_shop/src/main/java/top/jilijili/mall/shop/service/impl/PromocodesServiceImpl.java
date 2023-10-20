@@ -107,13 +107,19 @@ public class PromocodesServiceImpl extends ServiceImpl<PromocodesMapper, Promoco
         List<Promocodes> saveList = new ArrayList<>();
         for (int i = 0; i < promocodesDto.getBatchCount(); i++) {
             Promocodes promocodes = new Promocodes();
+            // 设置优惠卷id
+            promocodes.setCouponId(promocodesDto.getCouponId());
+            // 设置过期时间
             promocodes.setExpirationDate(promocodesDto.getExpirationDate());
+            // 生成兑换码批次
             promocodes.setGenCount(genGenCount());
+            // 生成兑换码
             promocodes.setPromoCode(genKey());
             saveList.add(promocodes);
         }
         // 批量持久化数据库,每次1000条
-        return this.saveBatch(saveList, 1000) ? Result.ok(saveList, "操作成功") : Result.fail("操作失败");
+        boolean saved = this.saveBatch(saveList);
+        return saved ? Result.ok(saveList, "操作成功") : Result.fail("操作失败");
     }
 
 

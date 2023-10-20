@@ -4,15 +4,16 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import top.jilijili.mall.shop.mapper.ConvertMapper;
 import top.jilijili.mall.shop.mapper.ProductsMapper;
-import top.jilijili.module.pojo.entity.shop.Products;
+import top.jilijili.mall.shop.service.ProductsService;
 import top.jilijili.module.pojo.dto.shop.ProductsDto;
+import top.jilijili.module.pojo.entity.shop.Products;
 import top.jilijili.module.pojo.vo.shop.ProductsEChartsVo;
 import top.jilijili.module.pojo.vo.shop.ProductsVo;
-import top.jilijili.mall.shop.service.ProductsService;
 
 import java.util.*;
 
@@ -21,6 +22,7 @@ import java.util.*;
  * @description 针对表【shop_products(商品表)】的数据库操作Service实现
  * @createDate 2023-08-26 18:55:20
  */
+@Slf4j
 @Service
 @AllArgsConstructor
 public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
@@ -51,8 +53,11 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
                         Products::getCreatedTime, productsDto.getCreatedTime(), productsDto.getComparisonTime())
                 .orderByDesc(Products::getCreatedTime)
                 .page(iPage);
+
         return iPage.convert(this.convertMapper::toProductsVo);
     }
+
+
 
     /**
      * # 商品今日上架总数量

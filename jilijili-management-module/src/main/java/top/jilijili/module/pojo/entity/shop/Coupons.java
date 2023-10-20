@@ -28,13 +28,13 @@ public class Coupons implements Serializable {
      * 优惠券id
      */
     @TableId(value = "coupon_id")
-    private Long couponId;
+    private String couponId;
 
     /**
      * 优惠券类型 (1满减、2直减、3直接白送等)
      */
     @TableField(value = "coupon_type")
-    private Integer couponType;
+    private String couponType;
 
     /**
      * 优惠金额

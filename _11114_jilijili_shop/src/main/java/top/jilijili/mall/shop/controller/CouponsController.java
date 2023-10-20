@@ -1,12 +1,18 @@
 package top.jilijili.mall.shop.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
+import top.jilijili.common.control.SuperController;
 import top.jilijili.common.entity.Result;
 import top.jilijili.mall.shop.service.CouponsService;
 import top.jilijili.mall.shop.service.PromocodesService;
 import top.jilijili.mall.shop.service.UserCouponsService;
+import top.jilijili.module.pojo.entity.shop.Coupons;
 import top.jilijili.module.pojo.entity.shop.Promocodes;
 import top.jilijili.module.pojo.dto.shop.CouponsDto;
 import top.jilijili.module.pojo.dto.shop.PromocodesDto;
@@ -28,9 +34,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/coupons")
 @AllArgsConstructor
-public class CouponsController {
+public class CouponsController extends SuperController {
 
-    // TODO 兑换码curd 优惠卷curd
 
     private CouponsService couponsService;
     private UserCouponsService userCouponsService;
@@ -46,8 +51,8 @@ public class CouponsController {
      * @return 所有数据
      */
     @GetMapping("/promocodes/list")
-    public Result<IPage<PromocodesVo>> selectAllPromocodes(PromocodesDto promocodesDto) {
-        return Result.ok(this.promocodesService.selectAllPromocodes(promocodesDto));
+    public Mono<Result<IPage<PromocodesVo>>> selectAllPromocodes(PromocodesDto promocodesDto) {
+        return Mono.just(Result.ok(this.promocodesService.selectAllPromocodes(promocodesDto)));
     }
 
     /**
@@ -57,8 +62,8 @@ public class CouponsController {
      * @return 单条数据
      */
     @GetMapping("/promocodes/{id}")
-    public Result<PromocodesVo> selectOnePromocodes(@PathVariable Serializable id) {
-        return this.promocodesService.selectOnePromocodes(id);
+    public Mono<Result<PromocodesVo>> selectOnePromocodes(@PathVariable Serializable id) {
+        return Mono.just(this.promocodesService.selectOnePromocodes(id));
     }
 
     /**
@@ -68,8 +73,8 @@ public class CouponsController {
      * @return 新增结果
      */
     @PostMapping("/promocodes")
-    public Result<PromocodesVo> insertPromocodes(@RequestBody PromocodesDto promocodesDto) {
-        return this.promocodesService.insertPromocodes(promocodesDto);
+    public Mono<Result<PromocodesVo>> insertPromocodes(@RequestBody PromocodesDto promocodesDto) {
+        return Mono.just(this.promocodesService.insertPromocodes(promocodesDto));
     }
 
 
@@ -80,8 +85,8 @@ public class CouponsController {
      * @return 新增结果
      */
     @PostMapping("/promocodes/batch")
-    public Result<List<Promocodes>> batchPromocodes(@RequestBody PromocodesDto promocodesDto) {
-        return this.promocodesService.batchPromocodes(promocodesDto);
+    public Mono<Result<List<Promocodes>>> batchPromocodes(@RequestBody PromocodesDto promocodesDto) {
+        return Mono.just(this.promocodesService.batchPromocodes(promocodesDto));
     }
 
     /**
@@ -91,8 +96,8 @@ public class CouponsController {
      * @return 修改结果
      */
     @PutMapping("/promocodes")
-    public Result<PromocodesVo> updatePromocodes(@RequestBody PromocodesDto promocodesDto) {
-        return this.promocodesService.updatePromocodes(promocodesDto);
+    public Mono<Result<PromocodesVo>> updatePromocodes(@RequestBody PromocodesDto promocodesDto) {
+        return Mono.just(this.promocodesService.updatePromocodes(promocodesDto));
     }
 
     /**
@@ -102,8 +107,25 @@ public class CouponsController {
      * @return 删除结果
      */
     @DeleteMapping("/promocodes")
-    public Result<String> deletePromocodes(@RequestBody List<Long> idList) {
-        return this.promocodesService.removeByIds(idList) ? Result.ok("操作成功") : Result.fail("操作失败");
+    public Mono<Result<?>> deletePromocodes(@RequestBody List<Long> idList) {
+        return Mono.fromCallable(() -> {
+            boolean removed = this.promocodesService.removeByIds(idList);
+            return removed ? Result.ok("操作成功") : Result.fail("操作失败");
+        }).subscribeOn(Schedulers.boundedElastic());
+    }
+
+    /**
+     * 兑换码导出
+     *
+     * @param response      导出数据
+     * @param promocodesDto 筛选条件
+     */
+    @GetMapping("/pormocodes/export")
+    public void promocodesExport(HttpServletResponse response, PromocodesDto promocodesDto) {
+        Mono<Result<IPage<PromocodesVo>>> resultMono = this.selectAllPromocodes(promocodesDto);
+        Result<IPage<PromocodesVo>> result = resultMono.block();
+        List<PromocodesVo> records = result.getData().getRecords();
+        super.exportData(response, "兑换码数据", "第一页", PromocodesVo.class, records);
     }
 
     /*====================================兑换码服务===========================================*/
@@ -112,14 +134,26 @@ public class CouponsController {
     /*====================================优惠卷===========================================*/
 
     /**
-     * 优惠卷分页查询所有数据
+     * 用户的优惠卷分页查询所有数据
+     *
+     * @param coupons 查询实体
+     * @return 所有数据
+     */
+    @GetMapping("/coupons/user/list")
+    public Mono<Result<IPage<UserWithCouponsVo>>> selectAllUserCoupons(CouponsDto coupons) {
+        return Mono.just(this.couponsService.selectAllUserCoupons(coupons));
+    }
+
+
+    /**
+     * 优惠卷页查询所有数据
      *
      * @param coupons 查询实体
      * @return 所有数据
      */
     @GetMapping("/coupons/list")
-    public Result<IPage<UserWithCouponsVo>> selectAllCoupons(CouponsDto coupons) {
-        return this.couponsService.selectAllCoupons(coupons);
+    public Mono<Result<Page<Coupons>>> selectAllCoupons(CouponsDto coupons) {
+        return Mono.just(this.couponsService.selectAllCoupons(coupons));
     }
 
     /**
@@ -129,8 +163,8 @@ public class CouponsController {
      * @return 单条数据
      */
     @GetMapping("/coupons/{id}")
-    public Result<CouponsVo> selectOneCoupons(@PathVariable Serializable id) {
-        return this.couponsService.selectOneCoupons(id);
+    public Mono<Result<CouponsVo>> selectOneCoupons(@PathVariable Serializable id) {
+        return Mono.just(this.couponsService.selectOneCoupons(id));
     }
 
     /**
@@ -140,8 +174,8 @@ public class CouponsController {
      * @return 新增结果
      */
     @PostMapping("/coupons")
-    public Result<CouponsVo> insertCoupons(@RequestBody CouponsDto  couponsDto) {
-        return this.couponsService.insertCoupons(couponsDto);
+    public Mono<Result<CouponsVo>> insertCoupons(@RequestBody CouponsDto couponsDto) {
+        return Mono.just(this.couponsService.insertCoupons(couponsDto));
     }
 
     /**
@@ -151,12 +185,12 @@ public class CouponsController {
      * @return 修改结果
      */
     @PutMapping("/coupons")
-    public Result<CouponsVo> updateCoupons(@RequestBody CouponsDto couponsDto) {
-        return this.couponsService.updateCoupons(couponsDto);
+    public Mono<Result<CouponsVo>> updateCoupons(@RequestBody CouponsDto couponsDto) {
+        return Mono.just(this.couponsService.updateCoupons(couponsDto));
     }
 
     /**
-     * 优惠卷 删除数据
+     * 优惠卷 不提供删除
      *
      * @param idList 主键结合
      * @return 删除结果
@@ -172,25 +206,14 @@ public class CouponsController {
     /*====================================兑换码&优惠卷使用情况===========================================*/
 
     /**
-     * 使用情况分页查询所有数据
+     * 用户优惠卷分页查询
      *
      * @param userCouponsDto 查询实体
      * @return 所有数据
      */
     @GetMapping("/userCoupons/list")
-    public Result<IPage<UserCouponsVo>> selectAllUC(UserCouponsDto userCouponsDto) {
-        return this.userCouponsService.selectAllUC(userCouponsDto);
-    }
-
-    /**
-     * 使用情况 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("/userCoupons/{id}")
-    public Result<UserCouponsVo> selectOneUC(@PathVariable Serializable id) {
-        return this.userCouponsService.selectOneUC(id);
+    public Mono<Result<IPage<UserCouponsVo>>> selectAllUC(UserCouponsDto userCouponsDto) {
+        return Mono.just(this.userCouponsService.selectAllUC(userCouponsDto));
     }
 
     /**
@@ -200,9 +223,20 @@ public class CouponsController {
      * @return 新增结果
      */
     @PostMapping("/userCoupons")
-    public Result<UserCouponsVo> insertUc(@RequestBody UserCouponsDto userCouponsDto) {
+    public Mono<Result<UserCouponsVo>> insertUc(@RequestBody UserCouponsDto userCouponsDto) {
 
-        return this.userCouponsService.insertUc(userCouponsDto);
+        return Mono.just(this.userCouponsService.insertUc(userCouponsDto));
+    }
+
+    /**
+     * 使用情况 通过主键查询单条数据
+     *
+     * @param id 主键
+     * @return 单条数据
+     */
+    @GetMapping("/userCoupons/{id}")
+    public Mono<Result<UserCouponsVo>> selectOneUC(@PathVariable Serializable id) {
+        return Mono.just(this.userCouponsService.selectOneUC(id));
     }
 
     /**
@@ -212,8 +246,8 @@ public class CouponsController {
      * @return 修改结果
      */
     @PutMapping("/userCoupons")
-    public Result<UserCouponsVo> updateUC(@RequestBody UserCouponsDto userCouponsDto) {
-        return this.userCouponsService.updateUC(userCouponsDto);
+    public Mono<Result<UserCouponsVo>> updateUC(@RequestBody UserCouponsDto userCouponsDto) {
+        return Mono.just(this.userCouponsService.updateUC(userCouponsDto));
     }
 
     /**

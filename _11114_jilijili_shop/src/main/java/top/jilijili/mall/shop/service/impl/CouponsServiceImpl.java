@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import top.jilijili.common.entity.Result;
 import top.jilijili.mall.shop.mapper.ConvertMapper;
-import top.jilijili.module.pojo.entity.shop.Coupons;
-import top.jilijili.module.pojo.dto.shop.CouponsDto;
-import top.jilijili.module.pojo.dto.sys.SysUserDto;
-import top.jilijili.module.pojo.vo.shop.CouponsVo;
-import top.jilijili.module.pojo.vo.shop.UserWithCouponsVo;
 import top.jilijili.mall.shop.mapper.CouponsMapper;
 import top.jilijili.mall.shop.service.CouponsService;
+import top.jilijili.module.pojo.dto.shop.CouponsDto;
+import top.jilijili.module.pojo.dto.sys.SysUserDto;
+import top.jilijili.module.pojo.entity.shop.Coupons;
+import top.jilijili.module.pojo.vo.shop.CouponsVo;
+import top.jilijili.module.pojo.vo.shop.UserWithCouponsVo;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -34,7 +34,7 @@ public class CouponsServiceImpl extends ServiceImpl<CouponsMapper, Coupons>
 
 
     @Override
-    public Result<IPage<UserWithCouponsVo>> selectAllCoupons(CouponsDto couponsDto) {
+    public Result<IPage<UserWithCouponsVo>> selectAllUserCoupons(CouponsDto couponsDto) {
         IPage<UserWithCouponsVo> page = new Page<>(couponsDto.getPage(), couponsDto.getSize());
         QueryWrapper<CouponsVo> queryWrapper = new QueryWrapper<>();
 
@@ -78,8 +78,8 @@ public class CouponsServiceImpl extends ServiceImpl<CouponsMapper, Coupons>
     public Result<CouponsVo> insertCoupons(CouponsDto couponsDto) {
         Coupons coupons = this.convertMapper.toCoupons(couponsDto);
 
-        return this.save(coupons) ?
-                Result.ok(this.convertMapper.toCouponsVo(coupons), "操作成功") : Result.fail(null, "操作失败");
+            return this.save(coupons) ?
+                    Result.ok(this.convertMapper.toCouponsVo(coupons), "操作成功") : Result.fail(null, "操作失败");
     }
 
     @Override
@@ -87,6 +87,21 @@ public class CouponsServiceImpl extends ServiceImpl<CouponsMapper, Coupons>
         Coupons coupons = this.convertMapper.toCoupons(couponsDto);
         return this.updateById(coupons) ?
                 Result.ok(this.convertMapper.toCouponsVo(coupons), "操作成功") : Result.fail(null, "操作失败");
+    }
+
+
+    @Override
+    public Result<Page<Coupons>> selectAllCoupons(CouponsDto coupons) {
+        Page<Coupons> page = this.lambdaQuery()
+                .eq(Objects.nonNull(coupons.getCouponId()), Coupons::getCouponId, coupons.getCouponId())
+                .eq(coupons.getCouponType() != null, Coupons::getCouponType, coupons.getCouponType())
+                .like(StringUtils.hasText(coupons.getOtherCouponInfo()), Coupons::getOtherCouponInfo, coupons.getOtherCouponInfo())
+                .between(coupons.getMin() != null && coupons.getMax() != null,
+                        Coupons::getCouponAmount, coupons.getMin(), coupons.getMax())
+                .between(coupons.getExpirationDate() != null && coupons.getComparisonTime() != null,
+                        Coupons::getExpirationDate, coupons.getExpirationDate(), coupons.getComparisonTime())
+                .page(new Page<>(coupons.getPage(), coupons.getSize()));
+        return Result.ok(page);
     }
 }
 

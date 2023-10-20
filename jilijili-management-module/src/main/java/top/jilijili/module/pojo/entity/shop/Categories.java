@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import top.jilijili.common.utils.TreeNode;
 
 import java.io.Serializable;
@@ -21,11 +21,11 @@ import java.util.List;
  */
 @TableName(value = "shop_categories")
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class Categories implements Serializable, TreeNode {
+public class Categories   implements Serializable, TreeNode {
     /**
      * 分类ID
      */
@@ -58,7 +58,10 @@ public class Categories implements Serializable, TreeNode {
 
 
     @TableField(exist = false)
-    List<Categories> chilendList;
+    private List<Categories> children;
+
+    @TableField(exist = false)
+    private String label;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
@@ -66,6 +69,6 @@ public class Categories implements Serializable, TreeNode {
 
     @Override
     public void editChildNodes(List<? extends TreeNode> childNodes) {
-        this.chilendList = (List<Categories>) childNodes;
+        this.children = (List<Categories>) childNodes;
     }
 }

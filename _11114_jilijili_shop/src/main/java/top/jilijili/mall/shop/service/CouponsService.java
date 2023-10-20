@@ -1,6 +1,7 @@
 package top.jilijili.mall.shop.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.jilijili.common.entity.Result;
 import top.jilijili.module.pojo.entity.shop.Coupons;
@@ -17,11 +18,13 @@ import java.io.Serializable;
 */
 public interface CouponsService extends IService<Coupons> {
 
-    Result<IPage<UserWithCouponsVo>> selectAllCoupons(CouponsDto coupons);
+    Result<IPage<UserWithCouponsVo>> selectAllUserCoupons(CouponsDto coupons);
 
     Result<CouponsVo> selectOneCoupons(Serializable id);
 
     Result<CouponsVo> insertCoupons(CouponsDto couponsDto);
 
     Result<CouponsVo> updateCoupons(CouponsDto couponsDto);
+
+    Result<Page<Coupons>> selectAllCoupons(CouponsDto coupons);
 }

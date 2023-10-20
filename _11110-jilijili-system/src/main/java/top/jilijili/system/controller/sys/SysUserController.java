@@ -18,6 +18,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 import top.jilijili.common.group.Insert;
 import top.jilijili.module.pojo.entity.sys.SysMenu;
 import top.jilijili.module.pojo.entity.sys.SysRole;
@@ -179,12 +181,14 @@ public class SysUserController {
      * @return
      */
     @GetMapping("/list")
-    public Result<IPage<SysUserVo>> getList(SysUserDto sysUserDto) {
-        IPage<SysUser> page = new Page<>(sysUserDto.getPage(), sysUserDto.getSize());
-        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>(convertMapper.toSysUserEnetity(sysUserDto));
-        page = this.sysUserService.page(page, queryWrapper);
+    public Mono<Result<IPage<SysUserVo>>> getList(SysUserDto sysUserDto) {
 
-        return Result.ok(page.convert(convertMapper::toSysUserVo));
+        return Mono.fromCallable(() -> {
+            IPage<SysUser> page = new Page<>(sysUserDto.getPage(), sysUserDto.getSize());
+            LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>(convertMapper.toSysUserEnetity(sysUserDto));
+            page = this.sysUserService.page(page, queryWrapper);
+            return Result.ok(page.convert(convertMapper::toSysUserVo));
+        }).subscribeOn(Schedulers.boundedElastic());
 
     }
 

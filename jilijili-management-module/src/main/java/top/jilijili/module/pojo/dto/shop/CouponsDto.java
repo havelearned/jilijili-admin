@@ -1,10 +1,12 @@
 package top.jilijili.module.pojo.dto.shop;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 import top.jilijili.module.pojo.dto.SuperDto;
 import top.jilijili.module.pojo.dto.sys.SysUserDto;
 
@@ -44,6 +46,8 @@ public class CouponsDto extends SuperDto implements Serializable {
     /**
      * 有效期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expirationDate;
 
     /**

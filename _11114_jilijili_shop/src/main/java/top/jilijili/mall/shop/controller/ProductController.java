@@ -4,16 +4,17 @@ package top.jilijili.mall.shop.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 import top.jilijili.common.entity.Item;
 import top.jilijili.common.entity.Result;
+import top.jilijili.common.group.Insert;
 import top.jilijili.mall.shop.mapper.ConvertMapper;
 import top.jilijili.mall.shop.service.CartsService;
 import top.jilijili.mall.shop.service.CategoriesService;
 import top.jilijili.mall.shop.service.ProductsService;
-import top.jilijili.module.pojo.dto.blog.CategoryDto;
 import top.jilijili.module.pojo.dto.shop.CategoriesDto;
 import top.jilijili.module.pojo.dto.shop.ProductsDto;
 import top.jilijili.module.pojo.entity.shop.Categories;
@@ -38,7 +39,7 @@ public class ProductController extends ShopSuperController {
     /**
      * 服务对象
      */
-    private ProductsService shopProductsService;
+    private ProductsService productsService;
     private ConvertMapper convertMapper;
     private CartsService cartsService;
     private CategoriesService categoriesService;
@@ -52,12 +53,15 @@ public class ProductController extends ShopSuperController {
      * @return
      */
     @DeleteMapping("/categories")
-    public Mono<Result<?>> categoriesDelete(@RequestBody List<Serializable> idList) {
+    public Mono<Result<Object>> categoriesDelete(@RequestBody List<Serializable> idList) {
         return Mono.fromCallable(() -> {
-            if (idList.isEmpty()) return Result.ok("操作成功");
+            Long count = this.productsService.lambdaQuery().in(Products::getCategoryId, idList).count();
+            if (count >= 1) {
+                return Result.ok(null, "该分类下有商品无法删除");
+            }
             boolean deleted = this.categoriesService.removeBatchByIds(idList);
             if (deleted) {
-                return Result.ok("操作成功");
+                return Result.ok(null, "操作成功");
             }
             return Result.fail("操作失败");
         }).subscribeOn(Schedulers.boundedElastic());
@@ -66,12 +70,17 @@ public class ProductController extends ShopSuperController {
     /**
      * 添加或者修改商品分类
      *
-     * @param categoryDto 请求参数
+     * @param dto 请求参数
      * @return
      */
     @PostMapping("/categories")
-    public Mono<Result<Categories>> add(@RequestBody CategoryDto categoryDto) {
-        return Mono.just(this.categoriesService.addOrUpdate(categoryDto));
+    public Mono<Result<Categories>> add(@RequestBody @Validated(value = Insert.class) CategoriesDto dto) {
+        return Mono.just(this.categoriesService.addOrUpdate(dto));
+    }
+
+    @PutMapping("/categories")
+    public Mono<Result<Categories>> edit(@RequestBody CategoriesDto dto) {
+        return Mono.just(this.categoriesService.addOrUpdate(dto));
     }
 
     /**
@@ -118,7 +127,7 @@ public class ProductController extends ShopSuperController {
      */
     @GetMapping("/productsToDayInfo")
     public Mono<Result<Map<String, Object>>> productsToDayInfo(@RequestBody ProductsDto productsDto) {
-        return Mono.just(Result.ok(shopProductsService.queryProductsTodayInfo(productsDto)));
+        return Mono.just(Result.ok(productsService.queryProductsTodayInfo(productsDto)));
     }
 
 
@@ -133,7 +142,7 @@ public class ProductController extends ShopSuperController {
      */
     @GetMapping("/list")
     public Mono<Result<IPage<ProductsVo>>> selectList(ProductsDto productsDto) {
-        return Mono.just(Result.ok(this.shopProductsService.queryProductList(productsDto)));
+        return Mono.just(Result.ok(this.productsService.queryProductList(productsDto)));
     }
 
     /**
@@ -144,7 +153,7 @@ public class ProductController extends ShopSuperController {
      */
     @GetMapping("/{id}")
     public Mono<Result<Object>> selectOne(@PathVariable Serializable id) {
-        Products products = this.shopProductsService.getById(id);
+        Products products = this.productsService.getById(id);
         return Mono.just(Result.ok(this.convertMapper.toProductsVo(products)));
     }
 
@@ -157,7 +166,7 @@ public class ProductController extends ShopSuperController {
     @PostMapping
     public Mono<Result<Object>> add(@RequestBody ProductsDto productsDto) {
         Products products = this.convertMapper.toProducts(productsDto);
-        boolean isSuccess = this.shopProductsService.save(products);
+        boolean isSuccess = this.productsService.save(products);
         if (isSuccess) {
             return Mono.just(Result.ok("操作成功"));
         }
@@ -173,7 +182,7 @@ public class ProductController extends ShopSuperController {
     @PutMapping
     public Mono<Result<String>> updateProduct(@RequestBody ProductsDto productsDto) {
         Products products = this.convertMapper.toProducts(productsDto);
-        boolean isSuccess = this.shopProductsService.updateById(products);
+        boolean isSuccess = this.productsService.updateById(products);
         if (isSuccess) {
             return Mono.just(Result.ok("操作成功"));
         }
@@ -189,7 +198,7 @@ public class ProductController extends ShopSuperController {
      */
     @DeleteMapping
     public Mono<Result<Object>> delete(@RequestBody List<Long> idList) {
-        return Mono.fromCallable(() -> this.shopProductsService.removeBatchByIds(idList))
+        return Mono.fromCallable(() -> this.productsService.removeBatchByIds(idList))
                 .map(success -> Boolean.TRUE.equals(success) ? Result.ok(null, "操作成功") : Result.fail("操作失败"))
                 .subscribeOn(Schedulers.boundedElastic());
     }
