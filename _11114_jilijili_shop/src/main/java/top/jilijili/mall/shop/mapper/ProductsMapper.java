@@ -19,6 +19,13 @@ import java.util.List;
 public interface ProductsMapper extends BaseMapper<Products> {
 
     /**
+     * 随机查询
+     * @param num 查询数量
+     * @return
+     */
+    List<Products> queryProductRandomByNum(@Param("num") Integer num);
+
+    /**
      * 获取商品指定时间段的上架统计图数据
      */
     List<ProductsEChartsVo> queryProductsByDateData(@Param("productsDto")

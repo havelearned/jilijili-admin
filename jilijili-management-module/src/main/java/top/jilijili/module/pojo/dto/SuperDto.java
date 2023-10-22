@@ -19,7 +19,6 @@ import java.util.Date;
 @NoArgsConstructor
 @SuperBuilder
 @Accessors(chain = true)
-
 public class SuperDto {
     @NotNull
     @TableField(exist = false)

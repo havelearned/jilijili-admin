@@ -1,6 +1,6 @@
 server:
   port: 11114
-#  port: 8080
+  #  port: 8080
   servlet:
     context-path: /shop
 
@@ -58,6 +58,22 @@ spring:
       max-pool-prepared-statement-per-connection-size: -1
       # 合并多个DruidDataSource的监控数据
       use-global-data-source-stat: true
+      stat-view-servlet:
+        allow: 127.0.0.1
+        enabled: true
+        login-password: 123456
+        login-username: root
+      web-stat-filter:
+        # 配置统计页面过滤
+        enabled: true
+        # 排除路径
+        exclusions: .js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*
+        # 开启session统计
+        session-stat-enable: true
+        # session统计的最大个数
+        session-stat-max-count: 100
+        # 过滤路径
+        url-pattern: /*
       # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
   #      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
@@ -101,7 +117,7 @@ mybatis-plus:
   configuration:
     #org.apache.ibatis.logging.stdout.StdOutImpl 控制台打印sql语句方便调试sql语句执行错误
     #org.apache.ibatis.logging.log4j2.Log4j2Impl:这个不在控制台打印查询结果,但是在log4j中打印
-#    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+    #    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
     cache-enabled: true
@@ -130,3 +146,7 @@ minio:
   bucket: jilijili-project
 
 
+#协同过滤算法文件数据模型路径
+cf:
+  model: item # 基于用户
+  file: E:\idea_project\jilijili-admin\jilijili-common\jilijili-recommendation-engine\src\main\resources\shop_user_ratings.csv # 文件模型

@@ -2,10 +2,12 @@ package top.jilijili.mall.shop.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.jilijili.common.entity.Result;
 import top.jilijili.module.pojo.entity.shop.Products;
 import top.jilijili.module.pojo.dto.shop.ProductsDto;
 import top.jilijili.module.pojo.vo.shop.ProductsVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,4 +35,18 @@ public interface ProductsService extends IService<Products> {
      * @return Mono<Result < Map < String, Object>>> 商品可视化数据
      */
     Map<String, Object> queryProductsTodayInfo(ProductsDto productsDto);
+
+    /**
+     * 推荐商品搜搜内容
+     * @param productsDto 查询实体
+     * @return 推荐商品列表
+     */
+    Result<IPage<ProductsVo>> recommendedProductSearchByItem(ProductsDto productsDto);
+
+    /**
+     * 推荐商品搜搜内容
+     * @param productsDto 查询实体
+     * @return 推荐商品列表
+     */
+    Result<List<ProductsVo>> recommendedProductSearchByUser(ProductsDto productsDto);
 }

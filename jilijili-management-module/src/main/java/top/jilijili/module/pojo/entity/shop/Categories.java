@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
-import top.jilijili.common.utils.TreeNode;
+import top.jilijili.module.utils.TreeNode;
 
 import java.io.Serializable;
 import java.util.Date;

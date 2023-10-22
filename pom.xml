@@ -27,6 +27,7 @@
         <module>jilijili-management-module</module>
         <module>_11115_jilijili_music</module>
         <module>jilijili-cloud</module>
+        <module>jilijili_test</module>
 
     </modules>
 

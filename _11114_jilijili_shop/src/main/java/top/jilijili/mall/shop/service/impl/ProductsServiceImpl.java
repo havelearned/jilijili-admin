@@ -1,5 +1,7 @@
 package top.jilijili.mall.shop.service.impl;
 
+import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -7,9 +9,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import top.jilijili.common.entity.Result;
 import top.jilijili.mall.shop.mapper.ConvertMapper;
 import top.jilijili.mall.shop.mapper.ProductsMapper;
 import top.jilijili.mall.shop.service.ProductsService;
+import top.jilijili.mall.shop.service.RecommendService;
 import top.jilijili.module.pojo.dto.shop.ProductsDto;
 import top.jilijili.module.pojo.entity.shop.Products;
 import top.jilijili.module.pojo.vo.shop.ProductsEChartsVo;
@@ -30,8 +34,63 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
 
     private ProductsMapper productsMapper;
     private ConvertMapper convertMapper;
+    private RecommendService recommendService;
 
-    // todo 通过上传图片相似度查询商品,无限延期
+
+    /**
+     * 通过User推荐商品搜搜内容
+     *
+     * @param productsDto 查询实体
+     * @return 推荐商品列表
+     */
+    @Override
+    public Result<List<ProductsVo>> recommendedProductSearchByUser(ProductsDto productsDto) {
+
+        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+        Object loginId = tokenInfo.getLoginId();
+        if (Objects.nonNull(loginId)) {
+            List<Long> recommend = recommendService.recommendByItem(Long.parseLong((String) loginId), productsDto.getSize());
+            List<Products> products = this.listByIds(recommend);
+            if (!products.isEmpty()) {
+                return Result.ok(this.listByIds(recommend).stream()
+                        .map(convertMapper::toProductsVo)
+                        .toList());
+            }
+        }
+        return Result.ok();
+    }
+
+
+    /**
+     * 通过Item推荐商品搜搜内容
+     *
+     * @param productsDto 查询实体
+     * @return 推荐商品列表
+     */
+    @Override
+    public Result<IPage<ProductsVo>> recommendedProductSearchByItem(ProductsDto productsDto) {
+        //使用不同的种子值,保证推荐数据尽量变化性
+        Random random = new Random(System.currentTimeMillis());
+        int randomValue = random.nextInt(50 - productsDto.getSize() + 1) + productsDto.getSize();
+
+        List<Long> recommend = recommendService.recommendByItem(Long.valueOf(productsDto.getProductId()), randomValue);
+        List<Products> products = this.listByIds(recommend);
+
+        Page<Products> page = new Page<>(productsDto.getPage(), productsDto.getSize());
+
+        // 如果推荐数据小于返回要求数量,随机查询填充
+        if (productsDto.getSize() > products.size()) {
+            List<Products> randmProductsList = this.productsMapper.queryProductRandomByNum(productsDto.getSize() - products.size());
+            products.addAll(randmProductsList);
+        }
+        // 统一分页返回数据
+        page.setRecords(products);
+        page.setCurrent(productsDto.getPage());
+        page.setSize(products.size());
+        page.setTotal(this.lambdaQuery().count());
+        IPage<ProductsVo> convert = page.convert(this.convertMapper::toProductsVo);
+        return Result.ok(convert);
+    }
 
 
     /**
@@ -56,7 +115,6 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
 
         return iPage.convert(this.convertMapper::toProductsVo);
     }
-
 
 
     /**
@@ -91,6 +149,7 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
         resultMap.put("count", count);
         return resultMap;
     }
+
 }
 
 

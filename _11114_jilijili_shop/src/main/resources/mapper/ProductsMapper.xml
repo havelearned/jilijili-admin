@@ -34,9 +34,12 @@
         where created_time between #{productsDto.createdTime} and #{productsDto.comparisonTime}
         group by created_time;
     </select>
-
-
-
+    <select id="queryProductRandomByNum" resultType="top.jilijili.module.pojo.entity.shop.Products">
+        select  product_id, category_id, product_name,
+                description, price, stock_quantity,
+                image_url, created_time, updated_time
+        from shop_products order by rand() limit #{num}
+    </select>
 
 
 </mapper>

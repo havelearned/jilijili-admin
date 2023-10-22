@@ -46,6 +46,7 @@ public class ProductController extends ShopSuperController {
 
     /*-------------------------------------分类信息--------------------------------------------*/
 
+
     /**
      * 通过一个或者多个id删除商品分类
      *
@@ -133,6 +134,18 @@ public class ProductController extends ShopSuperController {
 
 
     /*-------------------------------------商品--------------------------------------------*/
+
+    /**
+     * 推荐商品搜搜内容
+     * @param productsDto 查询实体
+     * @return 推荐商品列表
+     */
+    @GetMapping("/search")
+    public Mono<Result<IPage<ProductsVo>>> recommendedProductSearch(ProductsDto productsDto) {
+        return Mono.just(this.productsService.recommendedProductSearchByItem(productsDto));
+
+    }
+
 
     /**
      * 获取商品列表

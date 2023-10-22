@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.SysUserMapper">
+
+    <resultMap id="BaseResultMap" type="top.jilijili.module.pojo.entity.sys.SysUser">
+            <id property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="userType" column="user_type" jdbcType="VARCHAR"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+            <result property="gender" column="gender" jdbcType="TINYINT"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="phonenumber" column="phonenumber" jdbcType="VARCHAR"/>
+            <result property="locked" column="locked" jdbcType="TINYINT"/>
+            <result property="enabled" column="enabled" jdbcType="TINYINT"/>
+            <result property="lastLoginIp" column="last_login_ip" jdbcType="VARCHAR"/>
+            <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,username,nickname,
+        password,user_type,avatar,
+        gender,email,phonenumber,
+        locked,enabled,last_login_ip,
+        last_login_time,created_time,updated_time
+    </sql>
+
+
+
+</mapper>

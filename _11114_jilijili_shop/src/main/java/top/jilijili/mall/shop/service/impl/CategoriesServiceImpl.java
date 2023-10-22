@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import top.jilijili.common.entity.Item;
 import top.jilijili.common.entity.Result;
-import top.jilijili.common.utils.TreeUtils;
+import top.jilijili.module.utils.TreeUtils;
 import top.jilijili.mall.shop.mapper.CategoriesMapper;
 import top.jilijili.mall.shop.service.CategoriesService;
 import top.jilijili.module.pojo.dto.shop.CategoriesDto;
