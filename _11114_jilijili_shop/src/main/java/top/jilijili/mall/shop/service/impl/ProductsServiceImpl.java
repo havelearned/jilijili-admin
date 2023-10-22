@@ -1,7 +1,5 @@
 package top.jilijili.mall.shop.service.impl;
 
-import cn.dev33.satoken.stp.SaTokenInfo;
-import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -38,42 +36,37 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
 
 
     /**
-     * 通过User推荐商品搜搜内容
-     *
-     * @param productsDto 查询实体
-     * @return 推荐商品列表
-     */
-    @Override
-    public Result<List<ProductsVo>> recommendedProductSearchByUser(ProductsDto productsDto) {
-
-        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
-        Object loginId = tokenInfo.getLoginId();
-        if (Objects.nonNull(loginId)) {
-            List<Long> recommend = recommendService.recommendByItem(Long.parseLong((String) loginId), productsDto.getSize());
-            List<Products> products = this.listByIds(recommend);
-            if (!products.isEmpty()) {
-                return Result.ok(this.listByIds(recommend).stream()
-                        .map(convertMapper::toProductsVo)
-                        .toList());
-            }
-        }
-        return Result.ok();
-    }
-
-
-    /**
      * 通过Item推荐商品搜搜内容
      *
      * @param productsDto 查询实体
      * @return 推荐商品列表
      */
     @Override
-    public Result<IPage<ProductsVo>> recommendedProductSearchByItem(ProductsDto productsDto) {
+    public Result<IPage<ProductsVo>> recommendedProductSearch(ProductsDto productsDto) {
+
+        // 没有匹配到商品id,正常查询,忽略了user方式推荐
+        Long count = this.lambdaQuery()
+                .eq(Products::getProductId, productsDto.getProductId()).count();
+        if (count < 1) {
+            return Result.ok(this.queryProductList(productsDto));
+        }
+
         //使用不同的种子值,保证推荐数据尽量变化性
         Random random = new Random(System.currentTimeMillis());
         int randomValue = random.nextInt(50 - productsDto.getSize() + 1) + productsDto.getSize();
+        List<Long> recommend = recommendService.recommend(Long.valueOf(productsDto.getProductId()), randomValue);
+        IPage<ProductsVo> convert = getRecommendedPage(productsDto, recommend);
+        return Result.ok(convert);
+    }
 
-        List<Long> recommend = recommendService.recommendByItem(Long.valueOf(productsDto.getProductId()), randomValue);
+    /**
+     * 做推荐数据
+     *
+     * @param productsDto 查询dto
+     * @param recommend   推荐id
+     * @return 商品分页数据
+     */
+    private IPage<ProductsVo> getRecommendedPage(ProductsDto productsDto, List<Long> recommend) {
         List<Products> products = this.listByIds(recommend);
 
         Page<Products> page = new Page<>(productsDto.getPage(), productsDto.getSize());
@@ -88,8 +81,8 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
         page.setCurrent(productsDto.getPage());
         page.setSize(products.size());
         page.setTotal(this.lambdaQuery().count());
-        IPage<ProductsVo> convert = page.convert(this.convertMapper::toProductsVo);
-        return Result.ok(convert);
+        return page.convert(this.convertMapper::toProductsVo);
+
     }
 
 

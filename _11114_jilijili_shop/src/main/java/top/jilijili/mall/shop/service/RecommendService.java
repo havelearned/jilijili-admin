@@ -13,11 +13,13 @@ public interface RecommendService {
 
     /**
      * 默认使用文件模型
-     * @param userId 用户id
+     * @param itemId 用户id
      * @param haoMany 推荐大小
      * @return
      */
-    List<Long> recommendByItem(Long userId,Integer haoMany);
+    List<Long> recommend(Long itemId,Integer haoMany);
+
+
 
     /**
      * 通过用户或者物品推荐

@@ -35,7 +35,7 @@ public class RecommendServiceImpl implements RecommendService {
      * @return 推荐的商品列表
      */
     @Override
-    public List<Long> recommendByItem(Long itemId, Integer haoMany) {
+    public List<Long> recommend(Long itemId, Integer haoMany) {
         RecommendationStrategy strategy = RecommendationFactory.getRecommendationStrategy(CFMode);
         List<RecommendedItem> recommend = strategy.recommend(itemId, haoMany);
         return recommend.stream().map(RecommendedItem::getItemID).collect(Collectors.toList());

@@ -60,6 +60,7 @@ public class RecommendationByUser implements RecommendationStrategy {
             return recommend;
         } catch (Exception e) {
             log.error(e.getMessage());
+            e.printStackTrace();
         }
         return Collections.emptyList();
     }

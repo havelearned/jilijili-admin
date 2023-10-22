@@ -136,14 +136,14 @@ public class ProductController extends ShopSuperController {
     /*-------------------------------------商品--------------------------------------------*/
 
     /**
-     * 推荐商品搜搜内容
+     * 推荐商品物品
+     *
      * @param productsDto 查询实体
      * @return 推荐商品列表
      */
     @GetMapping("/search")
-    public Mono<Result<IPage<ProductsVo>>> recommendedProductSearch(ProductsDto productsDto) {
-        return Mono.just(this.productsService.recommendedProductSearchByItem(productsDto));
-
+    public Mono<Result<IPage<ProductsVo>>> recommendedProductSearchByItem(ProductsDto productsDto) {
+        return Mono.just(this.productsService.recommendedProductSearch(productsDto));
     }
 
 
