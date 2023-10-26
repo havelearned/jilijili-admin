@@ -1,0 +1,11 @@
+xxl:
+  job:
+    admin:
+      addresses: http://xxxxxx:8088/xxl-job-admin
+    executor:
+      appname: xxx
+      ip:
+      port: 9010
+      logpath: /data/applogs/xxl-job/xxx
+      logretentiondays: -1
+    accessToken:

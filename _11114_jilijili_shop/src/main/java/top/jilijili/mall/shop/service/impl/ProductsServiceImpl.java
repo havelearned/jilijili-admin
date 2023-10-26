@@ -94,7 +94,7 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
      */
     @Override
     public IPage<ProductsVo> queryProductList(ProductsDto productsDto) {
-        IPage<Products> iPage = new Page<>(productsDto.getPage(), productsDto.getSize());
+        Page<Products> iPage = new Page<>(productsDto.getPage(), productsDto.getSize());
         iPage = this.lambdaQuery()
                 .eq(productsDto.getCategoryId() != null, Products::getCategoryId, productsDto.getCategoryId())
                 .like(StringUtils.hasText(productsDto.getProductName()), Products::getProductName, productsDto.getProductName())
@@ -106,6 +106,7 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
                 .orderByDesc(Products::getCreatedTime)
                 .page(iPage);
 
+        // BUG 未分页
         return iPage.convert(this.convertMapper::toProductsVo);
     }
 

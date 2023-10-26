@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @EnableAdminServer //开启AdminServer的支持
 @SpringBootApplication
-public class AdminServerApplication {
+public class AdminServerJnilibCloudApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AdminServerApplication.class, args);
+		SpringApplication.run(AdminServerJnilibCloudApplication.class, args);
 	}
 
 }

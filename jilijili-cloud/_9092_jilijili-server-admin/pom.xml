@@ -8,10 +8,10 @@
     </parent>
 
     <groupId>wang.jilijili.cloud.admin</groupId>
-    <artifactId>jilijili-server-admin</artifactId>
+    <artifactId>_9092_jilijili-server-admin</artifactId>
     <packaging>jar</packaging>
 
-    <name>jilijili-server-admin</name>
+    <name>_9092_jilijili-server-admin</name>
     <url>http://maven.apache.org</url>
 
     <properties>

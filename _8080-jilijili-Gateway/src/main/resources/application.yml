@@ -12,6 +12,7 @@ spring:
             allowedOrigins:
               - "http://localhost:9000"
               - "http://localhost:9111"
+              - "http://localhost:9222"
             allowCredentials: true
             allowedMethods: # 允许的跨域ajax的请求方式
               - "GET"
