@@ -3,6 +3,8 @@ package top.jilijili.common.entity;
 import lombok.Data;
 import top.jilijili.common.enums.StatusCodeEnum;
 
+import java.io.Serializable;
+
 import static top.jilijili.common.enums.StatusCodeEnum.*;
 
 /**
@@ -12,7 +14,7 @@ import static top.jilijili.common.enums.StatusCodeEnum.*;
  * @date 2021/08/10
  */
 @Data
-public class Result<T> {
+public class Result<T> implements Serializable {
 
     /**
      * 返回状态
@@ -33,6 +35,10 @@ public class Result<T> {
 
     public static <T> Result<T> ok() {
         return restResult(true, null, SUCCESS.getCode(), SUCCESS.getDesc());
+    }
+
+    public static <T> Result<T> ok(int code,String message) {
+        return restResult(true, null, code,message);
     }
 
     public static <T> Result<T> ok(T data) {

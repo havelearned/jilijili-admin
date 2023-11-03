@@ -12,6 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import top.jilijili.system.common.heandler.JiliException;
 import top.jilijili.system.common.utils.IpUtils;
 import top.jilijili.system.common.utils.KeyConstants;
 import top.jilijili.common.entity.Result;
@@ -50,11 +51,11 @@ public class LoginAspect {
         String ipSource = IpUtils.getIpSource(IpUtils.getIpAddress(request));
 
 
-        Result result = null;
+        Result result;
         try {
             result = JSONUtil.toBean(JSONUtil.toJsonStr(pjp.proceed()), Result.class);
         } catch (Throwable e) {
-            throw new RuntimeException(e);
+            throw new JiliException(e.getMessage());
         }
 
         String key = KeyConstants.LOGIN_RESTRICTION + ipSource;

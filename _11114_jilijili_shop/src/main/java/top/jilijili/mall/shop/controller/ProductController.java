@@ -136,6 +136,18 @@ public class ProductController extends ShopSuperController {
     /*-------------------------------------商品--------------------------------------------*/
 
     /**
+     * 设置所有库存的商品进行统一预热处理
+     *
+     * @param idList 库存商品的ID列表
+     * @return 预热处理结果
+     */
+    @GetMapping("/preheat")
+    public  Result<Boolean> stockUnifiedPreheatingProcess(@RequestParam("idList") List<Long> idList){
+        return this.productsService.stockUnifiedPreheatingProcess(idList);
+
+    }
+
+    /**
      * 推荐商品物品
      *
      * @param productsDto 查询实体

@@ -13,8 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @Slf4j
 @SpringBootApplication
-@ComponentScan(basePackages = {"top.jilijili.system.*",
-})
+@ComponentScan(basePackages = {"top.jilijili.system.*",})
 @EnableScheduling
 public class JnilibSystemApplication {
     public static void main(String[] args) {

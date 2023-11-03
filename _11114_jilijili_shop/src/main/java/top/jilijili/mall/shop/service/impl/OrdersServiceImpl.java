@@ -5,13 +5,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import top.jilijili.mall.shop.mapper.OrdersMapper;
-import top.jilijili.module.pojo.entity.shop.Orders;
+import top.jilijili.mall.shop.service.OrdersService;
 import top.jilijili.module.pojo.dto.shop.OrdersDto;
+import top.jilijili.module.pojo.entity.shop.Orders;
 import top.jilijili.module.pojo.vo.shop.OrderEChartsVo;
 import top.jilijili.module.pojo.vo.shop.OrdersVo;
-import top.jilijili.mall.shop.service.OrdersService;
 
 import java.io.Serializable;
 import java.util.*;
@@ -34,9 +35,9 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders>
      * @param ordersDto 查询对象
      * @return
      */
+    @Cacheable("ordersList")
     @Override
     public IPage<OrdersVo> getOrderList(OrdersDto ordersDto) {
-
         QueryWrapper<Orders> qw = new QueryWrapper<>();
         qw
                 .eq(ordersDto.getOrderId() != null, "o.order_id", ordersDto.getOrderId())
@@ -77,7 +78,14 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders>
     @Override
     public IPage<OrdersVo> getOrderListByUserId(OrdersDto ordersDto) {
         IPage<OrdersVo> page = new Page(ordersDto.getPage(), ordersDto.getSize());
-        return this.ordersMapper.selectOrderListByUserId(page, ordersDto);
+        QueryWrapper<Orders> qw = new QueryWrapper<>();
+        qw
+                .eq(Objects.nonNull(ordersDto.getOrderId()), "o.order_id", ordersDto.getOrderId())
+                .eq("o.user_id", ordersDto.getUserId())
+                .eq(ordersDto.getOrderStatus() != null, "o.order_status", ordersDto.getOrderStatus())
+                .between(Objects.nonNull(ordersDto.getOrderDateFormat()), "o.order_date", ordersDto.getOrderDateFormat(), new Date())
+                .orderByDesc(true, "o.created_time", "o.order_date");
+        return this.ordersMapper.selectOrderListByUserId(page, qw);
 
     }
 

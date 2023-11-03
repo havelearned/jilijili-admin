@@ -45,5 +45,6 @@ public class CouponsVo  implements Serializable {
      * 其他优惠券相关信息
      */
     private String otherCouponInfo;
-
+    //是否过期
+    private String expire;
 }

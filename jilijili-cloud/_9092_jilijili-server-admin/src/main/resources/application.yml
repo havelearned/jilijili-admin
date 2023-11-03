@@ -16,7 +16,8 @@ logging.level:
 spring:
   application:
     name: jilijili-server-admin
-
+  banner:
+    location: file:E:\idea_project\jilijili-admin\banner.txt
 
 management:
   # 是否开放

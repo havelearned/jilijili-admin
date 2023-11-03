@@ -6,7 +6,9 @@ server:
 
 spring:
   application:
-    name: _11115_jilijili_music
+    name: 11115_jilijili_music
+  banner:
+    location: file:E:\idea_project\jilijili-admin\banner.txt
   servlet:
     multipart:
       max-file-size: 100MB
@@ -19,7 +21,7 @@ spring:
     # 数据源基本配置
     username: root
     password: 123456.ljj
-    url: jdbc:mysql://8.130.75.158:13306/jilijili_system?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true
+    url: jdbc:mysql://${mysql.host:localhost}:13306/jilijili_system?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true
     # driver-class需要注意mysql驱动的版本(com.mysql.cj.jdbc.Driver 或 com.mysql.jdbc.Driver)
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource

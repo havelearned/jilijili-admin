@@ -16,4 +16,14 @@
         user_coupon_id,user_id,coupon_id,
         is_used,usage_date
     </sql>
+    <select id="selectByUserId" resultType="java.util.Map">
+    <![CDATA[
+        SELECT suc.user_coupon_id, suc.is_used,suc.usage_date,
+               sc.coupon_id, sc.coupon_type, sc.coupon_amount, sc.min_purchase_amount, sc.other_coupon_info,sc.expiration_date,
+               IF(sc.expiration_date <= NOW(), '已过期', '未过期') as expire
+        from shop_user_coupons suc
+         left join shop_coupons sc on sc.coupon_id = suc.coupon_id
+        ${ew.customSqlSegment}
+     ]]>
+    </select>
 </mapper>

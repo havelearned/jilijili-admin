@@ -2,35 +2,54 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>wang.jilijili.cloud</groupId>
-        <artifactId>jilijili-cloud</artifactId>
+        <groupId>wang.jilijili</groupId>
+        <artifactId>jilijili-admin</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>wang.jilijili.cloud.admin</groupId>
-    <artifactId>_9092_jilijili-server-admin</artifactId>
+    <groupId>top.jilijili.gateway</groupId>
+    <artifactId>_9090-jilijili-Gateway</artifactId>
     <packaging>jar</packaging>
 
-    <name>_9092_jilijili-server-admin</name>
+    <description>网关配置</description>
+
+    <name>_9090-jilijili-Gateway</name>
     <url>http://maven.apache.org</url>
-    <description>监控平台</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
-        <!-- spring boot web依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- spring boot admin 服务端依赖 -->
         <dependency>
             <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-server</artifactId>
+            <artifactId>spring-boot-admin-client</artifactId>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
     </dependencies>
+
 
     <build>
         <plugins>
@@ -39,7 +58,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <!-- 指定该Main Class为全局的唯一入口 -->
-                    <mainClass>wang.jilijili.cloud.admin.AdminServerJnilibCloudApplication</mainClass>
+                    <mainClass>top.jilijili.gatway.JnilibGatewayApplication</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
                 <executions>
@@ -53,4 +72,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

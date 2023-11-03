@@ -44,10 +44,11 @@ public interface OrdersMapper extends BaseMapper<Orders> {
     /**
      * 通过用户id查询用户订单
      *
-     * @param ordersDto
+     * @param qw
      * @return
      */
-    IPage<OrdersVo> selectOrderListByUserId(IPage<OrdersVo> page,@Param("ordersDto") OrdersDto ordersDto);
+    IPage<OrdersVo> selectOrderListByUserId(@Param("page") IPage<OrdersVo> page,
+                                            @Param(Constants.WRAPPER) Wrapper qw);
 
     /**
      * 查询订单列表

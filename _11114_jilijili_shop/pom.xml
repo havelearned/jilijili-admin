@@ -21,11 +21,13 @@
     </properties>
 
     <dependencies>
+
 <!--        远程调用-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+
 
         <!--spring boot admin 客户端依赖-->
         <dependency>
@@ -33,13 +35,18 @@
             <artifactId>spring-boot-admin-starter-client</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
+        </dependency>
+
         <dependency>
             <groupId>top.jilijili.module</groupId>
             <artifactId>jilijili-management-module</artifactId>
-
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>top.jilijili.comment.recommendation</groupId>
             <artifactId>jilijili-recommendation-engine</artifactId>

@@ -12,11 +12,11 @@ import top.jilijili.common.entity.Result;
 import top.jilijili.mall.shop.service.CouponsService;
 import top.jilijili.mall.shop.service.PromocodesService;
 import top.jilijili.mall.shop.service.UserCouponsService;
-import top.jilijili.module.pojo.entity.shop.Coupons;
-import top.jilijili.module.pojo.entity.shop.Promocodes;
 import top.jilijili.module.pojo.dto.shop.CouponsDto;
 import top.jilijili.module.pojo.dto.shop.PromocodesDto;
 import top.jilijili.module.pojo.dto.shop.UserCouponsDto;
+import top.jilijili.module.pojo.entity.shop.Coupons;
+import top.jilijili.module.pojo.entity.shop.Promocodes;
 import top.jilijili.module.pojo.vo.shop.CouponsVo;
 import top.jilijili.module.pojo.vo.shop.PromocodesVo;
 import top.jilijili.module.pojo.vo.shop.UserCouponsVo;
@@ -24,6 +24,7 @@ import top.jilijili.module.pojo.vo.shop.UserWithCouponsVo;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 兑换码优惠卷管理
@@ -205,19 +206,23 @@ public class CouponsController extends SuperController {
 
     /*====================================兑换码&优惠卷使用情况===========================================*/
 
+
     /**
      * 用户优惠卷分页查询
-     *
-     * @param userCouponsDto 查询实体
-     * @return 所有数据
+     * @param userId 用户id
+     * @param isUsed 是否可用 0可用 1不可用
+     * @return
      */
-    @GetMapping("/userCoupons/list")
-    public Mono<Result<IPage<UserCouponsVo>>> selectAllUC(UserCouponsDto userCouponsDto) {
-        return Mono.just(this.userCouponsService.selectAllUC(userCouponsDto));
+    @GetMapping("/userCoupons/list/{userId}/{isUsed}")
+    public Mono<Result<IPage<Map<String, Object>>>> selectAllUC(
+            @PathVariable
+            Serializable userId,
+            @PathVariable(required = false) Integer isUsed) {
+        return Mono.just(this.userCouponsService.selectAllUC(userId,isUsed));
     }
 
     /**
-     * 使用情况 新增数据
+     * 优惠卷 新增数据
      *
      * @param userCouponsDto 实体对象
      * @return 新增结果
@@ -229,7 +234,7 @@ public class CouponsController extends SuperController {
     }
 
     /**
-     * 使用情况 通过主键查询单条数据
+     * 优惠卷 通过主键查询单条数据
      *
      * @param id 主键
      * @return 单条数据
@@ -240,7 +245,7 @@ public class CouponsController extends SuperController {
     }
 
     /**
-     * 使用情况 修改数据
+     * 优惠卷 修改数据
      *
      * @param userCouponsDto 实体对象
      * @return 修改结果
@@ -251,7 +256,7 @@ public class CouponsController extends SuperController {
     }
 
     /**
-     * 使用情况 删除数据
+     * 优惠卷 删除数据
      *
      * @param idList 主键结合
      * @return 删除结果

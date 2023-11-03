@@ -41,4 +41,5 @@ public class UserCouponsVo implements Serializable {
      */
     private Date usageDate;
 
+
 }

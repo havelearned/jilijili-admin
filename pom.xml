@@ -20,10 +20,10 @@
         <module>jilijili-common</module>
         <module>_11110-jilijili-system</module>
         <module>_11111-jilijili-blog</module>
-        <module>_8080-jilijili-Gateway</module>
+        <module>_9090-jilijili-Gateway</module>
         <module>_11112_jilijili_video</module>
         <module>_11114_jilijili_shop</module>
-        <module>_8848_jilijili_Nacos</module>
+<!--        <module>_8848_jilijili_Nacos</module>-->
         <module>jilijili-management-module</module>
         <module>_11115_jilijili_music</module>
         <module>jilijili-cloud</module>

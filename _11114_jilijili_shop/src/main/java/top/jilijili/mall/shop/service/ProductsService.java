@@ -7,6 +7,7 @@ import top.jilijili.module.pojo.dto.shop.ProductsDto;
 import top.jilijili.module.pojo.entity.shop.Products;
 import top.jilijili.module.pojo.vo.shop.ProductsVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,4 +43,12 @@ public interface ProductsService extends IService<Products> {
      */
     Result<IPage<ProductsVo>> recommendedProductSearch(ProductsDto productsDto);
 
+
+    /**
+     * 设置所有库存的商品进行统一预热处理
+     *
+     * @param idList 库存商品的ID列表
+     * @return 预热处理结果
+     */
+    Result<Boolean> stockUnifiedPreheatingProcess(List<Long> idList);
 }

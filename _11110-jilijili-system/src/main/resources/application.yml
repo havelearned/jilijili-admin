@@ -5,6 +5,8 @@ server:
 spring:
   application:
     name: 11110-jilijili-system
+  banner:
+    location: file:E:\idea_project\jilijili-admin\banner.txt
   servlet:
     multipart:
       max-file-size: 100MB
@@ -13,7 +15,7 @@ spring:
     # 数据源基本配置
     username: root
     password: 123456.ljj
-    url: jdbc:mysql://8.130.75.158:13306/jilijili_system?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true
+    url: jdbc:mysql://${mysql.host:localhost}:13306/jilijili_system?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&autoReconnect=true
     # driver-class需要注意mysql驱动的版本(com.mysql.cj.jdbc.Driver 或 com.mysql.jdbc.Driver)
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
@@ -60,23 +62,23 @@ spring:
         pool:
           enabled: true
           # 连接池中的最大空闲连接，默认值也是8。
-          max-idle: 500
+          max-idle: 8
           # 连接池中的最小空闲连接，默认值也是0。
-          min-idle: 50
+          min-idle: 7
           # 如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)
-          max-active: 1000
+          max-active: -1
           # 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException
           max-wait: -1
       lettuce:
         pool:
           # 连接池最大连接数
-          max-active: 200
+          max-active: 10
           # 连接池最大阻塞等待时间（使用负值表示没有限制）
           max-wait: -1ms
           # 连接池中的最大空闲连接
           max-idle: 10
           # 连接池中的最小空闲连接
-          min-idle: 0
+          min-idle: 7
   rabbitmq:
     username: admin_A
     password: admin_A

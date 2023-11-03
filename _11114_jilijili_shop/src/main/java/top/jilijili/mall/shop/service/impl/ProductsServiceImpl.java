@@ -1,10 +1,12 @@
 package top.jilijili.mall.shop.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import top.jilijili.common.entity.Result;
@@ -18,6 +20,8 @@ import top.jilijili.module.pojo.vo.shop.ProductsEChartsVo;
 import top.jilijili.module.pojo.vo.shop.ProductsVo;
 
 import java.util.*;
+
+import static top.jilijili.common.utils.KeyConstants.PRODUCT_HEA_KEY;
 
 /**
  * @author admin
@@ -33,6 +37,7 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
     private ProductsMapper productsMapper;
     private ConvertMapper convertMapper;
     private RecommendService recommendService;
+    private RedisTemplate<String, Object> redisTemplate;
 
 
     /**
@@ -58,6 +63,7 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
         IPage<ProductsVo> convert = getRecommendedPage(productsDto, recommend);
         return Result.ok(convert);
     }
+
 
     /**
      * 做推荐数据
@@ -87,6 +93,33 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
 
 
     /**
+     * 对库存进行统一预热处理
+     *
+     * @param idList 产品ID列表
+     * @return 设置结果及数量
+     */
+    @Override
+    public Result<Boolean> stockUnifiedPreheatingProcess(List<Long> idList) {
+        List<Products> products = this.lambdaQuery().in(Products::getProductId, idList).list();
+        int successCount = 0;
+        int failCount =0;
+
+        for (Products product : products) {
+            if (product.getStockQuantity() >= 0) {
+                this.redisTemplate.opsForValue().set(PRODUCT_HEA_KEY+product.getProductId(), product.getStockQuantity());
+                successCount++;
+            }else{
+                failCount++;
+            }
+        }
+        return Result.ok(true,
+                """
+                成功:%d个
+                失败:%d个
+                """.formatted(successCount,failCount));
+    }
+
+    /**
      * 查询商品列表
      *
      * @param productsDto
@@ -94,19 +127,18 @@ public class ProductsServiceImpl extends ServiceImpl<ProductsMapper, Products>
      */
     @Override
     public IPage<ProductsVo> queryProductList(ProductsDto productsDto) {
-        Page<Products> iPage = new Page<>(productsDto.getPage(), productsDto.getSize());
-        iPage = this.lambdaQuery()
-                .eq(productsDto.getCategoryId() != null, Products::getCategoryId, productsDto.getCategoryId())
+        LambdaQueryWrapper<Products> qw = new LambdaQueryWrapper<>();
+        qw.eq(productsDto.getCategoryId() != null, Products::getCategoryId, productsDto.getCategoryId())
                 .like(StringUtils.hasText(productsDto.getProductName()), Products::getProductName, productsDto.getProductName())
                 .like(StringUtils.hasText(productsDto.getDescription()), Products::getDescription, productsDto.getDescription())
                 .between(Objects.nonNull(productsDto.getMax()) && Objects.nonNull(productsDto.getMin()),
                         Products::getPrice, productsDto.getMin(), productsDto.getMax())
                 .between(Objects.nonNull(productsDto.getCreatedTime()),
                         Products::getCreatedTime, productsDto.getCreatedTime(), productsDto.getComparisonTime())
-                .orderByDesc(Products::getCreatedTime)
-                .page(iPage);
+                .orderByDesc(Products::getCreatedTime);
 
         // BUG 未分页
+        Page<Products> iPage = this.productsMapper.selectPage(new Page<Products>(productsDto.getPage(), productsDto.getSize()), qw);
         return iPage.convert(this.convertMapper::toProductsVo);
     }
 

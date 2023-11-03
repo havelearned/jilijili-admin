@@ -16,6 +16,21 @@ public class KeyConstants {
     private KeyConstants() {
     }
 
+    /*-----------------redisKey-----------------*/
+
+
+    /**
+     * Redis 秒杀分布式锁
+     * 格式:
+     */
+    public final static String SECKILL_LOCK = "seckill_lock:";
+
+    /**
+     * Redis 商品库存预热
+     * 格式: key:商品id
+     */
+    public final static String PRODUCT_HEA_KEY = "product_heat_key:";
+
     /**
      * Redis key验证码
      * 格式: CAPTCHA_KEY:时间戳
@@ -29,6 +44,7 @@ public class KeyConstants {
     public final static String LOGIN_RESTRICTION = "LOGIN_RESTRICTION:";
 
 
+    /*-----------------导入导出模板-----------------*/
     /**
      * Minio 文件路径
      * 歌手数据导入模板

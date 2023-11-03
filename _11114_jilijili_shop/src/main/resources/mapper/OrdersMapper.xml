@@ -49,8 +49,7 @@
         select o.*, u.user_id, u.nickname, u.avatar
         from shop_orders o
                  inner join sys_user u on o.user_id = u.user_id
-        where o.user_id = #{ordersDto.userId}
-        order by o.created_time, o.order_date desc
+        ${ew.customSqlSegment}
 
     </select>
 

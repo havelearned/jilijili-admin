@@ -8,6 +8,7 @@ import top.jilijili.module.pojo.dto.shop.UserCouponsDto;
 import top.jilijili.module.pojo.vo.shop.UserCouponsVo;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
 * @author admin
@@ -16,7 +17,7 @@ import java.io.Serializable;
 */
 public interface UserCouponsService extends IService<UserCoupons> {
 
-    Result<IPage<UserCouponsVo>> selectAllUC(UserCouponsDto userCouponsDto);
+    Result<IPage<Map<String, Object>>> selectAllUC(Serializable userId, Integer isUsed);
 
     Result<UserCouponsVo> selectOneUC(Serializable id);
 

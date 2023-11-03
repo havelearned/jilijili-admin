@@ -199,10 +199,10 @@ create table shop_currency_types
 );
 
 -- 插入初始货币类型数据
-insert into shop_currency_types (currency_name,currency_code, created_time)
-values ('肌理豆','JLB', now()),
-       ('肌理币','JLC', now()),
-       ('狗粮','GLC', now());
+insert into shop_currency_types (currency_name, currency_code, created_time)
+values ('肌理豆', 'JLB', now()),
+       ('肌理币', 'JLC', now()),
+       ('狗粮', 'GLC', now());
 
 -- 创建虚拟货币表
 drop table if exists shop_virtual_currency;
@@ -282,12 +282,6 @@ VALUES (6, 3, 2, 30.00, NOW(), NOW());
 
 
 
-
-
-
-
-
-
 select *
 from shop_user_ratings;
 select user_id
@@ -312,3 +306,39 @@ values (15217, 2, 1.1 + RAND() * (9.9 - 1.1), UNIX_TIMESTAMP()),
        (15217, 10017, 1.1 + RAND() * (9.9 - 1.1), UNIX_TIMESTAMP()),
        (15217, 10019, 1.1 + RAND() * (9.9 - 1.1), UNIX_TIMESTAMP()),
        (15217, 10020, 1.1 + RAND() * (9.9 - 1.1), UNIX_TIMESTAMP());
+
+
+-- 创建秒杀表
+drop table if exists shop_seckill;
+create table shop_seckill
+(
+    seckill_id          bigint       not null primary key auto_increment comment 'id',
+    seckill_products_id bigint       not null comment '商品id',
+    `desc`              varchar(255) not null default '' comment '秒杀开场描述',
+    created_time        datetime     not null default now() comment '秒杀开始时间',
+    end_time            datetime     not null default (now() + interval 1 HOUR) comment '结束时间'
+)ENGINE = InnoDB
+ DEFAULT CHARSET = utf8 COMMENT ='秒杀表';
+
+-- 创建秒杀商品表
+drop table if exists shop_seckill_products;
+create table shop_seckill_products
+(
+    seckill_products_id bigint not null primary key auto_increment comment 'id',
+    seckill_id          bigint not null comment '秒杀表id',
+    products_id         bigint not null comment '商品id',
+    stock_quantity      int default 0 comment '库存数量'
+)ENGINE = InnoDB
+ DEFAULT CHARSET = utf8 COMMENT ='秒杀商品表';
+
+-- 秒杀商品统计表
+drop table if exists shop_seckill_sale_statistics;
+CREATE TABLE shop_seckill_sale_statistics
+(
+    sale_id       bigint         not null primary key auto_increment comment '统计id',
+    statistic_id  bigint unique  not null comment '本场秒杀,秒杀表id,',
+    sale_count    int default 0 comment '销售数量',
+    total_sales   int default 0  not null comment '销售额=销售收入=售出数量*单价',
+    total_revenue decimal(10, 2) not null comment '总销售额'
+)ENGINE = InnoDB
+ DEFAULT CHARSET = utf8 COMMENT ='商品统计表';

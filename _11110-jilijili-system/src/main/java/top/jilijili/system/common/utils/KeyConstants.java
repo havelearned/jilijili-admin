@@ -20,13 +20,13 @@ public class KeyConstants {
      * Redis key验证码
      * 格式: CAPTCHA_KEY:时间戳
      */
-    public final static String CAPTCHA_KEY = "CAPTCHA_KEY:";
+    public final static String CAPTCHA_KEY = "captcha_key:";
 
     /**
      * Redis key ip访问限制
      * 格式: LOGIN_RESTRICTION:IP地址
      */
-    public final static String LOGIN_RESTRICTION = "LOGIN_RESTRICTION:";
+    public final static String LOGIN_RESTRICTION = "login_restriction:";
 
 
     /**

@@ -38,6 +38,9 @@ public class OrdersDto extends SuperDto implements Serializable {
      * 下单日期
      */
     private Date orderDate;
+    @JsonFormat(pattern = "YYYY-MM-DD HH:mm")
+    @DateTimeFormat(pattern = "YYYY-MM-DD HH:mm")
+    private String orderDateFormat;
 
     /**
      * 订单状态
