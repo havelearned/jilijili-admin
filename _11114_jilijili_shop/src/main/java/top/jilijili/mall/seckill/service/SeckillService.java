@@ -82,13 +82,10 @@ public class SeckillService {
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
         try {
-            Integer stock = (Integer) redisTemplate.opsForValue().get(KeyConstants.PRODUCT_HEA_KEY + productId);
-
-            if (stock == null || stock < 1) {
-                return false;
-            }
-
-            Products products = this.productsService.getById(productId);
+            // 使用数据库行级锁（FOR UPDATE）来锁定产品数据
+            Products products = this.productsService.lambdaQuery().eq(Products::getProductId, productId).last("for update").one();
+//            Products products = this.productsService.getById(productId);
+            // 检查库存是否足够
             if (products.getStockQuantity() < 1) {
                 return false;
             }
@@ -100,27 +97,25 @@ public class SeckillService {
                     .eq("product_id", productId)
                     .ge("stock_quantity", 1)
                     .set("stock_quantity", quantity);
-            boolean b = this.productsService.update(queryWrapper);
-            // 设置缓存库存
-            redisTemplate.opsForValue().decrement(KeyConstants.PRODUCT_HEA_KEY + productId);
+            boolean updateResult = this.productsService.update(queryWrapper);
+            if (updateResult) {
+                // 更新缓存库存
+                redisTemplate.opsForValue().decrement(KeyConstants.PRODUCT_HEA_KEY + productId);
+                // 发送MQ,生成订单
+                Orders orders = new Orders();
+                orders.setUserId(Long.valueOf(userId));
+                orders.setOrderStatus(2);
+                orders.setOrderDate(new Date());
+                boolean save = this.ordersService.save(orders);
 
-            // 发送MQ,生成订单
-            Orders orders = new Orders();
-            orders.setUserId(Long.valueOf(userId));
-            orders.setOrderStatus(2);
-            orders.setOrderDate(new Date());
-            boolean save = this.ordersService.save(orders);
-
-            OrderItems orderItems = new OrderItems();
-            orderItems.setOrderId(orders.getOrderId());
-            orderItems.setProductId(Long.valueOf(productId));
-            orderItems.setQuantity(1);
-            boolean save1 = this.orderItemService.save(orderItems);
-
-            if (save && save1) {
-                return true;
-            } else {
-                throw new JiliException("订单生成失败");
+                OrderItems orderItems = new OrderItems();
+                orderItems.setOrderId(orders.getOrderId());
+                orderItems.setProductId(Long.valueOf(productId));
+                orderItems.setQuantity(1);
+                boolean save1 = this.orderItemService.save(orderItems);
+                return save && save1;
+            }else{
+                return false;
             }
         } catch (Exception e) {
             log.error(e.getMessage());
