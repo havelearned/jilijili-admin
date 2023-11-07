@@ -1,19 +1,15 @@
 package top.jilijili.mall.currency.controller;
 
 
-import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import top.jilijili.common.control.SuperController;
 import top.jilijili.common.entity.Result;
-import top.jilijili.mall.currency.feign.UserServiceFigen;
 import top.jilijili.mall.currency.service.CurrencyTypesService;
 import top.jilijili.module.pojo.dto.currency.CurrencyTypesDto;
-import top.jilijili.module.pojo.dto.sys.SysUserDto;
 import top.jilijili.module.pojo.entity.currency.CurrencyTypes;
-import top.jilijili.module.pojo.vo.sys.SysUserVo;
 
 import java.io.Serializable;
 import java.util.List;

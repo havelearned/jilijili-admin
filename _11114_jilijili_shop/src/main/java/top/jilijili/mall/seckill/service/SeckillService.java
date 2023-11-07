@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import top.jilijili.common.heandler.JiliException;
 import top.jilijili.common.utils.KeyConstants;
+import top.jilijili.mall.currency.feign.UserServiceFigen;
 import top.jilijili.mall.shop.service.OrderItemsService;
 import top.jilijili.mall.shop.service.OrdersService;
 import top.jilijili.mall.shop.service.ProductsService;
@@ -33,49 +34,8 @@ public class SeckillService {
     private final OrderItemsService orderItemService;
     private final OrdersService ordersService;
     private final ProductsService productsService;
+    private final UserServiceFigen userServiceFigen;
 
-
-    // 处理秒杀请求的方法
-    @Transactional(rollbackFor = JiliException.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public Boolean handleSeckill(Integer productId, Integer userId) {
-        Integer stock = (Integer) redisTemplate.opsForValue().get(KeyConstants.PRODUCT_HEA_KEY + productId);
-
-        if (stock == null || stock < 1) {
-            return false;
-        }
-
-        Products products = this.productsService.getById(productId);
-        if (products.getStockQuantity() < 0) {
-            return false;
-        } else {
-            synchronized (this) {
-                // 库存扣减
-                products.setStockQuantity(products.getStockQuantity() - 1);
-                Integer quantity = products.getStockQuantity();
-                UpdateWrapper<Products> queryWrapper = new UpdateWrapper<Products>()
-                        .eq("product_id", productId)
-                        .ge("stock_quantity", 1)
-                        .set("stock_quantity", quantity);
-                boolean b = this.productsService.update(queryWrapper);
-                // 设置缓存库存
-                redisTemplate.opsForValue().decrement(KeyConstants.PRODUCT_HEA_KEY + productId);
-            }
-
-            Orders orders = new Orders();
-            orders.setUserId(Long.valueOf(userId));
-            orders.setOrderStatus(2);
-            orders.setOrderDate(new Date());
-            boolean save = this.ordersService.save(orders);
-
-            OrderItems orderItems = new OrderItems();
-            orderItems.setOrderId(orders.getOrderId());
-            orderItems.setProductId(Long.valueOf(productId));
-            orderItems.setQuantity(1);
-            boolean saved = this.orderItemService.save(orderItems);
-
-            return save && saved;
-        }
-    }
 
     @Transactional(rollbackFor = JiliException.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Boolean handleSeckillLock(Integer productId, Integer userId) {
@@ -84,7 +44,6 @@ public class SeckillService {
         try {
             // 使用数据库行级锁（FOR UPDATE）来锁定产品数据
             Products products = this.productsService.lambdaQuery().eq(Products::getProductId, productId).last("for update").one();
-//            Products products = this.productsService.getById(productId);
             // 检查库存是否足够
             if (products.getStockQuantity() < 1) {
                 return false;
@@ -113,8 +72,13 @@ public class SeckillService {
                 orderItems.setProductId(Long.valueOf(productId));
                 orderItems.setQuantity(1);
                 boolean save1 = this.orderItemService.save(orderItems);
+
+                if (save) {
+                    userServiceFigen.sendOrderInfo(orders);
+                }
+
                 return save && save1;
-            }else{
+            } else {
                 return false;
             }
         } catch (Exception e) {

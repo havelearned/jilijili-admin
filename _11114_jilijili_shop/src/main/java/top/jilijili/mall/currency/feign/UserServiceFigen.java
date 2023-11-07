@@ -11,6 +11,7 @@ import top.jilijili.common.entity.Result;
 import top.jilijili.common.group.Insert;
 import top.jilijili.common.heandler.JiliException;
 import top.jilijili.module.pojo.dto.sys.SysUserDto;
+import top.jilijili.module.pojo.entity.shop.Orders;
 import top.jilijili.module.pojo.vo.sys.SysUserVo;
 
 /**
@@ -23,6 +24,9 @@ import top.jilijili.module.pojo.vo.sys.SysUserVo;
 @FeignClient(value = "11110-jilijili-system", url = "${figen.client.url.sys}",
         fallback = JiliException.class)
 public interface UserServiceFigen {
+
+    @GetMapping("/console/sendOrderInfo")
+    void sendOrderInfo(@RequestParam Orders orders);
 
     @GetMapping("/sysUser/me")
     Result<SysUserVo> getUserinfo(@RequestParam(value = "token", defaultValue = "") String token);
